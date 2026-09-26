@@ -1,8 +1,15 @@
 # Deploy prompt: bmw.de replica backend (paste into Claude Code in a local checkout)
 
 > Copy everything below the line into Claude Code, running at the root of a local clone of the
-> repository on branch `bmw-migration` (or `main` once merged). Claude should run the commands,
+> repository on branch `main` (the migration is merged). Claude should run the commands,
 > show each result and stop to ask me when a step needs a browser login or a decision.
+>
+> **What you need to provide / create — summary:** one Cloudflare Worker (`bmw-proxy`, in
+> `tools/workers/bmw-proxy`). **No secrets, no KV namespaces, no D1/R2/Durable Objects**; configuration is
+> plain `[vars]` in `wrangler.toml` (`ALLOWED_ORIGINS`, `REQUIRE_ORIGIN`, `UPSTREAM_TIMEOUT_MS`, `CACHE`).
+> Optional: a custom domain on a Cloudflare zone (needed for edge caching). The DA redirects sheet and the
+> DA site config (`aem.assets.image.type = link`) were already uploaded during the migration — steps 5 and 6
+> are verification (plus publishing when you go live).
 
 ---
 
@@ -104,6 +111,13 @@ H -X POST -H 'content-type: application/json' --data '{}' \
 # stolo-sf-mco-api (10 min)
 H "$P/sf-mco.aws.bmw.cloud/display-service/DE/bmwCar/de/STOCKLOCATOR/errorCodes.json"
 H "$P/sf-mco.aws.bmw.cloud/configuration-service/app/discover/confi/channels/STOCKLOCATOR/brands/bmwCar/countries/DE/languages"
+# compare-techdata (1 h): per-model technical data JSON used by the compare tool
+H "$P/de/bmw-modelle-vergleichen/_jcr_content.technicaldata.3.G20.28FF.json"
+# ai-assistant (no cache): BMW AI Assistant chat API, forwards tenantId/language/brand, sends Origin www.bmw.de
+curl -sS -D - -o /tmp/body -X OPTIONS -H "Origin: $O" -H 'Access-Control-Request-Method: POST' \
+  -H 'Access-Control-Request-Headers: content-type, tenantid, language, brand' \
+  "$P/crm-il-api-prod.bmwgroup.com/ckm-genai-chat-prod-api/api/v1/chat"                  # 204
+# (a real POST needs the widget's payload; test it by opening "BMW AI Assistant" in the help sidebar)
 # ePaaS / consent (1 h)
 H "$P/www.bmw.com/etc/clientlibs/wcmp/consentcontroller.fallback/epaas.js"
 H "$P/etc/clientlibs/epaas/content/bmw/marketDE/bmw_de/de_DE.epaasclientlibinclude.js"   # seen on bmw.de pages
@@ -147,6 +161,10 @@ The browser code reads `window.BMW_PROXY || 'https://bmw-proxy.moved-permanently
    `ALLOWED_ORIGINS` at go-live.
 
 ## 5. Redirects sheet in Document Authoring
+
+**Status: already uploaded to DA and previewed on main during the migration (248 rows) — NOT published.**
+Only verify below; publish (`admin.hlx.page/live/...redirects.json`, or Publish in the DA UI) when going live.
+If the content import changes, regenerate and re-upload with the steps that follow.
 
 The rows are in `tools/workers/redirects/redirects.csv` (columns `Source,Destination`, 249 rows) and in
 DA sheet JSON in `tools/workers/redirects/redirects.json`. Regenerate both first with
@@ -196,6 +214,9 @@ Notes:
 
 ## 6. Site config: `aem.assets.image.type = link`
 
+**Status: already created during the migration** (`https://admin.da.live/config/moved-permanently/bmw`, data sheet
+row `aem.assets.image.type = link`). Only verify step 4 below.
+
 The key is documented at aem.live /docs/ew/administering/set-up-aem-assets. It is a key in the **data**
 sheet of the site configuration: "Insert images as links instead of image tags. Useful for Dynamic
 Media URLs that need to bypass Media Bus."
@@ -230,4 +251,17 @@ Give me:
 
 | id | upstream example | method | TTL | notes |
 |---|---|---|---|---|
-| _(placeholder)_ | | | | |
+| compare-techdata | `https://www.bmw.de/de/bmw-modelle-vergleichen/_jcr_content.technicaldata.3.G20.28FF.json` | GET | 1 h | used by blocks/model-compare (already in routes.js) |
+| ai-assistant | `https://crm-il-api-prod.bmwgroup.com/ckm-genai-chat-prod-api/api/v1/…` | GET, POST | 0 | help-sidebar AI assistant; forwards `tenantId`, `language`, `brand`; upstream only answers Origin www.bmw.de (already in routes.js) |
+| _(next)_ | | | | |
+
+## Notes for go-live (not part of this deployment)
+
+- `head.html` CSP allows `'unsafe-eval'` and no longer requires Trusted Types — needed by the HERE map
+  (Tangram) of the dealer locator. Revisit if the dealer locator is dropped.
+- BMW's tag manager (loaded by ePaaS after "Alle akzeptieren") is blocked by default so the replica does not
+  report into BMW's ad/analytics accounts; `window.BMW_EPAAS_TRACKING = true` restores the source behaviour.
+- The Live Chat widget (cctapiemea) only answers requests with a bmw.de referer; it stays hidden like on the
+  source until it runs on the real domain.
+- Content is previewed only; nothing has been published to `.aem.live`.
+
