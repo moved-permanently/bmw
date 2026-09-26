@@ -10,3 +10,4 @@ migration-work/*
 tools/workers/*
 tools/importer/*
 catalog/*
+tools/reports/*
