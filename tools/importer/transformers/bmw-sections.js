@@ -297,7 +297,12 @@ export default function transform(hookName, element, payload) {
     const styles = top.tagName === 'TABLE' ? [] : sectionStyles(top);
     pending.push(...nodes);
     pendingStyles = styles;
-    flush();
+    // keep in-page anchor targets such as the consumption footnotes (#bottom)
+    const anchor = top.id === 'bottom' || (top.querySelector && top.querySelector('#bottom')) ? 'bottom' : null;
+    if (anchor) {
+      pushSection(pending, metaTable(doc, pendingStyles || [], { id: anchor }));
+      pending = []; pendingStyles = null;
+    } else flush();
     // layers collected while flattening this section follow it
     while (ctx.layers.length) {
       const layer = ctx.layers.shift();

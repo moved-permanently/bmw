@@ -27,3 +27,5 @@ tools/importer/*.bundle.js
 tools/importer/reports/
 tools/workers/**/node_modules/
 tools/workers/**/.wrangler/
+migration-work/navigation-validation/
+migration-work/footer-validation/

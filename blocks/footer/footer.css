@@ -1,20 +1,321 @@
-footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+/*
+ * bmw.de footer (source: footer .cmp-list / .style-container--background-light / --border-fullwidth).
+ * Mobile first. Source breakpoints are 768 / 1024 / 1280 (grid tokens in styles/styles.css switch there).
+ * Bands: teaser (My BMW App) / link columns / social icons / legal bar, all on a full-bleed grey surface,
+ * separated by full-bleed 1px dividers; a white strip closes the footer (source copyright container).
+ * Pixel offsets marked "measured" reproduce the source geometry (1440px and 375px were measured).
+ */
+.footer {
+  --footer-inset: var(--bmw-grid-full, 1.5rem);
+  --footer-column-gap: calc(2 * var(--bmw-grid-gutter, 0.5rem));
+  --footer-title-gap: 1.5rem;
+  --footer-item-gap: 1rem;
+
+  padding-bottom: 3rem;
+  background-color: var(--bmw-surface, #fff);
+  color: var(--bmw-color-text, #262626);
+  font-family: var(--bmw-font-family);
+  font-size: var(--bmw-body-2-font-size);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-body-2-line-height);
 }
 
-footer .footer > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
-}
-
-footer .footer p {
+.footer p,
+.footer ul {
   margin: 0;
+  padding: 0;
 }
 
-@media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+.footer ul {
+  list-style: none;
+}
+
+.footer a:any-link {
+  color: var(--bmw-link, #262626);
+  font-weight: var(--bmw-font-weight-default, 300);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--bmw-link-hover, #1c69d4);
+}
+
+.footer a:active {
+  color: var(--bmw-link-active, #0653b6);
+}
+
+.footer a:focus-visible {
+  outline: none;
+  background: var(--bmw-focus-background-link);
+  box-shadow: var(--bmw-focus-outside);
+}
+
+.footer .footer-band {
+  padding-inline: var(--footer-inset);
+  background-color: var(--bmw-surface-grey, #f6f6f6);
+}
+
+.footer .footer-band > * {
+  max-width: var(--bmw-content-max-width, 108rem);
+  margin-inline: auto;
+}
+
+/* ---------- teaser (My BMW App): stacked + centered on mobile ---------- */
+.footer .footer-teaser {
+  padding-top: calc(var(--bmw-spacing-6, 1rem) + var(--bmw-spacing-4, 0.5rem) - 1px);
+  padding-bottom: 3px; /* measured */
+  border-top: 1px solid var(--bmw-border, #e6e6e6);
+  border-bottom: 1px solid var(--bmw-border, #e6e6e6);
+}
+
+.footer .footer-teaser-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footer .footer-teaser-icon {
+  height: 2.25rem;
+}
+
+.footer .footer-teaser-icon img {
+  display: block;
+  width: auto;
+  height: 2em; /* source icon = 2em of body-2 */
+  margin-top: -3px; /* measured: icon sits 3px above its box */
+}
+
+.footer .footer-teaser-row > p:not(.footer-teaser-icon, .footer-teaser-cta) {
+  margin-top: 1.375rem;
+}
+
+.footer .footer-teaser-cta {
+  margin-top: var(--bmw-spacing-2, 0.25rem);
+}
+
+.footer .footer-teaser-cta a.link-arrow:any-link {
+  justify-content: center;
+  font-weight: var(--bmw-font-weight-clickable, 500);
+}
+
+/* ---------- link groups: single-expand accordion on mobile ---------- */
+.footer .footer-links {
+  padding-top: var(--bmw-spacing-6, 1rem);
+}
+
+.footer .footer-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.footer .footer-group-title {
+  position: relative;
+  padding: 0 0 1.5rem;
+  margin: 0 0 1.5rem;
+  color: var(--bmw-color-heading, #262626);
+  font-size: var(--bmw-subsection-1-font-size);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-subsection-1-line-height);
+  text-align: start;
+  cursor: pointer;
+}
+
+.footer .footer-group-title::after {
+  content: "arrow_chevron_down";
+  position: absolute;
+  top: 0.5em;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  direction: ltr;
+  font-family: var(--bmw-font-family-icons);
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: var(--bmw-font-weight-regular, 400);
+  font-feature-settings: "liga";
+  line-height: 1;
+  text-transform: none;
+  white-space: nowrap;
+  transform: translate(25%, -50%);
+  transition: transform 0.5s ease-in-out;
+}
+
+.footer .footer-group-title:focus-visible {
+  outline: none;
+  background: var(--bmw-focus-background-link);
+  box-shadow: var(--bmw-focus-outside);
+}
+
+.footer .footer-group.is-expanded .footer-group-title::after {
+  transform: translate(25%, -50%) rotate(-180deg);
+}
+
+.footer .footer-group-list {
+  max-height: 0;
+  padding: 0.5rem 0 0 1rem;
+  margin: -0.5rem 0 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.footer .footer-group.is-expanded .footer-group-list {
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer .footer-group-list li + li {
+  margin-top: var(--footer-item-gap);
+}
+
+/* ---------- social icons ---------- */
+.footer .footer-social {
+  padding-top: 1rem;
+  padding-bottom: 30px; /* measured */
+}
+
+.footer .footer-social ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer .footer-social ul > li {
+  margin-right: 0.75rem;
+}
+
+.footer .footer-social li:last-child {
+  margin-right: calc(2rem + 5px); /* measured: source row is centred incl. a trailing gap */
+}
+
+.footer .footer-social a {
+  display: block;
+}
+
+.footer .footer-social img {
+  position: relative;
+  top: -3px; /* measured: icon sits 3px above its link box */
+  display: block;
+  width: 2em; /* source icon = 2em of body-2: 28px mobile, 30px desktop */
+  height: 2em;
+}
+
+.footer .footer-group-list a:any-link,
+.footer .footer-legal a:any-link {
+  display: inline-flex;
+}
+
+/* ---------- legal bar ---------- */
+.footer .footer-legal {
+  padding-top: 13px; /* measured */
+  padding-bottom: 1rem;
+  border-top: 1px solid var(--bmw-border, #e6e6e6);
+}
+
+.footer .footer-legal ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.75rem;
+}
+
+.footer .footer-legal li:not(:last-child) {
+  margin-right: 2rem;
+}
+
+/* breakpoint-exception: source (bmw.de) grid + accordion switch at 768px, tokens in styles.css too */
+@media (width >= 768px) {
+  .footer {
+    padding-bottom: 2rem;
+  }
+
+  .footer .footer-teaser {
+    padding-bottom: calc(var(--bmw-spacing-6, 1rem) + var(--bmw-spacing-4, 0.5rem) + var(--bmw-spacing-2, 0.25rem) - 1px);
+  }
+
+  .footer .footer-teaser-row {
+    flex-direction: row;
+    gap: var(--footer-column-gap);
+    text-align: start;
+  }
+
+  .footer .footer-teaser-icon {
+    display: flex;
+    flex: 0 0 calc((100% - 11 * var(--footer-column-gap)) / 12);
+    align-items: center;
+    justify-content: center;
+    height: 1.5rem;
+  }
+
+  .footer .footer-teaser-icon img {
+    margin-top: 0;
+  }
+
+  .footer .footer-teaser-row > p:not(.footer-teaser-icon, .footer-teaser-cta),
+  .footer .footer-teaser-cta {
+    margin-top: 0;
+  }
+
+  .footer .footer-links {
+    padding-bottom: var(--footer-title-gap);
+  }
+
+  .footer .footer-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--footer-column-gap);
+  }
+
+  .footer .footer-group + .footer-group {
+    margin-top: calc(var(--footer-title-gap) + var(--bmw-spacing-16, 2.5rem));
+  }
+
+  .footer .footer-group-title {
+    padding: 0;
+    margin: 0 0 var(--footer-title-gap);
+    cursor: auto;
+  }
+
+  .footer .footer-group-title::after,
+  .footer .footer-group.is-expanded .footer-group-title::after {
+    content: none;
+    transform: none;
+    transition: none;
+  }
+
+  /* same specificity as the mobile open state so the static desktop list always wins */
+  .footer .footer-group-list,
+  .footer .footer-group.is-expanded .footer-group-list {
+    max-height: none;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    transition: none;
+  }
+
+  .footer .footer-social li:last-child {
+    margin-right: 0.75rem;
+  }
+
+  .footer .footer-legal {
+    padding-top: 14px; /* measured */
+  }
+}
+
+/* breakpoint-exception: source (bmw.de) list spacing tokens switch at 1280px (margins-medium-responsive) */
+@media (width >= 1280px) {
+  .footer {
+    --footer-title-gap: 2rem;
+    --footer-item-gap: 0.75rem;
+  }
+
+  /* source .style-list--align-mobile-center keeps social + legal centred up to 1279px */
+  .footer .footer-social ul {
+    justify-content: flex-end;
+    padding-right: var(--footer-column-gap);
+  }
+
+  .footer .footer-legal ul {
+    justify-content: flex-start;
   }
 }

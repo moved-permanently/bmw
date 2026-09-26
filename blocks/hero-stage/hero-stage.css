@@ -313,7 +313,7 @@
 /* play button position */
 .hero-stage .bmw-video .bmw-video-playbutton {
   z-index: 30;
-  top: 1rem;
+  top: calc(var(--nav-height, 68px) + 1rem); /* below the transparent header bar (source y≈85) */
   right: 1rem;
   bottom: auto;
 }

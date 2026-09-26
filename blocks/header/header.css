@@ -1,272 +1,1023 @@
-/* header and nav layout */
-header .nav-wrapper {
-  background-color: var(--background-color);
-  width: 100%;
-  z-index: 2;
-  position: fixed;
+/* BMW global navigation (source: .cmp-globalnavigation). Mobile first; the source switches to the
+   desktop bar at 1280px and changes spacing at 768px and 1920px. */
+
+/* stylelint-disable no-descending-specificity */
+
+/* header element: in-flow for the solid variant, overlaying the stage for transparent variants */
+header.header-wrapper {
+  height: 68px;
 }
 
-header nav {
-  box-sizing: border-box;
-  display: grid;
-  grid-template:
-    'hamburger brand tools' var(--nav-height)
-    'sections sections sections' 1fr / auto 1fr auto;
-  align-items: center;
-  gap: 0 24px;
-  margin: auto;
-  max-width: 1248px;
-  height: var(--nav-height);
-  padding: 0 24px;
-  font-family: var(--body-font-family);
+header.header-transparent,
+header.header-gradient {
+  height: 0;
 }
 
-header nav[aria-expanded='true'] {
-  grid-template:
-    'hamburger brand' var(--nav-height)
-    'sections sections' 1fr
-    'tools tools' var(--nav-height) / auto 1fr;
-  overflow-y: auto;
-  min-height: 100dvh;
+/* transparent variant: white bar text over the (dark) stage */
+header.header-transparent {
+  color: #fff;
 }
 
-@media (width >= 900px) {
-  header .nav-wrapper {
-    position: relative;
-  }
+.header {
+  --nav-bar-height: 68px;
+  --nav-padding-inline: 1.5rem;
+  --nav-text: var(--bmw-grey-900, #262626);
+  --nav-item: var(--bmw-grey-700, #666);
+  --nav-blue: var(--bmw-blue, #1c69d4);
+  --nav-blue-active: var(--bmw-blue-hover, #0653b6);
+  --nav-line: var(--bmw-grey-500, #bbb);
+  --nav-divider: var(--bmw-grey-300, #e6e6e6);
+  --nav-ease: cubic-bezier(0, 0.5, 0.5, 1);
 
-  header nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 0 32px;
-    max-width: 1264px;
-    padding: 0 32px;
-  }
-
-  header nav[aria-expanded='true'] {
-    min-height: 0;
-    overflow: visible;
-  }
+  position: relative;
+  z-index: 1000;
+  font-family: var(--bmw-font-family, bmwtypenextweb, arial, helvetica, sans-serif);
+  font-weight: 300;
+  color: var(--nav-text);
 }
 
-header nav p {
+.header ul {
+  list-style: none;
   margin: 0;
-  line-height: 1;
+  padding: 0;
 }
 
-header nav a:any-link {
-  color: currentcolor;
+.header .nav-wrapper {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  transition: background 0.05s ease-in-out;
 }
 
-/* hamburger */
-header nav .nav-hamburger {
-  grid-area: hamburger;
-  height: 22px;
+.header .nav-wrapper.nav-transparent,
+.header .nav-wrapper.nav-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+}
+
+.header .nav-wrapper.nav-transparent::before,
+.header .nav-wrapper.nav-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6rem;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(0deg, rgb(0 0 0 / 0%), rgb(0 0 0 / 40%));
+}
+
+.header .nav-wrapper.nav-gradient::before {
+  height: 11.25rem;
+  background:
+    linear-gradient(#ffffff4d, #fff0),
+    linear-gradient(#fff, #fff0 70%),
+    linear-gradient(#fff6, #fff0 45%),
+    linear-gradient(#fff, #ffffff80 27%, #fff0 45%);
+}
+
+.header .nav-wrapper.is-open {
+  background: #fff;
+}
+
+.header .nav-wrapper.is-open::before {
+  background: transparent;
+}
+
+.header nav {
+  position: relative;
+}
+
+/* skip link: off-screen until focused */
+.header .nav-skip {
+  position: absolute;
+  top: 0;
+  left: -999px;
+  z-index: 2;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.header .nav-skip:focus-visible {
+  left: 0.5rem;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  background: #fff;
+  color: var(--nav-text);
+  box-shadow: var(--bmw-focus-outside);
+}
+
+/* ---------------------------------------------------------------- bar */
+.header .nav-bar {
+  position: relative;
   display: flex;
   align-items: center;
+  height: var(--nav-bar-height);
+  padding: 0 var(--nav-padding-inline);
 }
 
-header nav .nav-hamburger button {
-  height: 22px;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  background-color: var(--background-color);
-  color: inherit;
-  overflow: initial;
-  text-overflow: initial;
-  white-space: initial;
-}
-
-header nav .nav-hamburger-icon,
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
-  box-sizing: border-box;
+.header .nav-brand {
   display: block;
+  flex-shrink: 0;
+  width: 2.25rem;
+  margin: 0 1.5rem 0 0;
+  border-radius: 50%;
+  color: inherit;
+}
+
+.header .nav-logo {
+  display: none;
+  width: 100%;
+  height: auto;
+  transition: transform 0.25s ease-in-out;
+}
+
+.header .nav-brand:focus-visible {
+  outline: none;
+  box-shadow: var(--bmw-focus-outside);
+}
+
+.header .nav-brand:focus-visible .nav-logo {
+  transform: scale(1.1);
+}
+
+.header .nav-wrapper .nav-logo-dark,
+.header .nav-transparent:not(.is-open) .nav-bar .nav-logo-light {
+  display: block;
+}
+
+.header .nav-transparent:not(.is-open) .nav-bar .nav-logo-dark {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- shared link look */
+.header .nav-link,
+.header .nav-tool-link {
   position: relative;
-  width: 20px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0 0.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--nav-item);
+  font: inherit;
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.625rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
-  content: '';
+.header .nav-link:focus-visible,
+.header .nav-tool-link:focus-visible,
+.header .nav-back:focus-visible,
+.header .nav-column-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--bmw-focus-inside);
+}
+
+.header .nav-tool-link:hover,
+.header .nav-link:hover {
+  color: var(--nav-blue);
+}
+
+.header .nav-transparent:not(.is-open) .nav-bar,
+.header .nav-transparent:not(.is-open) .nav-bar .nav-tool-link {
+  color: #fff;
+}
+
+/* icons: element box in text font (like the source <i data-icon>), glyph in ::before */
+.header .nav-icon {
+  display: flex;
+  font-size: 1.5rem;
+  font-style: normal;
+  line-height: 1.875rem;
+}
+
+.header .nav-icon::before {
+  content: attr(data-icon);
+  display: block;
+  font-family: var(--bmw-font-family-icons, "bmw_next_icons");
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-feature-settings: "liga";
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+}
+
+.header .nav-tool-link .nav-icon {
+  margin-right: 0.25rem;
+}
+
+.header .nav-hamburger .nav-icon::before,
+.header .nav-close .nav-icon::before {
+  font-size: 1.5rem;
+}
+
+.header .nav-tool-label {
   position: absolute;
-  background: currentcolor;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-header nav[aria-expanded='false'] .nav-hamburger-icon,
-header nav[aria-expanded='false'] .nav-hamburger-icon::before,
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  height: 2px;
-  border-radius: 2px;
-  background: currentcolor;
+/* ---------------------------------------------------------------- tools (right) */
+.header .nav-tools {
+  height: 100%;
+  margin-left: auto;
 }
 
-header nav[aria-expanded='false'] .nav-hamburger-icon::before {
-  top: -6px;
+.header .nav-tools-list {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  top: 6px;
+.header .nav-tool {
+  display: flex;
+  height: 100%;
 }
 
-header nav[aria-expanded='true'] .nav-hamburger-icon {
-  height: 22px;
+.header .nav-tool-desktop {
+  display: none;
 }
 
-header nav[aria-expanded='true'] .nav-hamburger-icon::before,
-header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: 3px;
-  left: 1px;
-  transform: rotate(45deg);
-  transform-origin: 2px 1px;
-  width: 24px;
-  height: 2px;
-  border-radius: 2px;
+/* ---------------------------------------------------------------- primary (mobile slide-in list) */
+.header .nav-sections {
+  position: absolute;
+  top: calc(var(--nav-bar-height) + 1px);
+  left: 100vw;
+  display: none;
+  width: 100vw;
+  height: calc(100vh - var(--nav-bar-height) - 1px);
+  padding: 0 var(--nav-padding-inline);
+  overflow: auto;
+  background: #fff;
+  transition: left 0.15s var(--nav-ease);
 }
 
-header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: unset;
-  bottom: 3px;
-  transform: rotate(-45deg);
+.header .is-menu-open .nav-sections {
+  display: block;
 }
 
-@media (width >= 900px) {
-  header nav .nav-hamburger {
-    display: none;
-    visibility: hidden;
-  }
+.header .is-menu-visible .nav-sections {
+  left: 0;
 }
 
-/* brand */
-header .nav-brand {
-  grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
-  font-weight: 700;
+.header .is-menu-visible .nav-sections.is-out {
+  left: -100vw;
+}
+
+.header .nav-list {
+  display: flex;
+  flex-direction: column;
+  width: 83.3333%;
+  margin: 0 auto;
+  padding: 3rem 0;
+}
+
+.header .nav-item {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid var(--nav-divider);
+}
+
+.header .nav-sections .nav-link {
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5rem 0;
+  text-align: left;
+}
+
+.header .nav-chevron-desktop {
+  display: none;
+}
+
+.header .nav-chevron-mobile {
   line-height: 1;
 }
 
-header nav .nav-brand img {
-  width: 128px;
+/* ---------------------------------------------------------------- border line */
+.header .nav-border {
+  display: none;
+  padding: 0 var(--nav-padding-inline);
+}
+
+.header .nav-border::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background: var(--nav-line);
+}
+
+.header .nav-transparent:not(.is-open) .nav-border::after {
+  background: #fff;
+}
+
+/* ---------------------------------------------------------------- mobile menu bar (open state) */
+.header .nav-mobile-bar {
+  position: absolute;
+  top: 0;
+  left: 100vw;
+  display: none;
+  align-items: center;
+  width: 100vw;
+  height: calc(var(--nav-bar-height) + 1px);
+  padding: 0 var(--nav-padding-inline);
+  background: #fff;
+  border-bottom: 1px solid var(--nav-line);
+  transition: left 0.15s var(--nav-ease);
+}
+
+.header .is-menu-open .nav-mobile-bar {
+  display: flex;
+}
+
+.header .is-menu-visible .nav-mobile-bar {
+  left: 0;
+}
+
+.header .nav-mobile-bar .nav-logo-dark {
+  display: block;
+}
+
+.header .nav-mobile-bar .nav-tool-desktop {
+  display: flex;
+}
+
+/* ---------------------------------------------------------------- flyout layer */
+.header .nav-flyout-layer {
+  position: absolute;
+  top: calc(var(--nav-bar-height) + 1px);
+  left: 100vw;
+  display: none;
+  width: 100vw;
+  height: calc(100vh - var(--nav-bar-height) - 1px);
+  overflow: hidden;
+  transition: left 0.15s var(--nav-ease);
+}
+
+.header .is-menu-open .nav-flyout-layer {
+  display: flex;
+}
+
+.header .nav-flyout-layer.is-open {
+  left: 0;
+}
+
+.header .nav-flyout-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: rgb(0 0 0 / 40%);
+  opacity: 0;
+  transition: opacity 0.05s var(--nav-ease);
+}
+
+.header .nav-flyout-layer.is-open::before {
+  opacity: 1;
+}
+
+.header .nav-flyout-wrapper {
+  width: 100%;
+  height: fit-content;
+  background: #fff;
+}
+
+.header .nav-flyout {
+  display: none;
+}
+
+.header .nav-flyout.is-open {
+  display: block;
+}
+
+.header .nav-flyout-body {
+  height: calc(100dvh - var(--nav-bar-height) - 70px);
+  overflow: hidden auto;
+}
+
+.header .nav-flyout-small .nav-flyout-body {
+  height: calc(100dvh - var(--nav-bar-height) - 1px);
+}
+
+/* sticky panel header with back button (mobile levels 2 and 3) */
+.header .nav-panel-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 69px;
+  padding: 0 var(--nav-padding-inline);
+  background: #fff;
+  border-bottom: 1px solid var(--nav-line);
+  color: var(--nav-text);
+  font-size: 1rem;
+  line-height: 1.625rem;
+}
+
+.header .nav-flyout-small .nav-panel-header {
+  display: none;
+}
+
+.header .nav-back {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 var(--nav-padding-inline);
+  border: 0;
+  background: transparent;
+  color: var(--nav-item);
+  cursor: pointer;
+}
+
+.header .nav-back .nav-icon {
+  line-height: 1;
+}
+
+.header .nav-panel-header .nav-column-image {
+  width: 190px;
   height: auto;
 }
 
-/* sections */
-header nav .nav-sections {
-  grid-area: sections;
-  flex: 1 1 auto;
-  display: none;
-  visibility: hidden;
+/* columns */
+.header .nav-flyout-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 3rem var(--nav-padding-inline);
 }
 
-header nav[aria-expanded='true'] .nav-sections {
-  display: block;
-  visibility: visible;
-  align-self: start;
+.header .nav-column-heading {
+  margin: 0;
+  font: inherit;
 }
 
-header nav .nav-sections ul {
-  list-style: none;
-  padding-left: 0;
-  font-size: var(--body-font-size-s);
+.header .nav-column-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 1.5rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--nav-divider);
+  background: transparent;
+  color: var(--nav-text);
+  font: inherit;
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.625rem;
+  text-align: left;
+  cursor: pointer;
 }
 
-header nav .nav-sections ul > li {
-  font-weight: 500;
-}
-
-header nav .nav-sections ul > li > ul {
-  margin-top: 0;
-}
-
-header nav .nav-sections ul > li > ul > li {
+.header .nav-column-toggle::after {
+  content: "arrow_chevron_right";
+  font-family: var(--bmw-font-family-icons, "bmw_next_icons");
+  font-size: 1.25rem;
   font-weight: 400;
+  font-feature-settings: "liga";
+  line-height: 1;
 }
 
-@media (width >= 900px) {
-  header nav .nav-sections {
-    display: block;
-    visibility: visible;
-    white-space: nowrap;
+.header .nav-column-toggle:hover {
+  color: var(--nav-blue);
+}
+
+.header .nav-column-image {
+  display: block;
+  width: 190px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* level 3 (small screens): the column list slides in over its flyout */
+.header .nav-column-panel {
+  position: absolute;
+  top: 0;
+  left: 100vw;
+  z-index: 3;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden auto;
+  background: #fff;
+  transition: left 0.25s var(--nav-ease);
+}
+
+.header .nav-column.is-open .nav-column-panel {
+  left: 0;
+}
+
+.header .nav-column-links {
+  padding: 3.875rem 5rem 0;
+}
+
+.header .nav-column-item {
+  margin: 0 0 1rem;
+}
+
+.header .nav-column-link,
+.header .nav-column-text {
+  color: var(--nav-text);
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.375rem;
+  text-decoration: none;
+}
+
+.header .nav-column-link:hover {
+  color: var(--nav-blue);
+}
+
+.header .nav-column-link:focus-visible {
+  outline: none;
+  border-radius: 3px;
+  box-shadow: var(--bmw-focus-outside);
+}
+
+/* My BMW panel */
+.header .nav-panel-content {
+  width: 100%;
+  padding: 2rem 2.5rem 7.5rem;
+  color: var(--nav-text);
+}
+
+.header .nav-panel-heading {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.75rem;
+}
+
+.header .nav-panel-content p {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.5rem;
+}
+
+.header .nav-panel-benefits li {
+  position: relative;
+  padding-left: 1.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.header .nav-panel-benefits li:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.header .nav-panel-benefits li::before {
+  content: "";
+  position: absolute;
+  top: 0.125rem;
+  left: 0.3125rem;
+  width: 0.375rem;
+  height: 0.6875rem;
+  border: solid var(--nav-text);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.header .nav-panel-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.header .nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid var(--nav-text);
+  border-radius: 3px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  text-decoration: none;
+}
+
+.header .nav-button-primary {
+  background: var(--nav-text);
+  color: #fff;
+}
+
+.header .nav-button-primary:hover,
+.header .nav-button-secondary {
+  background: transparent;
+  color: var(--nav-text);
+}
+
+.header .nav-button-secondary:hover {
+  background: var(--nav-text);
+  color: #fff;
+}
+
+/* ================================================================ tablet */
+
+/* breakpoint-exception: source (www.bmw.de) tablet breakpoint is 768px */
+@media (width >= 768px) {
+  header.header-wrapper {
+    height: 84px;
   }
 
-  header nav[aria-expanded='true'] .nav-sections {
-    align-self: unset;
-  }
-
-  header nav .nav-sections .nav-drop {
-    position: relative;
-    padding-right: 16px;
-    cursor: pointer;
-  }
-
-  header nav .nav-sections .nav-drop::after {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    top: 0.5em;
-    right: 2px;
-    transform: rotate(135deg);
-    width: 6px;
-    height: 6px;
-    border: 2px solid currentcolor;
-    border-radius: 0 1px 0 0;
-    border-width: 2px 2px 0 0;
-  }
-
-  header nav .nav-sections .nav-drop[aria-expanded='true']::after {
-    top: unset;
-    bottom: 0.5em;
-    transform: rotate(315deg);
-  }
-
-  header nav .nav-sections ul {
-    display: flex;
-    gap: 24px;
-    margin: 0;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li {
-    flex: 0 1 auto;
-    position: relative;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
-    display: none;
-    position: relative;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
-    display: block;
-    position: absolute;
-    left: -24px;
-    width: 200px;
-    top: 150%;
-    padding: 16px;
-    background-color: var(--light-color);
-    white-space: initial;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 16px;
-    width: 0;
+  header.header-transparent,
+  header.header-gradient {
     height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
-    padding: 8px 0;
+  .header {
+    --nav-bar-height: 84px;
+    --nav-padding-inline: 3rem;
+  }
+
+  .header .nav-wrapper.nav-transparent::before {
+    height: 8rem;
+  }
+
+  .header .nav-brand {
+    width: 3.25rem;
+  }
+
+  .header .nav-list {
+    width: 66.6667%;
+  }
+
+  .header .nav-link,
+  .header .nav-column-toggle {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .header .nav-hamburger .nav-icon::before,
+  .header .nav-close .nav-icon::before {
+    font-size: 2rem;
+  }
+
+  .header .nav-panel-header {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  /* tablet shows the columns as a grid (no level 3) */
+  .header .nav-flyout-content {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 1.5rem;
+  }
+
+  .header .nav-column {
+    grid-column: span 3;
+  }
+
+  .header .nav-cols-1 .nav-column,
+  .header .nav-cols-2 .nav-column {
+    grid-column: span 6;
+  }
+
+  .header .nav-column-toggle,
+  .header .nav-column-toggle:hover {
+    margin: 0 0 1.5rem;
+    padding: 0;
+    border: 0;
+    color: var(--nav-text);
+    font-size: 1.25rem;
+    line-height: 1.875rem;
+    cursor: default;
+  }
+
+  .header .nav-column-toggle::after {
+    content: none;
+  }
+
+  .header .nav-column-panel {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    transition: none;
+  }
+
+  .header .nav-column-header {
+    display: none;
+  }
+
+  .header .nav-column-links {
+    padding: 0 0 1.5rem;
+  }
+
+  .header .nav-column-image {
+    width: 200px;
+  }
+
+  .header .nav-panel-content {
+    padding-inline: 5.25rem;
+  }
+
+  .header .nav-panel-buttons {
+    flex-direction: row;
+    gap: 1.5rem;
   }
 }
 
-/* tools */
-header nav .nav-tools {
-  grid-area: tools;
+/* breakpoint-exception: source (www.bmw.de) switches grid spans and the My BMW flyout at 1024px */
+@media (width >= 1024px) {
+  .header .nav-cols-1 .nav-column,
+  .header .nav-cols-2 .nav-column {
+    grid-column: span 4;
+  }
+
+  .header .nav-panel-heading {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .header .nav-panel-content p {
+    margin: 2rem 0 1rem;
+  }
+
+  .header .nav-panel-benefits li:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* ================================================================ desktop */
+
+/* breakpoint-exception: source (www.bmw.de) desktop navigation starts at 1280px */
+@media (width >= 1280px) {
+  header.header-wrapper {
+    height: 85px;
+  }
+
+  header.header-transparent,
+  header.header-gradient {
+    height: 0;
+  }
+
+  .header {
+    --nav-padding-inline: 6rem;
+  }
+
+  .header .nav-wrapper.nav-transparent::before {
+    height: 11.25rem;
+  }
+
+  /* primary list becomes the horizontal bar */
+  .header .nav-sections,
+  .header .is-menu-visible .nav-sections,
+  .header .is-menu-visible .nav-sections.is-out {
+    position: static;
+    display: block;
+    flex-grow: 1;
+    width: auto;
+    height: 100%;
+    padding: 0;
+    overflow: visible;
+    background: none;
+    transition: none;
+  }
+
+  .header .nav-list {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+
+  .header .nav-item {
+    width: auto;
+    height: 100%;
+    border-bottom: 0;
+  }
+
+  .header .nav-link,
+  .header .nav-sections .nav-link,
+  .header .nav-tool-link {
+    width: auto;
+    height: 100%;
+    padding: 0 0.75rem;
+    border-top: 0.25rem solid transparent;
+    border-bottom: 0.25rem solid transparent;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+  }
+
+  .header .nav-tool-link {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.875rem;
+  }
+
+  .header .nav-link:hover,
+  .header .nav-tool-link:hover {
+    border-bottom-color: var(--nav-blue);
+    color: var(--nav-blue);
+  }
+
+  .header .nav-link.is-active,
+  .header .nav-tool-link.is-active {
+    color: var(--nav-blue-active);
+  }
+
+  .header .nav-link.is-active:hover,
+  .header .nav-tool-link.is-active:hover {
+    color: var(--nav-blue);
+  }
+
+  .header .nav-transparent:not(.is-open) .nav-link,
+  .header .nav-transparent:not(.is-open) .nav-link:hover,
+  .header .nav-transparent:not(.is-open) .nav-tool-link:hover {
+    color: #fff;
+  }
+
+  .header .nav-chevron-mobile,
+  .header .nav-tool-mobile {
+    display: none;
+  }
+
+  .header .nav-chevron-desktop {
+    display: block;
+    padding-left: 0.25rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+  }
+
+  .header .nav-chevron-desktop::before {
+    display: inline-block;
+    height: 1em;
+    font-size: inherit;
+    transition: transform 0.25s ease-in-out;
+  }
+
+  .header .nav-link.is-active .nav-chevron-desktop::before {
+    transform: rotate(180deg);
+  }
+
+  .header .nav-tool-desktop {
+    display: flex;
+  }
+
+  .header .nav-border {
+    display: block;
+  }
+
+  .header .nav-mobile-bar,
+  .header .is-menu-open .nav-mobile-bar {
+    display: none;
+  }
+
+  /* flyout layer below the bar with 40% backdrop */
+  .header .nav-flyout-layer,
+  .header .is-menu-open .nav-flyout-layer {
+    top: calc(var(--nav-bar-height) + 1px);
+    left: 0;
+    display: none;
+    height: calc(100vh - var(--nav-bar-height) - 1px);
+    transition: none;
+  }
+
+  .header .nav-flyout-layer.is-open,
+  .header .is-menu-open .nav-flyout-layer.is-open {
+    display: flex;
+  }
+
+  .header .nav-flyout-layer.is-open .nav-flyout-wrapper {
+    transform-origin: top;
+    animation: nav-flyout-open 0.25s cubic-bezier(0.5, 0, 0.5, 1);
+  }
+
+  .header .nav-flyout.is-open .nav-flyout-body {
+    animation: nav-flyout-fade 0.4s cubic-bezier(0.5, 0, 1, 0.5);
+  }
+
+  .header .nav-flyout-body,
+  .header .nav-flyout-small .nav-flyout-body {
+    height: auto;
+    max-height: calc(100vh - 149px);
+    overflow-y: auto;
+  }
+
+  .header .nav-panel-header {
+    display: none;
+  }
+
+  .header .nav-flyout-content {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 1.5rem;
+    width: auto;
+    margin: 0;
+    padding: 4rem var(--nav-padding-inline) 6rem;
+  }
+
+  .header .nav-column {
+    grid-column: span 3;
+  }
+
+  .header .nav-cols-1 .nav-column,
+  .header .nav-cols-2 .nav-column {
+    grid-column: span 4;
+  }
+
+  .header .nav-column-toggle,
+  .header .nav-column-toggle:hover {
+    margin: 0 0 2rem;
+    padding: 0;
+    border: 0;
+    color: var(--nav-text);
+    font-size: 1.4375rem;
+    font-weight: 300;
+    line-height: 2.25rem;
+    cursor: default;
+  }
+
+  .header .nav-column-image {
+    width: 15rem;
+  }
+
+  .header .nav-column-links {
+    padding: 0;
+  }
+
+  .header .nav-column-item {
+    margin: 0 0 0.75rem;
+  }
+
+  .header .nav-column-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .header .nav-column-link,
+  .header .nav-column-text {
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+  }
+
+  /* My BMW */
+  .header .nav-panel-content {
+    padding: 2.5rem calc(var(--nav-padding-inline) + 1rem) 7.5rem;
+  }
+}
+
+/* breakpoint-exception: source (www.bmw.de) caps the navigation at 1752px from 1920px */
+@media (width >= 1920px) {
+  .header .nav-bar,
+  .header .nav-border,
+  .header .nav-flyout-content,
+  .header .nav-panel-content {
+    max-width: 109.5rem;
+    margin-inline: auto;
+    padding-inline: 0.75rem;
+  }
+
+  .header .nav-panel-content {
+    padding-inline: 1.75rem;
+  }
+
+  .header .nav-flyout-body {
+    max-height: calc(100vh - 207px);
+  }
+}
+
+@keyframes nav-flyout-open {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes nav-flyout-fade {
+  0%,
+  62% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

@@ -34,6 +34,10 @@ function applySectionMetadata(main) {
         section.dataset[toCamelCase(key)] = val.trim();
       }
     });
+    // anchor targets (e.g. the consumption footnotes "#bottom"); layers keep their id in data-id
+    if (section.dataset.id && !section.classList.contains('layer') && !document.getElementById(section.dataset.id)) {
+      section.id = section.dataset.id;
+    }
     const wrapper = meta.parentElement;
     meta.remove();
     if (wrapper && wrapper !== section && !wrapper.children.length) wrapper.remove();

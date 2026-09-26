@@ -162,7 +162,7 @@
   --bmw-button-radius: 3px;
 
   /* nav height (header block) */
-  --nav-height: 64px;
+  --nav-height: 68px;
 }
 
 @media (width >= 768px) {
@@ -393,6 +393,16 @@ body.appear {
 }
 
 header {
+  height: var(--nav-height);
+}
+
+/* pages opening with a stage/hero get a transparent header that overlays it:
+   reserve no bar height up front, so nothing shifts when the header decorates */
+body:has(main > div:first-child :is(.hero-stage, .hero-teaser)) > header {
+  height: 0;
+}
+
+html:has(meta[name="header-style" i][content^="solid" i]) body > header {
   height: var(--nav-height);
 }
 
