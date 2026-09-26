@@ -15,13 +15,45 @@
   src: url('../../fonts/bmw_next_icons_light.woff2') format('woff2');
 }
 
+/* source: the section title above the quick links is a centred container */
+.cards-quicklink-container .default-content-wrapper {
+  text-align: center;
+}
+
+.cards-quicklink-container .default-content-wrapper + .cards-quicklink-wrapper {
+  margin-top: var(--bmw-spacing-12, 3rem);
+}
+
+/* source grid: 12 of 12 columns (small), 6 (medium), 3 (large) */
 .cards-quicklink > ul {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 3rem 1.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+@media (width < 768px) {
+  /* single column: manual line breaks of the 4-up layout are not needed */
+  .cards-quicklink .cards-quicklink-body > :is(h1, h2, h3, h4, h5, h6) br {
+    display: none;
+  }
+
+  /* source .style-button--flex: full-width buttons on mobile */
+  .cards-quicklink .cards-quicklink-buttons {
+    align-self: stretch;
+  }
+
+  .cards-quicklink .cards-quicklink-buttons .button-wrapper {
+    width: 100%;
+  }
+}
+
+@media (width >= 768px) {
+  .cards-quicklink > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .cards-quicklink .cards-quicklink-item {

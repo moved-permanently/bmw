@@ -89,7 +89,14 @@ export default function decorate(block) {
   content.className = 'text-media-teaser-content';
   const items = [];
   contentRows.forEach((r) => [...r.children].forEach((cell) => items.push(...cell.children)));
-  const headingIndex = items.findIndex((el) => /^H[1-6]$/.test(el.tagName));
+  let headingIndex = items.findIndex((el) => /^H[1-6]$/.test(el.tagName));
+  // the source title may be a styled <p> (cmp-title with p.cmp-title__text): a short
+  // leading paragraph followed by more content is the title
+  const first = items[0];
+  if (headingIndex < 0 && items.length > 1 && first.tagName === 'P' && !isCtaParagraph(first)
+    && !first.querySelector('picture, img, br') && first.textContent.trim().length <= 150) {
+    headingIndex = 0;
+  }
   const title = document.createElement('div');
   title.className = 'text-media-teaser-title';
   const description = document.createElement('div');

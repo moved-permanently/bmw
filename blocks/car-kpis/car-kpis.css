@@ -138,8 +138,9 @@
     justify-content: center;
   }
 
+  /* source table cells: content-sized, the row is centred (not spread over 12 columns) */
   .car-kpis .car-kpis-item {
-    flex: 1 1 0;
+    flex: 0 0 auto;
     min-width: 180px;
     min-height: 140px;
     padding: 0.5rem 0;
@@ -162,7 +163,7 @@
 
   .car-kpis .car-kpis-label {
     max-width: 11.25rem;
-    margin-top: 0.75rem;
+    margin-top: 1.5rem;
   }
 
   .car-kpis .car-kpis-ctas,
@@ -198,5 +199,17 @@
   .car-kpis .car-kpis-ctas,
   .car-kpis .car-kpis-footnotes {
     margin-top: 3rem;
+  }
+}
+
+/* consumption disclaimer directly below the KPIs: centred like the source KPI footnotes */
+main > .section > .car-kpis-wrapper + .disclaimer-wrapper {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+@media (width >= 1024px) {
+  main > .section > .car-kpis-wrapper + .disclaimer-wrapper {
+    margin-top: 2.5rem;
   }
 }

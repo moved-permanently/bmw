@@ -445,16 +445,20 @@
     min-height: 22rem;
   }
 
+  /* source card: ~22rem high, the fuel badge overlaps the car picture's top left */
   .all-models .all-models-image {
-    padding: 1.5rem 0 1rem;
+    padding: 0;
   }
 
+  /* fixed picture band (source cards keep ~22rem regardless of the column width) */
   .all-models .all-models-image img {
+    height: 12rem;
+    object-fit: cover;
     transform: scale(1.25) translateX(4%);
   }
 
   .all-models .all-models-fuel-icon {
-    top: 1.5rem;
+    top: 2.5rem;
   }
 
   .all-models .all-models-detail {
@@ -591,10 +595,6 @@
 @media (width >= 1280px) {
   .all-models .all-models-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .all-models.no-sidebar .all-models-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 

@@ -24,8 +24,11 @@ async function fetchFooterFragment() {
   let resp = await fetch('/content/footer.plain.html');
   if (!resp.ok) resp = await fetch('/footer.plain.html');
   if (!resp.ok) return null;
+  // parse inertly: innerHTML on a live-document element would already request the
+  // fragment-relative images (images/x.png) against the page URL -> 404s
+  const doc = new DOMParser().parseFromString(await resp.text(), 'text/html');
   const root = document.createElement('div');
-  root.innerHTML = await resp.text();
+  root.append(...doc.body.childNodes);
   return { root, base: new URL(resp.url || '/footer.plain.html', window.location.href) };
 }
 

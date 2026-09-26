@@ -9,7 +9,8 @@
 import { replaceWithBlock } from './_utils.js';
 import { mediaNodes, blockName, divCell } from './_media.js';
 
-export const selectors = ['.video.aem-GridColumn'];
+// + non-grid videos placed directly in a top-level container (.cmp-container > .video)
+export const selectors = ['.video.aem-GridColumn', '.cmp-container > .video:not(.aem-GridColumn):not(.aem-GridColumn:not(.container) *)'];
 
 const OWNED_BY_OTHERS = '.cmp-carousel, .cmp-mediagallery, .cmp-multicontentgallery, .cmp-mediashowcase, '
   + '.cmp-previewslider, .cmp-onemedia, .cmp-stage, .cmp-backgroundmedia, .cmp-textmediateaser, .cmp-modelcard, .swiper';

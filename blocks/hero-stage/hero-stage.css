@@ -266,6 +266,18 @@
   margin: 0;
 }
 
+/* source: content-width buttons (padding 1.5rem), centred, wrapping onto own rows */
+@media (width < 768px) {
+  .hero-stage .hero-stage-buttons .hero-stage-cta {
+    margin: 0 auto;
+  }
+
+  .hero-stage .hero-stage-buttons .button {
+    width: auto;
+    padding-inline: 1.5rem;
+  }
+}
+
 
 
 

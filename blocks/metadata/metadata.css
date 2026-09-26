@@ -1,0 +1,5 @@
+/* local-preview artefact: the page metadata table is never rendered */
+.metadata,
+.metadata-wrapper:has(> .metadata:only-child) {
+  display: none;
+}

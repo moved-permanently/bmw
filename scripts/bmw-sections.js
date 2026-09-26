@@ -103,6 +103,32 @@ function decorateDefaultContent(main) {
   });
 }
 
+const SCENE7_CROP_RE = /scene7\.com\/is\/image\/[^?\s]*:[0-9]+to[0-9]+(\?|$)/i;
+
+/**
+ * Scene7 smart crops (":3to2") are only honoured with fit=constrain; without it a sized
+ * request returns the uncropped canvas (e.g. 750x2000 for wid=750). The pictures built from
+ * Dynamic Media links (scripts.js) lack the parameter, so add it to every source / img.
+ * @param {Element} main
+ */
+function fixScene7Crops(main) {
+  const fix = (url) => {
+    if (!url || !SCENE7_CROP_RE.test(url) || /[?&]fit=/.test(url)) return url;
+    return `${url}${url.includes('?') ? '&' : '?'}fit=constrain,1`;
+  };
+  main.querySelectorAll('picture source[srcset]').forEach((s) => {
+    const srcset = s.getAttribute('srcset');
+    if (srcset.includes(',')) return; // responsive srcsets are built by blocks (sizedImageUrl)
+    const fixed = fix(srcset);
+    if (fixed !== srcset) s.setAttribute('srcset', fixed);
+  });
+  main.querySelectorAll('picture img[src]').forEach((img) => {
+    const src = img.getAttribute('src');
+    const fixed = fix(src);
+    if (fixed !== src) img.setAttribute('src', fixed);
+  });
+}
+
 function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
@@ -246,6 +272,7 @@ function openLayerFromHash() {
 // eslint-disable-next-line import/prefer-default-export
 export function decorateBmwSections(main) {
   if (!main) return;
+  fixScene7Crops(main);
   applySectionMetadata(main);
   hidePageTitle(main);
   decorateDefaultContent(main);

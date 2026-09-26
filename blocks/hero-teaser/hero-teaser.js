@@ -59,6 +59,16 @@ export default function decorate(block) {
   [...content.children].forEach((el) => {
     if (el.tagName === 'P' && !el.textContent.trim() && !el.querySelector('img, picture, .icon')) el.remove();
   });
+  // model branding: a "THE" paragraph (source iconization title), optionally followed by a
+  // short model designation paragraph ("1", "X5", "iX2"; source stage-model title)
+  [...content.querySelectorAll(':scope > p')].forEach((p) => {
+    if (p.textContent.trim() !== 'THE' || p.children.length) return;
+    p.classList.add('hero-teaser-iconization');
+    const next = p.nextElementSibling;
+    const model = next && next.tagName === 'P' && !next.querySelector('a, img, picture')
+      ? next.textContent.trim() : '';
+    if (model && model.length <= 4 && !/\s/.test(model)) next.classList.add('hero-teaser-model');
+  });
   const cols = [...block.classList].find((c) => /^cols-\d+$/.test(c));
   if (cols) content.style.setProperty('--ht-cols', cols.substring(5));
   decorateFontIcons(content);

@@ -955,6 +955,13 @@ main > .section.dark {
 .section.spacing-bottom-40 { margin-bottom: var(--bmw-spacing-40); }
 .section.spacing-bottom-60 { margin-bottom: var(--bmw-spacing-60); }
 
+
+/* footnote markers (¹, <sup>) must not stretch the line box */
+sup,
+sub {
+  line-height: 0;
+}
+
 /* ---------- layers (source .cmp-popover[data-popover-style=new-teaser-modal]) ---------- */
 
 /* layer sections stay hidden in the page flow; scripts/bmw-sections.js moves them into a dialog */
@@ -1169,3 +1176,36 @@ dialog.bmw-layer.is-closing {
     transform: translateY(110%);
   }
 }
+
+/* block-level spacing: block variant "spacing-top-N" / "spacing-bottom-N" (source component
+   spacing inside a section container) spaces the block wrapper */
+main > .section > div:has(> .block.spacing-top-1) { margin-top: var(--bmw-spacing-1); }
+main > .section > div:has(> .block.spacing-top-2) { margin-top: var(--bmw-spacing-2); }
+main > .section > div:has(> .block.spacing-top-3) { margin-top: var(--bmw-spacing-3); }
+main > .section > div:has(> .block.spacing-top-4) { margin-top: var(--bmw-spacing-4); }
+main > .section > div:has(> .block.spacing-top-5) { margin-top: var(--bmw-spacing-5); }
+main > .section > div:has(> .block.spacing-top-6) { margin-top: var(--bmw-spacing-6); }
+main > .section > div:has(> .block.spacing-top-8) { margin-top: var(--bmw-spacing-8); }
+main > .section > div:has(> .block.spacing-top-10) { margin-top: var(--bmw-spacing-10); }
+main > .section > div:has(> .block.spacing-top-12) { margin-top: var(--bmw-spacing-12); }
+main > .section > div:has(> .block.spacing-top-16) { margin-top: var(--bmw-spacing-16); }
+main > .section > div:has(> .block.spacing-top-20) { margin-top: var(--bmw-spacing-20); }
+main > .section > div:has(> .block.spacing-top-24) { margin-top: var(--bmw-spacing-24); }
+main > .section > div:has(> .block.spacing-top-32) { margin-top: var(--bmw-spacing-32); }
+main > .section > div:has(> .block.spacing-top-40) { margin-top: var(--bmw-spacing-40); }
+main > .section > div:has(> .block.spacing-top-60) { margin-top: var(--bmw-spacing-60); }
+main > .section > div:has(> .block.spacing-bottom-1) { margin-bottom: var(--bmw-spacing-1); }
+main > .section > div:has(> .block.spacing-bottom-2) { margin-bottom: var(--bmw-spacing-2); }
+main > .section > div:has(> .block.spacing-bottom-3) { margin-bottom: var(--bmw-spacing-3); }
+main > .section > div:has(> .block.spacing-bottom-4) { margin-bottom: var(--bmw-spacing-4); }
+main > .section > div:has(> .block.spacing-bottom-5) { margin-bottom: var(--bmw-spacing-5); }
+main > .section > div:has(> .block.spacing-bottom-6) { margin-bottom: var(--bmw-spacing-6); }
+main > .section > div:has(> .block.spacing-bottom-8) { margin-bottom: var(--bmw-spacing-8); }
+main > .section > div:has(> .block.spacing-bottom-10) { margin-bottom: var(--bmw-spacing-10); }
+main > .section > div:has(> .block.spacing-bottom-12) { margin-bottom: var(--bmw-spacing-12); }
+main > .section > div:has(> .block.spacing-bottom-16) { margin-bottom: var(--bmw-spacing-16); }
+main > .section > div:has(> .block.spacing-bottom-20) { margin-bottom: var(--bmw-spacing-20); }
+main > .section > div:has(> .block.spacing-bottom-24) { margin-bottom: var(--bmw-spacing-24); }
+main > .section > div:has(> .block.spacing-bottom-32) { margin-bottom: var(--bmw-spacing-32); }
+main > .section > div:has(> .block.spacing-bottom-40) { margin-bottom: var(--bmw-spacing-40); }
+main > .section > div:has(> .block.spacing-bottom-60) { margin-bottom: var(--bmw-spacing-60); }

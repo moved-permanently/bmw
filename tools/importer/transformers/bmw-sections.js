@@ -105,6 +105,21 @@ function convertText(doc, col) {
     }
   });
   if (!nodes.length) return [];
+  // quote variant: <blockquote class="cmp-text__quote"><div class="cmp-text">…</div><cite>source</cite></blockquote>
+  const quote = col.querySelector('blockquote.cmp-text__quote');
+  if (quote) {
+    const bq = doc.createElement('blockquote');
+    nodes.forEach((n) => bq.append(n));
+    const cite = quote.querySelector('cite, .cmp-text__quote-source');
+    if (cite && cite.textContent.trim()) {
+      const p = doc.createElement('p');
+      const em = doc.createElement('em');
+      em.textContent = cite.textContent.replace(/\s+/g, ' ').trim();
+      p.append(em);
+      bq.append(p);
+    }
+    return [bq];
+  }
   const cls = col.className || '';
   if (/style-text--disclaimer/.test(cls)) {
     const variant = [];
@@ -208,14 +223,27 @@ function convertImage(doc, col) {
 
 function componentName(col) { return (col.className || '').split(/\s+/)[0]; }
 
+// default content emitted by parsers next to their block tables (e.g. a heading before a table)
+const LOOSE = /^(H[1-6]|P|UL|OL|BLOCKQUOTE)$/;
+
+/** AEM component placed directly in a container without a grid (no .aem-GridColumn), e.g.
+ * .cmp-container > .title — its first class is the component name (title, text, image, video, …). */
+function isNonGridComponent(c, parent) {
+  if (c.tagName !== 'DIV' || !parent.classList || !parent.classList.contains('cmp-container')) return false;
+  const first = c.classList[0] || '';
+  return !!first && first !== 'aem-Grid' && !first.startsWith('cmp-') && !first.startsWith('aem-');
+}
+
 function gridChildren(el) {
-  // direct grid columns below el (through non-column wrappers)
+  // direct grid columns below el (through non-column wrappers; some pages nest a second <main>)
   const out = [];
   const walk = (node) => {
     [...node.children].forEach((c) => {
       if (c.tagName === 'TABLE') out.push(c);
       else if (c.classList.contains('aem-GridColumn')) out.push(c);
-      else if (c.tagName === 'DIV' || c.tagName === 'SECTION' || c.tagName === 'ARTICLE') walk(c);
+      else if (LOOSE.test(c.tagName) && c.hasAttribute('data-bmw-loose')) out.push(c);
+      else if (isNonGridComponent(c, node)) out.push(c);
+      else if (/^(DIV|SECTION|ARTICLE|MAIN|ASIDE)$/.test(c.tagName)) walk(c);
     });
   };
   walk(el);
@@ -224,6 +252,7 @@ function gridChildren(el) {
 
 function flatten(doc, el, ctx) {
   if (el.tagName === 'TABLE') return [el];
+  if (LOOSE.test(el.tagName)) { el.removeAttribute('data-bmw-loose'); return [el]; }
   if (isHidden(el)) return [];
   const name = componentName(el);
   switch (name) {
@@ -274,7 +303,16 @@ export default function transform(hookName, element, payload) {
   const doc = element.ownerDocument;
   const main = element.querySelector('main') || element;
   const ctx = { layers: [], layerCount: 0, unknown: {} };
-  const tops = gridChildren(main);
+  let tops = gridChildren(main);
+  // whole page wrapped in one container holding a second <main> (e.g. X1 technical data): its inner
+  // containers are the real sections
+  if (tops.length === 1 && tops[0].querySelector && tops[0].querySelector('main')) {
+    tops = gridChildren(tops[0]).flatMap((t) => {
+      const kids = t.tagName === 'TABLE' ? [] : gridChildren(t);
+      const plain = componentName(t) === 'container' && !sectionStyles(t).length;
+      return plain && kids.length > 1 && kids.every((k) => componentName(k) === 'container' || k.tagName === 'TABLE') ? kids : [t];
+    });
+  }
   const out = [];
   const pushSection = (nodes, meta) => {
     if (!nodes.length) return;

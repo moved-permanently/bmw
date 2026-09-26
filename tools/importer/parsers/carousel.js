@@ -13,7 +13,9 @@ import { replaceWithBlock } from './_utils.js';
 import { mediaNodes, blockName, divCell } from './_media.js';
 import { normalizeNested, defaultContent, topComponents, titleStyle } from './_nested.js';
 
-export const selectors = ['.carousel.aem-GridColumn'];
+// non-grid carousels placed directly in a top-level container (not inside another component such as tabs or
+// model offer, whose parsers handle their own carousels)
+export const selectors = ['.carousel.aem-GridColumn', '.cmp-container > .carousel.panelcontainer:not(.aem-GridColumn):not(.aem-GridColumn:not(.container) *)'];
 
 const DEFAULT_SLIDES = ['1', '1', '3', '4'];
 const MEDIA = '.image, .video, .onemedia';

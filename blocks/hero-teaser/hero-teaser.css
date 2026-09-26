@@ -26,6 +26,10 @@
   --ht-sub-lh: 1.75rem;
   --ht-body-size: 1rem;
   --ht-body-lh: 1.625rem;
+  --ht-iconization-size: 0.875rem;
+  --ht-iconization-lh: 0.75rem;
+  --ht-model-size: 7.4375rem;
+  --ht-model-lh: 6.75rem;
 
   color: #fff;
 }
@@ -146,6 +150,27 @@
   line-height: var(--ht-body-lh);
 }
 
+/* model branding: "THE" (source title iconization-1) + model designation (stage-model-1) */
+.hero-teaser .hero-teaser-content > p.hero-teaser-iconization {
+  margin-bottom: var(--bmw-spacing-4, 0.5rem);
+  font-size: var(--ht-iconization-size);
+  font-weight: 300;
+  line-height: var(--ht-iconization-lh);
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+}
+
+.hero-teaser .hero-teaser-content > p.hero-teaser-model {
+  font-size: var(--ht-model-size);
+  font-weight: 300;
+  line-height: var(--ht-model-lh);
+  letter-spacing: normal;
+}
+
+.hero-teaser .hero-teaser-content > p.hero-teaser-model + :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: var(--bmw-spacing-2, 0.25rem);
+}
+
 .hero-teaser .hero-teaser-content > :is(h1, h2, h3, h4, h5, h6) + p {
   margin-top: 1.25rem;
 }
@@ -187,6 +212,8 @@
 
 @media (width >= 768px) {
   .hero-teaser {
+    --ht-model-size: 7.875rem;
+    --ht-model-lh: 7rem;
     --ht-margin: var(--bmw-grid-full, 3rem);
     --ht-h1-size: 2.1875rem;
     --ht-h1-lh: 3.125rem;
@@ -298,6 +325,11 @@
     justify-content: flex-start;
   }
 
+  /* source primary CTA is a grid button: at least two of twelve grid columns wide */
+  .hero-teaser .hero-teaser-buttons .button.primary {
+    min-width: calc((100vw - 2 * var(--bmw-grid-margin, 5.25rem)) / 6 - 2 * var(--bmw-grid-gutter, 0.75rem));
+  }
+
   .hero-teaser.center .hero-teaser-buttons {
     justify-content: center;
   }
@@ -309,6 +341,9 @@
 
 @media (width >= 1280px) {
   .hero-teaser {
+    --ht-iconization-size: 0.9375rem;
+    --ht-model-size: 13.125rem;
+    --ht-model-lh: 11.625rem;
     --ht-margin: var(--bmw-grid-full, 6rem);
     --ht-h1-size: 2.6875rem;
     --ht-h1-lh: 3.75rem;
@@ -328,6 +363,10 @@
 
 @media (width >= 1920px) {
   .hero-teaser {
+    --ht-iconization-size: 1rem;
+    --ht-iconization-lh: 0.875rem;
+    --ht-model-size: 15.75rem;
+    --ht-model-lh: 14rem;
     --ht-h1-size: 3.75rem;
     --ht-h1-lh: 5.25rem;
     --ht-h2-size: 2.8125rem;

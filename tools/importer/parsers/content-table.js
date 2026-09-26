@@ -8,7 +8,57 @@
 import { replaceWithBlock, text, pictureCell } from './_utils.js';
 import { cleanInline, ctaParagraph } from './_media.js';
 
-export const selectors = ['.contenttable.aem-GridColumn'];
+// .tireinfo (tyre label lists, bmw-reifenkennzeichnung): per series an h2 title and an accordion of plain
+// cmp-table tables (one per model) -> h2, then per model an h3 + "Content Table (header)"; footnotes -> <p>.
+export const selectors = ['.contenttable.aem-GridColumn', '.tireinfo.aem-GridColumn'];
+
+function loose(document, tag, txt) {
+  const el = document.createElement(tag);
+  if (txt) el.textContent = txt;
+  el.setAttribute('data-bmw-loose', ''); // picked up as default content by bmw-sections
+  return el;
+}
+
+/** plain AEM table (cmp-table) -> block table rows; icon-only links get a text label. */
+function plainTableRows(document, table) {
+  const trs = [...table.querySelectorAll('tr')].filter((tr) => tr.closest('table') === table);
+  return trs.map((tr) => [...tr.children].filter((c) => c.tagName === 'TD' || c.tagName === 'TH').map((td) => {
+    const d = document.createElement('div');
+    const a = td.querySelector('a[href]');
+    if (a) {
+      const link = document.createElement('a');
+      link.href = a.getAttribute('href');
+      link.textContent = text(a) || 'EPREL';
+      d.append(link);
+    } else if (text(td)) d.textContent = text(td);
+    return d;
+  })).filter((r) => r.length);
+}
+
+function parseTireInfo(element, document) {
+  const out = [];
+  element.querySelectorAll('.accordionblock').forEach((ab) => {
+    const h = text(ab.querySelector('.cmp-title__text'));
+    if (h) out.push(loose(document, 'h2', h));
+    ab.querySelectorAll('.cmp-accordion__item').forEach((it) => {
+      const t = text(it.querySelector('.cmp-accordion__title'));
+      const table = it.querySelector('table');
+      if (!table) return;
+      const rows = plainTableRows(document, table);
+      if (!rows.length) return;
+      if (t) out.push(loose(document, 'h3', t));
+      out.push(WebImporter.Blocks.createBlock(document, { name: 'Content Table (header)', cells: rows }));
+    });
+  });
+  element.querySelectorAll('.text .cmp-text > p, .text .cmp-text > ul').forEach((p) => {
+    if (p.closest('.accordionblock') || !text(p)) return;
+    const el = loose(document, p.tagName === 'UL' ? 'ul' : 'p', '');
+    el.append(...cleanInline(document, p).childNodes);
+    out.push(el);
+  });
+  if (!out.length) return;
+  element.replaceWith(...out);
+}
 
 function cellNodes(document, td) {
   const out = [];
@@ -54,6 +104,7 @@ function alignment(td) {
 }
 
 export default function parse(element, { document }) {
+  if (element.classList.contains('tireinfo')) { parseTireInfo(element, document); return; }
   const table = element.querySelector('table.cmp-contenttable__table, table');
   if (!table) return;
   const trs = [...table.querySelectorAll('tr')].filter((tr) => tr.closest('table') === table);

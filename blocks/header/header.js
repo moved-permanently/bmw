@@ -71,8 +71,10 @@ async function fetchNavFragment() {
   let resp = await fetch('/content/nav.plain.html');
   if (!resp.ok) resp = await fetch('/nav.plain.html');
   if (!resp.ok) return null;
+  // parse inertly so fragment-relative images are not requested against the page URL
+  const doc = new DOMParser().parseFromString(await resp.text(), 'text/html');
   const root = document.createElement('div');
-  root.innerHTML = await resp.text();
+  root.append(...doc.body.childNodes);
   const base = resp.url || window.location.href;
   root.querySelectorAll('img[src]').forEach((img) => {
     img.src = new URL(img.getAttribute('src'), base).href;

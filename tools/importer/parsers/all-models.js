@@ -86,7 +86,9 @@ export default function parse(element, { document }) {
   const root = element.querySelector('.cmp-allmodels');
   if (!root) return;
   const cells = [];
-  const noFilter = root.getAttribute('data-nofilter') === 'true' || element.matches('.allmodelsesi');
+  // ESI variant: no filter UI on the elektroauto pages (data-nofilter), but /de/konfigurator renders one
+  const noFilter = root.getAttribute('data-nofilter') === 'true'
+    || (element.matches('.allmodelsesi') && !root.querySelector('.cmp-allmodelsfilter__filter[data-filter-type]'));
 
   // filter groups
   if (!noFilter) {

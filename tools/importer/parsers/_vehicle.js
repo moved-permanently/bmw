@@ -76,7 +76,11 @@ export function compareLink(document, btn) {
  * primary -> <strong><a>, outline/secondary -> <em><a>, as-link -> <a>, default/nba (dark) -> <strong><em><a>.
  */
 export function vehicleCta(document, col) {
-  const btn = col.querySelector('a.cmp-button, button.cmp-button');
+  // html2md re-parses the page; a card link (<a class="cmp-allmodelscard__link">) wrapping the button then
+  // swallows the a.cmp-button, leaving <a class="cmp-allmodelscard__link"><span class="cmp-button__text">
+  const lbl = col.querySelector('.cmp-button__text');
+  const wrapped = lbl && lbl.closest('a[href]');
+  const btn = col.querySelector('a.cmp-button, button.cmp-button') || (wrapped && col.contains(wrapped) ? wrapped : null);
   if (!btn) return null;
   if (btn.tagName === 'BUTTON') {
     return btn.getAttribute('data-click-handler') === 'compareBelt' ? para(document, compareLink(document, btn)) : null;

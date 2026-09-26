@@ -310,7 +310,7 @@
 /* footnotes */
 .technical-data .technical-data-footnotes {
   margin-bottom: 2.5rem;
-  padding: 3rem var(--bmw-grid-gutter, 0.5rem) 0;
+  padding: 3rem 0 0;
   color: #666;
   font-size: var(--bmw-body-3-font-size);
   line-height: var(--bmw-body-3-line-height);
@@ -329,9 +329,11 @@
 
 .technical-data .technical-data-footnote > sup:first-child {
   position: absolute;
-  top: 0.6em;
+  top: 0;
   left: 0;
   font-size: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
 }
 
 @media (width <= 767px) {
@@ -368,6 +370,11 @@
 
   .technical-data .technical-data-fact dd {
     text-align: start;
+  }
+
+  /* a single fact in the last row keeps the zebra band across the full table width */
+  .technical-data:not(.short) .technical-data-fact:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 

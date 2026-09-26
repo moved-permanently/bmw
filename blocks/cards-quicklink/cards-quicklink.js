@@ -55,6 +55,14 @@ export default function decorate(block) {
       while (cell.firstChild) body.append(cell.firstChild);
     });
     decorateFontIcons(body);
+    // manual title breaks only apply to the multi-column layout (hidden in CSS on mobile):
+    // keep a word space next to them so the joined title still reads correctly
+    body.querySelectorAll(':is(h1, h2, h3, h4, h5, h6) br').forEach((br) => {
+      const prev = br.previousSibling;
+      if (!(prev && prev.nodeType === Node.TEXT_NODE && /\s$/.test(prev.textContent))) {
+        br.before(document.createTextNode(' '));
+      }
+    });
     groupButtons(body, 'cards-quicklink-buttons');
     li.append(body);
 
