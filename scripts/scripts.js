@@ -295,6 +295,47 @@ function buildWidgetAutoBlocks(main) {
 }
 
 /**
+ * BMW-hosted images the content pipeline cannot ingest (www.bmw.de DAM, cosy vehicle renders) are
+ * authored as links (like Scene7 images): <a href="IMG">alt</a>,
+ * or <a href="/page" title="IMG">alt</a> for linked images.
+ * Turns them back into pictures before blocks decorate.
+ * @param {Element} main The container element
+ */
+function buildExternalImageLinks(main) {
+  const isImage = (url) => {
+    try {
+      const u = new URL(url, window.location.href);
+      if (u.hostname === 'prod.cosy.bmw.cloud') return true;
+      return u.hostname === 'www.bmw.de' && /^\/content\/dam\/|\.coreimg\./.test(u.pathname)
+        && /\.(png|jpe?g|gif|webp|svg|avif)$/i.test(u.pathname);
+    } catch {
+      return false;
+    }
+  };
+  main.querySelectorAll('a[href]').forEach((a) => {
+    const linked = isImage(a.title) ? a.title : null;
+    const src = linked || (isImage(a.getAttribute('href')) ? a.getAttribute('href') : null);
+    if (!src) return;
+    const text = a.textContent.trim();
+    const picture = document.createElement('picture');
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = text === 'Image without alt text' ? '' : text;
+    img.loading = 'lazy';
+    picture.append(img);
+    if (linked) {
+      a.removeAttribute('title');
+      a.replaceChildren(picture);
+      return;
+    }
+    const p = a.parentElement;
+    const sole = p && p.tagName === 'P' && p.children.length === 1 && p.textContent.trim() === text;
+    if (sole) p.replaceWith(picture);
+    else a.replaceWith(picture);
+  });
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -319,6 +360,7 @@ function buildAutoBlocks(main) {
     }
     buildWidgetAutoBlocks(main);
     buildDynamicMediaImages(main);
+    buildExternalImageLinks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

@@ -45,6 +45,7 @@ import cleanupTransformer from './transformers/bmw-cleanup.js';
 import sectionsTransformer from './transformers/bmw-sections.js';
 import metadataTransformer from './transformers/bmw-metadata.js';
 import dmImagesTransformer from './transformers/bmw-dm-images.js';
+import externalImagesTransformer from './transformers/bmw-external-images.js';
 
 const PARSERS = [
   { name: 'hero-stage', parse: heroStageParser, selectors: heroStageParserSelectors },
@@ -93,7 +94,7 @@ const PAGE_TEMPLATE = {
 
 // before: cleanup. after: sections (default content + section breaks), metadata, DM links, cleanup.
 const BEFORE = [cleanupTransformer];
-const AFTER = [sectionsTransformer, metadataTransformer, dmImagesTransformer, cleanupTransformer];
+const AFTER = [sectionsTransformer, metadataTransformer, dmImagesTransformer, externalImagesTransformer, cleanupTransformer];
 
 function executeTransformers(list, hookName, element, payload) {
   const enhancedPayload = { ...payload, template: PAGE_TEMPLATE };

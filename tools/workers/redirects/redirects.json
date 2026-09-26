@@ -1,6 +1,6 @@
 {
- "total": 249,
- "limit": 249,
+ "total": 248,
+ "limit": 248,
  "offset": 0,
  "data": [
   {
@@ -533,10 +533,6 @@
   },
   {
    "Source": "/de/neufahrzeuge/5er/limousine/bmw-5er-limousine-ueberblick.html",
-   "Destination": "/de/neufahrzeuge/5er/limousine/bmw-5er-limousine-ueberblick"
-  },
-  {
-   "Source": "/de/neufahrzeuge/5er/limousine/bmw-5er-limousine-ueberblick.html.html",
    "Destination": "/de/neufahrzeuge/5er/limousine/bmw-5er-limousine-ueberblick"
   },
   {
