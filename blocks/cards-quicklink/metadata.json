@@ -1,0 +1,14 @@
+{
+  "variantName": "cards-quicklink",
+  "baseBlock": "cards",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "4 equal items: icon, 2-line heading, outline button",
+  "contentPattern": "One row per item: cell 1 = BMW icon-font icon (:icon_name:, e.g. :car_front_double:), cell 2 = h3 heading + italic link (outline/secondary button). 4 columns from 1024px, 2 columns below; icon, heading and CTA centered, CTAs bottom-aligned.",
+  "options": [],
+  "memberVariantIds": ["cards-quicklink"],
+  "usage": {
+    "pagesUsing": ["https://www.bmw.de/de/index.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-26"
+  }
+}

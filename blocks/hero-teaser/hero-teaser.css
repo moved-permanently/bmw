@@ -1,0 +1,345 @@
+/* stylelint-disable no-descending-specificity -- rules are grouped by component part */
+
+/* BMW ligature icon font (glyph rendered from the icon name) */
+@font-face {
+  font-family: 'bmw_next_icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../../fonts/bmw_next_icons_regular.woff2') format('woff2');
+}
+
+/* full-bleed unless "contained": release the section's content width */
+.hero-teaser-container .hero-teaser-wrapper:has(> .hero-teaser:not(.contained)) {
+  max-width: unset;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+.hero-teaser {
+  --ht-margin: var(--bmw-grid-full, 1.5rem);
+  --ht-h1-size: 2.0625rem;
+  --ht-h1-lh: 2.875rem;
+  --ht-h2-size: 1.75rem;
+  --ht-h2-lh: 2.5rem;
+  --ht-sub-size: 1.1875rem;
+  --ht-sub-lh: 1.75rem;
+  --ht-body-size: 1rem;
+  --ht-body-lh: 1.625rem;
+
+  color: #fff;
+}
+
+.hero-teaser .hero-teaser-teaser {
+  position: relative;
+  overflow: hidden;
+  background-color: #000;
+}
+
+/* media: aspect ratio from the Scene7 crop (images) or the ratio options (video) */
+.hero-teaser .hero-teaser-media {
+  position: relative;
+}
+
+.hero-teaser .hero-teaser-media .bmw-media {
+  position: relative;
+  aspect-ratio: var(--ht-ar-small, var(--bmw-media-ar-mobile, 1 / 1));
+  overflow: hidden;
+}
+
+.hero-teaser .hero-teaser-media picture,
+.hero-teaser .hero-teaser-media .bmw-video {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-teaser .hero-teaser-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* desktop legibility gradients (source: hidden on mobile and tablet) */
+.hero-teaser .hero-teaser-media::after {
+  content: none;
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-teaser .bmw-video .bmw-video-playbutton {
+  z-index: 25;
+}
+
+/* AI label */
+.hero-teaser.ai-label .hero-teaser-media::before {
+  content: 'ai_eu_label';
+  position: absolute;
+  z-index: 10;
+  top: 0.75rem;
+  right: 0.75rem;
+  color: #fff;
+  font-family: 'bmw_next_icons', sans-serif;
+  font-size: 1.5rem;
+  font-feature-settings: 'liga';
+  line-height: 1;
+  text-shadow: 0 0 10px #000000f2;
+  pointer-events: none;
+}
+
+/* text under the media on small screens, overlapping its bottom with a fade to black */
+.hero-teaser .hero-teaser-overlay {
+  display: flex;
+  position: relative;
+  z-index: 20;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  min-height: 172px;
+  margin-top: -172px;
+  padding: 3rem calc(100% / 12);
+  background: linear-gradient(180deg, #0000, #000 6rem);
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-teaser.no-media .hero-teaser-overlay {
+  margin-top: 0;
+}
+
+.hero-teaser .hero-teaser-content {
+  pointer-events: auto;
+}
+
+.hero-teaser .hero-teaser-content > * {
+  margin: 0;
+}
+
+.hero-teaser .hero-teaser-content > :is(h1, h2, h3, h4, h5, h6) {
+  color: inherit;
+  font-size: var(--ht-sub-size);
+  font-weight: 300;
+  line-height: var(--ht-sub-lh);
+  text-wrap: balance;
+}
+
+.hero-teaser .hero-teaser-content > :is(h1, h2, h3, h4, h5, h6):first-child {
+  font-size: var(--ht-h2-size);
+  line-height: var(--ht-h2-lh);
+}
+
+.hero-teaser .hero-teaser-content > h1:first-child {
+  font-size: var(--ht-h1-size);
+  line-height: var(--ht-h1-lh);
+}
+
+.hero-teaser .hero-teaser-content > :is(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: 0.5rem;
+}
+
+.hero-teaser .hero-teaser-content > p {
+  font-size: var(--ht-body-size);
+  font-weight: 300;
+  line-height: var(--ht-body-lh);
+}
+
+.hero-teaser .hero-teaser-content > :is(h1, h2, h3, h4, h5, h6) + p {
+  margin-top: 1.25rem;
+}
+
+.hero-teaser .hero-teaser-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  padding-top: 2.5rem;
+}
+
+.hero-teaser .hero-teaser-buttons .button-wrapper,
+.hero-teaser .hero-teaser-buttons p {
+  margin: 0;
+}
+
+.hero-teaser .hero-teaser-buttons .button {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+}
+
+
+
+.hero-teaser .bmw-icon {
+  display: inline-block;
+  font-family: 'bmw_next_icons', sans-serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 400;
+  font-feature-settings: 'liga';
+  line-height: 1;
+  text-transform: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (width >= 768px) {
+  .hero-teaser {
+    --ht-margin: var(--bmw-grid-full, 3rem);
+    --ht-h1-size: 2.1875rem;
+    --ht-h1-lh: 3.125rem;
+    --ht-h2-size: 1.8125rem;
+    --ht-h2-lh: 2.625rem;
+    --ht-sub-size: 1.25rem;
+    --ht-sub-lh: 1.875rem;
+    --ht-body-size: 1.0625rem;
+    --ht-body-lh: 1.75rem;
+  }
+
+  .hero-teaser .hero-teaser-media .bmw-media {
+    aspect-ratio: var(--ht-ar-large, var(--bmw-media-ar-tablet, 3 / 2));
+  }
+
+  .hero-teaser .hero-teaser-overlay {
+    min-height: 232px;
+    margin-top: -232px;
+    padding-top: 5rem;
+    background: linear-gradient(180deg, #0000, #000 188px);
+  }
+
+  .hero-teaser .hero-teaser-buttons {
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+
+  .hero-teaser .hero-teaser-buttons .button {
+    width: auto;
+  }
+
+  .hero-teaser.ai-label .hero-teaser-media::before {
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (width >= 1024px) {
+  .hero-teaser .hero-teaser-media .bmw-media {
+    aspect-ratio: var(--ht-ar-large, var(--bmw-media-ar-desktop, 3 / 1));
+  }
+
+  .hero-teaser.gradient-left .hero-teaser-media::after {
+    content: '';
+    background: linear-gradient(90deg, #000 10%, #000c 20%, #0009 30%, #0006 40%, #0003 50%, #0000 60%, #0000);
+  }
+
+  .hero-teaser.gradient-right .hero-teaser-media::after {
+    content: '';
+    background: linear-gradient(270deg, #000 10%, #000c 20%, #0009 30%, #0006 40%, #0003 50%, #0000 60%, #0000);
+  }
+
+  .hero-teaser.gradient-top .hero-teaser-media::after {
+    content: '';
+    background: linear-gradient(180deg, #000 10%, #000c 20%, #0009 30%, #0006 40%, #0003 50%, #0000 60%, #0000);
+  }
+
+  .hero-teaser.gradient-bottom .hero-teaser-media::after {
+    content: '';
+    background: linear-gradient(0deg, #000 10%, #000c 20%, #0009 30%, #0006 40%, #0003 50%, #0000 60%, #0000);
+  }
+
+  .hero-teaser.gradient-oblique .hero-teaser-media::after {
+    content: '';
+    background: linear-gradient(110deg, #262626cc, #26262600 50%);
+  }
+
+  /* text overlaid on the media */
+  .hero-teaser .hero-teaser-overlay {
+    position: absolute;
+    inset: 0;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-height: 0;
+    margin-top: 0;
+    padding: 3rem var(--ht-margin);
+    background: none;
+    text-align: left;
+  }
+
+  .hero-teaser.no-media .hero-teaser-overlay {
+    position: relative;
+  }
+
+  .hero-teaser.top .hero-teaser-overlay {
+    justify-content: flex-start;
+  }
+
+  .hero-teaser.middle .hero-teaser-overlay {
+    justify-content: center;
+  }
+
+  .hero-teaser.center .hero-teaser-overlay {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-teaser.end .hero-teaser-overlay {
+    align-items: flex-end;
+  }
+
+  .hero-teaser .hero-teaser-content {
+    box-sizing: border-box;
+    width: calc(100% * var(--ht-cols, 5) / 12);
+    padding-inline-start: 0.5rem;
+  }
+
+  .hero-teaser .hero-teaser-buttons {
+    justify-content: flex-start;
+  }
+
+  .hero-teaser.center .hero-teaser-buttons {
+    justify-content: center;
+  }
+
+  .hero-teaser.ai-label .hero-teaser-media::before {
+    z-index: 21;
+  }
+}
+
+@media (width >= 1280px) {
+  .hero-teaser {
+    --ht-margin: var(--bmw-grid-full, 6rem);
+    --ht-h1-size: 2.6875rem;
+    --ht-h1-lh: 3.75rem;
+    --ht-h2-size: 2.1875rem;
+    --ht-h2-lh: 3.125rem;
+    --ht-sub-size: 1.4375rem;
+    --ht-sub-lh: 2.25rem;
+    --ht-body-size: 1.125rem;
+    --ht-body-lh: 1.75rem;
+  }
+
+  .hero-teaser.ai-label .hero-teaser-media::before {
+    top: 1.25rem;
+    right: 1.25rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .hero-teaser {
+    --ht-h1-size: 3.75rem;
+    --ht-h1-lh: 5.25rem;
+    --ht-h2-size: 2.8125rem;
+    --ht-h2-lh: 3.875rem;
+    --ht-sub-size: 1.5625rem;
+    --ht-sub-lh: 2.375rem;
+    --ht-body-size: 1.1875rem;
+    --ht-body-lh: 1.875rem;
+  }
+
+  .hero-teaser.ai-label .hero-teaser-media::before {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+}

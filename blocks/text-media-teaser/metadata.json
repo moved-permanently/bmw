@@ -1,0 +1,31 @@
+{
+  "variantName": "text-media-teaser",
+  "baseBlock": "columns",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Text next to an image/video (media left or right, 4/4, 5/5, 6/4, 4/6 columns), stacked on phones; special intro (big headline) and special section (title left, text right, no media, optional 3-line clamp with \"Mehr anzeigen\")",
+  "contentPattern": "Row 1 (optional, media): desktop image, mobile image[, tablet image] - or poster images + desktop/mobile video links. Row 2 (content): heading, paragraphs, CTAs (a CTA can link to a #layer-N layer section).",
+  "options": [
+    "media-right",
+    "col-5-5",
+    "col-6-4",
+    "col-4-6",
+    "intro",
+    "section",
+    "collapsible",
+    "ai-label",
+    "autoplay",
+    "loop",
+    "controls",
+    "no-play-button",
+    "ratio-W-H",
+    "mobile-ratio-W-H"
+  ],
+  "memberVariantIds": [
+    "text-media-teaser"
+  ],
+  "usage": {
+    "pagesUsing": [],
+    "reuseCount": 13,
+    "lastUsed": "2026-09-26"
+  }
+}

@@ -11,3 +11,19 @@ helix-importer-ui
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md
+
+# migration scratch (large / regenerable)
+migration-work/raw/
+migration-work/snapshots/
+migration-work/ws/
+migration-work/shots/
+migration-work/images/
+migration-work/net/
+migration-work/*.png
+migration-work/visual-trees.json
+migration-work/.*.lock
+catalog/
+tools/importer/*.bundle.js
+tools/importer/reports/
+tools/workers/**/node_modules/
+tools/workers/**/.wrangler/

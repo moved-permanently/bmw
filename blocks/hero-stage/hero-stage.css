@@ -1,0 +1,578 @@
+/* stylelint-disable no-descending-specificity -- rules are grouped by component part */
+
+/* BMW ligature icon font (glyph rendered from the icon name) */
+@font-face {
+  font-family: 'bmw_next_icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../../fonts/bmw_next_icons_regular.woff2') format('woff2');
+}
+
+/* full-bleed: release the section's content width */
+.hero-stage-container .hero-stage-wrapper {
+  max-width: unset;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-stage {
+  /* source type scale (stage-*), mobile first */
+  --hs-zone1-size: 2.1875rem;
+  --hs-zone1-lh: 2.3125rem;
+  --hs-zone1-small-size: 2.0625rem;
+  --hs-zone1-small-lh: 2.1875rem;
+  --hs-headline2-size: 1.75rem;
+  --hs-headline2-lh: 2.5rem;
+  --hs-model-size: 7.4375rem;
+  --hs-model-lh: 6.75rem;
+  --hs-iconization-size: 0.875rem;
+  --hs-iconization-lh: 0.75rem;
+  --hs-claim-size: 3.5rem;
+  --hs-claim-lh: 3.625rem;
+  --hs-sub-size: 1.0625rem;
+  --hs-sub-lh: 1.1875rem;
+  --hs-price-size: 1.75rem;
+  --hs-price-lh: 2.5rem;
+  --hs-bg: #000;
+  --hs-fg: #fff;
+
+  position: relative;
+  color: var(--hs-fg);
+}
+
+.hero-stage.light {
+  --hs-bg: #fff;
+  --hs-fg: #262626;
+}
+
+.hero-stage .hero-stage-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100svh;
+  min-height: 34rem;
+  overflow: hidden;
+  background-color: var(--hs-bg);
+}
+
+/* media fills the stage; on small screens the text band sits on the black background */
+.hero-stage .hero-stage-media {
+  position: absolute;
+  inset: 0 0 auto;
+  aspect-ratio: 3 / 4;
+  pointer-events: none;
+}
+
+.hero-stage .hero-stage-media .bmw-video,
+.hero-stage .hero-stage-media > picture {
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+}
+
+.hero-stage .hero-stage-media .bmw-video video,
+.hero-stage .hero-stage-media .bmw-video button {
+  pointer-events: auto;
+}
+
+.hero-stage .hero-stage-media > picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-stage .hero-stage-click-area {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+}
+
+.hero-stage .hero-stage-click-area:focus-visible {
+  outline: none;
+}
+
+/* overlay with text zones at the bottom */
+.hero-stage .hero-stage-overlay {
+  display: grid;
+  position: absolute;
+  z-index: 20;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1.25rem 1.5rem 2.5rem;
+  background-color: var(--hs-bg);
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-stage .hero-stage-overlay::before {
+  content: '';
+  position: absolute;
+  top: -7.5rem;
+  left: 0;
+  width: 100%;
+  height: 7.5rem;
+  background: linear-gradient(180deg, transparent, var(--hs-bg));
+  pointer-events: none;
+}
+
+.hero-stage .hero-stage-overlay a,
+.hero-stage .hero-stage-overlay button {
+  pointer-events: auto;
+}
+
+.hero-stage .hero-stage-zone {
+  display: flex;
+  position: relative;
+  grid-area: 1 / 1;
+  flex-direction: column;
+  align-self: end;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(3rem);
+  transition: transform 0.75s ease-in, opacity 0.75s ease-in;
+}
+
+.hero-stage.is-intro .hero-stage-intro,
+.hero-stage.is-main .hero-stage-main {
+  opacity: 1;
+  transform: none;
+}
+
+.hero-stage.is-main .hero-stage-intro {
+  opacity: 0;
+  transform: translateY(-3rem);
+  transition: transform 1s ease-out, opacity 1s ease-out;
+  pointer-events: none;
+}
+
+.hero-stage .hero-stage-zone > * {
+  margin: 0;
+}
+
+.hero-stage .hero-stage-heading {
+  width: 100%;
+  color: inherit;
+  font-size: var(--hs-zone1-size);
+  font-weight: 500;
+  line-height: var(--hs-zone1-lh);
+  text-transform: none;
+}
+
+.hero-stage.small .hero-stage-heading {
+  font-size: var(--hs-zone1-small-size);
+  line-height: var(--hs-zone1-small-lh);
+}
+
+.hero-stage.model .hero-stage-heading {
+  font-size: var(--hs-headline2-size);
+  font-weight: 300;
+  line-height: var(--hs-headline2-lh);
+}
+
+.hero-stage .hero-stage-subline {
+  width: 100%;
+  margin-top: 1.5rem;
+  font-size: var(--hs-sub-size);
+  font-weight: 500;
+  line-height: var(--hs-sub-lh);
+  text-transform: uppercase;
+}
+
+.hero-stage .hero-stage-branding {
+  line-height: 0;
+}
+
+.hero-stage .hero-stage-branding img {
+  width: auto;
+  max-height: 1.4375rem;
+  margin: 0 auto 0.375rem;
+}
+
+/* intro: "THE" + big model name, or a one-line claim */
+.hero-stage .hero-stage-intro .hero-stage-model {
+  font-size: var(--hs-model-size);
+  font-weight: 300;
+  line-height: var(--hs-model-lh);
+}
+
+.hero-stage .hero-stage-intro .hero-stage-model strong {
+  font-weight: inherit;
+}
+
+.hero-stage .hero-stage-intro .hero-stage-claim {
+  font-size: var(--hs-iconization-size);
+  font-weight: 300;
+  line-height: var(--hs-iconization-lh);
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+}
+
+.hero-stage:not(.model) .hero-stage-intro .hero-stage-claim {
+  font-size: var(--hs-claim-size);
+  font-weight: 500;
+  line-height: var(--hs-claim-lh);
+  letter-spacing: normal;
+}
+
+.hero-stage .hero-stage-pricetag {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.hero-stage .hero-stage-price {
+  margin: 0;
+  padding-right: 0.25rem;
+  font-size: var(--hs-price-size);
+  font-weight: 700;
+  line-height: var(--hs-price-lh);
+  white-space: nowrap;
+}
+
+.hero-stage .hero-stage-price-label {
+  padding-left: 0.25rem;
+}
+
+.hero-stage .hero-stage-price-label p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+}
+
+.hero-stage .hero-stage-buttons {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  padding-top: 1.5rem;
+}
+
+.hero-stage .hero-stage-buttons .hero-stage-cta {
+  margin: 0;
+}
+
+.hero-stage .hero-stage-buttons .button {
+  margin: 0;
+}
+
+
+
+
+.hero-stage .bmw-icon {
+  display: inline-block;
+  font-family: 'bmw_next_icons', sans-serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 400;
+  font-feature-settings: 'liga';
+  line-height: 1;
+  text-transform: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* disclaimer overlay (bottom right) */
+.hero-stage .hero-stage-disclaimer {
+  display: flex;
+  position: absolute;
+  z-index: 19;
+  bottom: 1rem;
+  left: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  width: 100%;
+  padding: 0 1rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-stage .hero-stage-disclaimer p {
+  margin: 0;
+  font-size: var(--hs-sub-size);
+  font-weight: 500;
+  line-height: var(--hs-sub-lh);
+  text-transform: uppercase;
+}
+
+.hero-stage.disclaimer .hero-stage-overlay {
+  padding-bottom: 4.625rem;
+}
+
+/* play button position */
+.hero-stage .bmw-video .bmw-video-playbutton {
+  z-index: 30;
+  top: 1rem;
+  right: 1rem;
+  bottom: auto;
+}
+
+.hero-stage.ai-label .hero-stage-media::after {
+  content: 'ai_eu_label';
+  position: absolute;
+  z-index: 10;
+  top: 5rem;
+  left: 0.75rem;
+  color: #fff;
+  font-family: 'bmw_next_icons', sans-serif;
+  font-size: 1.5rem;
+  font-feature-settings: 'liga';
+  line-height: 1;
+}
+
+@media (width >= 768px) {
+  .hero-stage {
+    --hs-zone1-size: 3rem;
+    --hs-zone1-lh: 3.125rem;
+    --hs-zone1-small-size: 2.6875rem;
+    --hs-zone1-small-lh: 2.8125rem;
+    --hs-headline2-size: 1.8125rem;
+    --hs-headline2-lh: 2.625rem;
+    --hs-model-size: 7.875rem;
+    --hs-model-lh: 7rem;
+    --hs-claim-size: 4.625rem;
+    --hs-claim-lh: 4.75rem;
+    --hs-sub-size: 1.25rem;
+    --hs-sub-lh: 1.5rem;
+    --hs-price-size: 1.8125rem;
+    --hs-price-lh: 2.625rem;
+  }
+
+  .hero-stage .hero-stage-overlay {
+    padding: 0 6.625rem 2.5rem;
+  }
+
+  .hero-stage.disclaimer .hero-stage-overlay {
+    padding-bottom: 5.125rem;
+  }
+
+  .hero-stage .hero-stage-disclaimer {
+    bottom: 2.5rem;
+  }
+
+  .hero-stage .bmw-video .bmw-video-playbutton {
+    right: 1.5rem;
+  }
+
+  .hero-stage .hero-stage-branding img {
+    max-height: 1.8125rem;
+  }
+}
+
+@media (width >= 1024px) {
+  .hero-stage {
+    --hs-claim-size: 4.375rem;
+    --hs-claim-lh: 4.5rem;
+  }
+
+  .hero-stage .hero-stage-stage {
+    display: block;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 7;
+  }
+
+  .hero-stage .hero-stage-media {
+    inset: 0;
+    aspect-ratio: auto;
+  }
+
+  /* legibility gradient over the media, bottom-left */
+  .hero-stage .hero-stage-media::before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    background: linear-gradient(60deg, #000, #0000 65%);
+    pointer-events: none;
+  }
+
+  .hero-stage.light .hero-stage-media::before {
+    background:
+      radial-gradient(circle at left bottom, #fff 0, #fff9 25%, #fff0 62%, #0000 100%),
+      radial-gradient(circle at left bottom, #fff 0, #fff6 34%, #ffffff1a 55%, #0000 100%),
+      linear-gradient(90deg, #ffffff59 0, #ffffff1a 25%, #fff0 50%, #0000);
+  }
+
+  .hero-stage .hero-stage-overlay {
+    padding: 0 0 2.5rem 3rem;
+    background-color: transparent;
+    text-align: left;
+  }
+
+  .hero-stage .hero-stage-overlay::before {
+    display: none;
+  }
+
+  .hero-stage.disclaimer .hero-stage-overlay {
+    padding-bottom: 2.5rem;
+  }
+
+  .hero-stage .hero-stage-zone {
+    align-items: flex-start;
+    transform: translateX(-3rem);
+    transition: transform 1s ease-in, opacity 1s ease-in;
+  }
+
+  .hero-stage.is-main .hero-stage-intro {
+    transform: translateX(3rem);
+  }
+
+  .hero-stage .hero-stage-zone > .hero-stage-heading,
+  .hero-stage .hero-stage-zone > .hero-stage-subline,
+  .hero-stage .hero-stage-pricetag,
+  .hero-stage .hero-stage-buttons {
+    width: 40%;
+  }
+
+  .hero-stage .hero-stage-intro > * {
+    width: 100%;
+  }
+
+  .hero-stage .hero-stage-pricetag {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  .hero-stage .hero-stage-buttons {
+    justify-content: flex-start;
+  }
+
+  .hero-stage .hero-stage-branding img {
+    max-height: 1.75rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .hero-stage .hero-stage-disclaimer {
+    bottom: 0;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: 6.375rem;
+    padding: 0 1rem 1rem 0;
+    background: linear-gradient(0deg, #000, #0000);
+  }
+
+  .hero-stage.light .hero-stage-disclaimer {
+    background: linear-gradient(0deg, #fff, #0000);
+  }
+
+  .hero-stage.has-video .hero-stage-disclaimer {
+    padding-right: 4.75rem;
+  }
+
+  .hero-stage .bmw-video .bmw-video-playbutton {
+    top: auto;
+    right: 2.25rem;
+    bottom: 2.25rem;
+  }
+
+  .hero-stage.disclaimer .bmw-video .bmw-video-playbutton {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .hero-stage.ai-label .hero-stage-media::after {
+    top: 6.25rem;
+    right: 1rem;
+    left: auto;
+  }
+}
+
+@media (width >= 1280px) {
+  .hero-stage {
+    --hs-model-size: 13.125rem;
+    --hs-model-lh: 11.625rem;
+    --hs-iconization-size: 0.9375rem;
+    --hs-headline2-size: 2.1875rem;
+    --hs-headline2-lh: 3.125rem;
+    --hs-price-size: 2.1875rem;
+    --hs-price-lh: 3.125rem;
+  }
+
+  .hero-stage .hero-stage-overlay {
+    padding: 0 0 3rem 6rem;
+  }
+
+  .hero-stage.disclaimer .hero-stage-overlay {
+    padding-bottom: 3rem;
+  }
+
+  .hero-stage .hero-stage-subline,
+  .hero-stage .hero-stage-pricetag {
+    margin-top: 2rem;
+  }
+
+  .hero-stage .bmw-video .bmw-video-playbutton {
+    right: 6rem;
+    bottom: 3rem;
+  }
+
+  .hero-stage .hero-stage-branding img {
+    max-height: 1.8125rem;
+    margin-bottom: 0.375rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .hero-stage {
+    --hs-zone1-size: 5rem;
+    --hs-zone1-lh: 5.125rem;
+    --hs-zone1-small-size: 3.75rem;
+    --hs-zone1-small-lh: 3.875rem;
+    --hs-headline2-size: 2.8125rem;
+    --hs-headline2-lh: 3.875rem;
+    --hs-model-size: 15.75rem;
+    --hs-model-lh: 14rem;
+    --hs-iconization-size: 1rem;
+    --hs-iconization-lh: 0.875rem;
+    --hs-claim-size: 8.125rem;
+    --hs-claim-lh: 8.25rem;
+    --hs-sub-size: 1.375rem;
+    --hs-sub-lh: 1.625rem;
+    --hs-price-size: 2.8125rem;
+    --hs-price-lh: 3.875rem;
+  }
+
+  .hero-stage .hero-stage-stage {
+    max-height: 52.5rem;
+  }
+
+  .hero-stage .hero-stage-overlay {
+    padding: 0 0 4rem 6rem;
+  }
+
+  .hero-stage.disclaimer .hero-stage-overlay {
+    padding-bottom: 4rem;
+  }
+
+  .hero-stage .hero-stage-subline,
+  .hero-stage .hero-stage-pricetag {
+    margin-top: 2.5rem;
+  }
+
+  .hero-stage .bmw-video .bmw-video-playbutton {
+    bottom: 4rem;
+  }
+
+  .hero-stage .hero-stage-branding img {
+    max-height: 3rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-stage .hero-stage-zone {
+    transition: none;
+  }
+}

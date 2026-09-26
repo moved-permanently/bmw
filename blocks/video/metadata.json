@@ -1,0 +1,24 @@
+{
+  "variantName": "video",
+  "baseBlock": "video",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Inline BMW video player: poster, round progressive play button or dark play bar (play/pause, seek, time, mute, fullscreen); HLS via native or lazy hls.js, MP4 native",
+  "contentPattern": "One row, one cell: poster image(s) (desktop, mobile) + video link(s) (desktop, mobile; link text = video title).",
+  "options": [
+    "autoplay",
+    "loop",
+    "controls",
+    "no-play-button",
+    "ratio-W-H",
+    "mobile-ratio-W-H",
+    "ai-label"
+  ],
+  "memberVariantIds": [
+    "video"
+  ],
+  "usage": {
+    "pagesUsing": [],
+    "reuseCount": 63,
+    "lastUsed": "2026-09-26"
+  }
+}

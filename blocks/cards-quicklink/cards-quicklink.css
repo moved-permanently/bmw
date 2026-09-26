@@ -1,0 +1,138 @@
+/* BMW ligature icon font (glyph rendered from the icon name) */
+@font-face {
+  font-family: 'bmw_next_icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../../fonts/bmw_next_icons_regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'bmw_next_icons';
+  font-style: normal;
+  font-weight: 300;
+  font-display: block;
+  src: url('../../fonts/bmw_next_icons_light.woff2') format('woff2');
+}
+
+.cards-quicklink > ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cards-quicklink .cards-quicklink-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cards-quicklink .cards-quicklink-icon {
+  display: flex;
+  justify-content: center;
+  line-height: 1;
+}
+
+.cards-quicklink .cards-quicklink-icon p {
+  margin: 0;
+}
+
+.cards-quicklink .cards-quicklink-icon img {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+}
+
+.cards-quicklink .bmw-icon {
+  display: inline-block;
+  font-family: 'bmw_next_icons', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-feature-settings: 'liga';
+  line-height: 1;
+  text-transform: none;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cards-quicklink .cards-quicklink-icon .bmw-icon {
+  font-size: 3rem;
+}
+
+.cards-quicklink .cards-quicklink-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.cards-quicklink .cards-quicklink-body > :is(h1, h2, h3, h4, h5, h6) {
+  max-width: 100%;
+  margin: 1rem 0 0;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.cards-quicklink .cards-quicklink-body > p {
+  margin: 0.5rem 0 0;
+}
+
+/* CTA aligned to the bottom so buttons line up across items */
+.cards-quicklink .cards-quicklink-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 2rem;
+}
+
+.cards-quicklink .cards-quicklink-buttons .button-wrapper {
+  max-width: 100%;
+  margin: 0;
+}
+
+/* long German labels must wrap inside narrow (2-up) columns */
+.cards-quicklink .cards-quicklink-buttons .button {
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media (width >= 1024px) {
+  .cards-quicklink > ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3rem 2rem;
+  }
+}
+
+@media (width >= 1280px) {
+  .cards-quicklink .cards-quicklink-icon .bmw-icon {
+    font-size: 4rem;
+  }
+
+  .cards-quicklink .cards-quicklink-icon img {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .cards-quicklink .cards-quicklink-icon .bmw-icon {
+    font-size: 5rem;
+  }
+
+  .cards-quicklink .cards-quicklink-icon img {
+    width: 5rem;
+    height: 5rem;
+  }
+}

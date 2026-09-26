@@ -1,0 +1,11 @@
+# hero-stage
+
+Full-bleed stage (100vh on phones, 16:7 from 1024px): autoplay HLS video or image, optional intro zone (model name "THE X5" or claim) that hands over to the headline zone, headline, subline, price tag, primary + outline/link CTAs, optional disclaimer overlay.
+
+## Authoring (Document Authoring)
+
+Row 1 (media): desktop image, mobile image[, tablet image] (Scene7 links, smart-crop suffix kept) - or poster images (desktop, mobile) + desktop HLS/MP4 video link + mobile video link. Row 2 (content), in order: optional intro paragraphs (plain text = claim/"THE", **bold** = big model name), optional branding logo image, heading (h1/h2), subline paragraph(s), optional price tag (**price** paragraph + label paragraphs), CTAs (bold link = primary, italic = outline, bold+italic = dark, plain link = link with chevron), optional disclaimer paragraph(s) after the CTAs (option "disclaimer").
+
+## Options
+
+`light`, `clickable`, `small`, `model`, `disclaimer`, `ai-label`, `no-autoplay`, `loop`, `no-play-button`

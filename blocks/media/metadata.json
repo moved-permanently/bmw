@@ -1,0 +1,24 @@
+{
+  "variantName": "media",
+  "baseBlock": "media",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Full-width (or grid-contained) responsive image or background video without text, optional AI label",
+  "contentPattern": "One row, one cell: desktop image, mobile image[, tablet image] - or poster images + desktop/mobile video links.",
+  "options": [
+    "contained",
+    "ai-label",
+    "no-autoplay",
+    "loop",
+    "no-play-button",
+    "ratio-W-H",
+    "mobile-ratio-W-H"
+  ],
+  "memberVariantIds": [
+    "media"
+  ],
+  "usage": {
+    "pagesUsing": [],
+    "reuseCount": 40,
+    "lastUsed": "2026-09-26"
+  }
+}

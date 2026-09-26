@@ -1,0 +1,323 @@
+{
+  "templates": [
+    {
+      "name": "shop-online",
+      "urls": [
+        "https://www.bmw.de/de/bmw-modelle-vergleichen.html",
+        "https://www.bmw.de/de/landingpage/shops.html",
+        "https://www.bmw.de/de/shop-online/bmw-angebote.html",
+        "https://www.bmw.de/de/shop-online/bmw-offers.html",
+        "https://www.bmw.de/de_DE/shop-online/bmw-business-offers.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/bmw-modelle-vergleichen.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/*"
+    },
+    {
+      "name": "bmw-alpina",
+      "urls": [
+        "https://www.bmw.de/de/bmw-alpina.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/bmw-alpina.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/*"
+    },
+    {
+      "name": "2er",
+      "urls": [
+        "https://www.bmw.de/de/bmw-financial-services-overview/bmw-leasing.html",
+        "https://www.bmw.de/de/elektroauto/elektroautos-vorteile.html",
+        "https://www.bmw.de/de/mehr-bmw/sport-und-events/bmw-basketball.html",
+        "https://www.bmw.de/de/mehr-bmw/sport-und-events/bmw-basketball/innovation.html",
+        "https://www.bmw.de/de/mehr-bmw/sport-und-events/bmw-basketball/we-care.html",
+        "https://www.bmw.de/de/neufahrzeuge/2er/2-series-active-tourer/bmw-2er-active-tourer.html",
+        "https://www.bmw.de/de/neufahrzeuge/2er/2-series-coupe/bmw-2er-coupe-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/2er/2-series-coupe/bmw-2er-coupe.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/bmw-financial-services-overview/bmw-leasing.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/*"
+    },
+    {
+      "name": "bmw-financial-services-overview",
+      "urls": [
+        "https://www.bmw.de/de/bmw-financial-services-overview/form-finder.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/bmw-financial-services-overview/form-finder.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/bmw-financial-services-overview/*"
+    },
+    {
+      "name": "bmw-service-hub",
+      "urls": [
+        "https://www.bmw.de/de/bmw-service-hub/bmw-service-inclusive-kalkulator-gebrauchtwagen.html",
+        "https://www.bmw.de/de/bmw-service-hub/bmw-service-inclusive-kalkulator-neuwagen.html",
+        "https://www.bmw.de/de/elektroauto/rabatt-auf-die-bmw-wallbox-professional.html",
+        "https://www.bmw.de/de/footer/metanavigation/bmw-barrierefreiheit.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/bmw-service-hub/bmw-service-inclusive-kalkulator-gebrauchtwagen.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/*"
+    },
+    {
+      "name": "mehr-bmw",
+      "urls": [
+        "https://www.bmw.de/de/bmw-service-hub.html",
+        "https://www.bmw.de/de/bmw-service-hub/bmw-service/unfall-pannenhilfe.html",
+        "https://www.bmw.de/de/campaigns/bmw-fuer-geschaeftskunden.html",
+        "https://www.bmw.de/de/campaigns/hvo100-erneuerbarer-diesel.html",
+        "https://www.bmw.de/de/digital-services/bmw-connecteddrive.html",
+        "https://www.bmw.de/de/digital-services/bmw-digital-key.html",
+        "https://www.bmw.de/de/digital-services/bmw-entertainment.html",
+        "https://www.bmw.de/de/digital-services/bmw-idrive.html",
+        "https://www.bmw.de/de/digital-services/bmw-intelligent-personal-assistant.html",
+        "https://www.bmw.de/de/digital-services/bmw-maps.html",
+        "https://www.bmw.de/de/elektroauto.html",
+        "https://www.bmw.de/de/elektroauto/batterie-technologie.html",
+        "https://www.bmw.de/de/elektroauto/bmw-charging-support.html",
+        "https://www.bmw.de/de/elektroauto/foerderungen.html",
+        "https://www.bmw.de/de/elektroauto/gebrauchte-elektroautos.html",
+        "https://www.bmw.de/de/elektroauto/home-charging.html",
+        "https://www.bmw.de/de/elektroauto/plug-in-hybrid.html",
+        "https://www.bmw.de/de/home.html",
+        "https://www.bmw.de/de/index.html",
+        "https://www.bmw.de/de/landingpage/bmw-fahrfreude-gewinnen.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-efficientdynamics/pkw-envkv.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-gebrauchte.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-gebrauchte/EUROPlusGarantie.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-gebrauchte/garantie.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-gebrauchte/junge-gebrauchte.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-gebrauchte/premium-selection.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-individual.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-special-sales.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-special-sales/bmw-7-protection.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-special-sales/bmw-diplomatic-sales.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-special-sales/bmw-einsatzfahrzeuge.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-special-sales/bmw-military-sales.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-special-sales/bmw-sonderschutzfahrzeuge.html",
+        "https://www.bmw.de/de/mehr-bmw/bmw-special-sales/bmw-x5-protection-vr6.html",
+        "https://www.bmw.de/de/mehr-bmw/concept-cars/bmw-speedtop.html",
+        "https://www.bmw.de/de/mehr-bmw/die-exklusiven-bmw-automobile.html",
+        "https://www.bmw.de/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass.html",
+        "https://www.bmw.de/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass/ausgabe1-2024/der-klangmeister.html",
+        "https://www.bmw.de/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass/ausgabe1-2024/nuerburgring.html",
+        "https://www.bmw.de/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass/ausgabe2-2024/25-jahre-X5.html",
+        "https://www.bmw.de/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass/ausgabe2-2024/transformation-der-flotte.html",
+        "https://www.bmw.de/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass/fahrfreude.html",
+        "https://www.bmw.de/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass/fuhrparkmanagement.html",
+        "https://www.bmw.de/de/mehr-bmw/grosskunden-behoerden/businesskunden/was-uns-bewegt.html",
+        "https://www.bmw.de/de/mehr-bmw/kundenbetreuung.html",
+        "https://www.bmw.de/de/mehr-bmw/sport-und-events/bmw-basketball/bmw-park.html",
+        "https://www.bmw.de/de/mehr-bmw/sport-und-events/bmw-basketball/urban-culture.html",
+        "https://www.bmw.de/de/mehr-bmw/sport-und-events/laufsport.html",
+        "https://www.bmw.de/de/mehr-bmw/sport-und-events/sport-und-kultur.html",
+        "https://www.bmw.de/de/mehr-bmw/sport-und-events/tennis.html",
+        "https://www.bmw.de/de/mehr-bmw/technology-and-innovation/bmw-heart-of-joy.html",
+        "https://www.bmw.de/de/mehr-bmw/technology-and-innovation/bmw-reifenkennzeichnung.html",
+        "https://www.bmw.de/de/mehr-bmw/teile-und-zubehoer/bmw-zubehoer-hub.html",
+        "https://www.bmw.de/de/mehr-bmw/teile-und-zubehoer/original-bmw-teile.html",
+        "https://www.bmw.de/de/more-bmw/sport-und-events/bmw-basketball/bmw-park.html",
+        "https://www.bmw.de/de/my-bmw-app/my-bmw-app.html",
+        "https://www.bmw.de/de/neufahrzeuge/1er/bmw-1er/bmw-1er-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/1er/bmw-1er/bmw-1er.html",
+        "https://www.bmw.de/de/neufahrzeuge/2er/2-series-active-tourer/bmw-2er-active-tourer-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/2er/gran-coupe/bmw-2er-gran-coupe-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/2er/gran-coupe/bmw-2er-gran-coupe.html",
+        "https://www.bmw.de/de/neufahrzeuge/3er/bmw-3-er-limousine/bmw-3er-limousine-phev-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/3er/bmw-3-er-limousine/bmw-3er-limousine-plug-in-hybrid.html",
+        "https://www.bmw.de/de/neufahrzeuge/3er/bmw-3-er-limousine/bmw-3er-limousine-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/3er/bmw-3-er-limousine/bmw-3er-limousine.html",
+        "https://www.bmw.de/de/neufahrzeuge/3er/bmw-3-er-touring/bmw-3er-touring-plug-in-hybrid.html",
+        "https://www.bmw.de/de/neufahrzeuge/3er/bmw-3-er-touring/bmw-3er-touring-technische-daten-plug-in-hybrid.html",
+        "https://www.bmw.de/de/neufahrzeuge/3er/bmw-3-er-touring/bmw-3er-touring-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/3er/bmw-3-er-touring/bmw-3er-touring.html",
+        "https://www.bmw.de/de/neufahrzeuge/4er/cabrio/bmw-4er-cabrio-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/4er/cabrio/bmw-4er-cabrio.html",
+        "https://www.bmw.de/de/neufahrzeuge/4er/coupe/bmw-4er-coupe.html",
+        "https://www.bmw.de/de/neufahrzeuge/4er/gran-coupe/bmw-4er-gran-coupe.html",
+        "https://www.bmw.de/de/neufahrzeuge/5er/5-series-touring/bmw-5er-touring-phev-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/5er/5-series-touring/bmw-5er-touring-phev.html",
+        "https://www.bmw.de/de/neufahrzeuge/5er/5-series-touring/bmw-5er-touring.html",
+        "https://www.bmw.de/de/neufahrzeuge/5er/limousine/bmw-5er-limousine-phev-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/5er/limousine/bmw-5er-limousine-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/bmw-i/i4/bmw-i4-gran-coupe-technical-data.html",
+        "https://www.bmw.de/de/neufahrzeuge/bmw-i/i5/bmw-i5-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/bmw-i/i5/bmw-i5-touring-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/bmw-i/ix/bmw-ix-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/bmw-i/ix1/bmw-ix1-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/bmw-i/ix2/bmw-ix2-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/m/bmw-2er-m-modelle/bmw-m2-coupe-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/m/bmw-4er-m-modelle/bmw-m4-coupe-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/m/bmw-i4-m60/bmw-i4-m60-xdrive-gran-coupe-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/m/bmw-m-135/bmw-1er-m-automobile-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/m/ix-m70/bmw-ix-m70-technische-daten.html",
+        "https://www.bmw.de/de/neufahrzeuge/m/m235-xdrive-gran-coupe/bmw-m235-xdrive-gran-coupe-technische-daten.html",
+        "https://www.bmw.de/de/topics/fascination-bmw/corporate-direct-sales/corporate-sales.html",
+        "https://www.bmw.de/de/topics/fascination-bmw/events/quiztaxi2024.html",
+        "https://www.bmw.de/de/topics/fascination-bmw/events/vip-experience.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/bmw-xdrive-erleben/wintersport/biathlon.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/bmw-xdrive-erleben/wintersport/rennrodeln.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/events/bmw-golfsport.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/events/bmw-golfsport/friends-of-the-brand.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/events/bmw-golfsport/golf-cup.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/events/kulturelles-engagement.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/events/wintersport.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/events/wintersport/bmw-group-windkanal.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/events/wintersport/bmw-ibu-weltcup-biathlon.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/events/wintersport/bmw-rodelsimulation_WBS.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/grosskunden-behoerden/behoerdenfahrzeuge.html",
+        "https://www.bmw.de/de/topics/faszination-bmw/grosskunden-behoerden/corporate-sales.html",
+        "https://www.bmw.de/de/topics/neuwagen/gewaehrleistung.html",
+        "https://www.bmw.de/de/topics/service-zubehoer/bmw-security.html",
+        "https://www.bmw.de/de/topics/service-zubehoer/bmw-service/repair-inclusive.html",
+        "https://www.bmw.de/de/topics/service-zubehoer/financial-services/bmw-financial-services.html",
+        "https://www.bmw.de/de/topics/service-zubehoer/financial-services/bmw-finanzierung.html",
+        "https://www.bmw.de/de/topics/service-zubehoer/financial-services/bmw-leasing.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/bmw-service-hub.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/*"
+    },
+    {
+      "name": "elektroauto",
+      "urls": [
+        "https://www.bmw.de/de/elektroauto/elektroauto-kosten.html",
+        "https://www.bmw.de/de/elektroauto/elektroauto-reichweite.html",
+        "https://www.bmw.de/de/elektroauto/public-charging.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/elektroauto/elektroauto-kosten.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/elektroauto/*"
+    },
+    {
+      "name": "elektroauto-2",
+      "urls": [
+        "https://www.bmw.de/de/elektroauto/foerderungen_privatkunden.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/elektroauto/foerderungen_privatkunden.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/elektroauto/*"
+    },
+    {
+      "name": "metanavigation",
+      "urls": [
+        "https://www.bmw.de/de/fastlane/dealer-locator.html",
+        "https://www.bmw.de/de/footer/metanavigation/data-privacy/privacy-subpage-weblink-c.html",
+        "https://www.bmw.de/de/footer/metanavigation/data-privacy/privacy-subpage-weblink-d.html",
+        "https://www.bmw.de/de/footer/metanavigation/data-privacy/privacy-subpage-weblink-e.html",
+        "https://www.bmw.de/de/footer/metanavigation/eu-batterieverordnung.html",
+        "https://www.bmw.de/de/footer/metanavigation/legal-disclaimer-pool/legal-disclaimer.html",
+        "https://www.bmw.de/de/footer/metanavigation/legal-notice-pool/imprint.html",
+        "https://www.bmw.de/de/konfigurator.html",
+        "https://www.bmw.de/de/mehr-bmw/digital-services-act.html",
+        "https://www.bmw.de/de/neufahrzeuge.html",
+        "https://www.bmw.de/de/publicPools/sitemap/sitemap.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/fastlane/dealer-locator.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/*"
+    },
+    {
+      "name": "footer-section",
+      "urls": [
+        "https://www.bmw.de/de/footer/footer-section/cookie-policy.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/footer/footer-section/cookie-policy.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/footer/footer-section/*"
+    },
+    {
+      "name": "metanavigation-2",
+      "urls": [
+        "https://www.bmw.de/de/footer/metanavigation/bmw-betrugsfaelle.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/footer/metanavigation/bmw-betrugsfaelle.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/footer/metanavigation/*"
+    },
+    {
+      "name": "metanavigation-3",
+      "urls": [
+        "https://www.bmw.de/de/footer/metanavigation/data-privacy.html",
+        "https://www.bmw.de/de/footer/metanavigation/data-privacy/data-category.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/footer/metanavigation/data-privacy.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/footer/metanavigation/*"
+    },
+    {
+      "name": "legal-disclaimer-pool",
+      "urls": [
+        "https://www.bmw.de/de/footer/metanavigation/legal-disclaimer-pool/Produktsicherheitsverordnung.html",
+        "https://www.bmw.de/de/services-and-workshop/allgemeine-versicherungsbedingungen.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/footer/metanavigation/legal-disclaimer-pool/Produktsicherheitsverordnung.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/*"
+    },
+    {
+      "name": "limousine",
+      "urls": [
+        "https://www.bmw.de/de/neufahrzeuge/3er/limousine/bmw-i3-limousine.html",
+        "https://www.bmw.de/de/neufahrzeuge/7er/limousine/bmw-7er-limousine-technische-daten.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/neufahrzeuge/3er/limousine/bmw-i3-limousine.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/neufahrzeuge/*"
+    },
+    {
+      "name": "limousine-2",
+      "urls": [
+        "https://www.bmw.de/de/neufahrzeuge/7er/limousine/bmw-i7-limousine-technische-daten.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/neufahrzeuge/7er/limousine/bmw-i7-limousine-technische-daten.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/neufahrzeuge/7er/limousine/*"
+    },
+    {
+      "name": "limousine-3",
+      "urls": [
+        "https://www.bmw.de/de/neufahrzeuge/m/limousine/bmw-7er-limousine-m-modelle-technische-daten.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/neufahrzeuge/m/limousine/bmw-7er-limousine-m-modelle-technische-daten.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/neufahrzeuge/m/limousine/*"
+    },
+    {
+      "name": "sport-events",
+      "urls": [
+        "https://www.bmw.de/de/topics/faszination-bmw/sport-events/weltcup.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/topics/faszination-bmw/sport-events/weltcup.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/topics/faszination-bmw/sport-events/*"
+    },
+    {
+      "name": "bmw-service",
+      "urls": [
+        "https://www.bmw.de/de/topics/service-zubehoer/bmw-service/rueckrufe.html"
+      ],
+      "representativeUrl": "https://www.bmw.de/de/topics/service-zubehoer/bmw-service/rueckrufe.html",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/de/topics/service-zubehoer/bmw-service/*"
+    }
+  ]
+}

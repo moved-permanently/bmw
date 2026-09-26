@@ -1,0 +1,14 @@
+{
+  "variantName": "columns-split",
+  "baseBlock": "columns",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Image left (3:2), text right: heading, paragraph, 2 chevron text links",
+  "contentPattern": "One row, two cells: cell 1 = Scene7 picture (3:2 crop), cell 2 = h2 heading, paragraph, one plain link per paragraph (rendered as text link with chevron icon); bold/italic links render as buttons. Desktop 7/12 image + 5/12 text, vertically centred; stacked (image first) below 1024px. Image may be authored in the second cell to place it on the right.",
+  "options": [],
+  "memberVariantIds": ["columns-split"],
+  "usage": {
+    "pagesUsing": ["https://www.bmw.de/de/index.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-26"
+  }
+}

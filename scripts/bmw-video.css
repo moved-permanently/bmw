@@ -1,0 +1,278 @@
+/* stylelint-disable no-descending-specificity -- rules are grouped by component part */
+
+/* BMW video player chrome (loaded by createBmwVideo in scripts/bmw-utils.js) */
+@font-face {
+  font-family: 'bmw_next_icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../fonts/bmw_next_icons_regular.woff2') format('woff2');
+}
+
+.bmw-video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #262626;
+  line-height: 0;
+}
+
+.bmw-video .bmw-video-poster,
+.bmw-video .bmw-video-player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bmw-video .bmw-video-poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bmw-video .bmw-video-player {
+  display: block;
+  object-fit: cover;
+  background-color: transparent;
+}
+
+.has-controls .bmw-video-player {
+  cursor: pointer;
+}
+
+.bmw-video .bmw-video-poster {
+  z-index: 1;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+.bmw-video.is-started .bmw-video-poster {
+  opacity: 0;
+}
+
+.bmw-video .bmw-video-icon {
+  display: block;
+  font-family: 'bmw_next_icons', sans-serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 400;
+  font-feature-settings: 'liga';
+  line-height: 1;
+  text-transform: none;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* progressive play button: round, progress ring around it */
+.bmw-video .bmw-video-playbutton {
+  position: absolute;
+  z-index: 10;
+  top: 1rem;
+  right: 1rem;
+  box-sizing: border-box;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin: 0;
+  padding: 0;
+  border: 0.0625rem solid #ffffff75;
+  border-radius: 50%;
+  background-color: #000;
+  color: #fff;
+  line-height: 0;
+  cursor: pointer;
+  transition: border 0.5s ease-out;
+}
+
+.bmw-video .bmw-video-playbutton:hover {
+  color: #e6e6e6;
+}
+
+.bmw-video .bmw-video-playbutton:focus-visible,
+.bmw-video .bmw-video-control:focus-visible,
+.bmw-video .bmw-video-progress:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.bmw-video .bmw-video-playbutton .bmw-video-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.5s ease-out;
+}
+
+.bmw-video .bmw-video-icon-pause,
+.bmw-video.is-playing .bmw-video-icon-play {
+  opacity: 0;
+}
+
+.bmw-video.is-playing .bmw-video-icon-pause {
+  opacity: 1;
+}
+
+.bmw-video .bmw-video-controls .bmw-video-icon-pause,
+.bmw-video.is-playing .bmw-video-controls .bmw-video-icon-play {
+  display: none;
+}
+
+.bmw-video.is-playing .bmw-video-controls .bmw-video-icon-pause {
+  display: block;
+}
+
+.bmw-video .bmw-video-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.25rem;
+  height: 2.25rem;
+  overflow: visible;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  pointer-events: none;
+}
+
+.bmw-video .bmw-video-ring circle {
+  stroke: #fff;
+}
+
+@media (width >= 1024px) {
+  .bmw-video .bmw-video-playbutton {
+    top: auto;
+    bottom: 1rem;
+  }
+}
+
+/* control bar (style "playbar dark") */
+.bmw-video .bmw-video-controls {
+  display: flex;
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  align-items: center;
+  height: 2.5rem;
+  padding: 0 0.5rem;
+  opacity: 0;
+  color: #ffffffd6;
+  font-size: 1rem;
+  line-height: 1;
+  transition: opacity 0.3s;
+}
+
+.bmw-video .bmw-video-controls::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 6rem;
+  background: linear-gradient(0deg, #000, #0000);
+  pointer-events: none;
+}
+
+.bmw-video.is-ready:hover .bmw-video-controls,
+.bmw-video.is-ready:focus-within .bmw-video-controls,
+.bmw-video.is-ready:not(.is-playing) .bmw-video-controls {
+  opacity: 1;
+}
+
+.bmw-video .bmw-video-control {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  margin: 0 0.75rem 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.bmw-video .bmw-video-control:hover {
+  color: #fff;
+}
+
+.bmw-video .bmw-video-toggle {
+  margin-right: 0.5rem;
+}
+
+.bmw-video .bmw-video-fullscreen {
+  margin-right: 0;
+}
+
+.bmw-video .bmw-video-mute .bmw-video-icon-unmuted,
+.bmw-video.is-muted .bmw-video-mute .bmw-video-icon-muted {
+  display: block;
+}
+
+.bmw-video .bmw-video-mute .bmw-video-icon-muted,
+.bmw-video.is-muted .bmw-video-mute .bmw-video-icon-unmuted {
+  display: none;
+}
+
+.bmw-video .bmw-video-progress {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  align-items: center;
+  height: 1.5rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.bmw-video .bmw-video-progress-track {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background-color: #ffffff75;
+}
+
+.bmw-video .bmw-video-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--bmw-video-progress, 0%);
+  height: 100%;
+  background-color: #fff;
+}
+
+.bmw-video .bmw-video-progress-knob {
+  position: absolute;
+  top: 50%;
+  left: var(--bmw-video-progress, 0%);
+  width: 0.5625rem;
+  height: 0.5625rem;
+  border-radius: 50%;
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+}
+
+.bmw-video .bmw-video-time {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  margin-right: 0.75rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.bmw-video:fullscreen .bmw-video-player {
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bmw-video .bmw-video-poster,
+  .bmw-video .bmw-video-controls {
+    transition: none;
+  }
+}

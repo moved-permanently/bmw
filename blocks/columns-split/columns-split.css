@@ -1,0 +1,122 @@
+/* BMW ligature icon font (glyph rendered from the icon name) */
+@font-face {
+  font-family: 'bmw_next_icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../../fonts/bmw_next_icons_regular.woff2') format('woff2');
+}
+
+.columns-split .columns-split-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.columns-split .columns-split-row + .columns-split-row {
+  margin-top: 4rem;
+}
+
+/* image always first when stacked */
+.columns-split .columns-split-media {
+  order: -1;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.columns-split .columns-split-media picture,
+.columns-split .columns-split-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.columns-split .columns-split-media img {
+  object-fit: cover;
+}
+
+.columns-split .columns-split-text {
+  padding-top: 2rem;
+}
+
+.columns-split .columns-split-text > :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+}
+
+.columns-split .columns-split-text > p {
+  margin: 1rem 0 0;
+}
+
+.columns-split .columns-split-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.columns-split .columns-split-links > .columns-split-link-wrapper {
+  margin: 0;
+}
+
+/* text link with trailing chevron (icon font ligature) */
+.columns-split .columns-split-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+}
+
+
+.columns-split .columns-split-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.columns-split .columns-split-buttons .button-wrapper,
+.columns-split .columns-split-buttons .button {
+  margin: 0;
+}
+
+.columns-split .bmw-icon {
+  display: inline-block;
+  font-family: 'bmw_next_icons', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-feature-settings: 'liga';
+  line-height: 1;
+  text-transform: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+}
+
+.columns-split .columns-split-link-icon {
+  font-size: 1.25rem;
+}
+
+/* desktop: image 7/12, text 5/12, vertically centred */
+@media (width >= 1024px) {
+  .columns-split .columns-split-row {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
+    column-gap: 4rem;
+  }
+
+  .columns-split .columns-split-row.columns-split-media-right {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .columns-split .columns-split-media-right .columns-split-media {
+    order: 0;
+  }
+
+  .columns-split .columns-split-row.columns-split-text-only {
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  }
+
+  .columns-split .columns-split-text {
+    padding-top: 0;
+  }
+}
