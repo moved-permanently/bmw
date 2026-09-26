@@ -76,6 +76,10 @@
 .cards-quicklink .cards-quicklink-body > :is(h1, h2, h3, h4, h5, h6) {
   max-width: 100%;
   margin: 1rem 0 0;
+  color: var(--bmw-color-heading, #262626);
+  font-size: var(--bmw-subsection-1-font-size);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-subsection-1-line-height);
   overflow-wrap: break-word;
   hyphens: auto;
 }

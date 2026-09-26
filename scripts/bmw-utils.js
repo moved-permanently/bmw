@@ -717,3 +717,57 @@ export function groupCtaLinks(container, className, linkClass = 'bmw-link') {
   });
   return groups;
 }
+
+/* ------------------------------------------------------------------------------------------
+ * In-page anchors (content-navigation, scroll-navigation, disclaimer "#bottom" links)
+ * ---------------------------------------------------------------------------------------- */
+
+const normText = (s) => (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+/**
+ * Finds the element an in-page anchor points at. Order: element with that id, section with
+ * section-metadata id/anchor (data-id / data-anchor), then the section containing a heading (or
+ * paragraph) whose text equals `hint` (the importer stores the target's heading next to nav links).
+ * The found section gets the id so plain hash links and :target work afterwards.
+ * @param {string} hash "#id" or "id"
+ * @param {string} [hint] heading text of the target section
+ * @returns {Element|null}
+ */
+export function findAnchorTarget(hash, hint = '') {
+  let id = (hash || '').replace(/^#/, '');
+  try {
+    id = decodeURIComponent(id).trim();
+  } catch {
+    id = id.trim();
+  }
+  if (!id) return null;
+  const byId = document.getElementById(id);
+  if (byId) return byId;
+  const main = document.querySelector('main');
+  if (!main) return null;
+  const esc = window.CSS && CSS.escape ? CSS.escape(id) : id.replace(/"/g, '\\"');
+  let target = main.querySelector(`.section[data-id="${esc}"], .section[data-anchor="${esc}"]`);
+  const wanted = normText(hint);
+  if (!target && wanted) {
+    const skip = '.content-navigation, .scroll-navigation, .cta-collection, dialog, header, footer';
+    const nodes = [...main.querySelectorAll('h1, h2, h3, h4, h5, h6, p')]
+      .filter((n) => !n.closest(skip));
+    const match = nodes.find((n) => normText(n.textContent) === wanted)
+      || nodes.find((n) => normText(n.textContent).startsWith(wanted.slice(0, 40)));
+    target = match ? (match.closest('.section') || match) : null;
+  }
+  if (target && !target.id) target.id = id;
+  return target;
+}
+
+/**
+ * Smoothly scrolls to an element, leaving room for fixed bars at the top.
+ * @param {Element} el
+ * @param {number} [offset] px kept free above the element
+ */
+export function scrollToElement(el, offset = 0) {
+  if (!el) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const top = el.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top: Math.max(0, top), behavior: reduced ? 'auto' : 'smooth' });
+}

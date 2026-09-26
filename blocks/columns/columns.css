@@ -1,33 +1,100 @@
-.columns > div {
+/* Columns: source aem-Grid columns side by side (12-column spans via cols-A-B[-C]) */
+.columns .columns-row {
   display: flex;
   flex-direction: column;
+  gap: var(--bmw-spacing-8, 1.25rem);
+}
+
+.columns .columns-row + .columns-row {
+  margin-top: var(--bmw-spacing-12, 2rem);
 }
 
 .columns img {
+  display: block;
   width: 100%;
 }
 
-.columns > div > div {
-  order: 1;
+/* image first when stacked */
+.columns .columns-row > .columns-img-col {
+  order: -1;
 }
 
-.columns > div > .columns-img-col {
-  order: 0;
-}
-
-.columns > div > .columns-img-col img {
+.columns .columns-img-col picture {
   display: block;
 }
 
-@media (width >= 900px) {
-  .columns > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 24px;
+.columns .columns-img-col img {
+  height: auto;
+  object-fit: cover;
+}
+
+.columns .columns-text-col {
+  min-width: 0;
+  font-size: var(--bmw-body-1-font-size, 1rem);
+  line-height: var(--bmw-body-1-line-height, 1.625rem);
+}
+
+.columns .columns-text-col > * {
+  margin: 0;
+}
+
+.columns .columns-text-col > * + * {
+  margin-top: var(--bmw-spacing-4, 1rem);
+}
+
+.columns .columns-links {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: var(--bmw-spacing-4, 1rem);
+}
+
+.columns .columns-links > p {
+  width: 100%;
+  margin: 0;
+}
+
+.columns .columns-links > p:not(.button-wrapper) {
+  width: auto;
+}
+
+.columns .columns-text-col > * + .columns-links {
+  margin-top: var(--bmw-spacing-8, 1.25rem);
+}
+
+@media (width >= 768px) {
+  .columns .columns-row {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: calc(2 * var(--bmw-grid-gutter, 0.75rem));
   }
 
-  .columns > div > div {
-    flex: 1;
-    order: unset;
+  .columns .columns-row > div {
+    flex: 1 1 0;
+  }
+
+  .columns .columns-row > .columns-img-col {
+    order: 0;
+  }
+
+  .columns .columns-links {
+    flex-flow: row wrap;
+    align-items: center;
+    gap: var(--bmw-spacing-4, 1rem) calc(2 * var(--bmw-grid-gutter, 0.75rem));
+  }
+
+  .columns .columns-links > p {
+    width: auto;
+  }
+
+  /* cols-A-B[-C]: 12-column grid, each cell spans its source width */
+  .columns.columns-grid .columns-row {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: calc(2 * var(--bmw-grid-gutter, 0.75rem));
+  }
+
+  .columns.columns-grid .columns-row > div {
+    grid-column: span var(--columns-span, 6);
   }
 }

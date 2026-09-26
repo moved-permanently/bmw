@@ -1,0 +1,194 @@
+/* Icon Teaser (source: .icon components with title / text / button in centered grid columns) */
+.icon-teaser {
+  --icon-teaser-size: 3rem;
+  --icon-teaser-weight: var(--bmw-font-weight-light, 300);
+  --icon-teaser-cols: var(--icon-teaser-cols-m, 1);
+
+  color: var(--bmw-color-text, #262626);
+}
+
+@media (width >= 768px) {
+  .icon-teaser {
+    --icon-teaser-cols: var(--icon-teaser-cols-t, 2);
+  }
+}
+
+@media (width >= 1024px) {
+  .icon-teaser {
+    --icon-teaser-cols: var(--icon-teaser-cols-d, 3);
+  }
+}
+
+@media (width >= 1280px) {
+  .icon-teaser {
+    --icon-teaser-size: 4rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .icon-teaser {
+    --icon-teaser-size: 5rem;
+  }
+}
+
+/* icon sizes (source data-icon-size; "l" scales with the viewport) */
+.icon-teaser.size-xxs {
+  --icon-teaser-size: 1rem;
+  --icon-teaser-weight: var(--bmw-font-weight-regular, 400);
+}
+
+.icon-teaser.size-xs {
+  --icon-teaser-size: 1.25rem;
+  --icon-teaser-weight: var(--bmw-font-weight-regular, 400);
+}
+
+.icon-teaser.size-s {
+  --icon-teaser-size: 1.5rem;
+  --icon-teaser-weight: var(--bmw-font-weight-regular, 400);
+}
+
+.icon-teaser.size-m {
+  --icon-teaser-size: 2rem;
+  --icon-teaser-weight: var(--bmw-font-weight-regular, 400);
+}
+
+.icon-teaser.size-ml {
+  --icon-teaser-size: 2.5rem;
+}
+
+.icon-teaser.size-xl {
+  --icon-teaser-size: 4rem;
+}
+
+.icon-teaser.size-xxl {
+  --icon-teaser-size: 5rem;
+}
+
+/* incomplete last rows are centered (source: offset grid columns) */
+.icon-teaser .icon-teaser-list {
+  --icon-teaser-gap: calc(2 * var(--bmw-grid-gutter, 0.5rem));
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--bmw-spacing-16) var(--icon-teaser-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.icon-teaser.left .icon-teaser-list {
+  justify-content: flex-start;
+}
+
+.icon-teaser .icon-teaser-item {
+  display: flex;
+  flex: 0 0 calc((100% - (var(--icon-teaser-cols) - 1) * var(--icon-teaser-gap)) / var(--icon-teaser-cols));
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.icon-teaser.left .icon-teaser-item {
+  align-items: flex-start;
+  text-align: start;
+}
+
+.icon-teaser .icon-teaser-icon {
+  display: flex;
+  justify-content: center;
+  line-height: 1;
+}
+
+.icon-teaser .icon-teaser-icon p {
+  margin: 0;
+}
+
+.icon-teaser .icon-teaser-icon .bmw-icon {
+  font-size: var(--icon-teaser-size);
+  font-weight: var(--icon-teaser-weight);
+}
+
+.icon-teaser .icon-teaser-icon img {
+  display: block;
+  width: var(--icon-teaser-size);
+  height: var(--icon-teaser-size);
+  object-fit: contain;
+}
+
+.icon-teaser .icon-teaser-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: inherit;
+  width: 100%;
+  margin-top: var(--bmw-spacing-8);
+  font-size: var(--bmw-body-2-font-size);
+  line-height: var(--bmw-body-2-line-height);
+}
+
+.icon-teaser .icon-teaser-body > * {
+  max-width: 100%;
+  margin: 0;
+}
+
+.icon-teaser .icon-teaser-body > * + * {
+  margin-top: var(--bmw-spacing-4);
+}
+
+.icon-teaser .icon-teaser-body > :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--bmw-color-heading, #262626);
+  font-size: var(--bmw-subsection-1-font-size);
+  font-weight: var(--bmw-font-weight-default);
+  line-height: var(--bmw-subsection-1-line-height);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.icon-teaser .icon-teaser-body :is(ul, ol) {
+  padding-inline-start: 1.25em;
+  text-align: start;
+}
+
+.icon-teaser .icon-teaser-list .icon-teaser-body > ul {
+  list-style: disc;
+}
+
+.icon-teaser .icon-teaser-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--bmw-spacing-4) calc(2 * var(--bmw-grid-gutter, 0.5rem));
+}
+
+.icon-teaser.left .icon-teaser-buttons {
+  justify-content: flex-start;
+}
+
+.icon-teaser .icon-teaser-body > .icon-teaser-buttons {
+  margin-top: var(--bmw-spacing-8);
+}
+
+.icon-teaser .icon-teaser-buttons > p {
+  max-width: 100%;
+  margin: 0;
+}
+
+/* list: small icon inline before one line of text */
+.icon-teaser.list .icon-teaser-list {
+  gap: var(--bmw-spacing-3);
+}
+
+.icon-teaser.list .icon-teaser-item {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--bmw-spacing-4);
+}
+
+.icon-teaser.list .icon-teaser-body {
+  margin-top: 0;
+  font-size: var(--bmw-body-1-font-size);
+  line-height: var(--bmw-body-1-line-height);
+}

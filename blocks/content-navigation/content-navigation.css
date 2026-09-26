@@ -1,0 +1,348 @@
+/* Content Navigation (source cmp-contentnavigation v3, style solid-white) */
+.content-navigation {
+  --content-navigation-height: 3.25rem;
+
+  position: relative;
+  z-index: 6010;
+  height: var(--content-navigation-height);
+}
+
+.content-navigation.hide {
+  height: 0;
+}
+
+.content-navigation .content-navigation-bar {
+  position: relative;
+  background: var(--bmw-color-white, #fff);
+  color: var(--bmw-grey-900, #262626);
+}
+
+/* full-bleed white bar with a bottom rule */
+.content-navigation .content-navigation-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(50% - 50vw) -1px;
+  z-index: -1;
+  border-bottom: 0.0625rem solid var(--bmw-grey-300, #e6e6e6);
+  background: var(--bmw-color-white, #fff);
+}
+
+.content-navigation .content-navigation-inner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: var(--content-navigation-height);
+}
+
+.content-navigation.is-fixed .content-navigation-bar,
+.content-navigation.hide .content-navigation-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 6020;
+}
+
+.content-navigation.is-fixed .content-navigation-inner,
+.content-navigation.hide .content-navigation-inner {
+  max-width: var(--bmw-page-max-width, 120rem);
+  margin: 0 auto;
+  padding: 0 var(--bmw-grid-full, 1.5rem);
+}
+
+.content-navigation.hide .content-navigation-bar {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.content-navigation.hide.is-fixed .content-navigation-bar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.content-navigation .content-navigation-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* mobile: current entry + CTA; the entry opens the list */
+.content-navigation .content-navigation-toggle {
+  display: inline-flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  min-height: var(--content-navigation-height);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--bmw-grey-800, #4d4d4d);
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-regular, 400);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+  text-align: start;
+  cursor: pointer;
+}
+
+.content-navigation .content-navigation-toggle-label {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.content-navigation .content-navigation-toggle .bmw-icon {
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  transition: transform 0.5s ease-in-out;
+}
+
+.content-navigation.is-open .content-navigation-toggle .bmw-icon {
+  transform: rotate(-180deg);
+}
+
+.content-navigation .content-navigation-scroller {
+  display: none;
+}
+
+.content-navigation .content-navigation-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.content-navigation a.content-navigation-link:any-link {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0.75rem calc(var(--bmw-grid-full, 1.5rem) - 0.25rem);
+  border-width: 0 0 0 0.25rem;
+  border-style: solid;
+  border-color: transparent;
+  color: var(--bmw-grey-700, #666);
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-regular, 400);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+  text-decoration: none;
+  white-space: normal;
+}
+
+.content-navigation a.content-navigation-link:hover,
+.content-navigation a.content-navigation-link.is-active {
+  color: var(--bmw-grey-900, #262626);
+}
+
+.content-navigation a.content-navigation-link.is-active {
+  border-left-color: var(--bmw-grey-800, #4d4d4d);
+}
+
+.content-navigation a.content-navigation-link:focus-visible {
+  outline: none;
+  background: transparent;
+  box-shadow: var(--bmw-focus-inside, inset 0 0 0 0.25rem #1c69d4, 0 0 0 0.0625rem #fff);
+}
+
+.content-navigation .content-navigation-arrow {
+  display: none;
+}
+
+.content-navigation .content-navigation-ctas {
+  display: flex;
+  flex: 0 1 auto;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  max-width: 50%;
+}
+
+.content-navigation a.content-navigation-cta:any-link {
+  width: auto;
+  max-width: 100%;
+  min-height: var(--bmw-button-small-height, 2.25rem);
+  padding: 0.25rem 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* mobile list overlay */
+@media (width < 768px) {
+  .content-navigation.is-open .content-navigation-bar {
+    position: fixed;
+    inset: 0;
+    z-index: 6020;
+    display: flex;
+    flex-direction: column;
+    background: rgb(0 0 0 / 80%);
+  }
+
+  .content-navigation.is-open .content-navigation-inner {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    padding: 0 var(--bmw-grid-full, 1.5rem);
+    background: var(--bmw-color-white, #fff);
+    box-shadow: inset 0 -1px 0 var(--bmw-grey-300, #e6e6e6);
+  }
+
+  .content-navigation.is-open .content-navigation-scroller {
+    position: fixed;
+    inset: var(--content-navigation-height) 0 0;
+    display: block;
+    overflow-y: auto;
+    background: var(--bmw-color-white, #fff);
+  }
+
+  .content-navigation.is-open .content-navigation-list {
+    padding: 1rem 0 1.25rem;
+  }
+}
+
+@media (width >= 768px) {
+  .content-navigation .content-navigation-toggle {
+    display: none;
+  }
+
+  .content-navigation .content-navigation-scroller {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    align-items: stretch;
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  .content-navigation .content-navigation-list {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    white-space: nowrap;
+    -ms-overflow-style: none;
+  }
+
+  .content-navigation .content-navigation-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .content-navigation .content-navigation-list > li {
+    display: flex;
+  }
+
+  .content-navigation a.content-navigation-link:any-link {
+    padding: 0 0.5rem;
+    border-width: 0.25rem 0;
+    border-style: solid;
+    border-color: transparent;
+    white-space: nowrap;
+  }
+
+  .content-navigation a.content-navigation-link:hover {
+    border-bottom-color: var(--bmw-grey-800, #4d4d4d);
+  }
+
+  .content-navigation a.content-navigation-link.is-active {
+    border-left-color: transparent;
+    border-bottom-color: var(--bmw-grey-900, #262626);
+  }
+
+  /* overflow: chevron buttons + fading edges */
+  .content-navigation .content-navigation-arrow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--bmw-grey-900, #262626);
+    visibility: hidden;
+    cursor: pointer;
+  }
+
+  .content-navigation .content-navigation-arrow .bmw-icon {
+    font-size: 1.25rem;
+  }
+
+  .content-navigation .content-navigation-prev {
+    left: 0;
+  }
+
+  .content-navigation .content-navigation-next {
+    right: 0;
+  }
+
+  .content-navigation .has-prev .content-navigation-prev,
+  .content-navigation .has-next .content-navigation-next {
+    visibility: visible;
+  }
+
+  .content-navigation .has-prev .content-navigation-list {
+    mask: linear-gradient(90deg, transparent 0, transparent 35px, #fff 107px);
+  }
+
+  .content-navigation .has-next .content-navigation-list {
+    mask: linear-gradient(270deg, transparent 0, transparent 35px, #fff 107px);
+  }
+
+  .content-navigation .has-prev.has-next .content-navigation-list {
+    mask:
+      linear-gradient(90deg, transparent 0, transparent 35px, #fff 107px) left / 50% 100% no-repeat,
+      linear-gradient(270deg, transparent 0, transparent 35px, #fff 107px) right / 50% 100% no-repeat;
+  }
+
+  .content-navigation .content-navigation-ctas {
+    flex-shrink: 0;
+    max-width: none;
+    padding-left: 2rem;
+  }
+
+  /* fixed bar spans the viewport (source: list from 12px, CTA 20px from the right edge) */
+  .content-navigation.is-fixed .content-navigation-inner,
+  .content-navigation.hide .content-navigation-inner {
+    max-width: none;
+    padding: 0 1.25rem 0 0.75rem;
+  }
+}
+
+@media (width >= 1280px) {
+  .content-navigation {
+    --content-navigation-height: 5.25rem;
+  }
+
+  .content-navigation .content-navigation-title {
+    position: static;
+    flex-shrink: 0;
+    width: auto;
+    height: auto;
+    margin: 0 2rem 0 0;
+    overflow: visible;
+    clip-path: none;
+    font-size: var(--bmw-body-1-font-size, 1.0625rem);
+    font-weight: var(--bmw-font-weight-default, 300);
+    line-height: var(--bmw-body-1-line-height, 1.75rem);
+    white-space: normal;
+  }
+
+  .content-navigation a.content-navigation-cta:any-link {
+    min-height: var(--bmw-button-height, 3.25rem);
+    padding: 0.25rem 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content-navigation .content-navigation-toggle .bmw-icon,
+  .content-navigation.hide .content-navigation-bar {
+    transition: none;
+  }
+}

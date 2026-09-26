@@ -1,0 +1,158 @@
+/* Scroll Navigation (source cmp-scrollnavigation): fixed bullets at the right edge, desktop only */
+.scroll-navigation {
+  height: 0;
+}
+
+.scroll-navigation .scroll-navigation-nav {
+  position: fixed;
+  top: 0;
+  right: 0.5rem;
+  z-index: 6020;
+  display: none;
+  align-items: center;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+.scroll-navigation.is-visible .scroll-navigation-nav,
+.scroll-navigation .scroll-navigation-nav:focus-within {
+  opacity: 1;
+}
+
+.scroll-navigation .scroll-navigation-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 1rem;
+  list-style: none;
+  pointer-events: auto;
+}
+
+.scroll-navigation:not(.is-visible) .scroll-navigation-nav:not(:focus-within) .scroll-navigation-list {
+  pointer-events: none;
+}
+
+.scroll-navigation .scroll-navigation-item {
+  position: relative;
+  list-style: none;
+  cursor: pointer;
+}
+
+.scroll-navigation a.scroll-navigation-link:any-link {
+  display: inline-flex;
+  border: 0;
+  align-items: center;
+  min-height: 1.375rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.scroll-navigation a.scroll-navigation-link:focus-visible {
+  outline: none;
+  background: none;
+  box-shadow: none;
+}
+
+.scroll-navigation .scroll-navigation-bullet {
+  display: block;
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: 0.25rem;
+  border-radius: 50%;
+  background: var(--bmw-grey-600, #8e8e8e);
+  box-shadow: 0 0 0.0625rem 0.0469rem rgb(255 255 255 / 84%);
+  transition: all 0.1s;
+}
+
+.scroll-navigation .is-active .scroll-navigation-bullet {
+  box-shadow: 0 0 0.0625rem 0.0406rem #fff;
+  transform: scale(1.5);
+}
+
+.scroll-navigation .is-active .scroll-navigation-bullet::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50%, transparent 60%, var(--bmw-grey-600, #8e8e8e) 63%);
+  transform: scale(1.5);
+}
+
+.scroll-navigation .scroll-navigation-link:focus-visible .scroll-navigation-bullet {
+  transform: scale(1.5);
+}
+
+.scroll-navigation .scroll-navigation-link:not(.is-active):hover .scroll-navigation-bullet {
+  transform: scale(1.5);
+}
+
+.scroll-navigation .scroll-navigation-tooltip {
+  max-width: 10.75rem;
+  margin-right: 0.5rem;
+  padding: 0.1875rem 0.375rem;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--bmw-grey-900, #262626);
+  color: var(--bmw-color-white, #fff);
+  font-size: var(--bmw-label-1-font-size, 0.75rem);
+  font-weight: var(--bmw-font-weight-regular, 400);
+  line-height: var(--bmw-label-1-line-height, 1rem);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  translate: 5%;
+  transition: opacity 0.25s, translate 0.25s, margin-right 0.25s;
+}
+
+.scroll-navigation .show-all-tooltips .scroll-navigation-tooltip,
+.scroll-navigation.is-visible .is-active .scroll-navigation-tooltip {
+  animation: scroll-navigation-fade-in-out 4s 0.25s;
+}
+
+.scroll-navigation .scroll-navigation-nav:hover .scroll-navigation-tooltip,
+.scroll-navigation .scroll-navigation-link:focus-visible .scroll-navigation-tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  translate: 0;
+}
+
+.scroll-navigation .scroll-navigation-nav:hover .is-active .scroll-navigation-tooltip {
+  animation-duration: 0s;
+}
+
+@media (width >= 1024px) {
+  .scroll-navigation .scroll-navigation-nav {
+    display: flex;
+  }
+}
+
+@keyframes scroll-navigation-fade-in-out {
+  50% {
+    opacity: 1;
+    translate: 0;
+  }
+
+  100% {
+    opacity: 0;
+    translate: 10%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-navigation .scroll-navigation-tooltip,
+  .scroll-navigation .scroll-navigation-bullet {
+    transition: none;
+  }
+
+  .scroll-navigation .show-all-tooltips .scroll-navigation-tooltip,
+  .scroll-navigation.is-visible .is-active .scroll-navigation-tooltip {
+    animation: none;
+  }
+}

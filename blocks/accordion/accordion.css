@@ -1,0 +1,151 @@
+/* Accordion (source .cmp-accordion, style-accordion--border) */
+.accordion {
+  color: var(--bmw-color-text, #262626);
+}
+
+@media (width >= 1024px) {
+  .accordion[style*='--accordion-cols-lg'] {
+    max-width: calc((100% + 2 * var(--bmw-grid-gutter, 0.75rem)) * var(--accordion-cols-lg) / 12 - 2 * var(--bmw-grid-gutter, 0.75rem));
+    margin-inline: auto;
+  }
+}
+
+@media (width >= 1280px) {
+  .accordion[style*='--accordion-cols:'] {
+    max-width: calc((100% + 2 * var(--bmw-grid-gutter, 0.75rem)) * var(--accordion-cols) / 12 - 2 * var(--bmw-grid-gutter, 0.75rem));
+  }
+}
+
+.accordion .accordion-item {
+  margin-top: -1px;
+  border-top: 1px solid var(--bmw-border, #e6e6e6);
+  border-bottom: 1px solid var(--bmw-border, #e6e6e6);
+}
+
+.accordion .accordion-item:first-child {
+  margin-top: 0;
+}
+
+.accordion .accordion-header {
+  display: flex;
+  min-height: 5rem;
+  margin: 0;
+  padding: 0.5rem 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.accordion .accordion-button {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 0 0.5rem 0 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--bmw-link, #262626);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.accordion .accordion-button:hover {
+  color: var(--bmw-link-hover, #1c69d4);
+}
+
+.accordion .accordion-button:active {
+  color: var(--bmw-link-active, #0653b6);
+}
+
+.accordion .accordion-button:focus-visible {
+  outline: none;
+  background: var(--bmw-focus-background-link);
+  box-shadow: var(--bmw-focus-outside);
+}
+
+.accordion .accordion-title {
+  padding: 0 0.5rem;
+  font-size: var(--bmw-subsection-1-font-size);
+  font-weight: var(--bmw-font-weight-default);
+  line-height: var(--bmw-subsection-1-line-height);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.accordion .accordion-icon {
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  transition: transform 0.5s ease-in-out;
+}
+
+.accordion .accordion-item.is-open .accordion-icon {
+  transform: rotate(-180deg);
+}
+
+.accordion .accordion-panel {
+  padding: 0.75rem 0.5rem 3rem;
+  font-size: var(--bmw-body-1-font-size);
+  line-height: var(--bmw-body-1-line-height);
+}
+
+.accordion.faq .accordion-panel {
+  padding-bottom: 1.5rem;
+}
+
+@media (width >= 768px) {
+  .accordion.faq .accordion-panel {
+    padding-right: 3rem;
+  }
+}
+
+.accordion .accordion-panel[hidden] {
+  display: none;
+}
+
+.accordion .accordion-panel > * {
+  margin: 0;
+}
+
+.accordion .accordion-panel > * + * {
+  margin-top: var(--bmw-spacing-4);
+}
+
+.accordion .accordion-panel > :is(h2, h3, h4, h5, h6) {
+  font-size: var(--bmw-subsection-2-font-size);
+  font-weight: var(--bmw-font-weight-default);
+  line-height: var(--bmw-subsection-2-line-height);
+}
+
+.accordion .accordion-panel > * + :is(h2, h3, h4, h5, h6) {
+  margin-top: var(--bmw-spacing-10);
+}
+
+.accordion .accordion-panel picture,
+.accordion .accordion-panel img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.accordion .accordion-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bmw-spacing-4) calc(2 * var(--bmw-grid-gutter, 0.75rem));
+}
+
+.accordion .accordion-panel > .accordion-buttons {
+  margin-top: var(--bmw-spacing-8);
+}
+
+.accordion .accordion-buttons > p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion .accordion-icon {
+    transition: none;
+  }
+}

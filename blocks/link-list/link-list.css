@@ -1,0 +1,242 @@
+/* Link List (source cmp-list, title top) */
+.link-list .link-list-title {
+  margin: 0 0 1rem;
+  color: var(--bmw-color-text, #262626);
+  font-size: var(--bmw-label-1-font-size, 0.75rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-label-1-line-height, 1rem);
+}
+
+.link-list .link-list-items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link-list .link-list-item {
+  margin: 0;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+}
+
+.link-list a.link-list-link:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 0;
+  color: var(--bmw-link, #262626);
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-clickable, 500);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+  text-decoration: none;
+}
+
+.link-list a.link-list-link:hover {
+  color: var(--bmw-link-hover, #1c69d4);
+}
+
+.link-list a.link-list-link:active {
+  color: var(--bmw-link-active, #0653b6);
+}
+
+.link-list a.link-list-link img {
+  width: auto;
+  height: 2em;
+}
+
+/* thin (source .style-list--font-thin, with medium responsive margins) */
+.link-list.thin .link-list-title {
+  margin-bottom: 1.5rem;
+  font-size: var(--bmw-subsection-1-font-size, 1.1875rem);
+  line-height: var(--bmw-subsection-1-line-height, 1.75rem);
+}
+
+.link-list.thin .link-list-items {
+  gap: 1rem;
+}
+
+.link-list.thin .link-list-item {
+  font-size: var(--bmw-label-1-font-size, 0.75rem);
+  line-height: var(--bmw-label-1-line-height, 1rem);
+}
+
+.link-list.thin a.link-list-link:any-link {
+  font-weight: var(--bmw-font-weight-default, 300);
+}
+
+/* horizontal (source .style-list--orientation-horizontal, margins none) */
+.link-list.horizontal .link-list-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.link-list.horizontal .link-list-title {
+  width: 100%;
+  margin: 0.25rem 2rem 0.75rem 0;
+}
+
+.link-list.horizontal .link-list-items {
+  flex-flow: row wrap;
+  gap: 0 2rem;
+}
+
+.link-list.horizontal .link-list-item {
+  margin-bottom: 0.75rem;
+}
+
+.link-list.horizontal .link-list-icon-only a.link-list-link:any-link {
+  margin-right: -1.25rem;
+}
+
+/* overflow: one scrollable row, fading edges */
+.link-list.overflow .link-list-scroller {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.link-list.overflow .link-list-items {
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: -0.75rem;
+  padding: 0.75rem;
+  overflow: auto;
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.link-list.overflow .link-list-items::-webkit-scrollbar {
+  display: none;
+}
+
+.link-list.overflow .link-list-items.is-dragging {
+  cursor: grabbing;
+}
+
+.link-list.overflow .link-list-items.is-dragging a {
+  pointer-events: none;
+}
+
+.link-list.overflow .link-list-item {
+  white-space: nowrap;
+}
+
+.link-list.overflow .has-prev .link-list-items {
+  mask: linear-gradient(to right, transparent 0, #fff calc(var(--bmw-grid-full, 1.5rem) * 3));
+}
+
+.link-list.overflow .has-next .link-list-items {
+  mask: linear-gradient(to left, transparent 0, #fff calc(var(--bmw-grid-full, 1.5rem) * 3));
+}
+
+.link-list.overflow .has-prev.has-next .link-list-items {
+  mask:
+    linear-gradient(to left, transparent 0, #fff calc(var(--bmw-grid-full, 1.5rem) * 3)) right / 51% 100% no-repeat,
+    linear-gradient(to right, transparent 0, #fff calc(var(--bmw-grid-full, 1.5rem) * 3)) left / 51% 100% no-repeat;
+}
+
+/* collapsible title (mobile) */
+.link-list .link-list-toggle {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: default;
+}
+
+@media (width < 768px) {
+  .link-list.collapsible .link-list-title {
+    margin-bottom: 1.5rem;
+    font-size: var(--bmw-body-2-font-size, 0.875rem);
+    font-weight: var(--bmw-font-weight-clickable, 500);
+    line-height: var(--bmw-body-2-line-height, 1.375rem);
+  }
+
+  .link-list.collapsible .link-list-toggle {
+    position: relative;
+    padding: 0 2rem 1.5rem 0;
+    cursor: pointer;
+  }
+
+  .link-list.collapsible .link-list-toggle:hover {
+    color: var(--bmw-link-hover, #1c69d4);
+  }
+
+  .link-list.collapsible .link-list-toggle::after {
+    content: "arrow_chevron_down";
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    font-family: var(--bmw-font-family-icons, "bmw_next_icons");
+    font-size: 1.5rem;
+    font-weight: 400;
+    font-feature-settings: "liga";
+    line-height: 1;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .link-list.collapsible.is-expanded .link-list-toggle::after {
+    transform: rotate(-180deg);
+  }
+
+  .link-list.collapsible .link-list-items {
+    max-height: 0;
+    margin: -0.5rem 0 0;
+    padding: 0.5rem 0 0 1rem;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .link-list.collapsible.is-expanded .link-list-items {
+    max-height: 200rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+@media (width < 1280px) {
+  .link-list.center {
+    text-align: center;
+  }
+
+  .link-list.center .link-list-inner,
+  .link-list.center .link-list-items {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (width >= 768px) {
+  .link-list.horizontal .link-list-inner {
+    flex-wrap: nowrap;
+  }
+
+  .link-list.horizontal .link-list-title {
+    width: auto;
+    white-space: nowrap;
+  }
+}
+
+@media (width >= 1280px) {
+  .link-list.thin .link-list-title {
+    margin-bottom: 2rem;
+  }
+
+  .link-list.thin .link-list-items {
+    gap: 0.75rem;
+  }
+}

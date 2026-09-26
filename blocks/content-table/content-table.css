@@ -1,0 +1,96 @@
+/* Content Table (source cmp-contenttable) */
+.content-table {
+  --content-table-edge: var(--bmw-grid-full, 1.5rem);
+  --content-table-gap: 1rem;
+}
+
+.content-table .content-table-scroller {
+  margin: 0 calc(-1 * var(--content-table-edge));
+  padding: 0 var(--content-table-edge);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  mask:
+    linear-gradient(90deg, transparent 0, #fff var(--content-table-edge)) left / 50% 100% no-repeat,
+    linear-gradient(270deg, transparent 0, #fff var(--content-table-edge)) right / 50% 100% no-repeat;
+}
+
+.content-table .content-table-table {
+  width: 100%;
+  min-width: calc(var(--content-table-cols, 2) * 13.5rem);
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--bmw-color-text, #262626);
+}
+
+.content-table .content-table-cell {
+  box-sizing: border-box;
+  padding: 0.75rem var(--content-table-gap) 0.75rem 0;
+  border-bottom: 1px solid var(--bmw-grey-300, #e6e6e6);
+  background: transparent;
+  font-size: var(--bmw-body-1-font-size, 1rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-body-1-line-height, 1.625rem);
+  text-align: start;
+  vertical-align: middle;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+.content-table thead .content-table-cell {
+  font-size: var(--bmw-subsection-2-font-size, 1.0625rem);
+  line-height: var(--bmw-subsection-2-line-height, 1.625rem);
+  vertical-align: top;
+}
+
+.content-table .content-table-cell:last-child {
+  padding-right: 0;
+}
+
+.content-table .content-table-cell > * {
+  margin: 0;
+}
+
+.content-table .content-table-cell > * + * {
+  margin-top: 0.5rem;
+}
+
+.content-table .content-table-cell.align-center {
+  text-align: center;
+}
+
+.content-table .content-table-cell.align-end {
+  text-align: end;
+}
+
+.content-table .content-table-row.is-highlight .content-table-cell {
+  background: var(--bmw-grey-200, #f2f2f2);
+}
+
+.section.grey .content-table .content-table-row.is-highlight .content-table-cell {
+  background: var(--bmw-color-white, #fff);
+}
+
+.content-table .content-table-cell a:any-link {
+  font-weight: var(--bmw-font-weight-clickable, 500);
+}
+
+.content-table .content-table-cell .button-wrapper {
+  margin: 0.1875rem 0;
+}
+
+@media (width >= 768px) {
+  .content-table {
+    --content-table-gap: 1.5rem;
+  }
+}
+
+@media (width >= 1024px) {
+  .content-table .content-table-table {
+    min-width: 0;
+  }
+
+  .content-table .content-table-scroller {
+    mask: none;
+  }
+}

@@ -140,3 +140,24 @@ export function cell(document, nodes) {
   (Array.isArray(nodes) ? nodes : [nodes]).filter(Boolean).forEach((n) => d.append(n));
   return d;
 }
+
+/**
+ * Text of the first heading (or first paragraph) inside the element carrying the anchor id `href`
+ * ("#id"). Stored next to in-page nav links so the runtime can find the target section even when
+ * the section itself carries no id.
+ */
+export function anchorHint(document, href) {
+  if (!href || !href.startsWith('#') || href.length < 2) return '';
+  let id = href.substring(1).trim();
+  try { id = decodeURIComponent(id).trim(); } catch (e) { /* keep */ }
+  let target = null;
+  try { target = document.getElementById(id); } catch (e) { target = null; }
+  if (!target) return '';
+  const h = target.querySelector('.cmp-title__text, h1, h2, h3, h4, h5, h6');
+  let hint = h ? text(h) : '';
+  if (!hint) {
+    const p = target.querySelector('.cmp-text p, p');
+    hint = p ? text(p) : '';
+  }
+  return hint.slice(0, 120);
+}

@@ -1,0 +1,286 @@
+/* CTA Collection (source .style-button--sticky-top-right + .cmp-ctacollection-popover) */
+.cta-collection {
+  --cta-collection-padding: 4rem 1.5rem 3rem;
+  --cta-collection-width: 100%;
+  --cta-collection-heading-gap: 1.5rem;
+  --cta-collection-separator-gap: 1.5rem;
+}
+
+.cta-collection .cta-collection-trigger {
+  width: auto;
+  padding-inline: 1.5rem;
+}
+
+/* sticky: fixed top-right, fades in once scrolled past the block position */
+.cta-collection.sticky {
+  height: 0;
+  margin: 0;
+}
+
+.cta-collection.sticky .cta-collection-trigger {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 6060;
+  width: max-content;
+  min-width: unset;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.cta-collection.sticky.is-visible .cta-collection-trigger,
+.cta-collection.sticky .cta-collection-trigger:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* popover: full-screen dialog; the panel is placed inside */
+.cta-collection dialog.cta-collection-popover {
+  position: fixed;
+  inset: 0;
+  z-index: 6090;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: rgb(0 0 0 / 80%);
+  color: var(--bmw-grey-900, #262626);
+}
+
+.cta-collection dialog.cta-collection-popover::backdrop {
+  background: transparent;
+}
+
+.cta-collection dialog.cta-collection-popover.is-open {
+  animation: cta-collection-fade-in 0.3s forwards;
+}
+
+.cta-collection dialog.cta-collection-popover.is-closing {
+  animation: cta-collection-fade-out 0.3s forwards;
+}
+
+.cta-collection .cta-collection-panel {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  width: var(--cta-collection-width);
+  max-height: 100%;
+  padding: var(--cta-collection-padding);
+  overflow-y: auto;
+  background: var(--bmw-color-white, #fff);
+  box-shadow: 0 4px 12px 0 rgb(0 0 0 / 16%), 0 0 1px 0 rgb(0 0 0 / 29%);
+}
+
+.cta-collection .is-open .cta-collection-panel {
+  animation: cta-collection-slide-in 0.3s ease-out;
+}
+
+.cta-collection .is-closing .cta-collection-panel {
+  animation: cta-collection-slide-out 0.3s ease-in forwards;
+}
+
+.cta-collection .cta-collection-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  margin: 1rem 1rem 0 0;
+  padding: 0.75rem;
+  border: 0;
+  border-radius: var(--bmw-button-radius, 3px);
+  background: var(--bmw-color-white, #fff);
+  color: var(--bmw-grey-900, #262626);
+  cursor: pointer;
+}
+
+.cta-collection .cta-collection-close .bmw-icon {
+  font-size: 1.5rem;
+}
+
+.cta-collection .cta-collection-close:focus-visible {
+  outline: none;
+  background: var(--bmw-grey-500, #bbb);
+  box-shadow: var(--bmw-focus-outside, 0 0 0 0.0625rem #fff, 0 0 0 0.3125rem #1c69d4);
+}
+
+.cta-collection .cta-collection-heading {
+  margin: 0 2.75rem var(--cta-collection-heading-gap) 0;
+  font-size: var(--bmw-headline-3-font-size, 1.4375rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-headline-3-line-height, 2rem);
+  word-break: auto-phrase;
+}
+
+.cta-collection .cta-collection-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cta-collection .cta-collection-buttons .button {
+  width: 100%;
+  max-width: none;
+}
+
+.cta-collection .cta-collection-separator {
+  margin: var(--cta-collection-separator-gap) 0;
+  border: 1px solid var(--bmw-grey-300, #e6e6e6);
+}
+
+.cta-collection .cta-collection-textlinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cta-collection a.cta-collection-textlink:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--bmw-link, #262626);
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-clickable, 500);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+  text-decoration: none;
+}
+
+.cta-collection a.cta-collection-textlink:hover {
+  color: var(--bmw-link-hover, #1c69d4);
+}
+
+.cta-collection .cta-collection-textlink .bmw-icon {
+  font-size: 1.25rem;
+}
+
+@media (width >= 768px) {
+  .cta-collection {
+    --cta-collection-padding: 2rem;
+    --cta-collection-width: 19rem;
+    --cta-collection-heading-gap: 1.25rem;
+    --cta-collection-separator-gap: 1.25rem;
+  }
+
+  .cta-collection.sticky .cta-collection-trigger {
+    top: 3.5rem;
+    right: 3.5rem;
+  }
+
+  /* desktop: no backdrop, the panel opens where the button is */
+  .cta-collection dialog.cta-collection-popover {
+    background: none;
+  }
+
+  .cta-collection dialog.cta-collection-popover.is-open,
+  .cta-collection dialog.cta-collection-popover.is-closing {
+    animation: none;
+  }
+
+  .cta-collection .cta-collection-panel {
+    inset: var(--cta-collection-top, 3.5rem) auto auto var(--cta-collection-left, auto);
+    height: fit-content;
+    max-height: calc(100% - 7rem);
+  }
+
+  .cta-collection.sticky .cta-collection-panel {
+    right: 3.5rem;
+    left: auto;
+  }
+
+  .cta-collection .is-open .cta-collection-panel {
+    animation: cta-collection-panel-in 0.3s ease-out;
+  }
+
+  .cta-collection .is-closing .cta-collection-panel {
+    animation: cta-collection-fade-out 0.3s forwards;
+  }
+
+  .cta-collection .cta-collection-heading {
+    margin-right: 2rem;
+  }
+}
+
+@media (width >= 1280px) {
+  .cta-collection {
+    --cta-collection-padding: 2.5rem;
+    --cta-collection-heading-gap: 1.5rem;
+    --cta-collection-separator-gap: 1.5rem;
+  }
+
+  .cta-collection .cta-collection-heading {
+    margin-right: 1.5rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .cta-collection {
+    --cta-collection-padding: 3rem;
+    --cta-collection-width: 22.75rem;
+  }
+
+  .cta-collection .cta-collection-heading {
+    margin-right: 1.25rem;
+  }
+}
+
+@keyframes cta-collection-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cta-collection-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes cta-collection-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cta-collection-slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+}
+
+@keyframes cta-collection-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-collection dialog.cta-collection-popover.is-open,
+  .cta-collection dialog.cta-collection-popover.is-closing,
+  .cta-collection .is-open .cta-collection-panel,
+  .cta-collection .is-closing .cta-collection-panel {
+    animation: none;
+  }
+}

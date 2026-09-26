@@ -1,0 +1,75 @@
+/* Download (source .style-download--link-with-icon .cmp-download) */
+.download .download-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.download .download-item {
+  margin: 0;
+}
+
+.download a.download-link:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--bmw-button-height, 3.25rem);
+  padding: 0;
+  border: 0;
+  color: var(--bmw-link, #262626);
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-clickable, 500);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+  text-decoration: none;
+}
+
+.download a.download-link:hover {
+  color: var(--bmw-link-hover, #1c69d4);
+}
+
+.download a.download-link:active {
+  color: var(--bmw-link-active, #0653b6);
+}
+
+.download a.download-link:focus-visible {
+  outline: none;
+  background: var(--bmw-focus-background-link, rgb(255 255 255 / 50%));
+  box-shadow: var(--bmw-focus-outside, 0 0 0 0.0625rem #fff, 0 0 0 0.3125rem #1c69d4);
+}
+
+.download .download-icon {
+  flex-shrink: 0;
+  font-size: 1.25rem;
+}
+
+/* file name / size / format: read by screen readers only (hidden on the source) */
+.download .download-meta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* option outline: outline button (source .style-download--outline) */
+.download.outline a.download-link:any-link {
+  justify-content: center;
+  padding: 0 1rem;
+  border-radius: var(--bmw-button-radius, 3px);
+  box-shadow: inset 0 0 0 1px var(--bmw-ol, #262626);
+  color: var(--bmw-ol-text, #262626);
+  white-space: nowrap;
+}
+
+.download.outline a.download-link:hover {
+  box-shadow: inset 0 0 0 2px var(--bmw-ol-hover, #262626);
+}
+
+.download.outline .download-icon {
+  display: none;
+}

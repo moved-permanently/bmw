@@ -1,0 +1,265 @@
+/* stylelint-disable no-descending-specificity -- state/context overrides are grouped by feature */
+/* Tabs (source .cmp-tabs; default underline bar, option "buttons" = segmented bar) */
+.tabs {
+  color: var(--bmw-color-text, #262626);
+}
+
+.tabs .tabs-nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.tabs .tabs-nav[hidden] {
+  display: none;
+}
+
+.tabs.left .tabs-nav {
+  justify-content: flex-start;
+}
+
+.tabs .tabs-list {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  max-width: 100%;
+  margin: -0.5rem 0;
+  padding: 0.5rem 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+  cursor: grab;
+}
+
+.tabs .tabs-list::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs .tabs-nav.is-dragging .tabs-list {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.tabs .tabs-nav.is-dragging .tabs-tab {
+  pointer-events: none;
+}
+
+/* faded edges while the bar scrolls */
+.tabs .tabs-nav.mask-left .tabs-list {
+  mask: linear-gradient(to right, transparent 0, #fff calc(var(--bmw-grid-full, 1.5rem) * 3));
+}
+
+.tabs .tabs-nav.mask-right .tabs-list {
+  mask: linear-gradient(to left, transparent 0, #fff calc(var(--bmw-grid-full, 1.5rem) * 3));
+}
+
+.tabs .tabs-nav.mask-left.mask-right .tabs-list {
+  mask:
+    linear-gradient(to left, transparent 0, #fff calc(var(--bmw-grid-full, 1.5rem) * 3)) right / 51% 100% no-repeat,
+    linear-gradient(to right, transparent 0, #fff calc(var(--bmw-grid-full, 1.5rem) * 3)) left / 51% 100% no-repeat;
+}
+
+/* underline bar: grey base line, 4px indicator under the active tab */
+.tabs:not(.buttons) .tabs-list::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0.5rem;
+  z-index: -1;
+  min-width: 100%;
+  border-bottom: 1px solid var(--bmw-border, #e6e6e6);
+}
+
+.tabs .tabs-tab {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: 3.25rem;
+  max-width: calc(100vw - var(--bmw-grid-full, 1.5rem) * 6 + 1rem);
+  margin: 0;
+  padding: 0 0.5rem;
+  border: 0;
+  border-top: 0.25rem solid transparent;
+  border-bottom: 0.25rem solid transparent;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--bmw-grey-700, #666);
+  font-family: inherit;
+  font-size: var(--bmw-body-2-font-size);
+  font-weight: var(--bmw-font-weight-clickable);
+  line-height: var(--bmw-body-2-line-height);
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tabs .tabs-tab-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tabs .tabs-tab.is-active {
+  border-bottom-color: var(--bmw-grey-900, #262626);
+  color: var(--bmw-grey-900, #262626);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tabs .tabs-tab:hover {
+    border-bottom-color: var(--bmw-blue, #1c69d4);
+    color: var(--bmw-blue, #1c69d4);
+  }
+
+  .tabs .tabs-tab.is-active:hover {
+    border-bottom-color: var(--bmw-grey-900, #262626);
+    color: var(--bmw-grey-900, #262626);
+  }
+}
+
+.tabs .tabs-tab:focus-visible {
+  outline: none;
+  border-width: 0;
+  box-shadow: var(--bmw-focus-inside);
+  color: var(--bmw-blue, #1c69d4);
+}
+
+@media (width >= 768px) {
+  .tabs:not(.buttons) .tabs-tab {
+    height: 5rem;
+  }
+}
+
+/* dark sections */
+.section.dark .tabs .tabs-tab,
+.ctx-dark .tabs .tabs-tab {
+  color: var(--bmw-grey-500, #bbb);
+}
+
+.section.dark .tabs .tabs-tab.is-active,
+.ctx-dark .tabs .tabs-tab.is-active {
+  border-bottom-color: #fff;
+  color: #fff;
+}
+
+/* segmented buttons */
+.tabs.buttons .tabs-nav {
+  padding: 0.5rem 0;
+}
+
+.tabs.buttons .tabs-list {
+  display: inline-grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: 0;
+  margin: 0.5rem 0;
+  padding: 0;
+  border-radius: 3px;
+  box-shadow: 0 0.125rem 0.5rem 0 rgb(0 0 0 / 8%), 0 0 0.0625rem 0 rgb(0 0 0 / 28%);
+}
+
+.tabs.buttons .tabs-nav[data-items='2'] .tabs-list {
+  max-width: calc(var(--bmw-grid-full, 1.5rem) * 16);
+}
+
+.tabs.buttons .tabs-tab {
+  width: 100%;
+  min-width: 8rem;
+  min-height: var(--bmw-button-height, 3.25rem);
+  height: auto;
+  max-width: none;
+  padding: 0.5rem 1.125rem;
+  border-radius: 0;
+  background-color: var(--bmw-grey-100, #f6f6f6);
+  color: var(--bmw-grey-700, #666);
+  white-space: normal;
+}
+
+.tabs.buttons .tabs-tab-label {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.tabs.buttons .tabs-tab.is-active,
+.tabs.buttons .tabs-tab.is-active:hover {
+  border-bottom-color: transparent;
+  background-color: #fff;
+  color: var(--bmw-grey-900, #262626);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tabs.buttons .tabs-tab:hover {
+    border-bottom-color: transparent;
+    color: var(--bmw-blue, #1c69d4);
+  }
+}
+
+@media (width >= 768px) {
+  .tabs.buttons .tabs-nav {
+    padding: 0.5rem var(--bmw-grid-full, 3rem);
+  }
+
+  .tabs.buttons .tabs-nav[data-items='2'] .tabs-list {
+    max-width: calc(var(--bmw-grid-full, 3rem) * 10);
+  }
+}
+
+/* panels */
+.tabs .tabs-panel {
+  padding-top: 1rem;
+}
+
+.tabs .tabs-panel[hidden] {
+  display: none;
+}
+
+.tabs .tabs-panel:focus-visible {
+  outline: none;
+  box-shadow: var(--bmw-focus-inside);
+}
+
+.tabs .tabs-panel:not(.has-section) {
+  font-size: var(--bmw-body-1-font-size);
+  line-height: var(--bmw-body-1-line-height);
+}
+
+.tabs .tabs-panel:not(.has-section) > * {
+  margin: 0;
+}
+
+.tabs .tabs-panel:not(.has-section) > * + * {
+  margin-top: var(--bmw-spacing-4);
+}
+
+.tabs .tabs-panel picture,
+.tabs .tabs-panel:not(.has-section) img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.tabs .tabs-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bmw-spacing-4) calc(2 * var(--bmw-grid-gutter, 0.75rem));
+}
+
+.tabs .tabs-buttons > p {
+  margin: 0;
+}
+
+/* a section moved into a tab: the tab is already inside the page grid */
+.tabs .tabs-panel > .section {
+  margin: 0;
+  padding: 0;
+}
+
+.tabs .tabs-panel > .section > div {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tabs .tabs-panel > .section > div + div {
+  margin-top: var(--bmw-spacing-8);
+}

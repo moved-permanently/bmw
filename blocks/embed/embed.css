@@ -1,0 +1,24 @@
+/* Embed (source cmp-embed, style no-border) */
+.embed .embed-frame {
+  position: relative;
+  width: 100%;
+  min-height: 9.375rem;
+}
+
+.embed .embed-frame iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
+/* YouTube / Vimeo: 16:9 */
+.embed.embed-video .embed-frame {
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+}
+
+.embed.embed-video .embed-frame iframe {
+  position: absolute;
+  inset: 0;
+  height: 100% !important;
+}
