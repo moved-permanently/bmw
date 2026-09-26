@@ -1,0 +1,19 @@
+{
+  "variantName": "media-showcase",
+  "baseBlock": "media-showcase",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Full-bleed interactive showcase of images/videos that play one after another; exterior variant with a glass panel listing all item titles (expandable details, play/pause ring), interior variant dark with intro video, headline + details and a control bar (circle pagination, sound, play/pause)",
+  "contentPattern": "One row per item: cell 1 = media (desktop, mobile[, tablet] images, or poster images + desktop/mobile video links), cell 2 = h3 title + description paragraphs. With option intro the first row is the intro media with an h2 intro title.",
+  "options": [
+    "interior",
+    "intro"
+  ],
+  "memberVariantIds": [
+    "media-showcase"
+  ],
+  "usage": {
+    "pagesUsing": [],
+    "reuseCount": 0,
+    "lastUsed": "2026-09-26"
+  }
+}

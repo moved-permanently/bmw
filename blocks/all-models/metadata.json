@@ -1,0 +1,9 @@
+{
+  "variantName": "all-models",
+  "baseBlock": "all-models",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Model finder: sticky filter sidebar (icon toggles for categories/drivetrains, series grid, BMW M, further categories, reset) or chip row on mobile, sort dropdown, grey results area with drivetrain groups of white model cards (body type chip, Neu flag, big series name, fuel icon, car, compare icon, M logo); card click opens a detail row (side view + CTAs) or a full-screen layer on mobile",
+  "contentPattern": "Rows: [filter key | heading | list 'Label (value)'] per filter group; [sort | label | list 'Label (default)', 'Label (new)']; [preselect | 'key: value']; [h2 group heading | group code]; [car image, side image | body type p, *flag* p, h3 series (sub = small suffix), description p, fuel text p, M logo image, USP list | CTA links (+ compare link) | tags 'fuelType: e, series: x, category: suv, bmwM: no, driveType: ar, offers: new']. URL params ?series= ?category= ?fuelType= ?bmwM= ?specialCategory= preselect filters. Option: no-filter.",
+  "options": ["no-filter"],
+  "memberVariantIds": ["all-models"]
+}

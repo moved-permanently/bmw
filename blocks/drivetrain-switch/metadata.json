@@ -1,0 +1,9 @@
+{
+  "variantName": "drivetrain-switch",
+  "baseBlock": "drivetrain-switch",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Left: drivetrain cards grouped (Modelle / M Modelle), current one framed with check mark; right: big series name behind the car, key facts row, dark 'Technische Daten' button, compare link, WLTP small print. Mobile: cards become a dropdown.",
+  "contentPattern": "Rows: [group label (+ branding image) | list of drivetrains: car image + name (plain text = current page, link = other page)]; [series name | car image]; [fact label | value] per key fact; [CTA links] (strong+em = dark button, plain = link, link to the compare page = compare link); [disclaimer text].",
+  "options": [],
+  "memberVariantIds": ["drivetrain-switch"]
+}

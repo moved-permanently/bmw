@@ -29,11 +29,17 @@ export default function transform(hookName, element, payload) {
       if (!content || !owner) return;
       const txt = content.textContent.replace(/\s+/g, ' ').trim();
       if (!txt) return;
+      const targets = [...new Set([owner, infoi.parentElement].filter(Boolean))];
       if (txt.startsWith(WLTP_START)) {
-        owner.setAttribute('data-info', 'wltp');
+        targets.forEach((t) => t.setAttribute('data-info', 'wltp'));
         if (!doc.documentElement.getAttribute('data-wltp-info')) doc.documentElement.setAttribute('data-wltp-info', content.innerHTML.trim());
       } else {
-        owner.setAttribute('data-info-html', content.innerHTML.trim());
+        // several tooltips can belong to one component: keep them all, in order
+        const html = content.innerHTML.trim();
+        targets.forEach((t) => {
+          const prev = t.getAttribute('data-info-html');
+          t.setAttribute('data-info-html', prev && t === owner && t !== infoi.parentElement ? `${prev}${html}` : html);
+        });
       }
     });
     CHROME.forEach((sel) => {

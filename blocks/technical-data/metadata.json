@@ -1,0 +1,9 @@
+{
+  "variantName": "technical-data",
+  "baseBlock": "technical-data",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Model (+ transmission) dropdowns, collapsible spec groups with zebra 2-column fact grid, measurement images with dimension lines, variant-specific footnotes",
+  "contentPattern": "Rows: [fuel type | model | transmission] starts a variant (first = default, URL hash with model slug preselects); [h3 heading] group; [image | dimension] measurement; [label | value] fact; last single-cell row: footnote paragraphs starting with <sup>n</sup>. Option: short (3 columns).",
+  "options": ["short"],
+  "memberVariantIds": ["technical-data"]
+}

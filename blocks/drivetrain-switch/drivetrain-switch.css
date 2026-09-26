@@ -1,0 +1,544 @@
+/* Drivetrain Switch (source .cmp-drivetrain-switch) */
+.drivetrain-switch {
+  display: grid;
+  color: var(--bmw-color-text, #262626);
+  scroll-margin-top: var(--nav-height, 64px);
+}
+
+.drivetrain-switch .drivetrain-switch-models {
+  display: none;
+}
+
+.drivetrain-switch .drivetrain-switch-group-label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  font-size: var(--bmw-label-1-font-size);
+  line-height: var(--bmw-label-1-line-height);
+}
+
+.drivetrain-switch .drivetrain-switch-subbrand {
+  display: inline-block;
+  width: auto;
+  height: 1em;
+}
+
+.drivetrain-switch .drivetrain-switch-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drivetrain-switch .drivetrain-switch-card-item {
+  position: relative;
+  transition: box-shadow 0.25s ease-in-out;
+}
+
+.drivetrain-switch .drivetrain-switch-card {
+  --dts-border-color: #e6e6e6;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 3.25rem;
+  padding: 0.75rem;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 0.125rem var(--dts-border-color);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.drivetrain-switch a.drivetrain-switch-card:any-link {
+  border-bottom: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.drivetrain-switch .drivetrain-switch-card.is-selected {
+  --dts-border-color: #4d4d4d;
+
+  cursor: default;
+}
+
+/* check mark badge of the selected card */
+.drivetrain-switch .drivetrain-switch-card.is-selected::after {
+  content: "checkmark";
+  position: absolute;
+  top: -0.333em;
+  right: -0.333em;
+  z-index: 2;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.25em;
+  border-radius: 50%;
+  background: #4d4d4d;
+  color: #fff;
+  font-family: var(--bmw-font-family-icons);
+  font-size: 1rem;
+  font-feature-settings: "liga";
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.drivetrain-switch .drivetrain-switch-card-image {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+}
+
+.drivetrain-switch .drivetrain-switch-card-image img {
+  display: block;
+  width: 6.65vw;
+  max-width: 6rem;
+  height: auto;
+  transform: scale(1.05);
+}
+
+.drivetrain-switch .drivetrain-switch-card-name {
+  font-size: var(--bmw-body-2-font-size);
+  font-weight: var(--bmw-font-weight-light, 300);
+  line-height: var(--bmw-body-2-line-height);
+  text-align: start;
+  word-break: keep-all;
+}
+
+.drivetrain-switch .drivetrain-switch-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 0;
+}
+
+/* mobile dropdown */
+.drivetrain-switch .drivetrain-switch-dropdown {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.drivetrain-switch .drivetrain-switch-dropdown-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0 1.25rem;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-size: var(--bmw-body-2-font-size);
+  line-height: var(--bmw-body-2-line-height);
+  text-align: start;
+  cursor: pointer;
+}
+
+.drivetrain-switch .drivetrain-switch-dropdown-button::after {
+  content: "arrow_chevron_down";
+  font-family: var(--bmw-font-family-icons);
+  font-size: 1.5rem;
+  font-feature-settings: "liga";
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.drivetrain-switch .drivetrain-switch-dropdown-button[aria-expanded="true"]::after {
+  content: "arrow_chevron_up";
+}
+
+.drivetrain-switch .drivetrain-switch-dropdown-button:disabled {
+  cursor: default;
+}
+
+.drivetrain-switch .drivetrain-switch-dropdown-button:disabled::after {
+  visibility: hidden;
+}
+
+.drivetrain-switch .drivetrain-switch-dropdown-list {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  margin: 0;
+  padding: 0.5rem 0;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 0.375rem 1.25rem 0 #00000029, 0 0 0.0625rem 0 #0000003d;
+  list-style: none;
+}
+
+.drivetrain-switch .drivetrain-switch-dropdown-group {
+  padding: 0.5rem 1.25rem 0.25rem;
+  color: #666;
+  font-size: var(--bmw-label-1-font-size);
+  line-height: var(--bmw-label-1-line-height);
+}
+
+.drivetrain-switch .drivetrain-switch-dropdown-option {
+  display: block;
+  padding: 0.75rem 1.25rem;
+  color: inherit;
+  font-weight: var(--bmw-font-weight-light, 300);
+  font-size: var(--bmw-body-2-font-size);
+  line-height: var(--bmw-body-2-line-height);
+  text-decoration: none;
+}
+
+.drivetrain-switch a.drivetrain-switch-dropdown-option:any-link {
+  border-bottom: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.drivetrain-switch a.drivetrain-switch-dropdown-option:hover {
+  background: #f2f2f2;
+}
+
+.drivetrain-switch .drivetrain-switch-dropdown-option.is-selected {
+  font-weight: var(--bmw-font-weight-clickable, 500);
+}
+
+/* model card */
+.drivetrain-switch .drivetrain-switch-modelcard {
+  position: relative;
+  display: grid;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+
+.drivetrain-switch .drivetrain-switch-series {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0.75rem 1.25rem 0 0;
+  color: #e6e6e6;
+  font-size: var(--bmw-stage-model-1-font-size);
+  font-weight: var(--bmw-font-weight-light, 300);
+  line-height: 1;
+}
+
+.drivetrain-switch .drivetrain-switch-car {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1.5);
+}
+
+.drivetrain-switch .drivetrain-switch-car picture {
+  display: contents;
+}
+
+.drivetrain-switch .drivetrain-switch-car img {
+  display: block;
+  flex-shrink: 0;
+  width: 100%;
+  height: auto;
+}
+
+/* facts, CTAs, disclaimer */
+.drivetrain-switch .drivetrain-switch-data {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  width: 100%;
+  align-self: center;
+}
+
+.drivetrain-switch .drivetrain-switch-techdata-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.drivetrain-switch .drivetrain-switch-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+
+.drivetrain-switch .drivetrain-switch-fact {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.drivetrain-switch .drivetrain-switch-fact dt,
+.drivetrain-switch .drivetrain-switch-fact dd {
+  margin: 0;
+  font-size: var(--bmw-body-1-font-size);
+  font-weight: var(--bmw-font-weight-light, 300);
+  line-height: var(--bmw-body-1-line-height);
+}
+
+.drivetrain-switch .drivetrain-switch-fact dd {
+  text-align: end;
+}
+
+.drivetrain-switch .drivetrain-switch-fact sup {
+  font-size: 0.6em;
+  line-height: 0;
+}
+
+.drivetrain-switch .drivetrain-switch-ctas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.drivetrain-switch .drivetrain-switch-ctas p {
+  margin: 0;
+}
+
+.drivetrain-switch .drivetrain-switch-primary {
+  align-self: stretch;
+}
+
+.drivetrain-switch .drivetrain-switch-primary a.button:any-link {
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.drivetrain-switch .drivetrain-switch-secondary {
+  align-self: center;
+}
+
+.drivetrain-switch a.drivetrain-switch-compare:any-link {
+  display: inline-flex;
+  border-bottom: 0;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--bmw-link, #262626);
+  font-size: var(--bmw-body-2-font-size);
+  font-weight: var(--bmw-font-weight-clickable, 500);
+  line-height: var(--bmw-body-2-line-height);
+  text-decoration: none;
+}
+
+.drivetrain-switch a.drivetrain-switch-compare:hover {
+  color: var(--bmw-link-hover, #1c69d4);
+}
+
+.drivetrain-switch a.drivetrain-switch-compare::before {
+  content: "compare";
+  font-family: var(--bmw-font-family-icons);
+  font-size: 1.25rem;
+  font-feature-settings: "liga";
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.drivetrain-switch .drivetrain-switch-disclaimer {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: var(--bmw-body-3-font-size);
+  font-weight: var(--bmw-font-weight-light, 300);
+  line-height: var(--bmw-body-3-line-height);
+  opacity: var(--bmw-disclaimer-opacity, 0.7);
+}
+
+.drivetrain-switch .drivetrain-switch-disclaimer p {
+  margin: 0;
+}
+
+@media (width >= 768px) {
+  .drivetrain-switch .drivetrain-switch-dropdown,
+  .drivetrain-switch .drivetrain-switch-data {
+    width: 66.6667%;
+  }
+
+  .drivetrain-switch .drivetrain-switch-modelcard {
+    aspect-ratio: 16 / 9;
+  }
+
+  .drivetrain-switch .drivetrain-switch-series {
+    padding-top: 1.25rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-car {
+    transform: scale(1.25);
+  }
+
+  .drivetrain-switch .drivetrain-switch-fact dd {
+    font-size: var(--bmw-subsection-1-font-size);
+    line-height: var(--bmw-subsection-1-line-height);
+  }
+
+  .drivetrain-switch .drivetrain-switch-ctas {
+    flex-direction: row;
+    margin: 2rem 0 1.5rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-primary {
+    align-self: center;
+    width: 50%;
+  }
+}
+
+@media (width >= 1024px) {
+  .drivetrain-switch {
+    grid-template-columns: 1fr 3fr;
+    margin: 0 calc(var(--bmw-grid-gutter) * -1);
+  }
+
+  .drivetrain-switch.no-selection {
+    grid-template-columns: 1fr;
+  }
+
+  .drivetrain-switch .drivetrain-switch-selection,
+  .drivetrain-switch .drivetrain-switch-details {
+    padding: 0 var(--bmw-grid-gutter);
+  }
+
+  .drivetrain-switch .drivetrain-switch-models {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    width: fit-content;
+    min-height: 100%;
+  }
+
+  .drivetrain-switch .drivetrain-switch-dropdown {
+    display: none;
+  }
+
+  .drivetrain-switch .drivetrain-switch-modelcard {
+    aspect-ratio: 7 / 3;
+  }
+
+  .drivetrain-switch .drivetrain-switch-series {
+    padding: 1.5rem 0 0 6rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-car {
+    transform: none;
+  }
+
+  .drivetrain-switch .drivetrain-switch-data {
+    width: auto;
+  }
+
+  .drivetrain-switch .drivetrain-switch-techdata-wrapper {
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem 2rem;
+    width: auto;
+  }
+
+  .drivetrain-switch .drivetrain-switch-facts {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-fact {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+  }
+
+  .drivetrain-switch .drivetrain-switch-fact dd {
+    text-align: start;
+    white-space: nowrap;
+  }
+
+  .drivetrain-switch .drivetrain-switch-ctas {
+    align-items: center;
+    margin: 0;
+  }
+
+  .drivetrain-switch .drivetrain-switch-primary {
+    width: auto;
+  }
+
+  .drivetrain-switch .drivetrain-switch-primary a.button:any-link {
+    width: auto;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (width >= 1024px) {
+  .drivetrain-switch .drivetrain-switch-card-item:hover {
+    box-shadow: 0 0.375rem 1.25rem 0 #00000029, 0 0 0.0625rem 0 #0000003d;
+  }
+
+  .drivetrain-switch a.drivetrain-switch-card:hover {
+    --dts-border-color: #bbb;
+  }
+}
+
+@media (width >= 1280px) {
+  .drivetrain-switch .drivetrain-switch-card {
+    padding: 0.875rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-card.is-selected {
+    padding: 1rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-card-image img {
+    width: 6.25vw;
+  }
+
+  .drivetrain-switch .drivetrain-switch-series {
+    padding-top: 0;
+  }
+
+  .drivetrain-switch .drivetrain-switch-data {
+    row-gap: 1.25rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-techdata-wrapper {
+    gap: 2rem 2.5rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-facts {
+    gap: 2.5rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .drivetrain-switch .drivetrain-switch-card {
+    padding: 1rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-card.is-selected {
+    padding: 1.125rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-series {
+    padding: 2.5rem 0 0 10.75rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-data {
+    row-gap: 1.5rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-techdata-wrapper {
+    gap: 2.5rem 3rem;
+  }
+
+  .drivetrain-switch .drivetrain-switch-facts {
+    gap: 3rem;
+  }
+}

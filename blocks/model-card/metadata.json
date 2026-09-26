@@ -1,0 +1,9 @@
+{
+  "variantName": "model-card",
+  "baseBlock": "model-card",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Large light-grey series name behind a cut-out car image, optional back view on hover and USP chips",
+  "contentPattern": "Row 1: series name (+ subtitle paragraph) | car image(s): front view, optional back view. Row 2 (optional): list of USPs. Options: ratio-3x2|ratio-4x3|ratio-16x9|ratio-21x9, light|transparent, text-left|text-center|text-right.",
+  "options": ["ratio-3x2", "ratio-4x3", "ratio-16x9", "ratio-21x9", "light", "transparent", "text-left", "text-center", "text-right"],
+  "memberVariantIds": ["model-card"]
+}

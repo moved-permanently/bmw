@@ -1,0 +1,202 @@
+/* Car KPIs (source .cmp-carKPIs) */
+.car-kpis {
+  --car-kpis-color: var(--bmw-color-text, #262626);
+
+  color: var(--car-kpis-color);
+  text-align: center;
+}
+
+.car-kpis.light {
+  --car-kpis-color: #fff;
+}
+
+.car-kpis .car-kpis-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.car-kpis .car-kpis-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 7.5rem;
+}
+
+.car-kpis .car-kpis-item + .car-kpis-item {
+  margin-top: 3rem;
+}
+
+.car-kpis .car-kpis-figure {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.car-kpis .car-kpis-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.car-kpis .car-kpis-counter {
+  display: inline-flex;
+  height: var(--bmw-headline-1-line-height);
+  overflow: hidden;
+  font-size: var(--bmw-headline-1-font-size);
+  font-weight: var(--bmw-font-weight-light, 300);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--bmw-headline-1-line-height);
+  letter-spacing: -0.125rem;
+}
+
+.car-kpis .car-kpis-digit {
+  display: block;
+  height: var(--bmw-headline-1-line-height);
+  overflow: hidden;
+}
+
+.car-kpis .car-kpis-digit-set {
+  display: flex;
+  flex-direction: column;
+  transition: transform 1.2s cubic-bezier(0.36, 0, 0, 1);
+}
+
+.car-kpis .car-kpis-digit-set > span {
+  display: block;
+  height: var(--bmw-headline-1-line-height);
+}
+
+.car-kpis .car-kpis-char {
+  white-space: pre;
+}
+
+.car-kpis.no-animation .car-kpis-digit-set {
+  transition: none;
+}
+
+.car-kpis .car-kpis-unit {
+  font-size: var(--bmw-subsection-1-font-size);
+  font-weight: var(--bmw-font-weight-light, 300);
+  line-height: var(--bmw-subsection-1-line-height);
+}
+
+.car-kpis .car-kpis-label {
+  display: inline-block;
+  margin: 0.25rem 0 0;
+  font-size: var(--bmw-body-3-font-size);
+  font-weight: var(--bmw-font-weight-light, 300);
+  line-height: var(--bmw-body-3-line-height);
+}
+
+.car-kpis .car-kpis-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.car-kpis .car-kpis-ctas p {
+  margin: 0;
+}
+
+.car-kpis .car-kpis-ctas a.link-arrow:any-link {
+  color: var(--car-kpis-color);
+}
+
+.car-kpis .car-kpis-footnotes {
+  margin-top: 2rem;
+  color: var(--car-kpis-color);
+  font-size: var(--bmw-body-3-font-size);
+  line-height: var(--bmw-body-3-line-height);
+  opacity: var(--bmw-disclaimer-opacity, 0.7);
+}
+
+.car-kpis .car-kpis-footnote p {
+  margin: 0;
+}
+
+.car-kpis .car-kpis-footnote + .car-kpis-footnote {
+  margin-top: 1rem;
+}
+
+@media (width >= 1024px) {
+  .car-kpis .car-kpis-list {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .car-kpis .car-kpis-item {
+    flex: 1 1 0;
+    min-width: 180px;
+    min-height: 140px;
+    padding: 0.5rem 0;
+  }
+
+  .car-kpis .car-kpis-item + .car-kpis-item {
+    margin: 0 0 0 calc(3.5rem + 2.5rem);
+  }
+
+  /* diagonal separator (source .cmp-carKPIs__diagonal-element) */
+  .car-kpis .car-kpis-item + .car-kpis-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(-3.5rem - 1.25rem);
+    width: 3.5rem;
+    height: 140px;
+    background: linear-gradient(to top left, transparent 0, transparent calc(50% - 0.8px), var(--car-kpis-color) 50%, transparent calc(50% + 0.8px), transparent 100%);
+  }
+
+  .car-kpis .car-kpis-label {
+    max-width: 11.25rem;
+    margin-top: 0.75rem;
+  }
+
+  .car-kpis .car-kpis-ctas,
+  .car-kpis .car-kpis-footnotes {
+    margin-top: 2.5rem;
+  }
+
+  .car-kpis .car-kpis-footnote {
+    display: inline;
+    padding-right: 1rem;
+  }
+}
+
+@media (width >= 1280px) {
+  .car-kpis .car-kpis-item {
+    min-width: 220px;
+  }
+
+  .car-kpis .car-kpis-label {
+    max-width: 13.75rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .car-kpis .car-kpis-item {
+    min-width: 280px;
+  }
+
+  .car-kpis .car-kpis-label {
+    max-width: 17.5rem;
+  }
+
+  .car-kpis .car-kpis-ctas,
+  .car-kpis .car-kpis-footnotes {
+    margin-top: 3rem;
+  }
+}

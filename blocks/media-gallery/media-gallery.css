@@ -1,0 +1,409 @@
+/* stylelint-disable no-descending-specificity -- rules are grouped by breakpoint and component part */
+
+/* source .cmp-mediagallery inside .style-container--fixed: full bleed */
+main > .section > .media-gallery-wrapper {
+  padding-inline: 0;
+}
+
+.media-gallery {
+  --mg-item-w: 300px;
+  --mg-item-h: 400px;
+
+  position: relative;
+  overflow: hidden;
+  color: var(--bmw-color-text);
+}
+
+.media-gallery .mg-strip {
+  position: relative;
+}
+
+.media-gallery .mg-viewport {
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.media-gallery .mg-track {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.media-gallery .mg-item {
+  flex: 0 0 var(--mg-item-w);
+  width: var(--mg-item-w);
+  margin: 0;
+}
+
+.media-gallery .mg-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: var(--mg-item-h);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: #262626;
+  color: #fff;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.media-gallery .mg-image,
+.media-gallery .mg-image picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.media-gallery .mg-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.media-gallery .mg-overlay {
+  display: none;
+}
+
+.media-gallery .mg-media:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px #1c69d4;
+}
+
+/* round icon buttons (source .cmp-button--round-icon) */
+.media-gallery .mg-round {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.media-gallery .mg-round[hidden] {
+  display: none;
+}
+
+.media-gallery .mg-round .bmw-icon {
+  font-size: 1.25rem;
+}
+
+.media-gallery .mg-round:active .bmw-icon {
+  color: #bbb;
+}
+
+.media-gallery .mg-round:focus-visible {
+  outline: 0.125rem solid #1c69d4;
+  outline-offset: 0.125rem;
+}
+
+/* ---------------------------------------------------------------- mobile */
+.media-gallery .mg-counter,
+.media-gallery .mg-lightbox-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8125rem;
+  height: 1.625rem;
+  border: 1px solid #000;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #000;
+  font-size: var(--bmw-label-1-font-size);
+  line-height: var(--bmw-label-1-line-height);
+  user-select: none;
+}
+
+.media-gallery .mg-counter {
+  position: absolute;
+  z-index: 2;
+  top: calc(var(--mg-item-h) - 1rem - 1.625rem);
+  left: 1rem;
+  pointer-events: none;
+}
+
+.media-gallery .mg-progress {
+  width: 108px;
+  height: 2px;
+  margin: 1.25rem auto 2.5rem;
+  overflow: hidden;
+  background-color: color-mix(in srgb, currentcolor 20%, transparent);
+}
+
+.media-gallery .mg-progress-fill {
+  width: calc(100% / var(--mg-count, 1));
+  height: 100%;
+  background-color: currentcolor;
+  transform: translateX(calc(var(--mg-index, 0) * 100%));
+  transition: transform 0.3s ease;
+}
+
+.media-gallery .mg-caption {
+  display: grid;
+  padding: 0 1.5rem 4rem 1.25rem;
+}
+
+.media-gallery .mg-caption-item {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.media-gallery .mg-caption-item.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.media-gallery .mg-caption h3 {
+  margin: 0 0 1.25rem;
+  font-size: var(--bmw-headline-3-font-size);
+  font-weight: var(--bmw-font-weight-default);
+  line-height: var(--bmw-headline-3-line-height);
+}
+
+.media-gallery .mg-caption p {
+  margin: 0;
+  font-size: var(--bmw-body-1-font-size);
+  line-height: var(--bmw-body-1-line-height);
+}
+
+.media-gallery .mg-nav {
+  display: none;
+}
+
+/* ---------------------------------------------------------------- desktop */
+@media (width >= 768px) {
+  .media-gallery .mg-track {
+    transition: none;
+  }
+
+  .media-gallery .mg-track.is-stepping {
+    transition: transform 0.5s ease;
+  }
+
+  .media-gallery .mg-counter,
+  .media-gallery .mg-progress,
+  .media-gallery .mg-caption {
+    display: none;
+  }
+
+  .media-gallery .mg-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin: 1rem 5.125rem 1.75rem;
+  }
+
+  .media-gallery .mg-pause,
+  .media-gallery .mg-play {
+    margin-left: 1.375rem;
+  }
+
+  .media-gallery .mg-overlay {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background: color-mix(in srgb, #000 60%, transparent);
+    opacity: 0;
+    transition: opacity 0.25s ease-out, backdrop-filter 0.25s ease-out;
+    user-select: none;
+  }
+
+  .media-gallery .mg-overlay-content {
+    --mg-overlay-bottom: 3rem;
+    --mg-overlay-top: 1.5rem;
+
+    position: absolute;
+    bottom: var(--mg-overlay-bottom);
+    left: 1.25rem;
+    max-height: calc(100% - var(--mg-overlay-bottom) - var(--mg-overlay-top));
+    overflow: hidden;
+  }
+
+  .media-gallery .mg-overlay-content,
+  .media-gallery .mg-arrow {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  }
+
+  .media-gallery .mg-arrow {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .media-gallery .mg-title {
+    display: block;
+    margin: 0 1.5rem 1.25rem 0;
+    font-size: var(--bmw-headline-3-font-size);
+    font-weight: var(--bmw-font-weight-default);
+    line-height: var(--bmw-headline-3-line-height);
+  }
+
+  .media-gallery .mg-text {
+    display: block;
+    margin-right: 1.5rem;
+    font-size: 1.0625rem;
+    font-weight: var(--bmw-font-weight-default);
+    line-height: 1.75rem;
+  }
+
+  .media-gallery .mg-media:focus-visible .mg-overlay,
+  .media-gallery .mg-media:focus-visible .mg-overlay-content,
+  .media-gallery .mg-media:focus-visible .mg-arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (width >= 768px) and (hover: hover) and (pointer: fine) {
+  .media-gallery .mg-media:hover .mg-overlay {
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    transition-delay: 0.5s;
+  }
+
+  .media-gallery .mg-media:hover .mg-overlay-content,
+  .media-gallery .mg-media:hover .mg-arrow {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.5s;
+  }
+}
+
+@media (width >= 1280px) {
+  .media-gallery {
+    --mg-item-w: 330px;
+    --mg-item-h: 440px;
+  }
+
+  .media-gallery .mg-overlay-content {
+    --mg-overlay-bottom: 5rem;
+    --mg-overlay-top: 2.5rem;
+
+    left: 1.5rem;
+  }
+
+  .media-gallery .mg-title {
+    margin: 0 2.5rem 1.5rem 0;
+  }
+
+  .media-gallery .mg-text {
+    margin-right: 2.5rem;
+    font-size: 1.125rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .media-gallery {
+    --mg-item-w: 547.5px;
+    --mg-item-h: 730px;
+  }
+
+  .media-gallery .mg-overlay-content {
+    --mg-overlay-bottom: 4.125rem;
+    --mg-overlay-top: 5rem;
+
+    left: 2rem;
+  }
+
+  .media-gallery .mg-title {
+    margin: 0 5rem 1.25rem 0;
+  }
+
+  .media-gallery .mg-text {
+    margin-right: 5rem;
+    font-size: 1.1875rem;
+    line-height: 1.875rem;
+  }
+}
+
+/* ---------------------------------------------------------------- lightbox */
+html.mg-lightbox-open {
+  overflow: hidden;
+}
+
+.media-gallery .mg-lightbox {
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+}
+
+.media-gallery .mg-lightbox::backdrop {
+  background: color-mix(in srgb, #000 80%, transparent);
+}
+
+.media-gallery .mg-lightbox-stage {
+  position: relative;
+  display: flex;
+  width: calc(100vw - 2.25rem);
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.media-gallery .mg-lightbox-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-gallery .mg-lightbox-close {
+  position: absolute;
+  z-index: 2;
+  top: 1rem;
+  right: 1rem;
+}
+
+.media-gallery .mg-lightbox-nav {
+  position: absolute;
+  z-index: 2;
+  bottom: 1.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.media-gallery .mg-lightbox-counter {
+  margin-left: 1.5rem;
+}
+
+.media-gallery .mg-lightbox-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-right: 1.5rem;
+}
+
+@media (width >= 1280px) {
+  .media-gallery .mg-lightbox-stage {
+    width: calc(100vw - 14rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-gallery .mg-track,
+  .media-gallery .mg-overlay,
+  .media-gallery .mg-overlay-content,
+  .media-gallery .mg-arrow {
+    transition: none;
+  }
+}

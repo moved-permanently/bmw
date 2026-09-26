@@ -1,0 +1,9 @@
+{
+  "variantName": "car-kpis",
+  "baseBlock": "car-kpis",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "2-4 big key figures (value + unit, label below), diagonal separators on desktop, stacked on mobile, digit roll-in animation",
+  "contentPattern": "One row per KPI: value | unit | label. Row with only links = CTA(s) (plain link = link with chevron). Single-cell text row = footnote. Option: light.",
+  "options": ["light"],
+  "memberVariantIds": ["car-kpis"]
+}

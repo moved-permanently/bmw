@@ -771,3 +771,107 @@ export function scrollToElement(el, offset = 0) {
   const top = el.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top: Math.max(0, top), behavior: reduced ? 'auto' : 'smooth' });
 }
+
+/* ------------------------------------------------------------------------------------------
+ * Info-i tooltip (source .cmp-infoi / tippy): popover beside the icon on desktop, bottom sheet
+ * on mobile. Styles: /scripts/bmw-infoi.css (loaded on first use).
+ * ---------------------------------------------------------------------------------------- */
+
+let infoCssPromise;
+let openInfo = null;
+
+function loadInfoCss() {
+  if (!infoCssPromise) {
+    infoCssPromise = new Promise((resolve) => {
+      const base = (window.hlx && window.hlx.codeBasePath) || '';
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = `${base}/scripts/bmw-infoi.css`;
+      link.onload = () => resolve();
+      link.onerror = () => resolve();
+      document.head.append(link);
+    });
+  }
+  return infoCssPromise;
+}
+
+function closeInfo(focus = true) {
+  if (!openInfo) return;
+  const { button, pop } = openInfo;
+  pop.remove();
+  button.setAttribute('aria-expanded', 'false');
+  if (focus) button.focus({ preventScroll: true });
+  openInfo = null;
+}
+
+/**
+ * Creates an info-i button that shows `content` in a tooltip.
+ * @param {Node|string} content tooltip content (nodes are cloned on open; strings are HTML)
+ * @param {{label?: string, className?: string}} [opts]
+ * @returns {HTMLButtonElement}
+ */
+export function createInfoButton(content, { label = 'Weitere Informationen', className = '' } = {}) {
+  loadInfoCss();
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = `bmw-infoi ${className}`.trim();
+  button.setAttribute('aria-label', label);
+  button.setAttribute('aria-expanded', 'false');
+  const icon = document.createElement('span');
+  icon.className = 'bmw-icon';
+  icon.dataset.icon = 'information';
+  icon.setAttribute('aria-hidden', 'true');
+  icon.textContent = 'information';
+  button.append(icon);
+  button.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (openInfo && openInfo.button === button) {
+      closeInfo();
+      return;
+    }
+    closeInfo(false);
+    const pop = document.createElement('div');
+    pop.className = 'bmw-infoi-pop';
+    pop.setAttribute('role', 'dialog');
+    pop.tabIndex = -1;
+    const body = document.createElement('div');
+    body.className = 'bmw-infoi-body';
+    if (typeof content === 'string') body.innerHTML = content;
+    else if (content) body.append(content.cloneNode(true));
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'bmw-infoi-close';
+    close.setAttribute('aria-label', 'Schließen');
+    close.innerHTML = '<span class="bmw-icon" data-icon="close" aria-hidden="true">close</span>';
+    close.addEventListener('click', () => closeInfo());
+    pop.append(close, body);
+    document.body.append(pop);
+    const mobile = window.matchMedia('(max-width: 767px)').matches;
+    if (mobile) {
+      pop.classList.add('is-sheet');
+    } else {
+      const r = button.getBoundingClientRect();
+      const w = pop.offsetWidth;
+      const h = pop.offsetHeight;
+      const vw = document.documentElement.clientWidth;
+      const left = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), vw - w - 8);
+      const below = window.innerHeight - r.bottom > h + 16 || r.top < h + 16;
+      pop.style.left = `${left + window.scrollX}px`;
+      pop.style.top = `${(below ? r.bottom + 10 : r.top - h - 10) + window.scrollY}px`;
+      pop.dataset.placement = below ? 'bottom' : 'top';
+    }
+    button.setAttribute('aria-expanded', 'true');
+    openInfo = { button, pop };
+    pop.focus({ preventScroll: true });
+  });
+  if (!createInfoButton.bound) {
+    createInfoButton.bound = true;
+    document.addEventListener('click', (e) => {
+      if (openInfo && !openInfo.pop.contains(e.target)) closeInfo(false);
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeInfo(); });
+    window.addEventListener('resize', () => closeInfo(false));
+  }
+  return button;
+}

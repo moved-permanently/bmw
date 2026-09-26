@@ -1,0 +1,20 @@
+{
+  "variantName": "multi-content-gallery",
+  "baseBlock": "multi-content-gallery",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Full-bleed cross-fading media coupled with text cards: swipeable cards overlapping the media below 1280px, tiles under the media from 1280px (active tile opens its card); Mehr/Weniger anzeigen for long texts",
+  "contentPattern": "One row per item: cell 1 = media (desktop, mobile[, tablet] images, or poster images + desktop/mobile video links), cell 2 = h3 title, paragraphs/lists, CTA paragraphs.",
+  "options": [
+    "no-autoplay",
+    "loop",
+    "no-play-button"
+  ],
+  "memberVariantIds": [
+    "multi-content-gallery"
+  ],
+  "usage": {
+    "pagesUsing": [],
+    "reuseCount": 0,
+    "lastUsed": "2026-09-26"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "variantName": "media-gallery",
+  "baseBlock": "media-gallery",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Full-bleed auto-scrolling strip of portrait images with hover overlay (title/text), pause/play and prev/next, lightbox dialog; mobile swipe slider with counter, progress bar and caption",
+  "contentPattern": "One row per image: cell 1 = image (desktop, mobile[, tablet]), cell 2 = h3 title + paragraph.",
+  "options": [
+    "no-autoplay"
+  ],
+  "memberVariantIds": [
+    "media-gallery"
+  ],
+  "usage": {
+    "pagesUsing": [],
+    "reuseCount": 0,
+    "lastUsed": "2026-09-26"
+  }
+}

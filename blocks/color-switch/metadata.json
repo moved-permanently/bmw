@@ -1,0 +1,9 @@
+{
+  "variantName": "color-switch",
+  "baseBlock": "color-switch",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Full-bleed exterior car / interior cabin image with colour swatches, colour name and CTA; vehicle title with arrows for several vehicles; mobile drag-to-pan image with gesture hint; optional '+' hotspot opening a slide-out layer",
+  "contentPattern": "Per vehicle: [vehicle title] row, then one row per colour: swatch image | colour name (+ availability note paragraph) | car images desktop, mobile, tablet [| layer: image, h3, text], then [CTA link] row. Options: exterior|interior, hotspot-<row>-<col>.",
+  "options": ["exterior", "interior", "hotspot-top-left", "hotspot-top-center", "hotspot-top-right", "hotspot-middle-left", "hotspot-middle-right", "hotspot-bottom-left", "hotspot-bottom-center", "hotspot-bottom-right"],
+  "memberVariantIds": ["color-switch"]
+}

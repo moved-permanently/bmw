@@ -1,0 +1,16 @@
+{
+  "variantName": "preview-slider",
+  "baseBlock": "preview-slider",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Stock Locator preview (available new cars): headline, 'Jetzt entdecken' link and the closing teaser card linking to the stock locator results (vehicle data needs a bmw.de proxy)",
+  "contentPattern": "Key/value rows: headline (h2), link (stock locator results link), teaser (teaser card headline), series, model-range, fuel-types, sorting, brand.",
+  "options": [],
+  "memberVariantIds": [
+    "preview-slider"
+  ],
+  "usage": {
+    "pagesUsing": [],
+    "reuseCount": 0,
+    "lastUsed": "2026-09-26"
+  }
+}

@@ -1,0 +1,161 @@
+/* Model Card (source .cmp-modelhubcard) */
+.model-card .model-card-card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: #f2f2f2;
+}
+
+.model-card.transparent .model-card-card {
+  background-color: transparent;
+}
+
+.model-card.ratio-3x2 .model-card-card {
+  aspect-ratio: 3 / 2;
+}
+
+.model-card.ratio-4x3 .model-card-card {
+  aspect-ratio: 4 / 3;
+}
+
+.model-card.ratio-16x9 .model-card-card {
+  aspect-ratio: 16 / 9;
+}
+
+.model-card.ratio-21x9 .model-card-card {
+  aspect-ratio: 21 / 9;
+}
+
+.model-card .model-card-card .model-card-series {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 0;
+}
+
+.model-card .model-card-card .model-card-name {
+  margin: 0;
+  padding: 0.75rem 1.25rem 0;
+  color: #bbb;
+  font-size: var(--bmw-stage-model-1-font-size);
+  font-weight: var(--bmw-font-weight-light, 300);
+  line-height: 1;
+}
+
+.model-card.text-center .model-card-name {
+  text-align: center;
+}
+
+.model-card.text-right .model-card-name {
+  text-align: right;
+}
+
+.model-card .model-card-card .model-card-subtitle {
+  margin: 0;
+  padding: 0 1.25rem;
+  color: #bbb;
+  font-size: var(--bmw-body-1-font-size);
+  line-height: var(--bmw-body-1-line-height);
+}
+
+.model-card .model-card-card .model-card-image {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  height: calc(100% - 2.5rem);
+  margin: 0;
+  font-size: 0;
+  line-height: 0;
+}
+
+.model-card .model-card-card .model-card-image-holder {
+  transform: translateY(1.25rem) scale(1.8);
+}
+
+.model-card .model-card-card .model-card-image img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.model-card .model-card-card .model-card-image a:focus-visible {
+  outline: none;
+  box-shadow: var(--bmw-focus-outside, 0 0 0 2px #1c69d4);
+}
+
+.model-card .model-card-card .model-card-image-back {
+  display: none;
+}
+
+.model-card .model-card-card .model-card-usps {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  margin: 0;
+  padding: 1.25rem;
+  overflow: auto hidden;
+  list-style: none;
+  white-space: nowrap;
+}
+
+.model-card .model-card-card .model-card-usps li {
+  display: inline-block;
+  margin: 0.125rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #4d4d4d;
+  font-size: var(--bmw-label-1-font-size);
+  line-height: var(--bmw-label-1-line-height);
+}
+
+@media (width >= 768px) {
+  .model-card .model-card-card .model-card-image-holder {
+    transform: translateX(-2rem) translateY(1.25rem) scale(1.35);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (width >= 768px) {
+  .model-card .model-card-card.has-backview:hover .model-card-image-front {
+    display: none;
+  }
+
+  .model-card .model-card-card.has-backview:hover .model-card-image-back {
+    display: grid;
+  }
+}
+
+@media (width >= 1024px) {
+  .model-card:not([class*="ratio-"]) .model-card-card {
+    aspect-ratio: 4 / 3;
+  }
+
+  .model-card .model-card-card .model-card-image-holder {
+    transform: translateX(-1rem) translateY(1.25rem) scale(1.35);
+  }
+}
+
+@media (width >= 1280px) {
+  .model-card .model-card-card .model-card-name {
+    padding: 0.75rem 1.5rem 0;
+  }
+
+  .model-card .model-card-card .model-card-subtitle {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .model-card .model-card-card .model-card-name {
+    padding: 1.5rem 2rem 0;
+  }
+
+  .model-card .model-card-card .model-card-subtitle {
+    padding: 0 2rem;
+  }
+
+  .model-card .model-card-card .model-card-image-holder {
+    transform: translateX(-1rem) translateY(1.25rem) scale(1.3);
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "variantName": "model-overview",
+  "baseBlock": "model-overview",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Centered tabs with model counts, horizontal slider of model cards (car on street backdrop, compare icon, name, price with info-i, icon fact rows aligned across cards or check-mark bullets, outline CTAs); arrows on desktop, dots on mobile",
+  "contentPattern": "Rows: [tab title] starts a tab; [car image (optionally linked) | h3 (+ branding image), price paragraph, list of facts 'label <strong>value</strong>' or plain bullet list | CTA links, compare link to /de/bmw-modelle-vergleichen]; last single-cell row = info-i text for the prices.",
+  "options": [],
+  "memberVariantIds": ["model-overview"]
+}

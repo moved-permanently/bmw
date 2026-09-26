@@ -1,0 +1,339 @@
+/* stylelint-disable no-descending-specificity -- rules are grouped by breakpoint and component part */
+
+/* source .cmp-multi-content inside .style-container--fixed: full-bleed media, cards in the grid */
+main > .section > .multi-content-gallery-wrapper {
+  padding-inline: 0;
+}
+
+.multi-content-gallery {
+  --mcg-card-h: 15.625rem;
+  --mcg-gap: calc(var(--bmw-grid-gutter) * 2);
+  --mcg-border: #e6e6e6;
+
+  position: relative;
+  overflow: hidden;
+  color: var(--bmw-color-text);
+}
+
+/* ---------------------------------------------------------------- media */
+.multi-content-gallery .mcg-media {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background-color: #262626;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.multi-content-gallery .mcg-media-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease-in-out 0.25s, visibility 0s linear 0.5s;
+}
+
+.multi-content-gallery .mcg-media-slide.is-active {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.multi-content-gallery .bmw-media,
+.multi-content-gallery .bmw-media > picture,
+.multi-content-gallery .bmw-media .bmw-video {
+  position: absolute;
+  inset: 0;
+}
+
+.multi-content-gallery .bmw-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------------------------------------------------------------- cards */
+.multi-content-gallery .mcg-cards {
+  position: relative;
+  z-index: 2;
+  height: var(--mcg-card-h);
+  margin-top: -2.5rem;
+  padding: 0 var(--bmw-grid-full);
+  overflow-x: clip;
+  touch-action: pan-y;
+}
+
+.multi-content-gallery .mcg-track {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--mcg-gap);
+  height: 100%;
+  transition: transform 0.25s ease-out;
+}
+
+.multi-content-gallery.is-dragging .mcg-track {
+  cursor: grabbing;
+}
+
+.multi-content-gallery .mcg-card {
+  position: relative;
+  display: flex;
+  flex: 0 0 calc((100% + var(--mcg-gap)) * 5 / 6);
+  align-items: flex-end;
+  box-sizing: border-box;
+  height: 100%;
+  cursor: grab;
+}
+
+.multi-content-gallery.single .mcg-card {
+  cursor: auto;
+}
+
+.multi-content-gallery .mcg-tile {
+  display: none;
+}
+
+.multi-content-gallery .mcg-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--mcg-card-h);
+  max-height: var(--mcg-card-h);
+  padding: 1.5rem 0.75rem 0.75rem;
+  border: 0.0625rem solid var(--mcg-border);
+  overflow: hidden;
+  background-color: var(--bmw-surface, #fff);
+  cursor: auto;
+  transition: max-height 0.25s ease-in-out;
+}
+
+.multi-content-gallery .mcg-content.is-expanded {
+  max-height: var(--mcg-expanded-max, 30rem);
+}
+
+.multi-content-gallery .mcg-scroll {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 0;
+  padding: 0 0.75rem 0.75rem;
+  overflow: hidden;
+  font-size: var(--bmw-body-2-font-size);
+  line-height: var(--bmw-body-2-line-height);
+  transition: opacity 0.25s ease-in-out;
+}
+
+.multi-content-gallery .mcg-content.is-expanded .mcg-scroll {
+  overflow: hidden auto;
+  scrollbar-color: #4d4d4d #e6e6e6;
+  scrollbar-width: thin;
+}
+
+.multi-content-gallery .mcg-content.mask-bottom .mcg-scroll {
+  mask: linear-gradient(0deg, #fff0 0, #fff 3rem);
+}
+
+.multi-content-gallery .mcg-content.mask-top .mcg-scroll {
+  mask: linear-gradient(180deg, #fff0 0, #fff 3rem);
+}
+
+.multi-content-gallery .mcg-content.mask-top.mask-bottom .mcg-scroll {
+  mask: linear-gradient(0deg, #fff0 0, #fff 3rem) bottom, linear-gradient(180deg, #fff0 0, #fff 3rem) top;
+  mask-repeat: no-repeat;
+  mask-size: 100% 51%;
+}
+
+.multi-content-gallery .mcg-scroll > * {
+  margin: 0;
+}
+
+.multi-content-gallery .mcg-scroll :is(h2, h3, h4, h5, h6) {
+  color: var(--bmw-color-heading);
+  font-size: var(--bmw-subsection-1-font-size);
+  font-weight: var(--bmw-font-weight-default);
+  line-height: var(--bmw-subsection-1-line-height);
+}
+
+.multi-content-gallery .mcg-scroll :is(ul, ol) {
+  margin-left: 0.5rem;
+  padding-left: 1rem;
+}
+
+.multi-content-gallery .mcg-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.multi-content-gallery .mcg-links a.button:any-link {
+  min-height: var(--bmw-button-small-height);
+  padding: 0.25rem 1.5rem;
+}
+
+/* "Mehr anzeigen / Weniger anzeigen" */
+.multi-content-gallery .mcg-toggle {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-self: flex-start;
+  align-items: center;
+  margin: 0 0.75rem 0.75rem;
+  padding: 0 1.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--bmw-color-text, #000);
+  font-size: var(--bmw-body-2-font-size);
+  font-weight: var(--bmw-font-weight-clickable);
+  line-height: var(--bmw-body-2-line-height);
+  cursor: pointer;
+}
+
+.multi-content-gallery .mcg-toggle[hidden] {
+  display: none;
+}
+
+.multi-content-gallery .mcg-toggle .bmw-icon {
+  position: absolute;
+  top: 50%;
+  left: -0.125rem;
+  font-size: 1.25rem;
+  transform: translateY(-50%);
+  transition: transform 0.25s ease-in-out;
+}
+
+.multi-content-gallery .mcg-content.is-expanded .mcg-toggle .bmw-icon {
+  transform: translateY(-50%) rotate(-180deg);
+}
+
+.multi-content-gallery .mcg-card:not(.is-active) .mcg-scroll,
+.multi-content-gallery .mcg-card:not(.is-active) .mcg-toggle {
+  opacity: 0.5207;
+  pointer-events: none;
+}
+
+.multi-content-gallery button:focus-visible {
+  outline: none;
+  box-shadow: var(--bmw-focus-outside, 0 0 0 2px #1c69d4);
+}
+
+@media (width >= 768px) {
+  .multi-content-gallery {
+    --mcg-card-h: 11.25rem;
+  }
+}
+
+@media (width >= 1024px) {
+  .multi-content-gallery .mcg-media {
+    aspect-ratio: 3;
+  }
+
+  .multi-content-gallery .mcg-card {
+    flex-basis: calc((100% + var(--mcg-gap)) * 0.75);
+  }
+}
+
+/* ---------------------------------------------------------------- desktop tiles */
+@media (width >= 1280px) {
+  .multi-content-gallery {
+    --mcg-card-h: 14.375rem;
+  }
+
+  .multi-content-gallery .mcg-cards {
+    height: 4rem;
+    margin-top: 2.5rem;
+  }
+
+  .multi-content-gallery .mcg-card {
+    flex-basis: calc((100% - 3 * var(--mcg-gap)) / 4);
+    border-bottom: 0.0625rem solid var(--mcg-border);
+    cursor: auto;
+  }
+
+  .multi-content-gallery .mcg-tile {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: -0.0625rem;
+    padding: 1.5rem 0;
+    border: 0;
+    background: transparent;
+    color: var(--bmw-color-text, #000);
+    font-size: var(--bmw-body-2-font-size);
+    font-weight: var(--bmw-font-weight-clickable);
+    line-height: var(--bmw-body-2-line-height);
+    text-align: start;
+    cursor: pointer;
+    transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out, visibility 0s linear;
+  }
+
+  .multi-content-gallery .mcg-tile-title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .multi-content-gallery .mcg-tile .bmw-icon {
+    flex: none;
+    margin: 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  .multi-content-gallery .mcg-content {
+    position: absolute;
+    bottom: -0.0625rem;
+    left: 0;
+    transition: visibility 0s linear, opacity 0.25s ease-in-out, max-height 0.25s ease-in-out,
+      min-height 0.25s ease-in-out, transform 0.25s ease-in-out;
+  }
+
+  .multi-content-gallery .mcg-card.is-active .mcg-tile,
+  .multi-content-gallery .mcg-card:not(.is-active) .mcg-content {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(75%);
+    transition: visibility 0s linear 0.25s, opacity 0.25s ease-in-out, max-height 0.25s ease-in-out,
+      min-height 0.25s ease-in-out, transform 0.25s ease-in-out;
+  }
+
+  .multi-content-gallery .mcg-card:not(.is-active) .mcg-content {
+    min-height: 0;
+    max-height: 0;
+  }
+
+  .multi-content-gallery .mcg-card:not(.is-active) .mcg-scroll {
+    opacity: 1;
+  }
+}
+
+@media (width >= 1920px) {
+  .multi-content-gallery {
+    --mcg-card-h: 12.5rem;
+  }
+
+  .multi-content-gallery .mcg-cards {
+    margin-top: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .multi-content-gallery .mcg-track,
+  .multi-content-gallery .mcg-media-slide,
+  .multi-content-gallery .mcg-content {
+    transition: none;
+  }
+}

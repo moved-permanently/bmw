@@ -1,0 +1,9 @@
+{
+  "variantName": "powertrain-selector",
+  "baseBlock": "powertrain-selector",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "Centered headline, 1-4 grey gradient cards with heading, text and chevron link; mobile accordion with plus/minus",
+  "contentPattern": "Row 1 (optional): h2 title only. Each further row: one cell with h3 heading (optional branding image before it), description paragraph(s), CTA link (plain link). Whole card links to the CTA on desktop.",
+  "options": [],
+  "memberVariantIds": ["powertrain-selector"]
+}
