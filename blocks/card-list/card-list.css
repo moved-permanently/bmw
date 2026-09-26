@@ -1,4 +1,5 @@
 /* stylelint-disable no-descending-specificity -- state/context overrides are grouped by feature */
+
 /* Card List (source .cmp-cardlist) */
 .card-list {
   --card-list-primary-rgb: 58 93 144;

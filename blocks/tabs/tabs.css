@@ -1,4 +1,5 @@
 /* stylelint-disable no-descending-specificity -- state/context overrides are grouped by feature */
+
 /* Tabs (source .cmp-tabs; default underline bar, option "buttons" = segmented bar) */
 .tabs {
   color: var(--bmw-color-text, #262626);
