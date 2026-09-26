@@ -1,0 +1,7 @@
+{
+  "env": { "es2022": true, "node": true, "worker": true },
+  "rules": {
+    "no-console": "off",
+    "import/extensions": ["error", "always", { "ignorePackages": true }]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variantName": "microsite",
+  "baseBlock": "microsite",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "several content pages in one block, one visible at a time, switched by the URL hash",
+  "contentPattern": "One row per page: <page id> | page content. The hash selects the page with that id or containing an element with that id.",
+  "options": [],
+  "memberVariantIds": [
+    "microsite"
+  ],
+  "usage": {
+    "pagesUsing": [],
+    "reuseCount": 0,
+    "lastUsed": "2026-09-26"
+  }
+}

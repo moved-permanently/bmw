@@ -1,0 +1,13 @@
+{
+  "name": "bmw-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Allowlisted reverse proxy to www.bmw.de for the AEM EDS bmw.de replica (Cloudflare Worker)",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test",
+    "dev": "npx -y wrangler@4 dev",
+    "deploy": "npx -y wrangler@4 deploy"
+  }
+}

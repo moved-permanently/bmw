@@ -1,0 +1,129 @@
+/* Questionnaire (source cmp-questionnaire / cmp-microsite, squared answer buttons) */
+.questionnaire {
+  --questionnaire-gap: 1.5rem;
+
+  color: var(--bmw-color-text, #262626);
+  font-size: var(--bmw-body-1-font-size, 1rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-body-1-line-height, 1.625rem);
+}
+
+.questionnaire .questionnaire-page[hidden] {
+  display: none;
+}
+
+.questionnaire .questionnaire-page > * {
+  margin: 0 0 1rem;
+}
+
+.questionnaire .questionnaire-page > :last-child {
+  margin-bottom: 0;
+}
+
+.questionnaire .questionnaire-answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem var(--questionnaire-gap);
+}
+
+.questionnaire .questionnaire-answers > p {
+  flex: 0 0 100%;
+  margin: 0;
+}
+
+/* squared button (source .style-button--squared .cmp-button) */
+.questionnaire a.questionnaire-answer:any-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 1.5rem;
+  overflow: hidden;
+  border: 0;
+  background-color: #f6f6f6;
+  color: #262626;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+  text-align: center;
+  text-decoration: none;
+}
+
+.questionnaire a.questionnaire-answer::before {
+  content: none;
+}
+
+.questionnaire a.questionnaire-answer > * {
+  pointer-events: none;
+}
+
+.questionnaire a.questionnaire-answer:hover {
+  background-color: #f2f2f2;
+  color: #000;
+  text-decoration-line: underline;
+}
+
+.questionnaire a.questionnaire-answer:focus-visible {
+  outline: none;
+  box-shadow: var(--bmw-focus-inside);
+}
+
+/* the text sits in a 2.5rem high centred line box (source .cmp-button__text) */
+.questionnaire .questionnaire-answer-text {
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+  margin-top: 0.5rem;
+}
+
+/* downloads (source style-download--link-with-icon) */
+.questionnaire .questionnaire-download {
+  margin: 0 0 1.5rem;
+}
+
+.questionnaire a.questionnaire-download-link:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  color: var(--bmw-link, #262626);
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-clickable, 500);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+  text-decoration: none;
+}
+
+.questionnaire a.questionnaire-download-link:hover {
+  color: var(--bmw-link-hover, #1c69d4);
+}
+
+.questionnaire a.questionnaire-download-link .bmw-icon {
+  flex: none;
+  font-size: 1.25rem;
+}
+
+@media (width >= 768px) {
+  .questionnaire .questionnaire-answers > p {
+    flex-basis: calc(50% - var(--questionnaire-gap) / 2);
+  }
+}
+
+@media (width >= 1024px) {
+  .questionnaire .questionnaire-answers > p {
+    flex-basis: calc((100% + var(--questionnaire-gap)) * var(--questionnaire-answer-cols, 2) / 12 - var(--questionnaire-gap));
+  }
+
+  .questionnaire a.questionnaire-answer:any-link {
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (width >= 1280px) {
+  .questionnaire a.questionnaire-answer:any-link {
+    font-size: 1rem;
+    line-height: 1.625rem;
+  }
+}

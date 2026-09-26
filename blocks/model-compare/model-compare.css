@@ -1,0 +1,857 @@
+/* Model Compare (port of the source .cmp-compare / .cmp-comparetable styles) */
+.model-compare {
+  --mc-gap: 1.5rem;
+  --mc-grey: #f6f6f6;
+
+  color: var(--bmw-color-text, #262626);
+}
+
+.model-compare .bmw-icon {
+  font-size: 1.5rem;
+}
+
+.model-compare [hidden] {
+  display: none !important;
+}
+
+.model-compare .model-compare-headline {
+  padding: var(--bmw-spacing-20, 5rem) 0 var(--bmw-spacing-16, 4rem);
+  text-align: center;
+}
+
+.model-compare .model-compare-title {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.model-compare .model-compare-status {
+  margin: 0 0 3rem;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------- header columns */
+.model-compare .model-compare-header {
+  margin-bottom: 3rem;
+}
+
+.model-compare .model-compare-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 0.5rem;
+  align-items: stretch;
+}
+
+.model-compare .model-compare-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.model-compare .model-compare-column[data-index="2"] {
+  display: none;
+}
+
+.model-compare .model-compare-column.is-hidden-column {
+  visibility: hidden;
+}
+
+.model-compare .model-compare-column.is-loading {
+  opacity: 0.6;
+}
+
+.model-compare .model-compare-media {
+  position: relative;
+  container-type: inline-size;
+}
+
+.model-compare .model-compare-picture picture,
+.model-compare .model-compare-picture img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.model-compare .model-compare-picture img {
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+/* empty column: dark silhouette of the placeholder car (source .cmp-cosyimage--shadow) */
+.model-compare .model-compare-cosy-empty img {
+  filter: brightness(0) grayscale(1) opacity(0.7);
+}
+
+.model-compare .model-compare-delete {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0.625rem;
+  display: grid;
+  place-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.model-compare .model-compare-delete:hover {
+  color: var(--bmw-blue, #1c69d4);
+}
+
+.model-compare .model-compare-hybrid {
+  position: absolute;
+  z-index: 1;
+  top: 20%;
+  left: 0;
+  color: var(--bmw-blue, #1c69d4);
+  line-height: 1;
+}
+
+.model-compare .model-compare-hybrid .bmw-icon {
+  width: 20cqw;
+  height: 20cqw;
+  font-size: 20cqw;
+}
+
+.model-compare .model-compare-placeholder,
+.model-compare .model-compare-description {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.model-compare .model-compare-name {
+  margin: 0;
+  font-size: var(--bmw-headline-3-font-size, 1.4375rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-headline-3-line-height, 2rem);
+}
+
+.model-compare .model-compare-hint {
+  margin: 1rem 0 1.5rem;
+  font-size: var(--bmw-body-1-font-size, 1rem);
+  line-height: var(--bmw-body-1-line-height, 1.625rem);
+}
+
+.model-compare .model-compare-ctas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin: 0.75rem 0 0;
+}
+
+.model-compare .model-compare-ctas .button-wrapper {
+  max-width: 100%;
+  margin: 0;
+}
+
+.model-compare .model-compare-ctas a.button {
+  min-height: 2.5rem;
+  max-width: 100%;
+}
+
+.model-compare .model-compare-price {
+  margin-top: 1.5rem;
+}
+
+.model-compare .model-compare-price-text {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0;
+  font-size: var(--bmw-body-1-font-size, 1rem);
+  line-height: var(--bmw-body-1-line-height, 1.625rem);
+}
+
+.model-compare .model-compare-price-text strong {
+  font-weight: var(--bmw-font-weight-bold, 700);
+}
+
+/* selection panel (grey form) */
+.model-compare .model-compare-panel {
+  margin: 1.5rem 0 0;
+  padding: 1rem;
+  background: var(--mc-grey);
+}
+
+.model-compare .model-compare-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.model-compare .model-compare-legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.model-compare .model-compare-field {
+  margin-bottom: 1.5rem;
+}
+
+.model-compare .model-compare-field:last-child {
+  margin-bottom: 0;
+}
+
+.model-compare .model-compare-label {
+  display: block;
+  margin: 0 0 0.25rem;
+  color: #666;
+  font-size: var(--bmw-label-1-font-size, 0.75rem);
+  line-height: var(--bmw-label-1-line-height, 1rem);
+}
+
+.model-compare .model-compare-select {
+  position: relative;
+}
+
+.model-compare .model-compare-select select {
+  box-sizing: border-box;
+  width: 100%;
+  height: 2.5rem;
+  margin: 0;
+  padding: 0 3rem 0 1.25rem;
+  border: 1px solid #bbb;
+  border-radius: 0;
+  background: #fff;
+  color: #262626;
+  font-family: inherit;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  appearance: none;
+  cursor: pointer;
+}
+
+.model-compare .model-compare-select select:hover {
+  border-color: #262626;
+}
+
+.model-compare .model-compare-select select:focus-visible {
+  outline: 2px solid var(--bmw-blue, #1c69d4);
+  outline-offset: 0;
+}
+
+.model-compare .model-compare-select select:disabled {
+  border-color: #e6e6e6;
+  background: #f2f2f2;
+  color: #8e8e8e;
+  cursor: default;
+}
+
+.model-compare .model-compare-select-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.model-compare .model-compare-field.is-disabled .model-compare-select-icon {
+  color: #8e8e8e;
+}
+
+.model-compare .model-compare-single {
+  display: none;
+  margin: 0;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  line-height: 2.25rem;
+}
+
+.model-compare .model-compare-field.is-single .model-compare-select {
+  display: none;
+}
+
+.model-compare .model-compare-field.is-single .model-compare-single {
+  display: block;
+}
+
+.model-compare .model-compare-transmission-value {
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+}
+
+.model-compare .model-compare-radio {
+  display: grid;
+  grid-template-columns: 1.5rem auto;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.model-compare .model-compare-radio input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  accent-color: var(--bmw-blue, #1c69d4);
+}
+
+/* ---------------------------------------------------------------- sticky header */
+.model-compare .model-compare-sticky {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: #fff;
+  box-shadow: 0 0.375rem 1.25rem 0 #00000029;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  visibility: hidden;
+}
+
+.model-compare .model-compare-sticky.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  visibility: visible;
+}
+
+.model-compare .model-compare-sticky-inner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  max-width: var(--bmw-page-max-width, 120rem);
+  margin: 0 auto;
+  padding: 0.75rem var(--bmw-grid-full, 1.5rem);
+}
+
+.model-compare .model-compare-sticky-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(4rem, 7.5rem) 1.5rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0 0.75rem;
+  min-width: 0;
+}
+
+.model-compare .model-compare-sticky-picture {
+  position: relative;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.model-compare .model-compare-sticky-picture.model-compare-cosy-empty {
+  cursor: pointer;
+}
+
+.model-compare .model-compare-sticky-picture.model-compare-cosy-empty::after {
+  content: "plus";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  color: #fff;
+  font-family: var(--bmw-font-family-icons, "bmw_next_icons");
+  font-size: 2rem;
+  font-feature-settings: "liga";
+  line-height: 1;
+}
+
+.model-compare .model-compare-sticky-text {
+  grid-row: 1;
+  grid-column: 3;
+  min-width: 0;
+}
+
+.model-compare .model-compare-sticky-item:not(:has(.model-compare-delete)) .model-compare-sticky-text {
+  grid-column: 2 / 4;
+  align-self: center;
+}
+
+.model-compare .model-compare-sticky-item[data-index="2"] {
+  display: none;
+}
+
+.model-compare .model-compare-sticky-item .model-compare-delete {
+  position: static;
+  grid-row: 1;
+  grid-column: 2;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.model-compare .model-compare-sticky-picture img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+.model-compare .model-compare-sticky-text a.link-arrow {
+  white-space: nowrap;
+}
+
+.model-compare .model-compare-sticky-name {
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--bmw-body-1-font-size, 1rem);
+  line-height: var(--bmw-body-1-line-height, 1.625rem);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- sections */
+.model-compare .model-compare-section-title {
+  margin: 0;
+  padding: var(--bmw-spacing-20, 5rem) 0 var(--bmw-spacing-16, 4rem);
+  text-align: center;
+}
+
+.model-compare .model-compare-group {
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.model-compare .model-compare-group-header {
+  margin: 0;
+}
+
+.model-compare .model-compare-group-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 1.5rem 0.5rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: var(--bmw-subsection-1-font-size, 1.1875rem);
+  font-weight: var(--bmw-font-weight-clickable, 500);
+  line-height: var(--bmw-subsection-1-line-height, 1.75rem);
+  text-align: left;
+  cursor: pointer;
+}
+
+.model-compare .model-compare-group-button:hover {
+  color: var(--bmw-blue, #1c69d4);
+}
+
+.model-compare .model-compare-group-button:focus-visible {
+  outline: none;
+  box-shadow: var(--bmw-focus-inside);
+}
+
+.model-compare .model-compare-group-icon {
+  flex: none;
+  transition: transform 0.2s ease-out;
+}
+
+.model-compare .model-compare-group-button[aria-expanded="true"] .model-compare-group-icon {
+  transform: rotate(180deg);
+}
+
+.model-compare .model-compare-group-panel {
+  padding: 0 0.625rem 1.5rem;
+}
+
+.model-compare .model-compare-note {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  background: #dde8f9;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+}
+
+.model-compare .model-compare-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.model-compare .model-compare-row.is-odd {
+  background-color: var(--mc-grey);
+}
+
+.model-compare .model-compare-row-title {
+  grid-column: 1 / -1;
+  padding: 1.25rem 1.5rem 0.25rem;
+  color: #666;
+  font-size: var(--bmw-label-1-font-size, 0.75rem);
+  line-height: var(--bmw-label-1-line-height, 1rem);
+}
+
+.model-compare .model-compare-cell {
+  padding: 0 1.5rem 1.25rem;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+  overflow-wrap: anywhere;
+}
+
+.model-compare .model-compare-cell[data-index="2"] {
+  display: none;
+}
+
+.model-compare .model-compare-cell.is-hidden-column {
+  visibility: hidden;
+}
+
+.model-compare .model-compare-ref {
+  margin-left: 0.25rem;
+  font-size: var(--bmw-body-3-font-size, 0.75rem);
+  line-height: 1;
+  opacity: 0.7051;
+  vertical-align: text-top;
+}
+
+.model-compare .model-compare-ref:empty {
+  display: none;
+}
+
+.model-compare a.model-compare-ref-link:any-link {
+  border: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* toggle "only differences" */
+.model-compare .model-compare-toggle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1.5rem;
+}
+
+.model-compare .model-compare-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: var(--bmw-body-1-font-size, 1rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-body-1-line-height, 1.625rem);
+  cursor: pointer;
+}
+
+.model-compare .model-compare-switch-track {
+  position: relative;
+  flex: none;
+  width: 3.25rem;
+  height: 1.75rem;
+  border-radius: 1.5rem;
+  background: #8e8e8e;
+  transition: background-color 0.15s ease;
+}
+
+.model-compare .model-compare-switch-track::after {
+  content: "";
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.15s ease;
+}
+
+.model-compare .model-compare-switch:hover .model-compare-switch-track {
+  background: #666;
+}
+
+.model-compare .model-compare-switch[aria-pressed="true"] .model-compare-switch-track {
+  background: var(--bmw-blue, #1c69d4);
+}
+
+.model-compare .model-compare-switch[aria-pressed="true"] .model-compare-switch-track::after {
+  left: 1.625rem;
+}
+
+.model-compare .model-compare-switch.is-disabled {
+  color: #bbb;
+  cursor: default;
+}
+
+.model-compare .model-compare-switch.is-disabled .model-compare-switch-track {
+  background: #e6e6e6;
+}
+
+.model-compare .model-compare-toast {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 0.5rem);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  background: #e8f2eb;
+  box-shadow: 0 0.375rem 1.25rem 0 #00000029;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+}
+
+.model-compare .model-compare-toast p {
+  margin: 0;
+}
+
+.model-compare .model-compare-toast-icon {
+  color: #1b7b3a;
+}
+
+.model-compare .model-compare-toast-close {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* design comparison */
+.model-compare .model-compare-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.model-compare .model-compare-tab {
+  margin: 0 0 -1px;
+  padding: 0.75rem 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: #666;
+  font-family: inherit;
+  font-size: var(--bmw-body-1-font-size, 1rem);
+  font-weight: var(--bmw-font-weight-clickable, 500);
+  cursor: pointer;
+}
+
+.model-compare .model-compare-tab[aria-selected="true"] {
+  border-bottom-color: #262626;
+  color: #262626;
+}
+
+.model-compare .model-compare-hint-box {
+  margin: 0 auto 2rem;
+  padding: 0.75rem 1rem;
+  background: #dde8f9;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  text-align: center;
+}
+
+.model-compare .model-compare-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.model-compare .model-compare-gallery-item[data-index="2"] {
+  display: none;
+}
+
+.model-compare .model-compare-gallery-item picture,
+.model-compare .model-compare-gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.model-compare .model-compare-gallery-name {
+  margin: 0.5rem 0 0;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+}
+
+.model-compare .model-compare-disclaimer {
+  display: none;
+  margin: 1.5rem 0 0;
+  font-size: var(--bmw-disclaimer-1-font-size, 0.75rem);
+  line-height: var(--bmw-disclaimer-1-line-height, 1.125rem);
+  opacity: var(--bmw-disclaimer-opacity, 0.7051);
+}
+
+.model-compare .model-compare-design.has-vehicle .model-compare-disclaimer {
+  display: block;
+}
+
+/* footnotes */
+.model-compare .model-compare-footnotes {
+  margin: 3rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--bmw-body-3-font-size, 0.75rem);
+  line-height: var(--bmw-body-3-line-height, 1.125rem);
+  opacity: 0.7051;
+}
+
+.model-compare .model-compare-footnote {
+  position: relative;
+  padding-inline-start: 1rem;
+}
+
+.model-compare .model-compare-footnote::before {
+  content: attr(data-counter);
+  position: absolute;
+  left: 0;
+  width: 1rem;
+}
+
+/* delete confirmation */
+.model-compare .model-compare-dialog {
+  box-sizing: border-box;
+  width: min(100%, 50rem);
+  max-width: 100%;
+  padding: 3rem 1.5rem 1.5rem;
+  border: 0;
+  background: #fff;
+  color: inherit;
+}
+
+.model-compare .model-compare-dialog::backdrop {
+  background: var(--bmw-backdrop, rgb(0 0 0 / 80%));
+}
+
+.model-compare .model-compare-dialog-title {
+  margin: 0 0 2rem;
+  font-size: var(--bmw-headline-4-font-size, 1.25rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-headline-4-line-height, 1.75rem);
+}
+
+.model-compare .model-compare-dialog-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.model-compare .model-compare-dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.model-compare .model-compare-dialog-actions .button {
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------- breakpoints */
+@media (width <= 767px) {
+  .model-compare .model-compare-dialog {
+    margin: auto 0 0;
+  }
+
+  .model-compare .model-compare-select select {
+    padding: 0 2.25rem 0 0.75rem;
+  }
+
+  .model-compare .model-compare-select-icon {
+    right: 0.5rem;
+  }
+}
+
+@media (width >= 768px) {
+  .model-compare .model-compare-panel {
+    padding: 1.5rem;
+  }
+
+  .model-compare .model-compare-ctas {
+    flex-flow: row wrap;
+  }
+}
+
+@media (width >= 1024px) {
+  .model-compare .model-compare-header {
+    margin-bottom: 4rem;
+  }
+
+  .model-compare .model-compare-columns,
+  .model-compare .model-compare-sticky-inner,
+  .model-compare .model-compare-gallery,
+  .model-compare .model-compare-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .model-compare .model-compare-columns {
+    gap: 0 var(--mc-gap);
+  }
+
+  .model-compare .model-compare-column[data-index="2"],
+  .model-compare .model-compare-gallery-item[data-index="2"],
+  .model-compare .model-compare-cell[data-index="2"] {
+    display: block;
+  }
+
+  .model-compare .model-compare-column[data-index="2"] {
+    display: flex;
+  }
+
+  .model-compare .model-compare-sticky-item[data-index="2"] {
+    display: grid;
+  }
+
+  .model-compare .model-compare-ctas {
+    flex-direction: column;
+  }
+
+  .model-compare .model-compare-row-title {
+    padding: 1.5rem 1.5rem 0.25rem 2rem;
+  }
+
+  .model-compare .model-compare-cell {
+    padding: 0 1.5rem 1.5rem 2rem;
+  }
+
+  .model-compare .model-compare-switch-track {
+    width: 3.75rem;
+    height: 2rem;
+  }
+
+  .model-compare .model-compare-switch-track::after {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .model-compare .model-compare-switch[aria-pressed="true"] .model-compare-switch-track::after {
+    left: 1.875rem;
+  }
+
+  .model-compare .model-compare-toggle {
+    margin-top: 0;
+  }
+}
+
+@media (width >= 1280px) {
+  .model-compare .model-compare-header {
+    margin-bottom: 5rem;
+  }
+
+  .model-compare .model-compare-row-title {
+    padding: 2rem 1.5rem 0.25rem 2rem;
+  }
+
+  .model-compare .model-compare-cell {
+    padding: 0 1.5rem 2rem 2rem;
+  }
+
+  .model-compare .model-compare-toggle {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .model-compare .model-compare-row-title {
+    padding: 2rem 2rem 0.25rem;
+  }
+}

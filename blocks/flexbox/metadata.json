@@ -1,0 +1,20 @@
+{
+  "variantName": "flexbox",
+  "baseBlock": "flexbox",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "default: grey link tiles (headline + arrow) centred 1/2/3/4/5 per row; expandable: white icon tiles in a 1/2/3 column grid opening an info panel (group titles, label/value rows) below the tiles; live chat tile (blue)",
+  "contentPattern": "default: one row per tile = link (text = headline). expandable: rows \":icon:\" | label | \"live-chat\" | link | panel content (h3 group title, h4 row label followed by values).",
+  "options": [
+    "expandable"
+  ],
+  "memberVariantIds": [
+    "flexbox"
+  ],
+  "usage": {
+    "pagesUsing": [
+      "https://www.bmw.de/de/mehr-bmw/kundenbetreuung.html"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-26"
+  }
+}

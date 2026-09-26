@@ -1,0 +1,18 @@
+{
+  "variantName": "questionnaire",
+  "baseBlock": "questionnaire",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "question text + grey squared answer tiles; result pages with download links and \"Erneut starten\"; one page visible at a time (URL hash)",
+  "contentPattern": "Rows: <page id> | page content [| answers-N]; questions | q1, q2, ...; rules | \"condition = result\" per paragraph (+ and, | or, ! not); fallback | page id. Answer links: \"#<page id>\" (direct) or \"#<answer id>\" (rules), answer id = <question id>a<n>.",
+  "options": [],
+  "memberVariantIds": [
+    "questionnaire"
+  ],
+  "usage": {
+    "pagesUsing": [
+      "https://www.bmw.de/de/bmw-financial-services-overview/form-finder.html"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-26"
+  }
+}

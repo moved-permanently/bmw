@@ -1,0 +1,8 @@
+/* Microsite: only the selected page is visible */
+.microsite .microsite-page[hidden] {
+  display: none;
+}
+
+.microsite .microsite-page > * + * {
+  margin-top: var(--bmw-spacing-4, 1rem);
+}

@@ -1,0 +1,405 @@
+/* AI Entry (port of the source .cmp-aientry styles) */
+.ai-entry {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.ai-entry.ai-entry-in-hero {
+  max-width: 24.5rem;
+  margin: 1rem auto 0;
+}
+
+.ai-entry .bmw-icon {
+  font-size: 1.5rem;
+}
+
+.ai-entry .ai-entry-input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.ai-entry .ai-entry-input-wrapper {
+  position: relative;
+  flex: 1;
+  width: 100%;
+}
+
+.ai-entry .ai-entry-input {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.25rem;
+  margin: 0;
+  padding: 0 2.25rem 0 1.25rem;
+  border: 1px solid #8e8e8e;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  color: #262626;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: var(--bmw-font-weight-default, 300);
+}
+
+.ai-entry .ai-entry-input::-webkit-search-cancel-button {
+  display: none;
+  appearance: none;
+}
+
+.ai-entry .ai-entry-input:focus-visible {
+  outline: 2px solid var(--bmw-blue, #1c69d4);
+  outline-offset: 0;
+}
+
+.ai-entry .ai-entry-input-fade {
+  position: absolute;
+  z-index: 10;
+  top: 1rem;
+  left: 1.25rem;
+  width: 1.75rem;
+  height: 1.5rem;
+  background: linear-gradient(90deg, #fff, #0000);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ai-entry .ai-entry-input-fade.is-visible {
+  opacity: 1;
+}
+
+.ai-entry .ai-entry-input-clear {
+  position: absolute;
+  z-index: 11;
+  top: 1rem;
+  right: 0.5rem;
+  display: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #262626;
+  cursor: pointer;
+}
+
+.ai-entry .ai-entry-input-clear .bmw-icon {
+  font-size: 1rem;
+}
+
+.ai-entry .ai-entry-input-clear.is-visible {
+  display: flex;
+}
+
+/* animated placeholder: label, then the suggestions cycle */
+.ai-entry .ai-entry-placeholder {
+  position: absolute;
+  z-index: 10;
+  top: 0.75rem;
+  left: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: calc(100% - 2.5rem);
+  height: 1.75rem;
+  overflow: hidden;
+  color: #666;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-body-2-line-height, 1.375rem);
+  text-align: left;
+  pointer-events: none;
+}
+
+.ai-entry .ai-entry-placeholder.is-hidden {
+  opacity: 0;
+}
+
+.ai-entry .ai-entry-input-icon {
+  z-index: 10;
+  flex: none;
+  padding: 0.125rem;
+  background-color: #fff;
+}
+
+.ai-entry .ai-entry-placeholder-text {
+  position: relative;
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.ai-entry .ai-entry-suggestions {
+  position: relative;
+  min-width: 0;
+  height: 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ai-entry .ai-entry-suggestion {
+  display: flex;
+  align-items: center;
+  height: 1.75rem;
+  white-space: nowrap;
+}
+
+.ai-entry .ai-entry-placeholder-animated .ai-entry-placeholder-text {
+  animation: ai-entry-hide 0ms 3.75s forwards;
+}
+
+.ai-entry .ai-entry-placeholder-animated .ai-entry-placeholder-text::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, #0000, #fff 50%);
+  transform: translateX(250%);
+  animation: ai-entry-dissolve 2.25s ease-out 1.5s;
+}
+
+.ai-entry .ai-entry-placeholder-animated .ai-entry-suggestions {
+  transform: translateY(1.75rem);
+  animation: ai-entry-cycle calc(var(--suggestions-count) * 4.5s) 4s steps(var(--suggestions-count)) infinite;
+}
+
+.ai-entry .ai-entry-placeholder-animated .ai-entry-suggestions::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: calc(200% * var(--suggestions-count));
+  background: linear-gradient(90deg, #0000, #fff 50%);
+  transform: translateX(-50%);
+  animation: ai-entry-dissolve 2.25s 4.5s infinite alternate-reverse;
+}
+
+.ai-entry .ai-entry-placeholder-animated .ai-entry-suggestion {
+  animation: ai-entry-overflow 4.5s 4s infinite;
+}
+
+.ai-entry .ai-entry-placeholder-animated .ai-entry-suggestion-fade {
+  position: absolute;
+  top: calc(var(--suggestion-index) * 1.5rem);
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ai-entry .ai-entry-placeholder-animated .ai-entry-suggestion-fade::before,
+.ai-entry .ai-entry-placeholder-animated .ai-entry-suggestion-fade::after {
+  content: "";
+  position: absolute;
+  z-index: 10;
+  height: 1.5rem;
+  opacity: 0;
+}
+
+.ai-entry .ai-entry-placeholder-animated .ai-entry-suggestion-fade::before {
+  left: -0.5rem;
+  width: 2.25rem;
+  background: linear-gradient(90deg, #fff, #0000);
+  animation: ai-entry-fade-before 4.5s 4s infinite;
+  animation-play-state: var(--suggestion-overflow-fade, paused);
+}
+
+.ai-entry .ai-entry-placeholder-animated .ai-entry-suggestion-fade::after {
+  right: 0;
+  width: 1.75rem;
+  background: linear-gradient(90deg, #0000, #fff);
+  animation: ai-entry-fade-after 4.5s 4s infinite;
+  animation-play-state: var(--suggestion-overflow-fade, paused);
+}
+
+/* buttons */
+.ai-entry .ai-entry-submit,
+.ai-entry .ai-entry-direct-access-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--bmw-button-height, 3.25rem);
+  margin: 0;
+  padding: 0 1.5rem;
+  border: 0;
+  border-radius: 3px;
+  background-color: var(--bmw-blue, #1c69d4);
+  color: #fff;
+  font-family: inherit;
+  font-size: var(--bmw-body-2-font-size, 0.875rem);
+  font-weight: var(--bmw-font-weight-clickable, 500);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ai-entry .ai-entry-submit {
+  width: 3.25rem;
+  min-height: 3.25rem;
+  padding: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ai-entry .ai-entry-submit:hover,
+  .ai-entry .ai-entry-direct-access-button:hover {
+    background-color: var(--bmw-blue-hover, #0653b6);
+  }
+}
+
+.ai-entry .ai-entry-submit:focus-visible,
+.ai-entry .ai-entry-direct-access-button:focus-visible {
+  outline: none;
+  background-color: var(--bmw-blue-hover, #0653b6);
+  box-shadow: var(--bmw-focus-outside);
+}
+
+.ai-entry .ai-entry-submit:disabled,
+.ai-entry .ai-entry-direct-access-button:disabled {
+  background-color: #4d4d4d;
+  color: #8e8e8e;
+  pointer-events: none;
+}
+
+.ai-entry .ai-entry-disclaimer {
+  flex-basis: 100%;
+}
+
+.ai-entry .ai-entry-direct-access {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* states / variants */
+.ai-entry:not(.chat-open) .ai-entry-direct-access-button,
+.ai-entry.chat-open .ai-entry-input-group,
+.ai-entry.button-only .ai-entry-input-group,
+.ai-entry.ghost-dark .ai-entry-input-group {
+  display: none;
+}
+
+.ai-entry.button-only .ai-entry-direct-access-button,
+.ai-entry.ghost-dark .ai-entry-direct-access-button {
+  display: inline-flex;
+}
+
+.ai-entry.ghost-dark .ai-entry-direct-access-button {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px #262626;
+  color: #262626;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ai-entry.ghost-dark .ai-entry-direct-access-button:hover {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 2px #262626;
+  }
+}
+
+@media (width <= 480px) {
+  .ai-entry .ai-entry-input-icon {
+    display: none;
+  }
+}
+
+@media (width >= 768px) {
+  .ai-entry {
+    margin-top: 1.5rem;
+  }
+
+  .ai-entry .ai-entry-input-clear .bmw-icon {
+    font-size: 1.25rem;
+  }
+}
+
+@media (width >= 1920px) {
+  .ai-entry {
+    margin-top: 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-entry .ai-entry-placeholder-animated *,
+  .ai-entry .ai-entry-placeholder-animated *::before,
+  .ai-entry .ai-entry-placeholder-animated *::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@keyframes ai-entry-hide {
+  0% {
+    display: block;
+    width: 100%;
+    opacity: 1;
+  }
+
+  100% {
+    position: absolute;
+    display: none;
+    width: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes ai-entry-dissolve {
+  0% {
+    transform: translateX(250%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ai-entry-cycle {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(calc(var(--suggestions-count) * 1.75rem * -1));
+  }
+}
+
+@keyframes ai-entry-overflow {
+  0%,
+  54% {
+    margin-left: 0;
+  }
+
+  72%,
+  100% {
+    margin-left: var(--suggestion-overflow-amount, 0);
+  }
+}
+
+@keyframes ai-entry-fade-before {
+  0%,
+  44% {
+    opacity: 0;
+  }
+
+  45%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ai-entry-fade-after {
+  0%,
+  62% {
+    opacity: 1;
+  }
+
+  63%,
+  100% {
+    opacity: 0;
+  }
+}

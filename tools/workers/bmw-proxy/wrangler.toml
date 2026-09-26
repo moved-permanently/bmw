@@ -1,0 +1,16 @@
+# Cloudflare Worker: bmw-proxy (see ../README.md, ../DEPLOY-PROMPT.md)
+name = "bmw-proxy"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+workers_dev = true
+# Edge caching (Cache API) only takes effect on a custom domain / zone route, not on *.workers.dev.
+# routes = [{ pattern = "bmw-proxy.example.com", custom_domain = true }]
+
+[vars]
+ALLOWED_ORIGINS = "https://*--bmw--moved-permanently.aem.page,https://*--bmw--moved-permanently.aem.live,http://localhost:3000"
+REQUIRE_ORIGIN = "false"
+UPSTREAM_TIMEOUT_MS = "15000"
+CACHE = "on"
+
+[observability]
+enabled = true

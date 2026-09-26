@@ -1,0 +1,21 @@
+{
+  "variantName": "ai-entry",
+  "baseBlock": "ai-entry",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": "BMW AI Assistant entry field (animated placeholder cycling suggestions, blue send button) or just the blue \"BMW AI Assistant fragen\" button; moves into a directly preceding hero teaser",
+  "contentPattern": "Row 1: label (\"BMW AI Assistant fragen\"); row 2: list of suggestions; row 3 (optional): disclaimer. Sending opens the AI assistant of the help sidebar (scripts/bmw-sidebar.js) with the question.",
+  "options": [
+    "button-only",
+    "ghost-dark"
+  ],
+  "memberVariantIds": [
+    "ai-entry"
+  ],
+  "usage": {
+    "pagesUsing": [
+      "https://www.bmw.de/de/mehr-bmw/kundenbetreuung.html"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-26"
+  }
+}

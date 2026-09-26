@@ -420,6 +420,9 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  import('./bmw-consent.js').then((m) => m.default());
+  import('./bmw-sidebar.js').then((m) => m.default());
 }
 
 /**
@@ -427,7 +430,6 @@ async function loadLazy(doc) {
  * without impacting the user experience.
  */
 function loadDelayed() {
-  import('./consent-check.js');
   // load anything that can be postponed to the latest here
 }
 

@@ -1,0 +1,14 @@
+{
+  "variantName": "dealer-locator",
+  "baseBlock": "dealer-locator",
+  "canonicalModel": "config",
+  "visualCharacteristics": "BMW DLO widget (dlo.api.bmw): search panel with location/name search and filters, dealer list, HERE map; full bleed up to 1920px",
+  "contentPattern": "Key/value rows = window.dloaas.api.start(config) of the source (country, language, configId, initialBrand, brands, dealerDetails, layoutMode, osatCsvPath, ...). Values are JSON literals (true, 60, null, [..], {..}, \"5\" = string) or plain strings. osatCsvPath (www.bmw.de DAM path) is fetched through the bmw-proxy (window.BMW_PROXY).",
+  "options": [],
+  "memberVariantIds": ["dealer-locator"],
+  "usage": {
+    "pagesUsing": ["https://www.bmw.de/de/fastlane/dealer-locator.html"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-26"
+  }
+}

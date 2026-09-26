@@ -875,3 +875,21 @@ export function createInfoButton(content, { label = 'Weitere Informationen', cla
   }
   return button;
 }
+
+/* ------------------------------------------------------------------------------------------
+ * bmw-proxy (Cloudflare worker, tools/workers/bmw-proxy): www.bmw.de endpoints without CORS.
+ * Paths are identical to www.bmw.de; other upstream hosts are addressed as /<host>/<path>.
+ * The base URL can be overridden with window.BMW_PROXY (e.g. a local mock).
+ * ---------------------------------------------------------------------------------------- */
+
+export const BMW_PROXY_DEFAULT = 'https://bmw-proxy.moved-permanently.workers.dev';
+
+/**
+ * URL of a www.bmw.de resource through the bmw-proxy worker.
+ * @param {string} path absolute www.bmw.de path ("/de-de/login/...") or "/<host>/<path>"
+ * @returns {string}
+ */
+export function bmwProxyUrl(path = '/') {
+  const base = String(window.BMW_PROXY || BMW_PROXY_DEFAULT).replace(/\/+$/, '');
+  return `${base}${path.startsWith('/') ? '' : '/'}${path}`;
+}
