@@ -56,6 +56,10 @@ export default function transform(hookName, element, payload) {
   if (kw) rows.push(['Keywords', kw]);
   const tmpl = meta('meta[name="template"]');
   if (tmpl && tmpl !== 'content-page') rows.push(['Template', tmpl]);
+  // page theme colour (source :root { --page-variables-primary-color: #3E527A }, e.g. BMW iX3 pages):
+  // read by scripts.js (metadata primary-color → --page-variables-primary-color[-rgb])
+  const primary = (payload.html || '').match(/--page-variables-primary-color:\s*(#[0-9a-f]{3,8})\b/i);
+  if (primary) rows.push(['Primary Color', primary[1]]);
   const headerStyle = sourceHeaderStyle(payload.html || '');
   if (headerStyle) rows.push(['Header Style', headerStyle]);
   // source page without footer content (e.g. the sitemap; recorded by bmw-cleanup): no footer

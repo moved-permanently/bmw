@@ -301,17 +301,17 @@
       linear-gradient(270deg, transparent 0, transparent 35px, #fff 107px) right / 50% 100% no-repeat;
   }
 
+  /* source: wrapper--secondary padding-left 3rem, CTA list margin 0 .5rem */
   .content-navigation .content-navigation-ctas {
     flex-shrink: 0;
     max-width: none;
-    padding-left: 2rem;
+    margin-right: 0.5rem;
+    padding-left: 3rem;
   }
 
-  /* fixed bar spans the viewport (source: list from 12px, CTA 20px from the right edge) */
-  .content-navigation.is-fixed .content-navigation-inner,
-  .content-navigation.hide .content-navigation-inner {
-    max-width: none;
-    padding: 0 1.25rem 0 0.75rem;
+  /* source: an (empty) icon + gap precede the label -> 0.5rem extra on the left */
+  .content-navigation a.content-navigation-cta:any-link {
+    padding: 0.25rem 1.5rem 0.25rem 2rem;
   }
 }
 
@@ -336,7 +336,6 @@
 
   .content-navigation a.content-navigation-cta:any-link {
     min-height: var(--bmw-button-height, 3.25rem);
-    padding: 0.25rem 1.5rem;
   }
 }
 
