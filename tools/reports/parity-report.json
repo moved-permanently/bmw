@@ -1,6 +1,6 @@
 {
- "generated": "2026-09-27T20:12:23.512Z",
- "round": "final — after round 6 (161 of 220 pages re-captured; the rest carry round-5 numbers)",
+ "generated": "2026-09-27T22:16:29.211Z",
+ "round": "after round 6 (transformer regression reverted; all pages re-captured)",
  "rows": [
   {
    "page": "/de/bmw-alpina",
@@ -79,7 +79,7 @@
    ],
    "remaining": [
     "1440: [height] preview 17188px vs live 14630px content height (117%)",
-    "1440: [layout] 26/179 text blocks placed differently: \"Vorteile\": cx 131/47 | \"Leasingprodukte\": cx 242/158 | \"Smart Packages\": cx 383/299 | \"Leasingbeispiele\": cx 525/441 | \"",
+    "1440: [layout] 20/179 text blocks placed differently: \"4. Bestellen Sie Ihren BMW.\": w 290/221 | \"BMW Leasing Care Paket\": w 312/232 | \"Ratenschutzversicherung\": w 288/204 | \"",
     "768: [height] preview 18022px vs live 15832px content height (114%)"
    ],
    "notes": []
@@ -167,13 +167,13 @@
   },
   {
    "page": "/de/bmw-service-hub/bmw-service-inclusive-kalkulator-gebrauchtwagen",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "85% / 90% / 93%",
+   "heightRatioPreviewVsLive": "92% / 93% / 96%",
    "blocks": [
     "embed"
    ],
@@ -183,23 +183,18 @@
     "R2: global centered-list rule scoped to default content (was collapsing block tracks)",
     "R3: tablet (768) spans/offsets for default content"
    ],
-   "remaining": [
-    "1440: [height] preview 992px vs live 1162px content height (85%)",
-    "1440: [missing-text] 6/11 live text runs not visible on preview: \"Kaufen Sie unser Service Inclusive Einst\", \"Für alle weiteren Details zu Ihrem BMW S\", \"Die hier genannten Preise s",
-    "768: [missing-text] 6/11 live text runs not visible on preview: \"Kaufen Sie unser Service Inclusive Einst\", \"Für alle weiteren Details zu Ihrem BMW S\", \"Die hier genannten Preise s",
-    "390: [missing-text] 6/11 live text runs not visible on preview: \"Kaufen Sie unser Service Inclusive Einst\", \"Für alle weiteren Details zu Ihrem BMW S\", \"Die hier genannten Preise s"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
    "page": "/de/bmw-service-hub/bmw-service-inclusive-kalkulator-neuwagen",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "86% / 91% / 94%",
+   "heightRatioPreviewVsLive": "91% / 93% / 95%",
    "blocks": [
     "embed"
    ],
@@ -209,12 +204,7 @@
     "R2: global centered-list rule scoped to default content (was collapsing block tracks)",
     "R3: tablet (768) spans/offsets for default content"
    ],
-   "remaining": [
-    "1440: [height] preview 1049px vs live 1219px content height (86%)",
-    "1440: [missing-text] 5/10 live text runs not visible on preview: \"Der Preis des Pakets hängt von dem BMW M\", \"Bitte beachten Sie bei der Paketauswahl,\", \"Kaufen Sie Service Inclusiv",
-    "768: [missing-text] 5/10 live text runs not visible on preview: \"Der Preis des Pakets hängt von dem BMW M\", \"Bitte beachten Sie bei der Paketauswahl,\", \"Kaufen Sie Service Inclusiv",
-    "390: [missing-text] 5/10 live text runs not visible on preview: \"Der Preis des Pakets hängt von dem BMW M\", \"Bitte beachten Sie bei der Paketauswahl,\", \"Kaufen Sie Service Inclusiv"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -225,7 +215,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "110% / 103% / 101%",
+   "heightRatioPreviewVsLive": "111% / 103% / 100%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -251,10 +241,9 @@
     "R3: no longer collapsed by the centered-list rule"
    ],
    "remaining": [
-    "1440: [height] preview 10537px vs live 9543px content height (110%)",
-    "1440: [layout] 18/88 text blocks placed differently: \"Unfall- und Pannenhilfe\": x 96/0 | \"BMW Service\": cx 387/291 | \"Proactive Care\": cx 510/414 | \"Service Inclusive\": cx 644",
-    "768: [typography] 6 runs differ: \"Die BMW Unfall- und Pannenhilfe.\": align start/center | \"Seit 1984 immer an Ihrer Seite, wenn\": align start/center | \"BMW Service\": color rgb(10",
-    "768: [layout] 17/88 text blocks placed differently: \"Unfall- und Pannenhilfe\": x 47/-1 | \"BMW Service\": cx 99/51 | \"Proactive Care\": cx 212/164 | \"Service Inclusive\": cx 335/",
+    "1440: [height] preview 10557px vs live 9543px content height (111%)",
+    "1440: [layout] 19/90 text blocks placed differently: \"Unfall- und Pannenhilfe\": x 96/0 | \"BMW Service\": cx 387/291 | \"Proactive Care\": cx 510/414 | \"Service Inclusive\": cx 644",
+    "768: [layout] 15/90 text blocks placed differently: \"Unfall- und Pannenhilfe\": x 47/-1 | \"BMW Service\": cx 99/51 | \"Proactive Care\": cx 212/164 | \"Service Inclusive\": cx 335/",
     "390: [typography] 5 runs differ: \"Die BMW Unfall- und Pannenhilfe.\": align start/center | \"Seit 1984 immer an Ihrer Seite, wenn\": align start/center | \"AI-generated content\": col"
    ],
    "notes": []
@@ -289,8 +278,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 9/68 text blocks placed differently: \"Leasingangebote\": cx 167/83 | \"Fahrzeugempfehlung\": cx 329/245 | \"Vorteile\": cx 456/372 | \"Großkunden\": cx 551/467 | \"21.5",
-    "768: [layout] 12/68 text blocks placed differently: \"Angebot anfordern\": cx 385/133 | \"Unverbindliches Leasingbeispie\": w 350/616 | \"21.564,00 €\": w 92/616 | \"✔ Leasingsonder"
+    "768: [layout] 12/69 text blocks placed differently: \"Angebot anfordern\": cx 385/133 | \"Unverbindliches Leasingbeispie\": w 350/616 | \"21.564,00 €\": w 92/616 | \"✔ Leasingsonder"
    ],
    "notes": []
   },
@@ -302,7 +290,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "95% / 94% / 96%",
+   "heightRatioPreviewVsLive": "95% / 94% / 97%",
    "blocks": [
     "hero-teaser",
     "text-media-teaser",
@@ -324,8 +312,8 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [layout] 4/30 text blocks placed differently: \"HVO100 – der hochwertige, erne\": w 512/384 | \"Ihr BMW Diesel ist bereit für \": w 512/389 | \"Hier überprüfen\": cx 177/402 |",
-    "768: [layout] 5/30 text blocks placed differently: \"Gründe für die Verwendung von \": w 616/464 | \"Eine saubere Lösung für Diesel\": w 616/449 | \"HVO100 ist geruchsneutral und "
+    "1440: [layout] 4/31 text blocks placed differently: \"HVO100 – der hochwertige, erne\": w 512/384 | \"Ihr BMW Diesel ist bereit für \": w 512/389 | \"Hier überprüfen\": cx 177/402 |",
+    "768: [layout] 5/31 text blocks placed differently: \"Gründe für die Verwendung von \": w 616/464 | \"Eine saubere Lösung für Diesel\": w 616/449 | \"HVO100 ist geruchsneutral und "
    ],
    "notes": []
   },
@@ -368,7 +356,7 @@
   },
   {
    "page": "/de/digital-services/bmw-digital-key",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -400,9 +388,7 @@
     "R3: card title sizes, large-titles option",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 6/56 text blocks placed differently: \"BMW Digital Key.\": w 512/334 | \"Was Sie erhalten\": cx 308/224 | \"Digital Key vs. Digital Key Pl\": cx 501/417 | \"Weitere di"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -565,14 +551,13 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 13/80 text blocks placed differently: \"BMW Elektroautos.\": w 512/376 | \"Modelle\": cx -218/-109 | \"Vorteile von Elektroautos\": cx -77/32 | \"E-Auto Batterie und T",
-    "768: [layout] 13/80 text blocks placed differently: \"Modelle\": cx -710/66 | \"Vorteile von Elektroautos\": cx -581/195 | \"E-Auto Batterie und Technologi\": cx -375/401 | \"Reichw"
+    "1440: [layout] 12/81 text blocks placed differently: \"BMW Elektroautos.\": w 512/376 | \"Modelle\": cx 49/-109 | \"Vorteile von Elektroautos\": cx 190/32 | \"E-Auto Batterie und Tec"
    ],
    "notes": []
   },
   {
    "page": "/de/elektroauto/batterie-technologie",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -602,10 +587,7 @@
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 11/90 text blocks placed differently: \"So funktioniert ein Elektroaut\": w 512/315 | \"Die Batterie\": cx 147/63 | \"Kosten\": cx 238/154 | \"Optimierung der Lebensda",
-    "768: [layout] 14/95 text blocks placed differently: \"Die Batterie\": cx -312/58 | \"Kosten\": cx -227/143 | \"Optimierung der Lebensdauer\": cx -85/285 | \"Batteriegewährleistung\":"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -632,16 +614,13 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [typography] 3 runs differ: \"Wallbox Professional\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"Vorvertragliche Transparenzinformati\": align start/center | \"Infobroschüre Bi",
-    "1440: [layout] 13/23 text blocks placed differently: \"Wallbox Professional\": cx 179/95 | \"Multifunction Charger\": cx 354/270 | \"Vehicle-to-Load Adapter\": cx 541/457 | \"Ladekab",
-    "768: [typography] 3 runs differ: \"Wallbox Professional\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"Vorvertragliche Transparenzinformati\": align start/center | \"Infobroschüre Bi",
-    "768: [layout] 7/23 text blocks placed differently: \"Wallbox Professional\": cx -275/86 | \"Multifunction Charger\": cx -118/243 | \"Vehicle-to-Load Adapter\": cx 54/415 | \"Ladekab"
+    "1440: [layout] 6/23 text blocks placed differently: \"BMW Wallbox Professional.\": w 466/343 | \"BMW Vehicle-to-Load (V2L) Adap\": w 466/354 | \"BMW Ladekabel Mode 3.\": w 466/316 |"
    ],
    "notes": []
   },
   {
    "page": "/de/elektroauto/elektroauto-kosten",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -669,14 +648,12 @@
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "768: [layout] 10/70 text blocks placed differently: \"E-Autos im Preisvergleich\": cx -352/102 | \"Elektroauto leasen\": cx -187/267 | \"Förderung E-Autos\": cx -42/412 | \"Wallbox "
-   ],
+   "remaining": [],
    "notes": []
   },
   {
    "page": "/de/elektroauto/elektroauto-reichweite",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -704,15 +681,12 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 8/59 text blocks placed differently: \"Die Reichweite von Elektroauto\": w 512/371 | \"Komfortabel im Alltag unterweg\": w 512/344 | \"Reichweitenübersicht\": cx 181/",
-    "768: [layout] 6/59 text blocks placed differently: \"Reichweitenübersicht\": cx -138/89 | \"E-Auto Analyse\": cx 6/233 | \"Reichweite optimieren\": cx 151/378 | \"Maximale Reichweit"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
    "page": "/de/elektroauto/elektroautos-vorteile",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -738,9 +712,7 @@
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 7/56 text blocks placed differently: \"Die Vorteile und Auswirkungen \": w 512/359 | \"Kostenplanung. Alltagsnutzen. \": w 512/315 | \"Kosten\": cx 129/45 | \"Alltag\":"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -785,7 +757,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "90% / 91% / 92%",
+   "heightRatioPreviewVsLive": "90% / 92% / 92%",
    "blocks": [
     "hero-teaser",
     "icon-teaser",
@@ -805,7 +777,8 @@
     "R3: slider track restored (no stacking), 15/24 bullets, large-titles, empty facts dropped, M-logo cells"
    ],
    "remaining": [
-    "1440: [layout] 8/78 text blocks placed differently: \"AI-generated content\": x -1/1395 | \"- Batterieelektrisch (BEV)\": w 208/400 | \"- Plug-in-Hybrid (PHEV)\": w 198/400 | \"Elekt"
+    "1440: [layout] 8/78 text blocks placed differently: \"AI-generated content\": x -1/1395 | \"- Batterieelektrisch (BEV)\": w 208/400 | \"- Plug-in-Hybrid (PHEV)\": w 198/400 | \"Elekt",
+    "768: [layout] 8/78 text blocks placed differently: \"Elektrisch ins Studium.\": w 672/257 | \"Effizient im Ruhestand.\": w 672/262 | \"Familienfreundlich im Alltag.\": w 672/321 | "
    ],
    "notes": []
   },
@@ -842,7 +815,7 @@
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards"
    ],
    "remaining": [
-    "768: [layout] 12/84 text blocks placed differently: \"BMW Premium Selection\": cx -237/14 | \"Vorteile\": cx -110/141 | \"BMW Modelle\": cx -18/233 | \"Gebrauchte Batterien\": cx 119"
+    "768: [layout] 12/84 text blocks placed differently: \"BMW Premium Selection\": cx 99/14 | \"Vorteile\": cx 226/141 | \"BMW Modelle\": cx 318/233 | \"Gebrauchte Batterien\": cx 455/37"
    ],
    "notes": []
   },
@@ -880,8 +853,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 11/105 text blocks placed differently: \"E-Auto zuhause laden.\": w 616/449 | \"700 € Wallbox Rabatt sichern*\": cx 482/408 | \"Ladelösungen für Ihr Zuhause\": cx 211",
-    "768: [layout] 15/110 text blocks placed differently: \"Zum Installationspartner\": cx 253/300 | \"Ladelösungen für Ihr Zuhause\": cx -314/-270 | \"Ladeprodukte\": cx -150/-106 | \"7"
+    "768: [layout] 15/113 text blocks placed differently: \"Zum Installationspartner\": cx 253/300 | \"Ladelösungen für Ihr Zuhause\": cx 115/-270 | \"Ladeprodukte\": cx 279/-106 | \"700"
    ],
    "notes": []
   },
@@ -916,8 +888,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 12/68 text blocks placed differently: \"Flexibel. Effizient. Kraftvoll\": w 512/276 | \"PHEV Modelle\": cx -36/71 | \"PHEV Technologie\": cx 104/211 | \"So funktionier",
-    "768: [layout] 12/68 text blocks placed differently: \"PHEV Modelle\": cx -541/-379 | \"PHEV Technologie\": cx -412/-250 | \"So funktioniert ein Hybrid-Aut\": cx -231/-69 | \"Die Vor"
+    "768: [typography] 5 runs differ: \"PHEV Modelle\": color rgb(38, 38, 38)/rgb(102, 102, 102) | \"PHEV Technologie\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"So funktioniert ein Hy",
+    "768: [layout] 12/68 text blocks placed differently: \"PHEV Modelle\": cx 66/-379 | \"PHEV Technologie\": cx 195/-250 | \"So funktioniert ein Hybrid-Aut\": cx 376/-69 | \"Die Vorteil"
    ],
    "notes": []
   },
@@ -957,21 +929,21 @@
    ],
    "remaining": [
     "1440: [height] preview 16189px vs live 12708px content height (127%)",
-    "1440: [layout] 27/81 text blocks placed differently: \"Ihre erweiterte Ladeinfrastruk\": w 616/336 | \"Lademöglichkeiten\": cx 172/88 | \"Ladezeiten im Vergleich\": cx 348/264 | \"La",
+    "1440: [layout] 21/81 text blocks placed differently: \"Ihre erweiterte Ladeinfrastruk\": w 616/336 | \"BMW Charging erhält zweimal di\": x 772/878 | \"Wir freuen uns über die Ausze",
     "1440: [image-geometry] 3/16 images sized differently (preview/live): emob_public-charging_bmw-cha 1248x832/400x267, emob_public-charging_mode-3- 1248x832/400x267, emob_public-charging",
-    "768: [layout] 18/86 text blocks placed differently: \"Lademöglichkeiten\": cx -230/-185 | \"Ladezeiten im Vergleich\": cx -70/-25 | \"Ladezubehör\": cx 73/118 | \"Ladestationen find"
+    "768: [layout] 18/86 text blocks placed differently: \"Lademöglichkeiten\": cx 81/-185 | \"Ladezeiten im Vergleich\": cx 241/-25 | \"Ladezubehör\": cx 384/118 | \"Ladestationen finde"
    ],
    "notes": []
   },
   {
    "page": "/de/elektroauto/rabatt-auf-die-bmw-wallbox-professional",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "91% / 93% / 96%",
+   "heightRatioPreviewVsLive": "104% / 100% / 100%",
    "blocks": [
     "disclaimer"
    ],
@@ -981,11 +953,7 @@
     "R2: global centered-list rule scoped to default content (was collapsing block tracks)",
     "R3: tablet (768) spans/offsets for default content"
    ],
-   "remaining": [
-    "1440: [missing-text] 7/11 live text runs not visible on preview: \"1. V2G Stromtarif bei E.ON abschließen.\", \"2. BMW-Wertgutschein (1 700 € inkl. MwSt\", \"3. Gutschein bei der Bestell",
-    "768: [missing-text] 7/11 live text runs not visible on preview: \"1. V2G Stromtarif bei E.ON abschließen.\", \"2. BMW-Wertgutschein (1 700 € inkl. MwSt\", \"3. Gutschein bei der Bestell",
-    "390: [missing-text] 7/11 live text runs not visible on preview: \"1. V2G Stromtarif bei E.ON abschließen.\", \"2. BMW-Wertgutschein (1 700 € inkl. MwSt\", \"3. Gutschein bei der Bestell"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -1007,8 +975,8 @@
     "R3: tablet (768) spans/offsets for default content"
    ],
    "remaining": [
-    "1440: [missing-text] 120/516 live text runs not visible on preview: \"Longuyoner Straße 5\", \"01796 Pirna\", \"Bautzener Str. 113\", \"01877 Bischofswerda\"",
-    "768: [missing-text] 157/512 live text runs not visible on preview: \"Hoflindenstr. 1\", \"09429 Hilmersdorf\", \"Autohaus J.B. Lell GmbH\", \"Luisenburgstraße 45\""
+    "1440: [missing-text] 138/516 live text runs not visible on preview: \"BMW AG Niederlassung Dresden\", \"Dohnaer Str. 99-101\", \"01219 Dresden\", \"Laugkfeld 28\"",
+    "768: [missing-text] 211/512 live text runs not visible on preview: \"Zwickauer Str. 275\", \"08468 Reichenbach\", \"Pausaer Str. 190\", \"08525 Plauen\""
    ],
    "notes": [
     "dealer list + HERE map load from BMW services; the dealer service CSV now comes from the site sheet /de/data/dealer-services.json"
@@ -1045,7 +1013,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "93% / 95% / 97%",
+   "heightRatioPreviewVsLive": "92% / 95% / 96%",
    "blocks": [
     "accordion"
    ],
@@ -1057,13 +1025,10 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [missing-text] 6/51 live text runs not visible on preview: \"Webumfänge, die nicht Bestandteil der be\", \"Im Falle des Leasings oder der Finanzier\", \"Der Kunde kann sein Interes",
     "1440: [typography] 3 runs differ: \"Kaufen\": color rgb(28, 105, 212)/rgb(38, 38, 38) | \"Tel.: +49 89 1250 16000\": size 15/18 | \"Nachricht senden\": size 15/18",
-    "1440: [layout] 10/45 text blocks placed differently: \"Barrierefreiheit.\": w 1248/303 | \"Online-Bestellung von Fahrzeug\": w 1248/447 | \"BMW ConnectedDrive.\": w 1248/286 | \"Zube",
-    "768: [missing-text] 6/51 live text runs not visible on preview: \"Webumfänge, die nicht Bestandteil der be\", \"Im Falle des Leasings oder der Finanzier\", \"Der Kunde kann sein Interes",
-    "768: [layout] 6/45 text blocks placed differently: \"Barrierefreiheit.\": w 440/245 | \"BMW ConnectedDrive.\": w 440/255 | \"Zubehör und Services.\": w 440/253 | \"Online Terminvere",
-    "390: [missing-text] 6/51 live text runs not visible on preview: \"Webumfänge, die nicht Bestandteil der be\", \"Im Falle des Leasings oder der Finanzier\", \"Der Kunde kann sein Interes",
-    "390: [layout] 6/45 text blocks placed differently: \"Barrierefreiheit.\": w 342/225 | \"Online-Bestellung von Fahrzeug\": w 342/229 | \"BMW ConnectedDrive.\": w 342/234 | \"Zubehör "
+    "1440: [layout] 10/51 text blocks placed differently: \"Barrierefreiheit.\": w 1248/303 | \"Online-Bestellung von Fahrzeug\": w 1248/447 | \"BMW ConnectedDrive.\": w 1248/286 | \"Zube",
+    "768: [layout] 6/51 text blocks placed differently: \"Barrierefreiheit.\": w 440/245 | \"BMW ConnectedDrive.\": w 440/255 | \"Zubehör und Services.\": w 440/253 | \"Online Terminvere",
+    "390: [layout] 6/51 text blocks placed differently: \"Barrierefreiheit.\": w 342/225 | \"Online-Bestellung von Fahrzeug\": w 342/229 | \"BMW ConnectedDrive.\": w 342/234 | \"Zubehör "
    ],
    "notes": []
   },
@@ -1090,7 +1055,7 @@
   },
   {
    "page": "/de/footer/metanavigation/data-privacy",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -1107,11 +1072,7 @@
     "R3: tablet (768) spans/offsets for default content",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [missing-text] 1/12 live text runs not visible on preview: \"Die BMW Datenschutzhinweise beschreiben \"",
-    "768: [missing-text] 1/12 live text runs not visible on preview: \"Die BMW Datenschutzhinweise beschreiben \"",
-    "390: [missing-text] 1/12 live text runs not visible on preview: \"Die BMW Datenschutzhinweise beschreiben \""
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -1224,13 +1185,13 @@
   },
   {
    "page": "/de/footer/metanavigation/legal-disclaimer-pool/produktsicherheitsverordnung",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "88% / 90% / 93%",
+   "heightRatioPreviewVsLive": "92% / 92% / 94%",
    "blocks": [],
    "fixed": [
     "R1: typography follows source title/text styles (headline/subsection/body-2), centered section intros, default-content grid spans/offsets per breakpoint",
@@ -1238,12 +1199,7 @@
     "R2: global centered-list rule scoped to default content (was collapsing block tracks)",
     "R3: tablet (768) spans/offsets for default content"
    ],
-   "remaining": [
-    "1440: [height] preview 293px vs live 333px content height (88%)",
-    "1440: [missing-text] 1/4 live text runs not visible on preview: \"Unsere zentrale Kontaktstelle für Verbra\"",
-    "768: [missing-text] 1/4 live text runs not visible on preview: \"Unsere zentrale Kontaktstelle für Verbra\"",
-    "390: [missing-text] 1/4 live text runs not visible on preview: \"Unsere zentrale Kontaktstelle für Verbra\""
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -1254,7 +1210,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "91% / 93% / 94%",
+   "heightRatioPreviewVsLive": "92% / 93% / 95%",
    "blocks": [
     "disclaimer"
    ],
@@ -1265,23 +1221,20 @@
     "R3: tablet (768) spans/offsets for default content"
    ],
    "remaining": [
-    "1440: [missing-text] 5/26 live text runs not visible on preview: \"Der Inhalt dieser Webseite darf nicht zu\", \"Vertraulichkeit und der Schutz von hinwe\", \"Weiterführende Informatione",
-    "1440: [layout] 4/18 text blocks placed differently: \"Rechtlicher Hinweis.\": w 1248/321 | \"Außergerichtliche Streitbeileg\": w 1248/347 | \"Anlaufstellen für hinweisgeben\": w 124",
-    "768: [missing-text] 5/26 live text runs not visible on preview: \"Der Inhalt dieser Webseite darf nicht zu\", \"Vertraulichkeit und der Schutz von hinwe\", \"Weiterführende Informatione",
-    "768: [layout] 4/18 text blocks placed differently: \"Rechtlicher Hinweis.\": w 672/266 | \"Außergerichtliche Streitbeileg\": w 672/310 | \"Anlaufstellen für hinweisgeben\": w 672/4",
-    "390: [missing-text] 5/26 live text runs not visible on preview: \"Der Inhalt dieser Webseite darf nicht zu\", \"Vertraulichkeit und der Schutz von hinwe\", \"Weiterführende Informatione"
+    "1440: [layout] 4/22 text blocks placed differently: \"Rechtlicher Hinweis.\": w 1248/321 | \"Außergerichtliche Streitbeileg\": w 1248/347 | \"Anlaufstellen für hinweisgeben\": w 124",
+    "768: [layout] 4/22 text blocks placed differently: \"Rechtlicher Hinweis.\": w 672/266 | \"Außergerichtliche Streitbeileg\": w 672/310 | \"Anlaufstellen für hinweisgeben\": w 672/4"
    ],
    "notes": []
   },
   {
    "page": "/de/footer/metanavigation/legal-notice-pool/imprint",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "88% / 88% / 89%",
+   "heightRatioPreviewVsLive": "96% / 92% / 93%",
    "blocks": [],
    "fixed": [
     "R1: typography follows source title/text styles (headline/subsection/body-2), centered section intros, default-content grid spans/offsets per breakpoint",
@@ -1289,14 +1242,7 @@
     "R2: global centered-list rule scoped to default content (was collapsing block tracks)",
     "R3: tablet (768) spans/offsets for default content"
    ],
-   "remaining": [
-    "1440: [height] preview 1335px vs live 1515px content height (88%)",
-    "1440: [missing-text] 15/27 live text runs not visible on preview: \"Kontakt BMW:\", \"Telefon: 089 1250 160 00\", \"Montag – Samstag 08:00 bis 18:00 Uhr\", \"Sonntag und Feiertags geschlos",
-    "768: [height] preview 1454px vs live 1650px content height (88%)",
-    "768: [missing-text] 15/27 live text runs not visible on preview: \"Kontakt BMW:\", \"Telefon: 089 1250 160 00\", \"Montag – Samstag 08:00 bis 18:00 Uhr\", \"Sonntag und Feiertags geschlos",
-    "390: [height] preview 1638px vs live 1842px content height (89%)",
-    "390: [missing-text] 15/27 live text runs not visible on preview: \"Kontakt BMW:\", \"Telefon: 089 1250 160 00\", \"Montag – Samstag 08:00 bis 18:00 Uhr\", \"Sonntag und Feiertags geschlos"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -1411,7 +1357,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "90% / 88% / 93%",
+   "heightRatioPreviewVsLive": "91% / 89% / 93%",
    "blocks": [
     "hero-teaser",
     "link-list"
@@ -1424,11 +1370,7 @@
     "R0: source text/CTA spacing variants (text-top/bottom, cta-*), tablet button stacking"
    ],
    "remaining": [
-    "1440: [height] preview 946px vs live 1052px content height (90%)",
-    "1440: [missing-text] 1/7 live text runs not visible on preview: \"Wenn sich eine Werbung auf die gesamte A\"",
-    "768: [height] preview 1150px vs live 1301px content height (88%)",
-    "768: [missing-text] 1/7 live text runs not visible on preview: \"Wenn sich eine Werbung auf die gesamte A\"",
-    "390: [missing-text] 1/7 live text runs not visible on preview: \"Wenn sich eine Werbung auf die gesamte A\""
+    "768: [height] preview 1158px vs live 1301px content height (89%)"
    ],
    "notes": []
   },
@@ -1457,8 +1399,8 @@
    ],
    "remaining": [
     "1440: [height] preview 1314px vs live 1558px content height (84%)",
-    "1440: [typography] 3 runs differ: \"BMW GEBRAUCHTE AUTOMOBILE.\": size 18/43, color rgb(38, 38, 38)/rgb(255, 255, 255) | \"BMW Premium Selection Garantie\": align start/center | \"AI-g",
-    "768: [typography] 3 runs differ: \"BMW GEBRAUCHTE AUTOMOBILE.\": size 14/35, color rgb(38, 38, 38)/rgb(255, 255, 255), align start/center | \"BMW Premium Selection Garantie\": align ",
+    "1440: [typography] 4 runs differ: \"BMW GEBRAUCHTE AUTOMOBILE.\": size 18/43, color rgb(38, 38, 38)/rgb(255, 255, 255) | \"Junge Gebrauchte\": color rgb(38, 38, 38)/rgb(102, 102, 102)",
+    "768: [typography] 4 runs differ: \"BMW GEBRAUCHTE AUTOMOBILE.\": size 14/35, color rgb(38, 38, 38)/rgb(255, 255, 255), align start/center | \"Junge Gebrauchte\": color rgb(38, 38, 38",
     "390: [layout] 6/14 text blocks placed differently: \"BMW GEBRAUCHTE AUTOMOBILE.\": cx 24/195, ypos 19%/9% | \"AI-generated content\": x 23/329 | \"BMW JUNGE GEBRAUCHTE\": w 342/251"
    ],
    "notes": []
@@ -1471,7 +1413,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "93% / 97% / 95%",
+   "heightRatioPreviewVsLive": "100% / 101% / 98%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -1487,9 +1429,8 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [missing-text] 15/36 live text runs not visible on preview: \"Die Garantie startet frühestens nach Abl\", \"Sie wollen sich länger vor Risiken schüt\", \"✓ 1 Jahr Garantie auf alle",
-    "768: [missing-text] 15/36 live text runs not visible on preview: \"Die Garantie startet frühestens nach Abl\", \"Sie wollen sich länger vor Risiken schüt\", \"✓ 1 Jahr Garantie auf alle",
-    "390: [missing-text] 16/34 live text runs not visible on preview: \"Die Garantie startet frühestens nach Abl\", \"Sie wollen sich länger vor Risiken schüt\", \"✓ 1 Jahr Garantie auf alle"
+    "1440: [typography] 3 runs differ: \"DAMIT DIE FREUDE DAUERHAFT BLEIBT.\": size 23/28 | \"Junge Gebrauchte\": color rgb(38, 38, 38)/rgb(102, 102, 102) | \"BMW Premium Selection Garantie",
+    "768: [typography] 3 runs differ: \"DAMIT DIE FREUDE DAUERHAFT BLEIBT.\": size 20/25 | \"Junge Gebrauchte\": color rgb(38, 38, 38)/rgb(102, 102, 102) | \"BMW Premium Selection Garantie"
    ],
    "notes": []
   },
@@ -1501,7 +1442,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "94% / 97% / 94%",
+   "heightRatioPreviewVsLive": "98% / 99% / 96%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -1517,13 +1458,10 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [missing-text] 12/33 live text runs not visible on preview: \"✓ 2 Jahre Garantie auf alle mechanischen\", \"✓ BMW Premium Selection Fahrzeuge bis zu\", \"✓ Europaweite Gültigkeit i",
     "1440: [typography] 3 runs differ: \"AI-generated content\": color rgb(255, 255, 255)/rgb(38, 38, 38) | \"BMW PREMIUM SELECTION GARANTIE.\": size 15/43, color rgb(38, 38, 38)/rgb(255, ",
-    "1440: [layout] 5/21 text blocks placed differently: \"AI-generated content\": x -1/1395 | \"BMW PREMIUM SELECTION GARANTIE\": x 738/104, ypos 17%/9% | \"DIE NEUEN GEBRAUCHTEN.\": w ",
-    "768: [missing-text] 12/33 live text runs not visible on preview: \"✓ 2 Jahre Garantie auf alle mechanischen\", \"✓ BMW Premium Selection Fahrzeuge bis zu\", \"✓ Europaweite Gültigkeit i",
+    "1440: [layout] 5/31 text blocks placed differently: \"AI-generated content\": x -1/1395 | \"BMW PREMIUM SELECTION GARANTIE\": x 738/104, ypos 17%/9% | \"DIE NEUEN GEBRAUCHTEN.\": w ",
     "768: [typography] 4 runs differ: \"AI-generated content\": color rgb(255, 255, 255)/rgb(38, 38, 38) | \"BMW PREMIUM SELECTION GARANTIE.\": size 14/35, color rgb(38, 38, 38)/rgb(255, ",
-    "768: [layout] 3/21 text blocks placed differently: \"BMW PREMIUM SELECTION GARANTIE\": cx 484/382 | \"IHRE VORTEILE AUF EINEN BLICK.\": w 672/480 | \"Download of current warranty ",
-    "390: [missing-text] 13/31 live text runs not visible on preview: \"Junge Gebrauchte\", \"✓ 2 Jahre Garantie auf alle mechanischen\", \"✓ BMW Premium Selection Fahrzeuge bis zu\", \"✓ Euro",
+    "390: [missing-text] 3/31 live text runs not visible on preview: \"Junge Gebrauchte\", \"Premium Selection Garantie\", \"die Premium Selection Servicestelle\"",
     "390: [typography] 3 runs differ: \"AI-generated content\": color rgb(255, 255, 255)/rgb(38, 38, 38) | \"BMW PREMIUM SELECTION GARANTIE.\": size 14/33, color rgb(77, 77, 77)/rgb(255, "
    ],
    "notes": []
@@ -1536,7 +1474,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "91% / 95% / 95%",
+   "heightRatioPreviewVsLive": "94% / 96% / 96%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -1552,13 +1490,10 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [missing-text] 9/35 live text runs not visible on preview: \"✓ Große Auswahl an Traumwagen unterschie\", \"✓ Geringes Alter von durchschnittlich 12\", \"✓ Überwiegend hohes Ausstat",
     "1440: [typography] 4 runs differ: \"AI-generated content\": color rgb(255, 255, 255)/rgb(38, 38, 38) | \"Junge Gebrauchte von BMW.\": size 43/35 | \"Junge Gebrauchte\": color rgb(38, 38",
-    "1440: [layout] 6/26 text blocks placed differently: \"AI-generated content\": x -1/1395 | \"Preisvorteil sichern\": w 1248/297 | \"Folgende Kriterien gelten für \": w 1248/624 | \"BM",
-    "768: [missing-text] 9/35 live text runs not visible on preview: \"✓ Große Auswahl an Traumwagen unterschie\", \"✓ Geringes Alter von durchschnittlich 12\", \"✓ Überwiegend hohes Ausstat",
+    "1440: [layout] 6/35 text blocks placed differently: \"AI-generated content\": x -1/1395 | \"Preisvorteil sichern\": w 1248/297 | \"Folgende Kriterien gelten für \": w 1248/624 | \"BM",
     "768: [typography] 4 runs differ: \"AI-generated content\": color rgb(255, 255, 255)/rgb(38, 38, 38) | \"Junge Gebrauchte von BMW.\": size 35/29 | \"Junge Gebrauchte\": color rgb(38, 38",
-    "768: [layout] 4/26 text blocks placed differently: \"Fahrzeug finden\": cx 385/301 | \"Preisvorteil sichern\": w 672/248 | \"BMW Service Inclusive.\": w 672/210 | \"BMW Junge Gebrau",
-    "390: [missing-text] 9/34 live text runs not visible on preview: \"✓ Große Auswahl an Traumwagen unterschie\", \"✓ Geringes Alter von durchschnittlich 12\", \"✓ Überwiegend hohes Ausstat"
+    "768: [layout] 4/35 text blocks placed differently: \"Fahrzeug finden\": cx 385/301 | \"Preisvorteil sichern\": w 672/248 | \"BMW Service Inclusive.\": w 672/210 | \"BMW Junge Gebrau"
    ],
    "notes": []
   },
@@ -1570,7 +1505,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "109% / 184% / 130%",
+   "heightRatioPreviewVsLive": "109% / 183% / 130%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -1586,15 +1521,15 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [missing-text] 4/23 live text runs not visible on preview: \"24 MONATE BMW PREMIUM SELECTION GARANTIE\", \"360° FAHRZEUG CHECK.\", \"Unsere Gebrauchtwagen erfüllen höchste S\", \"WAR",
-    "1440: [typography] 11 runs differ: \"DIE NEUEN GEBRAUCHTEN.\": size 23/28 | \"BMW Premium Selection Garantie\": align start/center | \"Ein Fahrzeug, auf das Sie sich verla\": align star",
-    "1440: [layout] 4/19 text blocks placed differently: \"BMW PREMIUM SELECTION.\": w 512/323 | \"DIE NEUEN GEBRAUCHTEN.\": w 512/380 | \"STANDARDS HABEN WIR AUCH. NUR \": w 1248/897 | ",
-    "768: [height] preview 5729px vs live 3114px content height (184%)",
-    "768: [missing-text] 4/23 live text runs not visible on preview: \"24 MONATE BMW PREMIUM SELECTION GARANTIE\", \"360° FAHRZEUG CHECK.\", \"Unsere Gebrauchtwagen erfüllen höchste S\", \"WAR",
-    "768: [typography] 11 runs differ: \"DIE NEUEN GEBRAUCHTEN.\": size 20/25 | \"BMW Premium Selection Garantie\": align start/center | \"Ein Fahrzeug, auf das Sie sich verla\": align star",
-    "390: [height] preview 4947px vs live 3801px content height (130%)",
-    "390: [missing-text] 5/21 live text runs not visible on preview: \"Junge Gebrauchte\", \"24 MONATE BMW PREMIUM SELECTION GARANTIE\", \"360° FAHRZEUG CHECK.\", \"Unsere Gebrauchtwagen erfül",
-    "390: [typography] 10 runs differ: \"DIE NEUEN GEBRAUCHTEN.\": size 19/23 | \"Ein Fahrzeug, auf das Sie sich verla\": align start/center | \"BMW Premium Selection Fahrzeuge erha\": alig"
+    "1440: [missing-text] 3/23 live text runs not visible on preview: \"24 MONATE BMW PREMIUM SELECTION GARANTIE\", \"360° FAHRZEUG CHECK.\", \"WARTUNGSFREI FÜR 6 MONATE / 10.000 KM.\"",
+    "1440: [typography] 12 runs differ: \"DIE NEUEN GEBRAUCHTEN.\": size 23/28 | \"BMW Premium Selection Garantie\": align start/center | \"Ein Fahrzeug, auf das Sie sich verla\": align star",
+    "1440: [layout] 4/20 text blocks placed differently: \"BMW PREMIUM SELECTION.\": w 512/323 | \"DIE NEUEN GEBRAUCHTEN.\": w 512/380 | \"STANDARDS HABEN WIR AUCH. NUR \": w 1248/897 | ",
+    "768: [height] preview 5709px vs live 3114px content height (183%)",
+    "768: [missing-text] 3/23 live text runs not visible on preview: \"24 MONATE BMW PREMIUM SELECTION GARANTIE\", \"360° FAHRZEUG CHECK.\", \"WARTUNGSFREI FÜR 6 MONATE / 10.000 KM.\"",
+    "768: [typography] 12 runs differ: \"DIE NEUEN GEBRAUCHTEN.\": size 20/25 | \"BMW Premium Selection Garantie\": align start/center | \"Ein Fahrzeug, auf das Sie sich verla\": align star",
+    "390: [height] preview 4929px vs live 3801px content height (130%)",
+    "390: [missing-text] 4/21 live text runs not visible on preview: \"Junge Gebrauchte\", \"24 MONATE BMW PREMIUM SELECTION GARANTIE\", \"360° FAHRZEUG CHECK.\", \"WARTUNGSFREI FÜR 6 MONATE /",
+    "390: [typography] 11 runs differ: \"DIE NEUEN GEBRAUCHTEN.\": size 19/23 | \"Ein Fahrzeug, auf das Sie sich verla\": align start/center | \"BMW Premium Selection Fahrzeuge erha\": alig"
    ],
    "notes": []
   },
@@ -1626,7 +1561,6 @@
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards"
    ],
    "remaining": [
-    "1440: [layout] 8/55 text blocks placed differently: \"BMW Individual.\": w 512/316 | \"Außergewöhnlicher Stil, der au\": w 512/365 | \"Lackierungen\": cx 152/68 | \"Polsterausstattun",
     "768: [layout] 11/55 text blocks placed differently: \"BMW M3 Competition – BMW Indiv\": w 402/672 | \"BMW XM 50e – BMW Individual Ja\": w 339/672 | \"BMW M2 CS – BMW Individual Ve"
    ],
    "notes": []
@@ -1658,21 +1592,19 @@
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards"
    ],
    "remaining": [
-    "1440: [layout] 6/30 text blocks placed differently: \"BMW Behördenfahrzeuge\": cx 196/112 | \"BMW Einsatzfahrzeuge\": cx 396/312 | \"BMW Sonderschutzfahrzeuge\": cx 609/525 | \"BMW D",
-    "768: [layout] 5/30 text blocks placed differently: \"BMW Behördenfahrzeuge\": cx -71/103 | \"BMW Einsatzfahrzeuge\": cx 110/284 | \"BMW Sonderschutzfahrzeuge\": cx 303/477 | \"BMW D",
     "390: [layout] 4/30 text blocks placed differently: \"BMW Einsatzfahrzeuge.\": w 342/252 | \"BMW Diplomatic Sales.\": w 342/243 | \"BMW Military Sales.\": w 342/208 | \"BMW Fahrertra"
    ],
    "notes": []
   },
   {
    "page": "/de/mehr-bmw/bmw-special-sales/bmw-7-protection",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "98% / 98% / 98%",
+   "heightRatioPreviewVsLive": "95% / 98% / 98%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -1700,20 +1632,18 @@
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 8/67 text blocks placed differently: \"BMW 7 Protection.\": w 512/361 | \"Highlights\": cx 140/56 | \"Protection-Konzept\": cx 269/185 | \"Schutzausrüstung\": cx 425/34"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
    "page": "/de/mehr-bmw/bmw-special-sales/bmw-diplomatic-sales",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "101% / 99% / 101%",
+   "heightRatioPreviewVsLive": "101% / 100% / 102%",
    "blocks": [
     "hero-teaser",
     "disclaimer",
@@ -1735,13 +1665,7 @@
     "R3: tablet width from source grid",
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards"
    ],
-   "remaining": [
-    "1440: [missing-text] 4/45 live text runs not visible on preview: \"Vertrieb an Botschaften und Konsulate\", \"Telefon: +49-30-200991275\", \"Mobil: +49-151-60510221\", \"Mail: Renate.Roder",
-    "1440: [layout] 4/39 text blocks placed differently: \"Ansprechpartner\": cx 163/79 | \"Service & Konditionen\": cx 325/241 | \"Pre-Sales-Service und Länderwe\": w 466/284 | \"Service",
-    "768: [missing-text] 4/45 live text runs not visible on preview: \"Vertrieb an Botschaften und Konsulate\", \"Telefon: +49-30-200991275\", \"Mobil: +49-151-60510221\", \"Mail: Renate.Roder",
-    "768: [layout] 4/39 text blocks placed differently: \"Kontakt anfragen\": cx 385/329 | \"Sonderkonditionen für Dienstwa\": cx 210/384 | \"Persönliche Kundenbetreuung du\": cx 558/38",
-    "390: [missing-text] 4/44 live text runs not visible on preview: \"Vertrieb an Botschaften und Konsulate\", \"Telefon: +49-30-200991275\", \"Mobil: +49-151-60510221\", \"Mail: Renate.Roder"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -1781,7 +1705,7 @@
   },
   {
    "page": "/de/mehr-bmw/bmw-special-sales/bmw-military-sales",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -1808,20 +1732,18 @@
     "R3: tablet width from source grid",
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards"
    ],
-   "remaining": [
-    "1440: [layout] 6/47 text blocks placed differently: \"Service & Konditionen\": cx 183/99 | \"Weitere Vorteile\": cx 342/258 | \"BMW und MINI Military Sales. I\": w 612/430 | \"24 Mon"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
    "page": "/de/mehr-bmw/bmw-special-sales/bmw-sonderschutzfahrzeuge",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "100% / 97% / 98%",
+   "heightRatioPreviewVsLive": "100% / 98% / 99%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -1845,22 +1767,18 @@
     "R0: poster until first frame",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [missing-text] 8/75 live text runs not visible on preview: \"Mobil: +49 151 601 42566\", \"E-Mail: Marcel.Muhl@bmw.de\", \"In Vertretung steht Ihnen Daniel Wossilu\", \"Mobil: +49 15",
-    "768: [missing-text] 8/75 live text runs not visible on preview: \"Mobil: +49 151 601 42566\", \"E-Mail: Marcel.Muhl@bmw.de\", \"In Vertretung steht Ihnen Daniel Wossilu\", \"Mobil: +49 15",
-    "390: [missing-text] 8/72 live text runs not visible on preview: \"Mobil: +49 151 601 42566\", \"E-Mail: Marcel.Muhl@bmw.de\", \"In Vertretung steht Ihnen Daniel Wossilu\", \"Mobil: +49 15"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
    "page": "/de/mehr-bmw/bmw-special-sales/bmw-x5-protection-vr6",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "99% / 98% / 99%",
+   "heightRatioPreviewVsLive": "99% / 99% / 100%",
    "blocks": [
     "hero-teaser",
     "disclaimer",
@@ -1888,11 +1806,7 @@
     "R2: tab layout at 768/390",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [missing-text] 8/85 live text runs not visible on preview: \"Mobil: +49 151 601 42566\", \"E-Mail: Marcel.Muhl@bmw.de\", \"In Vertretung steht Ihnen Daniel Wossilu\", \"Mobil: +49 15",
-    "768: [missing-text] 8/87 live text runs not visible on preview: \"Mobil: +49 151 601 42566\", \"E-Mail: Marcel.Muhl@bmw.de\", \"In Vertretung steht Ihnen Daniel Wossilu\", \"Mobil: +49 15",
-    "390: [missing-text] 8/86 live text runs not visible on preview: \"Mobil: +49 151 601 42566\", \"E-Mail: Marcel.Muhl@bmw.de\", \"In Vertretung steht Ihnen Daniel Wossilu\", \"Mobil: +49 15"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -1960,12 +1874,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [typography] 4 runs differ: \"The i7\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"Wir stehen Ihnen mit allen Informati\": size 18/15 | \"+49 89 1250-16084\": size 18/15 | \"Ober",
-    "1440: [layout] 18/55 text blocks placed differently: \"In jeder Facette. Bis ins letz\": w 512/376 | \"The i7\": cx 126/42 | \"The X7\": cx 258/174 | \"The XM Label\": cx 355/271 | \"B",
-    "768: [typography] 4 runs differ: \"The i7\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"Wir stehen Ihnen mit allen Informati\": size 17/14 | \"+49 89 1250-16084\": size 17/14 | \"Ober",
-    "768: [layout] 6/55 text blocks placed differently: \"Mehr erfahren\": x 48/241 | \"BMW i7 60 xDrive.\": w 648/241 | \"BMW 740 xDrive.\": w 648/227 | \"Der Fond des XM Label. Einziga",
-    "390: [typography] 3 runs differ: \"Wir stehen Ihnen mit allen Informati\": size 16/14 | \"+49 89 1250-16084\": size 16/14 | \"Oberklasse-Kundenbetreuung@bmw.de\": size 16/14",
-    "390: [layout] 6/52 text blocks placed differently: \"BMW i7 60 xDrive.\": w 326/233 | \"BMW M760e xDrive.\": x 24/103, w 342/215 | \"BMW 740 xDrive.\": w 326/220 | \"BMW X7 M60i xDr"
+    "1440: [layout] 13/55 text blocks placed differently: \"In jeder Facette. Bis ins letz\": w 512/376 | \"BMW i7 60 xDrive.\": w 512/293 | \"Der BMW i7 verbindet sinnliche\": w 512/288"
    ],
    "notes": []
   },
@@ -1977,7 +1886,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "82% / 89% / 93%",
+   "heightRatioPreviewVsLive": "88% / 91% / 94%",
    "blocks": [
     "accordion"
    ],
@@ -1989,11 +1898,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [height] preview 3410px vs live 4153px content height (82%)",
-    "1440: [missing-text] 17/37 live text runs not visible on preview: \"E-Mail: dsa.de@bmwgroup.com\", \"Darüber hinaus erreichen Sie uns auch te\", \"Sie können mit uns in deutscher Sprache",
-    "768: [height] preview 5087px vs live 5694px content height (89%)",
-    "768: [missing-text] 17/37 live text runs not visible on preview: \"E-Mail: dsa.de@bmwgroup.com\", \"Darüber hinaus erreichen Sie uns auch te\", \"Sie können mit uns in deutscher Sprache",
-    "390: [missing-text] 17/37 live text runs not visible on preview: \"E-Mail: dsa.de@bmwgroup.com\", \"Darüber hinaus erreichen Sie uns auch te\", \"Sie können mit uns in deutscher Sprache"
+    "1440: [height] preview 3650px vs live 4153px content height (88%)"
    ],
    "notes": []
   },
@@ -2034,7 +1939,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "93% / 94% / 93%",
+   "heightRatioPreviewVsLive": "93% / 94% / 94%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -2050,12 +1955,11 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [missing-text] 10/49 live text runs not visible on preview: \"Renzo Vitale: Ja, ich gehe tatsächlich s\", \"Business Class: Wie gehst du praktisch v\", \"Renzo Vitale: Der Prozess ",
-    "1440: [layout] 11/39 text blocks placed differently: \"Interview mit Renzo Vitale.\": x 832/1058, w 512/274 | \"Stand 2024\": x 96/0 | \"Startseite Großkunden\": cx 329/233 | \"Onlin",
-    "768: [missing-text] 10/49 live text runs not visible on preview: \"Renzo Vitale: Ja, ich gehe tatsächlich s\", \"Business Class: Wie gehst du praktisch v\", \"Renzo Vitale: Der Prozess ",
-    "768: [layout] 10/39 text blocks placed differently: \"Stand 2024\": x 47/-1 | \"Startseite Großkunden\": cx 129/81 | \"Online-Magazin\": cx 276/228 | \"Ein BMW muss nicht brüllen, u",
-    "390: [missing-text] 10/48 live text runs not visible on preview: \"Renzo Vitale: Ja, ich gehe tatsächlich s\", \"Business Class: Wie gehst du praktisch v\", \"Renzo Vitale: Der Prozess ",
-    "390: [layout] 4/38 text blocks placed differently: \"Kreative Prozesse und Inspirat\": w 342/250 | \"Die Personalisierung des Fahre\": w 342/258 | \"Der Showroom der Zukunft.\": w "
+    "1440: [typography] 4 runs differ: \"Startseite Großkunden\": color rgb(38, 38, 38)/rgb(102, 102, 102) | \"Ein BMW muss nicht brüllen, um geseh\": size 18/28, align start/center | \"Hol",
+    "1440: [layout] 11/49 text blocks placed differently: \"Interview mit Renzo Vitale.\": x 832/1058, w 512/274 | \"Stand 2024\": x 96/0 | \"Startseite Großkunden\": cx 329/233 | \"Onlin",
+    "768: [typography] 3 runs differ: \"Ein BMW muss nicht brüllen, um geseh\": size 17/25, align start/center | \"Hollywood bei BMW.\": align start/center | \"Im Rahmen einer einzigartige",
+    "768: [layout] 10/49 text blocks placed differently: \"Stand 2024\": x 47/-1 | \"Startseite Großkunden\": cx 129/81 | \"Online-Magazin\": cx 276/228 | \"Ein BMW muss nicht brüllen, u",
+    "390: [typography] 3 runs differ: \"Ein BMW muss nicht brüllen, um geseh\": size 16/23, align start/center | \"Hollywood bei BMW.\": align start/center | \"Im Rahmen einer einzigartige"
    ],
    "notes": []
   },
@@ -2067,7 +1971,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "96% / 96% / 97%",
+   "heightRatioPreviewVsLive": "96% / 96% / 98%",
    "blocks": [
     "hero-teaser",
     "link-list",
@@ -2085,10 +1989,7 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [missing-text] 2/21 live text runs not visible on preview: \"Besonders spannend ist die Eröffnung des\", \"Zum Abschluss gibt Christian Stephani ei\"",
-    "768: [missing-text] 2/21 live text runs not visible on preview: \"Besonders spannend ist die Eröffnung des\", \"Zum Abschluss gibt Christian Stephani ei\"",
-    "768: [layout] 3/18 text blocks placed differently: \"Die Evolution des Fahrens.\": w 672/246 | \"Der Klangmeister – Interview m\": w 672/423 | \"Umfrage: Welche Themen wollen \": w",
-    "390: [missing-text] 2/21 live text runs not visible on preview: \"Besonders spannend ist die Eröffnung des\", \"Zum Abschluss gibt Christian Stephani ei\""
+    "768: [layout] 3/20 text blocks placed differently: \"Die Evolution des Fahrens.\": w 672/246 | \"Der Klangmeister – Interview m\": w 672/423 | \"Umfrage: Welche Themen wollen \": w"
    ],
    "notes": []
   },
@@ -2120,13 +2021,13 @@
   },
   {
    "page": "/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass/ausgabe2-2024/transformation-der-flotte",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "96% / 95% / 96%",
+   "heightRatioPreviewVsLive": "99% / 97% / 98%",
    "blocks": [
     "hero-teaser",
     "columns"
@@ -2140,11 +2041,7 @@
     "R0: grid-width detection (side-by-side rows), inset/middle/stack-md options",
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
-   "remaining": [
-    "1440: [missing-text] 19/52 live text runs not visible on preview: \"Der Fuhrpark soll jedoch technologieoffe\", \"Bei SAP spricht man von einem lokal emis\", \"Mit mehr als 2.000 Ladepun",
-    "768: [missing-text] 19/52 live text runs not visible on preview: \"Der Fuhrpark soll jedoch technologieoffe\", \"Bei SAP spricht man von einem lokal emis\", \"Mit mehr als 2.000 Ladepun",
-    "390: [missing-text] 19/52 live text runs not visible on preview: \"Der Fuhrpark soll jedoch technologieoffe\", \"Bei SAP spricht man von einem lokal emis\", \"Mit mehr als 2.000 Ladepun"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -2155,7 +2052,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "100% / 98% / 99%",
+   "heightRatioPreviewVsLive": "101% / 99% / 100%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -2169,23 +2066,21 @@
     "R0: source text/CTA spacing variants (text-top/bottom, cta-*), tablet button stacking"
    ],
    "remaining": [
-    "1440: [missing-text] 10/30 live text runs not visible on preview: \"Fahrfreude neu definiert.\", \"Unsichtbar unter der Oberfläche – und do\", \"„Ich gebe zu: Als das Heart of Joy erstm\"",
-    "1440: [typography] 3 runs differ: \"Startseite Großkunden\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"Elektromobilität ist die Zukunft und\": size 18/28 | \"*An einer 400kW High-Po",
-    "768: [missing-text] 10/30 live text runs not visible on preview: \"Fahrfreude neu definiert.\", \"Unsichtbar unter der Oberfläche – und do\", \"„Ich gebe zu: Als das Heart of Joy erstm\"",
-    "768: [typography] 3 runs differ: \"Startseite Großkunden\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"Elektromobilität ist die Zukunft und\": size 17/25 | \"*An einer 400kW High-Po",
-    "390: [missing-text] 10/29 live text runs not visible on preview: \"Fahrfreude neu definiert.\", \"Unsichtbar unter der Oberfläche – und do\", \"„Ich gebe zu: Als das Heart of Joy erstm\""
+    "1440: [typography] 7 runs differ: \"Eine zentrale Steuereinheit für die \": align start/center | \"Eine neue Verbindung zum Fahrzeug.\": align start/center | \"Freude am Fahren, neu in",
+    "768: [typography] 7 runs differ: \"Eine zentrale Steuereinheit für die \": align start/center | \"Eine neue Verbindung zum Fahrzeug.\": align start/center | \"Freude am Fahren, neu in",
+    "390: [typography] 7 runs differ: \"Eine zentrale Steuereinheit für die \": align start/center | \"Eine neue Verbindung zum Fahrzeug.\": align start/center | \"Freude am Fahren, neu in"
    ],
    "notes": []
   },
   {
    "page": "/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass/fuhrparkmanagement",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "100% / 100% / 98%",
+   "heightRatioPreviewVsLive": "101% / 101% / 99%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -2200,11 +2095,7 @@
     "R0: grid-width detection (side-by-side rows), inset/middle/stack-md options",
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
-   "remaining": [
-    "1440: [missing-text] 13/80 live text runs not visible on preview: \"Innovative Management-Tools unterstützen\", \"Als Teil der BMW Group bietet der Busine\", \"Digitale Flottenmanagement",
-    "768: [missing-text] 13/80 live text runs not visible on preview: \"Innovative Management-Tools unterstützen\", \"Als Teil der BMW Group bietet der Busine\", \"Digitale Flottenmanagement",
-    "390: [missing-text] 13/79 live text runs not visible on preview: \"Innovative Management-Tools unterstützen\", \"Als Teil der BMW Group bietet der Busine\", \"Digitale Flottenmanagement"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -2215,7 +2106,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "86% / 88% / 88%",
+   "heightRatioPreviewVsLive": "87% / 89% / 89%",
    "blocks": [
     "hero-teaser",
     "embed",
@@ -2231,12 +2122,9 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [height] preview 1816px vs live 2120px content height (86%)",
-    "1440: [missing-text] 4/11 live text runs not visible on preview: \"Was bewegt die Automobilbranche – heute \", \"Im BMW Business Class Podcast „Was uns b\", \"Wie sieht der Fuhrpark der ",
-    "768: [height] preview 1879px vs live 2145px content height (88%)",
-    "768: [missing-text] 4/11 live text runs not visible on preview: \"Was bewegt die Automobilbranche – heute \", \"Im BMW Business Class Podcast „Was uns b\", \"Wie sieht der Fuhrpark der ",
-    "390: [height] preview 2228px vs live 2522px content height (88%)",
-    "390: [missing-text] 4/11 live text runs not visible on preview: \"Was bewegt die Automobilbranche – heute \", \"Im BMW Business Class Podcast „Was uns b\", \"Wie sieht der Fuhrpark der "
+    "1440: [height] preview 1852px vs live 2120px content height (87%)",
+    "768: [height] preview 1903px vs live 2145px content height (89%)",
+    "390: [height] preview 2252px vs live 2522px content height (89%)"
    ],
    "notes": []
   },
@@ -2302,13 +2190,13 @@
   },
   {
    "page": "/de/mehr-bmw/sport-und-events/bmw-basketball/bmw-park",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "96% / 95% / 93%",
+   "heightRatioPreviewVsLive": "97% / 95% / 93%",
    "blocks": [
     "hero-teaser",
     "link-list",
@@ -2325,11 +2213,7 @@
     "R0: grid-width detection (side-by-side rows), inset/middle/stack-md options",
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
-   "remaining": [
-    "1440: [missing-text] 3/17 live text runs not visible on preview: \"Herzstück der Arena ist natürlich der ne\", \"Also: vorbeikommen und überraschen lasse\", \"We Power Joy. Together.\"",
-    "768: [missing-text] 3/17 live text runs not visible on preview: \"Herzstück der Arena ist natürlich der ne\", \"Also: vorbeikommen und überraschen lasse\", \"We Power Joy. Together.\"",
-    "390: [missing-text] 3/17 live text runs not visible on preview: \"Herzstück der Arena ist natürlich der ne\", \"Also: vorbeikommen und überraschen lasse\", \"We Power Joy. Together.\""
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -2386,13 +2270,13 @@
   },
   {
    "page": "/de/mehr-bmw/sport-und-events/bmw-basketball/we-care",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "94% / 93% / 92%",
+   "heightRatioPreviewVsLive": "96% / 95% / 93%",
    "blocks": [
     "hero-teaser",
     "link-list",
@@ -2406,11 +2290,7 @@
     "R0: source text/CTA spacing variants (text-top/bottom, cta-*), tablet button stacking",
     "R0: poster until first frame"
    ],
-   "remaining": [
-    "1440: [missing-text] 4/11 live text runs not visible on preview: \"In der ersten gemeinsamen Saison kamen d\", \"„Unsere Initiative ‚Dunks for Tomorrow‘ \", \"Auch der Sport selbst ist e",
-    "768: [missing-text] 4/11 live text runs not visible on preview: \"In der ersten gemeinsamen Saison kamen d\", \"„Unsere Initiative ‚Dunks for Tomorrow‘ \", \"Auch der Sport selbst ist e",
-    "390: [missing-text] 4/11 live text runs not visible on preview: \"In der ersten gemeinsamen Saison kamen d\", \"„Unsere Initiative ‚Dunks for Tomorrow‘ \", \"Auch der Sport selbst ist e"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -2421,7 +2301,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "99% / 99% / 98%",
+   "heightRatioPreviewVsLive": "93% / 89% / 99%",
    "blocks": [
     "hero-teaser",
     "media",
@@ -2437,9 +2317,7 @@
     "R3: slides side by side per slides-* variant, static grid, peek track; 15px body; centred/body-2 options; offer cards"
    ],
    "remaining": [
-    "1440: [missing-text] 1/5 live text runs not visible on preview: \"Wille, Ehrgeiz, Leidenschaft und ein lan\"",
-    "768: [missing-text] 1/5 live text runs not visible on preview: \"Wille, Ehrgeiz, Leidenschaft und ein lan\"",
-    "390: [missing-text] 1/5 live text runs not visible on preview: \"Wille, Ehrgeiz, Leidenschaft und ein lan\""
+    "768: [height] preview 2507px vs live 2811px content height (89%)"
    ],
    "notes": []
   },
@@ -2475,7 +2353,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "99% / 100% / 100%",
+   "heightRatioPreviewVsLive": "96% / 92% / 100%",
    "blocks": [
     "hero-teaser",
     "media",
@@ -2528,7 +2406,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "92% / 94% / 94%",
+   "heightRatioPreviewVsLive": "92% / 94% / 95%",
    "blocks": [
     "hero-teaser",
     "content-table"
@@ -2546,7 +2424,7 @@
   },
   {
    "page": "/de/mehr-bmw/teile-und-zubehoer/bmw-zubehoer-hub",
-   "status": "match",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -2578,7 +2456,9 @@
     "R3: card title sizes, large-titles option",
     "R3: tablet width from source grid"
    ],
-   "remaining": [],
+   "remaining": [
+    "1440: [broken-images] 1: https://bmw.scene7.com/is/image/BMW/BMW-Accessories-Hub_Spring-Summer-2026_Transportsolutions:3to2?fit=constrain%2C1&wid=2560&fmt=webp&qlt=8"
+   ],
    "notes": []
   },
   {
@@ -2589,7 +2469,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "101% / 99% / 106%",
+   "heightRatioPreviewVsLive": "99% / 98% / 106%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -2609,22 +2489,23 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 14/75 text blocks placed differently: \"ORIGINAL BMW TEILE.\": w 616/464 | \"Wiederaufbereitete Teile\": cx 406/310 | \"Wiederaufbereitung\": cx 588/492 | \"Original B",
-    "768: [layout] 12/75 text blocks placed differently: \"Wiederaufbereitete Teile\": cx 127/281 | \"Wiederaufbereitung\": cx 291/445 | \"Original BMW Classic Teile\": cx 461/615 | \"BM",
-    "390: [typography] 6 runs differ: \"DAMIT IHR BMW EIN ORIGINAL BMW BLEIB\": size 19/23 | \"Geprüfte BMW Qualität.\": align start/center | \"Attraktives Preis-Leistungs-Verhältn\": align",
-    "390: [layout] 9/71 text blocks placed differently: \"NEU UND GENAU FÜR IHREN BMW.\": ypos 25%/16% | \"ES MUSS NICHT IMMER NEU SEIN.\": ypos 37%/28% | \"IN 5 SCHRITTEN ZU NEUER QUA"
+    "1440: [typography] 4 runs differ: \"DAMIT IHR BMW EIN ORIGINAL BMW BLEIB\": size 23/28 | \"Original BMW Classic Teile\": align start/center | \"Bei Verschleiß, Beschädigung oder De\": a",
+    "1440: [layout] 14/77 text blocks placed differently: \"ORIGINAL BMW TEILE.\": w 616/464 | \"Wiederaufbereitete Teile\": cx 406/310 | \"Wiederaufbereitung\": cx 588/492 | \"Original B",
+    "768: [layout] 12/77 text blocks placed differently: \"Wiederaufbereitete Teile\": cx 329/281 | \"Wiederaufbereitung\": cx 493/445 | \"Original BMW Classic Teile\": cx 663/615 | \"BM",
+    "390: [typography] 8 runs differ: \"DAMIT IHR BMW EIN ORIGINAL BMW BLEIB\": size 19/23 | \"Geprüfte BMW Qualität.\": align start/center | \"Attraktives Preis-Leistungs-Verhältn\": align",
+    "390: [layout] 10/73 text blocks placed differently: \"NEU UND GENAU FÜR IHREN BMW.\": ypos 25%/16% | \"ES MUSS NICHT IMMER NEU SEIN.\": ypos 37%/28% | \"IN 5 SCHRITTEN ZU NEUER QU"
    ],
    "notes": []
   },
   {
    "page": "/de/more-bmw/sport-und-events/bmw-basketball/bmw-park",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "96% / 95% / 93%",
+   "heightRatioPreviewVsLive": "97% / 95% / 93%",
    "blocks": [
     "hero-teaser",
     "link-list",
@@ -2641,11 +2522,7 @@
     "R0: grid-width detection (side-by-side rows), inset/middle/stack-md options",
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
-   "remaining": [
-    "1440: [missing-text] 3/17 live text runs not visible on preview: \"Herzstück der Arena ist natürlich der ne\", \"Also: vorbeikommen und überraschen lasse\", \"We Power Joy. Together.\"",
-    "768: [missing-text] 3/17 live text runs not visible on preview: \"Herzstück der Arena ist natürlich der ne\", \"Also: vorbeikommen und überraschen lasse\", \"We Power Joy. Together.\"",
-    "390: [missing-text] 3/17 live text runs not visible on preview: \"Herzstück der Arena ist natürlich der ne\", \"Also: vorbeikommen und überraschen lasse\", \"We Power Joy. Together.\""
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -2656,7 +2533,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "128% / 101% / 95%",
+   "heightRatioPreviewVsLive": "129% / 102% / 95%",
    "blocks": [
     "hero-teaser",
     "icon-teaser",
@@ -2679,10 +2556,10 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [height] preview 5926px vs live 4621px content height (128%)",
-    "1440: [layout] 25/50 text blocks placed differently: \"My BMW APP.\": w 512/277 | \"ALLES AN EINEM ORT – MIT DER M\": w 1248/442, ypos 24%/15% | \"Fahrzeugstatus / Ladestatus ch\": ",
+    "1440: [height] preview 5950px vs live 4621px content height (129%)",
+    "1440: [layout] 27/52 text blocks placed differently: \"My BMW APP.\": w 512/277 | \"ALLES AN EINEM ORT – MIT DER M\": w 1248/442, ypos 24%/15% | \"Fahrzeugstatus / Ladestatus ch\": ",
     "1440: [image-geometry] 3/8 images sized differently (preview/live): 4.1-all-good_0009_ios6_de_te 1248x833/718x479, visual_app_seite_(1400x800_p 1248x693/718x410, reference_image 1248x",
-    "768: [layout] 9/50 text blocks placed differently: \"Fahrzeugstatus / Ladestatus ch\": x 252/80 | \"Digital Key: Fahrzeug verriege\": x 184/79 | \"Vorklimatisieren und Vorheizen\":"
+    "768: [layout] 9/52 text blocks placed differently: \"Fahrzeugstatus / Ladestatus ch\": x 252/80 | \"Digital Key: Fahrzeug verriege\": x 184/79 | \"Vorklimatisieren und Vorheizen\":"
    ],
    "notes": []
   },
@@ -2735,7 +2612,7 @@
   },
   {
    "page": "/de/neufahrzeuge/1er/bmw-1er/bmw-1er",
-   "status": "match",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -2770,7 +2647,10 @@
     "R3: card title sizes, large-titles option",
     "R3: tablet width from source grid"
    ],
-   "remaining": [],
+   "remaining": [
+    "1440: [layout] 14/100 text blocks placed differently: \"Technische Daten\": cx 83/159 | \"Angebote\": cx 205/281 | \"Preisliste\": cx 297/373 | \"Probefahrt vereinbaren\": cx 436/512 ",
+    "768: [layout] 13/101 text blocks placed differently: \"Technische Daten\": cx 77/-133 | \"Angebote\": cx 189/-21 | \"Preisliste\": cx 273/63 | \"Probefahrt vereinbaren\": cx 400/190 "
+   ],
    "notes": []
   },
   {
@@ -2835,10 +2715,9 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [typography] 5 runs differ: \"Technische Daten\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"BMW 220i Active Tourer\": size 20/15, weight 300/700 | \"Preisliste BMW 2er Active ",
     "1440: [layout] 14/82 text blocks placed differently: \"BMW 220i Active Tourer\": cx 205/469 | \"Urbaner Athlet.\": w 512/240 | \"Kraft und Eleganz in Balance.\": w 1248/371 | \"Das k",
     "1440: [image-geometry] 6/23 images sized differently (preview/live): u06_exterior_rear-design 1248x830/718x478, u06_plug-in-hybrid_phev 612x408/294x196, u06_plug-in-hybrid_home-char 6",
-    "768: [layout] 15/84 text blocks placed differently: \"Technische Daten\": cx -229/36 | \"Preisliste\": cx -120/145 | \"Probefahrt vereinbaren\": cx 7/272 | \"Design\": cx 126/391 | \""
+    "768: [layout] 15/84 text blocks placed differently: \"Technische Daten\": cx 77/36 | \"Preisliste\": cx 186/145 | \"Probefahrt vereinbaren\": cx 313/272 | \"Design\": cx 432/391 | \"P"
    ],
    "notes": []
   },
@@ -2906,7 +2785,7 @@
    "remaining": [
     "1440: [layout] 9/76 text blocks placed differently: \"Das BMW 2er Coupé.\": w 538/338 | \"BMW M240i xDrive Coupé\": cx 216/440 | \"Sportlich bis zum Heck.\": w 466/295 | \"Mit dem 8-",
     "1440: [image-geometry] 3/19 images sized differently (preview/live): g42_dynamics_steptronic-tran 400x267/294x195, g42_dynamics_adaptive-m-susp 400x267/294x196, g42_dynamics_twinpower",
-    "768: [layout] 18/77 text blocks placed differently: \"Technische Daten\": cx -475/77 | \"Design\": cx -373/179 | \"Preisliste\": cx -298/254 | \"Fahrdynamik\": cx -203/349 | \"Probefa",
+    "768: [layout] 10/77 text blocks placed differently: \"BMW M240i xDrive Coupé\": cx 384/184 | \"Breite Spur. Scharfe Reaktion.\": w 648/391 | \"Sportlich bis zum Heck.\": w 672/264 ",
     "390: [layout] 10/71 text blocks placed differently: \"BMW M240i xDrive Coupé\": cx 196/48 | \"Sportlich bis zum Heck.\": w 342/242 | \"Leichter Parken durch mehr Kam\": x 347/227 |"
    ],
    "notes": []
@@ -2944,7 +2823,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "98% / 98% / 97%",
+   "heightRatioPreviewVsLive": "98% / 99% / 98%",
    "blocks": [
     "hero-teaser",
     "disclaimer",
@@ -2972,7 +2851,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "768: [layout] 14/96 text blocks placed differently: \"Technische Daten\": cx -229/-46 | \"Preisliste\": cx -120/63 | \"Probefahrt vereinbaren\": cx 7/190 | \"Design\": cx 126/309 | \""
+    "768: [layout] 14/97 text blocks placed differently: \"Technische Daten\": cx 77/-46 | \"Preisliste\": cx 186/63 | \"Probefahrt vereinbaren\": cx 313/190 | \"Design\": cx 432/309 | \"T"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -3038,8 +2917,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 11/86 text blocks placed differently: \"Die BMW 3er LimousinePlug-in-H\": x 832/104, w 512/252 | \"Konfigurieren & Preise\": cx 938/200 | \"Angebot anfordern\": cx 11",
-    "768: [layout] 11/86 text blocks placed differently: \"Technische Daten\": cx -417/-46 | \"Preisliste\": cx -308/63 | \"Probefahrt vereinbaren\": cx -181/190 | \"Design\": cx -62/309 "
+    "1440: [layout] 10/86 text blocks placed differently: \"Die BMW 3er LimousinePlug-in-H\": x 832/104, w 512/252 | \"Konfigurieren & Preise\": cx 938/200 | \"Angebot anfordern\": cx 11",
+    "768: [layout] 11/86 text blocks placed differently: \"Technische Daten\": cx 77/-46 | \"Preisliste\": cx 186/63 | \"Probefahrt vereinbaren\": cx 313/190 | \"Design\": cx 432/309 | \"T"
    ],
    "notes": []
   },
@@ -3141,8 +3020,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 10/88 text blocks placed differently: \"Konfigurieren & Preise\": cx 938/200 | \"Angebot anfordern\": cx 1153/409 | \"BMW 330e xDrive Touring\": cx 215/443 | \"Rein el",
-    "768: [layout] 13/88 text blocks placed differently: \"Technische Daten\": cx -475/-46 | \"Preisliste\": cx -366/63 | \"Probefahrt vereinbaren\": cx -239/190 | \"Design\": cx -120/309"
+    "1440: [layout] 10/89 text blocks placed differently: \"Konfigurieren & Preise\": cx 938/200 | \"Angebot anfordern\": cx 1153/409 | \"BMW 330e xDrive Touring\": cx 215/443 | \"Rein el",
+    "768: [layout] 13/89 text blocks placed differently: \"Technische Daten\": cx 77/-46 | \"Preisliste\": cx 186/63 | \"Probefahrt vereinbaren\": cx 313/190 | \"Design\": cx 432/309 | \"T"
    ],
    "notes": []
   },
@@ -3232,8 +3111,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 20/94 text blocks placed differently: \"Der BMW 3er Touring.\": x 832/104, w 512/228 | \"Konfigurieren & Preise\": cx 938/200 | \"Angebot anfordern\": cx 1153/409 | \"",
-    "768: [layout] 14/94 text blocks placed differently: \"Technische Daten\": cx -562/-133 | \"Angebote\": cx -450/-21 | \"Preisliste\": cx -366/63 | \"Probefahrt vereinbaren\": cx -239/"
+    "1440: [layout] 11/94 text blocks placed differently: \"Der BMW 3er Touring.\": x 832/104, w 512/228 | \"Konfigurieren & Preise\": cx 938/200 | \"Angebot anfordern\": cx 1153/409 | \"",
+    "768: [layout] 14/94 text blocks placed differently: \"Technische Daten\": cx 77/-133 | \"Angebote\": cx 189/-21 | \"Preisliste\": cx 273/63 | \"Probefahrt vereinbaren\": cx 400/190 |"
    ],
    "notes": []
   },
@@ -3296,7 +3175,7 @@
   },
   {
    "page": "/de/neufahrzeuge/4er/cabrio/bmw-4er-cabrio",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -3329,17 +3208,14 @@
     "R3: card title sizes, large-titles option",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 11/65 text blocks placed differently: \"Das BMW 4er Cabrio.\": w 512/224 | \"Technische Daten\": cx 167/83 | \"Konfigurieren\": cx 302/218 | \"Preisliste\": cx 407/323 ",
-    "768: [layout] 12/66 text blocks placed differently: \"Technische Daten\": cx -321/77 | \"Konfigurieren\": cx -198/200 | \"Preisliste\": cx -103/295 | \"Probefahrt vereinbaren\": cx 2"
-   ],
+   "remaining": [],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
    ]
   },
   {
    "page": "/de/neufahrzeuge/4er/coupe/bmw-4er-coupe",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -3371,15 +3247,12 @@
     "R3: card title sizes, large-titles option",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 10/63 text blocks placed differently: \"Das BMW 4er Coupé.\": w 512/224 | \"Technische Daten\": cx 167/83 | \"Preisliste\": cx 287/203 | \"Probefahrt vereinbaren\": cx ",
-    "768: [layout] 11/63 text blocks placed differently: \"Technische Daten\": cx -212/77 | \"Preisliste\": cx -103/186 | \"Probefahrt vereinbaren\": cx 24/313 | \"Design\": cx 143/432 | "
-   ],
+   "remaining": [],
    "notes": []
   },
   {
    "page": "/de/neufahrzeuge/4er/gran-coupe/bmw-4er-gran-coupe",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -3411,10 +3284,7 @@
     "R3: card title sizes, large-titles option",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 12/79 text blocks placed differently: \"Das BMW 4er Gran Coupé.\": w 512/280 | \"Technische Daten\": cx 167/83 | \"Preisliste\": cx 287/203 | \"Probefahrt vereinbaren\"",
-    "768: [layout] 11/79 text blocks placed differently: \"Technische Daten\": cx -212/77 | \"Preisliste\": cx -103/186 | \"Probefahrt vereinbaren\": cx 24/313 | \"Design\": cx 143/432 | "
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -3479,8 +3349,9 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 14/83 text blocks placed differently: \"Der BMW 5er Touring Plug-in-Hy\": w 512/385 | \"Technische Daten\": cx 167/83 | \"Preisliste\": cx 287/203 | \"Probefahrt verei",
-    "768: [layout] 13/83 text blocks placed differently: \"Technische Daten\": cx -279/77 | \"Preisliste\": cx -170/186 | \"Probefahrt vereinbaren\": cx -43/313 | \"Design\": cx 76/432 | "
+    "1440: [typography] 6 runs differ: \"THE NEW\": size 18/15, case none/uppercase | \"Technische Daten\": color rgb(38, 38, 38)/rgb(102, 102, 102) | \"Design\": color rgb(102, 102, 102)/rg",
+    "768: [typography] 6 runs differ: \"THE NEW\": size 17/14, case none/uppercase | \"Technische Daten\": color rgb(38, 38, 38)/rgb(102, 102, 102) | \"Preisliste\": color rgb(102, 102, 102",
+    "390: [typography] 5 runs differ: \"THE NEW\": size 16/14, case none/uppercase | \"BMW 530e Touring\": size 17/14, weight 300/700, color rgb(255, 255, 255)/rgb(38, 38, 38) | \"Technisc"
    ],
    "notes": []
   },
@@ -3521,7 +3392,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "768: [layout] 12/73 text blocks placed differently: \"Technische Daten\": cx -326/-16 | \"Preisliste\": cx -217/93 | \"Probefahrt vereinbaren\": cx -90/220 | \"Design\": cx 29/339 | ",
+    "1440: [layout] 14/73 text blocks placed differently: \"Der BMW 5er Touring.\": w 512/228 | \"Technische Daten\": cx 83/215 | \"Preisliste\": cx 203/335 | \"Probefahrt vereinbaren\": c",
+    "768: [layout] 12/73 text blocks placed differently: \"Technische Daten\": cx 77/-16 | \"Preisliste\": cx 186/93 | \"Probefahrt vereinbaren\": cx 313/220 | \"Design\": cx 432/339 | \"F",
     "390: [image-geometry] 2/13 images sized differently (preview/live): g61_ice_touring_driving-dyna 390x219/390x150, g61_ice_touring_driving-dyna 390x219/390x150"
    ],
    "notes": []
@@ -3553,7 +3425,7 @@
   },
   {
    "page": "/de/neufahrzeuge/5er/limousine/bmw-5er-limousine-phev-ueberblick",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -3587,10 +3459,7 @@
     "R3: card title sizes, large-titles option",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 14/74 text blocks placed differently: \"Der BMW 5er Plug-in-Hybrid.\": w 512/303 | \"Technische Daten\": cx -6/86 | \"Preisliste\": cx 114/206 | \"Probefahrt vereinbar",
-    "768: [layout] 12/74 text blocks placed differently: \"Technische Daten\": cx -520/77 | \"Preisliste\": cx -411/186 | \"Probefahrt vereinbaren\": cx -284/313 | \"Design\": cx -165/432"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -3655,7 +3524,9 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "768: [layout] 13/72 text blocks placed differently: \"Technische Daten\": cx -417/-46 | \"Preisliste\": cx -308/63 | \"Probefahrt vereinbaren\": cx -181/190 | \"Fahrdynamik\": cx -42"
+    "1440: [typography] 4 runs differ: \"Technische Daten\": color rgb(38, 38, 38)/rgb(102, 102, 102) | \"Fahrdynamik\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"BMW 520i Limousine\": si",
+    "1440: [layout] 14/72 text blocks placed differently: \"Die BMW 5er Limousine.\": w 512/258 | \"Technische Daten\": cx 83/178 | \"Preisliste\": cx 203/298 | \"Probefahrt vereinbaren\":",
+    "768: [layout] 13/72 text blocks placed differently: \"Technische Daten\": cx 77/-46 | \"Preisliste\": cx 186/63 | \"Probefahrt vereinbaren\": cx 313/190 | \"Fahrdynamik\": cx 452/329"
    ],
    "notes": []
   },
@@ -3796,9 +3667,7 @@
    ],
    "remaining": [
     "1440: [layout] 17/124 text blocks placed differently: \"DER NEUE BMW 7er\": w 538/383 | \"DIE NEUE BMW i7 LIMOUSINE\": w 538/412 | \"BMW Individual\": x 842/616 | \"727 km\": cx 405/6",
-    "1440: [image-geometry] 3/17 images sized differently (preview/live): road-1 400x267/270x180, room 400x267/270x180, women 400x267/270x180",
-    "768: [layout] 13/124 text blocks placed differently: \"BMW Individual\": x 227/512 | \"727 km\": cx 385/588 | \"Mehr anzeigen\": cx 148/384 | \"Der Innenraum. Digitale Perfek\": w 61",
-    "390: [layout] 13/124 text blocks placed differently: \"BMW Individual\": x 124/24 | \"727 km\": cx 196/133 | \"Mehr anzeigen\": cx 96/195 | \"Farbkombinationen\": x 149/24 | \"Vancouv"
+    "1440: [image-geometry] 3/17 images sized differently (preview/live): road-1 400x267/270x180, room 400x267/270x180, women 400x267/270x180"
    ],
    "notes": []
   },
@@ -3862,9 +3731,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 16/106 text blocks placed differently: \"Das BMW i4 Gran Coupé.\": w 512/265 | \"Technische Daten\": cx -2/90 | \"Business Lösungen\": cx 156/248 | \"Preisliste\": cx 2",
     "1440: [broken-images] 2: https://bmw.scene7.com/is/image/BMW/g26_bev_electric-driving-pleasure_fb_de?wid=1024&fmt=webp&qlt=80 https://bmw.scene7.com/is/image/BMW/g26_bev_glass-applic",
-    "768: [layout] 13/106 text blocks placed differently: \"Technische Daten\": cx -378/77 | \"Business Lösungen\": cx -235/220 | \"Preisliste\": cx -120/335 | \"Probefahrt vereinbaren\":",
     "768: [broken-images] 2: https://bmw.scene7.com/is/image/BMW/g26_bev_electric-driving-pleasure_fb_de?wid=768&fmt=webp&qlt=80 https://bmw.scene7.com/is/image/BMW/g26_bev_glass-applica",
     "390: [broken-images] 1: https://bmw.scene7.com/is/image/BMW/g26_bev_electric-driving-pleasure_fb_de?wid=480&fmt=webp&qlt=80"
    ],
@@ -3958,13 +3825,13 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "768: [layout] 18/95 text blocks placed differently: \"Technische Daten\": cx -458/77 | \"Angebote\": cx -346/189 | \"Preisliste\": cx -262/273 | \"Probefahrt vereinbaren\": cx -135/4"
+    "768: [layout] 10/95 text blocks placed differently: \"BMW i5 eDrive40 Touring\": cx 385/193 | \"Vollintegriertes Video Streami\": w 672/431 | \"Immer in der richtigen Spur un\": w "
    ],
    "notes": []
   },
   {
    "page": "/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick",
-   "status": "differences remain",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -3999,10 +3866,7 @@
     "R3: card title sizes, large-titles option",
     "R3: tablet width from source grid"
    ],
-   "remaining": [
-    "1440: [layout] 18/96 text blocks placed differently: \"Der BMW i5. 100% elektrisch.\": w 512/309 | \"Technische Daten\": cx -325/83 | \"Angebote\": cx -203/205 | \"Preisliste\": cx -1",
-    "768: [layout] 17/98 text blocks placed differently: \"Technische Daten\": cx -815/77 | \"Angebote\": cx -703/189 | \"Preisliste\": cx -619/273 | \"Probefahrt vereinbaren\": cx -492/4"
-   ],
+   "remaining": [],
    "notes": []
   },
   {
@@ -4038,7 +3902,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "100% / 100% / 97%",
+   "heightRatioPreviewVsLive": "100% / 101% / 97%",
    "blocks": [
     "hero-teaser",
     "disclaimer",
@@ -4070,8 +3934,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 24/115 text blocks placed differently: \"100 % elektrisch.Bis zu 701 km\": w 512/349 | \"Technische Daten\": cx 167/-121 | \"Angebote\": cx 289/1 | \"Preisliste\": cx 3",
-    "768: [layout] 18/118 text blocks placed differently: \"Technische Daten\": cx -316/77 | \"Angebote\": cx -204/189 | \"Preisliste\": cx -120/273 | \"Probefahrt vereinbaren\": cx 7/400"
+    "1440: [layout] 24/117 text blocks placed differently: \"100 % elektrisch.Bis zu 701 km\": w 512/349 | \"Technische Daten\": cx 83/-121 | \"Angebote\": cx 205/1 | \"Preisliste\": cx 29"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -4139,9 +4002,9 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 24/110 text blocks placed differently: \"Technische Daten\": cx -265/83 | \"Angebote\": cx -143/205 | \"Business Lösungen\": cx -13/335 | \"Preisliste\": cx 114/462 | \"",
-    "1440: [image-geometry] 4/21 images sized differently (preview/live): u11_bmw_cherifa_3000x3000 1248x829/718x477, u11-bev_teaser_home-charging 400x267/294x196, u11-bev_teaser_plug-and-",
-    "768: [layout] 25/111 text blocks placed differently: \"Technische Daten\": cx -533/77 | \"Angebote\": cx -421/189 | \"Business Lösungen\": cx -303/307 | \"Preisliste\": cx -188/422 |"
+    "1440: [layout] 16/113 text blocks placed differently: \"BMW iX1 xDrive30\": cx 1080/449 | \"15.444,00 €\": w 100/296 | \"16.884,00 €\": w 103/296 | \"17.604,00 €\": w 98/296 | \"19.764",
+    "1440: [image-geometry] 4/20 images sized differently (preview/live): u11_bmw_cherifa_3000x3000 1248x829/718x477, u11-bev_teaser_home-charging 400x267/294x196, u11-bev_teaser_plug-and-",
+    "768: [layout] 17/114 text blocks placed differently: \"BMW iX1 xDrive30\": cx 1567/193 | \"15.444,00 €\": w 92/616 | \"16.884,00 €\": w 97/616 | \"17.604,00 €\": w 91/616 | \"19.764,0"
    ],
    "notes": []
   },
@@ -4206,8 +4069,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 24/111 text blocks placed differently: \"Der BMW iX2. 100 % elektrisch.\": w 512/330 | \"Technische Daten\": cx 167/83 | \"Angebote\": cx 289/205 | \"Preisliste\": cx 3",
-    "768: [layout] 24/111 text blocks placed differently: \"Technische Daten\": cx -316/-133 | \"Angebote\": cx -204/-21 | \"Preisliste\": cx -120/63 | \"Probefahrt vereinbaren\": cx 7/19"
+    "1440: [layout] 16/112 text blocks placed differently: \"Der BMW iX2. 100 % elektrisch.\": w 512/330 | \"BMW iX2 xDrive30\": cx 182/449 | \"Unverbindliches Leasingbeispie\": w 556/37",
+    "768: [layout] 25/112 text blocks placed differently: \"Technische Daten\": cx 77/-133 | \"Angebote\": cx 189/-21 | \"Preisliste\": cx 273/63 | \"Probefahrt vereinbaren\": cx 400/190 "
    ],
    "notes": []
   },
@@ -4313,9 +4176,9 @@
    ],
    "remaining": [
     "1440: [missing-text] 69/226 live text runs not visible on preview: \"Skip to main content\", \"Kaufen\", \"E-Mobilität\", \"Kunden\"",
-    "1440: [layout] 15/149 text blocks placed differently: \"Modelle\": x 96/184 | \"8-Gang Steptronic Sport Getrie\": w 360/231 | \"Fahren, wie Sie es sich wünsch\": w 400/289 | \"Das Au",
+    "1440: [layout] 26/149 text blocks placed differently: \"Modelle\": x 96/184 | \"Technische Daten\": cx 83/167 | \"Konfigurieren\": cx 218/302 | \"Preisliste\": cx 323/407 | \"BMW M2 mi",
     "768: [missing-text] 67/224 live text runs not visible on preview: \"Skip to main content\", \"Diese Auswahl führt aufgrund von Einschr\", \"Die My BMW App. Die direkte Verbindung z\", \"K",
-    "768: [layout] 20/150 text blocks placed differently: \"Die BMW 2er Coupé M Modelle.\": cx 384/433 | \"Technische Daten\": cx -167/-37 | \"Konfigurieren\": cx -44/86 | \"Preisliste\":",
+    "768: [layout] 20/150 text blocks placed differently: \"Die BMW 2er Coupé M Modelle.\": cx 384/433 | \"Technische Daten\": cx 77/-37 | \"Konfigurieren\": cx 200/86 | \"Preisliste\": c",
     "390: [missing-text] 67/218 live text runs not visible on preview: \"Skip to main content\", \"Diese Auswahl führt aufgrund von Einschr\", \"Die My BMW App. Die direkte Verbindung z\", \"K"
    ],
    "notes": []
@@ -4358,8 +4221,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 26/152 text blocks placed differently: \"Die BMW 3er Limousine M Modell\": x 104/183, w 512/372 | \"Technische Daten\": cx -408/-316 | \"Konfigurieren\": cx -273/-181",
-    "768: [layout] 21/152 text blocks placed differently: \"Technische Daten\": cx -569/-155 | \"Konfigurieren\": cx -446/-32 | \"Preisliste\": cx -351/63 | \"Probefahrt vereinbaren\": cx"
+    "1440: [layout] 26/153 text blocks placed differently: \"Die BMW 3er Limousine M Modell\": x 104/183, w 512/372 | \"Technische Daten\": cx 83/-316 | \"Konfigurieren\": cx 218/-181 | ",
+    "768: [layout] 21/153 text blocks placed differently: \"Technische Daten\": cx 77/-155 | \"Konfigurieren\": cx 200/-32 | \"Preisliste\": cx 295/63 | \"Probefahrt vereinbaren\": cx 422"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -4405,8 +4268,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 23/128 text blocks placed differently: \"Die BMW 3er Touring M Modelle.\": x 104/183, w 512/340 | \"Technische Daten\": cx -198/29 | \"Konfigurieren\": cx -63/164 | \"",
-    "768: [layout] 16/128 text blocks placed differently: \"Technische Daten\": cx -511/77 | \"Konfigurieren\": cx -388/200 | \"Preisliste\": cx -293/295 | \"Probefahrt vereinbaren\": cx "
+    "1440: [layout] 14/129 text blocks placed differently: \"Die BMW 3er Touring M Modelle.\": x 104/183, w 512/340 | \"BMW M3 Competition Touring mit\": cx 296/460 | \"390 kW (530 PS),"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -4450,7 +4312,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 25/124 text blocks placed differently: \"Die BMW 4er Cabrio M Modelle.\": x 104/183, w 512/331 | \"Technische Daten\": cx -228/83 | \"Konfigurieren\": cx -93/218 | \"P"
+    "1440: [layout] 16/124 text blocks placed differently: \"Die BMW 4er Cabrio M Modelle.\": x 104/183, w 512/331 | \"BMW M4 Competition Cabrio mit \": cx 296/460 | \"Maximale M High-P",
+    "768: [layout] 15/127 text blocks placed differently: \"Technische Daten\": cx 77/-326 | \"Konfigurieren\": cx 200/-203 | \"Preisliste\": cx 295/-108 | \"Probefahrt vereinbaren\": cx "
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -4521,8 +4384,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 21/149 text blocks placed differently: \"Die BMW 4er Coupé M Modelle.\": x 104/183, w 512/331 | \"Technische Daten\": cx -324/-232 | \"Konfigurieren\": cx -189/-97 | ",
-    "768: [layout] 17/150 text blocks placed differently: \"Technische Daten\": cx -545/77 | \"Konfigurieren\": cx -422/200 | \"Preisliste\": cx -327/295 | \"Probefahrt vereinbaren\": cx "
+    "1440: [layout] 21/150 text blocks placed differently: \"Die BMW 4er Coupé M Modelle.\": x 104/183, w 512/331 | \"Technische Daten\": cx 83/-232 | \"Konfigurieren\": cx 218/-97 | \"Pr"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -4591,8 +4453,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 24/123 text blocks placed differently: \"Technische Daten\": cx 167/5 | \"Leasingbeispiel\": cx 311/149 | \"Preisliste\": cx 424/262 | \"Probefahrt vereinbaren\": cx 56",
-    "768: [layout] 16/123 text blocks placed differently: \"Technische Daten\": cx -352/36 | \"Leasingbeispiel\": cx -222/166 | \"Preisliste\": cx -120/268 | \"Probefahrt vereinbaren\": c"
+    "1440: [layout] 24/123 text blocks placed differently: \"Technische Daten\": cx 83/5 | \"Leasingbeispiel\": cx 227/149 | \"Preisliste\": cx 340/262 | \"Probefahrt vereinbaren\": cx 479",
+    "768: [layout] 16/123 text blocks placed differently: \"Technische Daten\": cx 77/36 | \"Leasingbeispiel\": cx 207/166 | \"Preisliste\": cx 309/268 | \"Probefahrt vereinbaren\": cx 43"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -4635,8 +4497,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 14/82 text blocks placed differently: \"BMW i5 M60 xDrive. 100 % elekt\": x 104/183 | \"Technische Daten\": cx 0/92 | \"Preisliste\": cx 120/212 | \"Probefahrt vereinb",
-    "768: [layout] 15/81 text blocks placed differently: \"Technische Daten\": cx -517/-217 | \"Preisliste\": cx -408/-108 | \"Probefahrt vereinbaren\": cx -281/19 | \"Performance\": cx -"
+    "768: [layout] 15/81 text blocks placed differently: \"Technische Daten\": cx 77/-217 | \"Preisliste\": cx 186/-108 | \"Probefahrt vereinbaren\": cx 313/19 | \"Performance\": cx 451/1"
    ],
    "notes": []
   },
@@ -4703,8 +4564,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 18/96 text blocks placed differently: \"Der BMW M135 xDrive.\": x 104/183, w 512/238 | \"Technische Daten\": cx 167/83 | \"Konfigurieren\": cx 302/218 | \"Preisliste\":",
-    "768: [layout] 11/94 text blocks placed differently: \"Technische Daten\": cx -511/-155 | \"Konfigurieren\": cx -388/-32 | \"Preisliste\": cx -293/63 | \"Probefahrt vereinbaren\": cx "
+    "768: [layout] 11/94 text blocks placed differently: \"Technische Daten\": cx 77/-155 | \"Konfigurieren\": cx 200/-32 | \"Preisliste\": cx 295/63 | \"Probefahrt vereinbaren\": cx 422/"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -4773,8 +4633,8 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 14/87 text blocks placed differently: \"Technische Daten\": cx 167/-27 | \"Preisliste\": cx 287/93 | \"Probefahrt vereinbaren\": cx 426/232 | \"Performance\": cx 577/38",
-    "768: [layout] 24/86 text blocks placed differently: \"Technische Daten\": cx -229/77 | \"Preisliste\": cx -120/186 | \"Probefahrt vereinbaren\": cx 7/313 | \"Performance\": cx 145/45"
+    "1440: [layout] 14/87 text blocks placed differently: \"Technische Daten\": cx 83/-27 | \"Preisliste\": cx 203/93 | \"Probefahrt vereinbaren\": cx 342/232 | \"Performance\": cx 493/383",
+    "768: [layout] 15/86 text blocks placed differently: \"BMW i5 M60 xDrive Touring\": cx 385/188 | \"Grosszügig in Leistung und Pla\": w 648/442 | \"Auch in der Nacht unverwechsel\": "
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -4843,7 +4703,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "768: [layout] 11/95 text blocks placed differently: \"Technische Daten\": cx -229/-428 | \"Preisliste\": cx -120/-319 | \"Probefahrt vereinbaren\": cx 7/-192 | \"Performance\": cx 14"
+    "768: [layout] 11/96 text blocks placed differently: \"Technische Daten\": cx 77/-428 | \"Preisliste\": cx 186/-319 | \"Probefahrt vereinbaren\": cx 313/-192 | \"Performance\": cx 451"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -4882,7 +4742,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "95% / 95% / 91%",
+   "heightRatioPreviewVsLive": "95% / 95% / 90%",
    "blocks": [
     "hero-stage",
     "disclaimer",
@@ -4915,13 +4775,13 @@
     "R3: video/download cells kept inside columns, reverse rows, link size 15px"
    ],
    "remaining": [
-    "1440: [typography] 19 runs differ: \"DER NEUE BMW 7er\": case uppercase/none | \"Beschleunigung 0–100 km/h¹⁰\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"Max. Leistung\": color rgb(62,",
+    "1440: [typography] 17 runs differ: \"DER NEUE BMW 7er\": case uppercase/none | \"Beschleunigung 0–100 km/h¹⁰\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"Max. Leistung\": color rgb(62,",
     "1440: [layout] 17/148 text blocks placed differently: \"DER NEUE BMW 7er\": w 538/383 | \"DIE BMW 7er M MODELLE\": w 538/350 | \"500 kW (680 PS)\": x 336/616 | \"Integral-Aktivlenkun",
     "768: [missing-text] 15/182 live text runs not visible on preview: \"BMW 7er\", \"Ihr BMW 7er M Modell\", \"500 (680)\", \"3,8 (3,5) Sekunden\"",
-    "768: [typography] 19 runs differ: \"DER NEUE BMW 7er\": case uppercase/none | \"Beschleunigung 0–100 km/h¹⁰\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"Max. Leistung\": color rgb(62,",
-    "768: [layout] 17/148 text blocks placed differently: \"500 kW (680 PS)\": x 80/527 | \"BMW Individual\": x 563/417 | \"Mehr anzeigen\": cx 148/384 | \"BMW M760e xDrive Limousine.\": ",
+    "768: [typography] 17 runs differ: \"DER NEUE BMW 7er\": case uppercase/none | \"Beschleunigung 0–100 km/h¹⁰\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"Max. Leistung\": color rgb(62,",
+    "768: [layout] 15/148 text blocks placed differently: \"500 kW (680 PS)\": x 80/527 | \"BMW Individual\": x 563/417 | \"Mehr anzeigen\": cx 148/384 | \"BMW M760e xDrive Limousine.\": ",
     "390: [missing-text] 15/182 live text runs not visible on preview: \"BMW 7er\", \"Ihr BMW 7er M Modell\", \"500 (680)\", \"3,8 (3,5) Sekunden\"",
-    "390: [typography] 19 runs differ: \"DER NEUE BMW 7er\": case uppercase/none | \"Beschleunigung 0–100 km/h¹⁰\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"Max. Leistung\": color rgb(62,"
+    "390: [typography] 17 runs differ: \"DER NEUE BMW 7er\": case uppercase/none | \"Beschleunigung 0–100 km/h¹⁰\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"Max. Leistung\": color rgb(62,"
    ],
    "notes": []
   },
@@ -4985,8 +4845,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 13/84 text blocks placed differently: \"Das BMW M235 xDrive Gran Coupé\": x 104/183, w 512/376 | \"Technische Daten\": cx -72/83 | \"Konfigurieren\": cx 63/218 | \"Pre",
-    "768: [layout] 14/85 text blocks placed differently: \"Technische Daten\": cx -581/-537 | \"Konfigurieren\": cx -458/-414 | \"Preisliste\": cx -363/-319 | \"Probefahrt vereinbaren\": "
+    "768: [layout] 14/86 text blocks placed differently: \"Technische Daten\": cx 77/-537 | \"Konfigurieren\": cx 200/-414 | \"Preisliste\": cx 295/-319 | \"Probefahrt vereinbaren\": cx 4"
    ],
    "notes": []
   },
@@ -4998,7 +4857,7 @@
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "97% / 97% / 97%",
+   "heightRatioPreviewVsLive": "97% / 97% / 96%",
    "blocks": [
     "hero-teaser",
     "disclaimer",
@@ -5028,8 +4887,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 18/97 text blocks placed differently: \"Das BMW M440i xDrive Gran Coup\": x 104/183, w 512/385 | \"Technische Daten\": cx 167/83 | \"Preisliste\": cx 287/203 | \"Probe",
-    "768: [layout] 11/97 text blocks placed differently: \"Technische Daten\": cx -229/77 | \"Preisliste\": cx -120/186 | \"Probefahrt vereinbaren\": cx 7/313 | \"Performance\": cx 145/45"
+    "1440: [layout] 11/98 text blocks placed differently: \"Das BMW M440i xDrive Gran Coup\": x 104/183, w 512/385 | \"BMW M440i xDrive Gran Coupé\": cx 1135/440 | \"Fahren, wie Sie es "
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -5098,11 +4956,10 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [typography] 10 runs differ: \"Preisliste\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"BMW M5 Limousine\": size 23/15, weight 300/700 | \"Die BMW M5 Limousine mit M Hybrid is\"",
-    "1440: [layout] 21/113 text blocks placed differently: \"Die neue BMW M5 Limousine.\": x 104/183, w 512/316 | \"Technische Daten\": cx 167/20 | \"Konfigurieren\": cx 302/155 | \"Preis",
-    "768: [typography] 9 runs differ: \"Konfigurieren\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"BMW M5 Limousine\": size 20/14, weight 300/700 | \"Die BMW M5 Limousine mit M Hybrid i",
-    "768: [layout] 14/112 text blocks placed differently: \"Technische Daten\": cx -511/77 | \"Konfigurieren\": cx -388/200 | \"Preisliste\": cx -293/295 | \"Probefahrt vereinbaren\": cx ",
-    "390: [typography] 9 runs differ: \"BMW M5 Limousine\": size 19/14, weight 300/700 | \"Technische Daten\": color rgb(77, 77, 77)/rgb(255, 255, 255) | \"Die BMW M5 Limousine mit M Hybri"
+    "1440: [typography] 12 runs differ: \"Technische Daten\": color rgb(38, 38, 38)/rgb(102, 102, 102) | \"Preisliste\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"BMW M5 Limousine\": size",
+    "1440: [layout] 12/114 text blocks placed differently: \"Die neue BMW M5 Limousine.\": x 104/183, w 512/316 | \"BMW M5 Limousine\": cx 227/453 | \"Fahren, wie Sie es sich wünsch\": w",
+    "768: [typography] 11 runs differ: \"Technische Daten\": color rgb(38, 38, 38)/rgb(102, 102, 102) | \"Konfigurieren\": color rgb(102, 102, 102)/rgb(38, 38, 38) | \"BMW M5 Limousine\": s",
+    "390: [typography] 10 runs differ: \"BMW M5 Limousine\": size 19/14, weight 300/700 | \"Technische Daten\": color rgb(77, 77, 77)/rgb(255, 255, 255) | \"Die BMW M5 Limousine mit M Hybr"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -5171,8 +5028,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 23/120 text blocks placed differently: \"Der BMW M5 Touring.\": x 104/183, w 512/228 | \"Technische Daten\": cx 167/-189 | \"Auszeichnung\": cx 305/-51 | \"Konfigurier",
-    "768: [layout] 16/119 text blocks placed differently: \"Technische Daten\": cx -452/113 | \"Auszeichnung\": cx -327/238 | \"Konfigurieren\": cx -215/350 | \"Preisliste\": cx -120/445 "
+    "1440: [layout] 23/120 text blocks placed differently: \"Der BMW M5 Touring.\": x 104/183, w 512/228 | \"Technische Daten\": cx 83/-189 | \"Auszeichnung\": cx 221/-51 | \"Konfiguriere"
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -5306,8 +5162,7 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 12/77 text blocks placed differently: \"Der BMW X1 M35i xDrive.\": x 96/212, w 538/401 | \"Technische Daten\": cx 48/140 | \"Preisliste\": cx 168/260 | \"Design\": cx 2",
-    "768: [layout] 13/76 text blocks placed differently: \"Der BMW X1 M35i xDrive.\": cx 384/433 | \"Technische Daten\": cx -472/36 | \"Preisliste\": cx -363/145 | \"Design\": cx -288/220"
+    "768: [layout] 13/77 text blocks placed differently: \"Der BMW X1 M35i xDrive.\": cx 384/433 | \"Technische Daten\": cx 77/36 | \"Preisliste\": cx 186/145 | \"Design\": cx 261/220 | \""
    ],
    "notes": [
     "live stock cars through the bmw-proxy worker (public x-api-key from the stock-locator config)"
@@ -5315,7 +5170,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/x2-m35i/bmw-x2-m35ixdrive-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -5340,7 +5195,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/x2-m35i/bmw-x2-m35ixdrive-ueberblick",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5385,7 +5240,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/x3-m50/bmw-x3-m50",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5427,7 +5282,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/x6-m/bmw-x6-m-modelle",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5470,7 +5325,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/x6-m/bmw-x6-m-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -5495,7 +5350,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/x7-m60i/bmw-x7-m60i-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -5520,7 +5375,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/x7-m60i/bmw-x7-m60i",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5565,7 +5420,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/xm/bmw-xm-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -5590,7 +5445,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/xm/bmw-xm",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5637,7 +5492,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/z4-m40i/bmw-z4-m40i-roadster",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5681,7 +5536,7 @@
   },
   {
    "page": "/de/neufahrzeuge/m/z4-m40i/bmw-z4-m40i-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -5706,7 +5561,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x2/bmw-x2-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -5731,7 +5586,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x2/bmw-x2-ueberblick",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5775,7 +5630,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/ix3/bmw-ix3-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -5800,7 +5655,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/ix3/bmw-ix3",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5836,20 +5691,20 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [typography] 9 runs differ: \"DER BMW iX3\": color rgb(38, 38, 38)/rgb(62, 82, 122) | \"EINE NEUE ÄRA DER FAHRFREUDE.\": color rgb(38, 38, 38)/rgb(62, 82, 122) | \"Neue Designspr",
+    "1440: [typography] 13 runs differ: \"Max. Reichweite WLTP\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"Energieverbrauch, kombiniert WLTP\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"",
     "768: [missing-text] 13/141 live text runs not visible on preview: \"Ihr BMW iX3\", \"kWh/100 km\", \"18,1–15,1\", \"Max. Reichweite (WLTP) nach 10 Minuten l\"",
-    "768: [typography] 9 runs differ: \"DER BMW iX3\": color rgb(38, 38, 38)/rgb(62, 82, 122) | \"EINE NEUE ÄRA DER FAHRFREUDE.\": color rgb(38, 38, 38)/rgb(62, 82, 122) | \"Neue Designspr",
+    "768: [typography] 13 runs differ: \"Max. Reichweite WLTP\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"Energieverbrauch, kombiniert WLTP\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"",
     "768: [layout] 15/106 text blocks placed differently: \"Das erste Modell der neuen Kla\": w 672/242 | \"Das Goldene Lenkrad 2025.\": x 744/350 | \"Für seine Innovationskraft wur\": ",
     "768: [image-geometry] 4/13 images sized differently (preview/live): euroncap_car_star_rating_log 672x672/242x242, goldenes-lenkrad-3000x3000 672x672/242x242, 2026_design_trophy_siege",
     "390: [missing-text] 13/141 live text runs not visible on preview: \"Ihr BMW iX3\", \"kWh/100 km\", \"18,1–15,1\", \"Max. Reichweite (WLTP) nach 10 Minuten l\"",
-    "390: [typography] 9 runs differ: \"DER BMW iX3\": color rgb(38, 38, 38)/rgb(62, 82, 122) | \"EINE NEUE ÄRA DER FAHRFREUDE.\": color rgb(38, 38, 38)/rgb(62, 82, 122) | \"Neue Designspr",
+    "390: [typography] 13 runs differ: \"Max. Reichweite WLTP\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"Energieverbrauch, kombiniert WLTP\": color rgb(62, 82, 122)/rgb(38, 38, 38) | \"",
     "390: [image-geometry] 3/10 images sized differently (preview/live): euroncap_car_star_rating_log 342x342/266x266, goldenes-lenkrad-3000x3000 342x342/266x266, 2026_design_trophy_siege"
    ],
    "notes": []
   },
   {
    "page": "/de/neufahrzeuge/x/suv/bmw-ix5-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -5874,7 +5729,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/suv/bmw-ix5",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5917,7 +5772,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/suv/bmw-x5-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -5942,7 +5797,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/suv/bmw-x5",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -5989,7 +5844,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x1/bmw-x1-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6014,7 +5869,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x1/bmw-x1",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6058,7 +5913,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x3/bmw-x3-phev-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6083,7 +5938,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x3/bmw-x3-phev",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6131,7 +5986,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x3/bmw-x3-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6156,7 +6011,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x3/bmw-x3",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6200,7 +6055,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x6/bmw-x6-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6225,7 +6080,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x6/bmw-x6",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6269,7 +6124,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x7/bmw-x7-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6294,7 +6149,7 @@
   },
   {
    "page": "/de/neufahrzeuge/x/x7/bmw-x7",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6342,7 +6197,7 @@
   },
   {
    "page": "/de/neufahrzeuge/z4/z4-roadster/bmw-z4-roadster",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6386,7 +6241,7 @@
   },
   {
    "page": "/de/neufahrzeuge/z4/z4-roadster/bmw-z4-technische-daten",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6411,7 +6266,7 @@
   },
   {
    "page": "/de/publicpools/sitemap/sitemap",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6437,7 +6292,7 @@
   },
   {
    "page": "/de/services-and-workshop/allgemeine-versicherungsbedingungen",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6462,13 +6317,13 @@
   },
   {
    "page": "/de/shop-online/bmw-angebote",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "95% / 96% / 95%",
+   "heightRatioPreviewVsLive": "96% / 97% / 96%",
    "blocks": [
     "content-navigation",
     "hero-teaser",
@@ -6490,21 +6345,21 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 11/76 text blocks placed differently: \"Leasingbeispiele der BMW Bank \": w 1/1179 | \"26.604,00 €\": w 106/296 | \"16.524,00 €\": w 99/296 | \"17.604,00 €\": w 98/296 ",
-    "768: [layout] 14/76 text blocks placed differently: \"Leasingbeispiele der BMW Bank \": w 1/627 | \"26.604,00 €\": w 98/616 | \"16.524,00 €\": w 92/616 | \"17.604,00 €\": w 91/616 | ",
-    "390: [layout] 13/75 text blocks placed differently: \"Leasingbeispiele der BMW Bank \": w 1/320 | \"BMW Plug-in-Hybride\": cx 195/94 | \"BMW Elektroautos.\": cx 84/195 | \"26.604,00"
+    "1440: [layout] 10/76 text blocks placed differently: \"26.604,00 €\": w 106/296 | \"16.524,00 €\": w 99/296 | \"17.604,00 €\": w 98/296 | \"15.444,00 €\": w 100/296 | \"21.564,00 €\": w",
+    "768: [layout] 13/76 text blocks placed differently: \"26.604,00 €\": w 98/616 | \"16.524,00 €\": w 92/616 | \"17.604,00 €\": w 91/616 | \"15.444,00 €\": w 92/616 | \"21.564,00 €\": w 9",
+    "390: [layout] 12/75 text blocks placed differently: \"BMW Plug-in-Hybride\": cx 195/94 | \"BMW Elektroautos.\": cx 84/195 | \"26.604,00 €\": w 92/294 | \"16.524,00 €\": w 87/294 | \"1"
    ],
    "notes": []
   },
   {
    "page": "/de/shop-online/bmw-offers",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "95% / 96% / 95%",
+   "heightRatioPreviewVsLive": "96% / 97% / 96%",
    "blocks": [
     "content-navigation",
     "hero-teaser",
@@ -6526,15 +6381,15 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 11/76 text blocks placed differently: \"Leasingbeispiele der BMW Bank \": w 1/1115 | \"32.364,00 €\": w 103/296 | \"17.964,00 €\": w 97/296 | \"19.764,00 €\": w 99/296 ",
-    "768: [layout] 14/76 text blocks placed differently: \"Leasingbeispiele der BMW Bank \": w 1/627 | \"32.364,00 €\": w 96/616 | \"17.964,00 €\": w 91/616 | \"19.764,00 €\": w 93/616 | ",
-    "390: [layout] 13/75 text blocks placed differently: \"Leasingbeispiele der BMW Bank \": w 1/320 | \"BMW Plug-in-Hybride\": cx 195/94 | \"BMW Elektroautos.\": cx 84/195 | \"32.364,00"
+    "1440: [layout] 10/76 text blocks placed differently: \"32.364,00 €\": w 103/296 | \"17.964,00 €\": w 97/296 | \"19.764,00 €\": w 99/296 | \"16.884,00 €\": w 103/296 | \"22.644,00 €\": w",
+    "768: [layout] 13/76 text blocks placed differently: \"32.364,00 €\": w 96/616 | \"17.964,00 €\": w 91/616 | \"19.764,00 €\": w 93/616 | \"16.884,00 €\": w 97/616 | \"22.644,00 €\": w 9",
+    "390: [layout] 12/75 text blocks placed differently: \"BMW Plug-in-Hybride\": cx 195/94 | \"BMW Elektroautos.\": cx 84/195 | \"32.364,00 €\": w 90/294 | \"17.964,00 €\": w 85/294 | \"1"
    ],
    "notes": []
   },
   {
    "page": "/de/topics/fascination-bmw/corporate-direct-sales/corporate-sales",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6573,7 +6428,7 @@
   },
   {
    "page": "/de/topics/fascination-bmw/events/quiztaxi2024",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6597,7 +6452,7 @@
   },
   {
    "page": "/de/topics/fascination-bmw/events/vip-experience",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6624,7 +6479,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/bmw-xdrive-erleben/wintersport/biathlon",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6654,7 +6509,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/bmw-xdrive-erleben/wintersport/rennrodeln",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6683,7 +6538,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/events/bmw-golfsport",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6710,7 +6565,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/events/bmw-golfsport/friends-of-the-brand",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6735,7 +6590,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/events/bmw-golfsport/golf-cup",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6760,7 +6615,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/events/kulturelles-engagement",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6790,7 +6645,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/events/wintersport",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6818,7 +6673,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/events/wintersport/bmw-group-windkanal",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6846,7 +6701,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/events/wintersport/bmw-ibu-weltcup-biathlon",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6877,7 +6732,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/events/wintersport/bmw-rodelsimulation-wbs",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6901,7 +6756,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/grosskunden-behoerden/behoerdenfahrzeuge",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6933,7 +6788,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/grosskunden-behoerden/corporate-sales",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -6972,7 +6827,7 @@
   },
   {
    "page": "/de/topics/faszination-bmw/sport-events/weltcup",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -6998,7 +6853,7 @@
   },
   {
    "page": "/de/topics/neuwagen/gewaehrleistung",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -7029,7 +6884,7 @@
   },
   {
    "page": "/de/topics/service-zubehoer/bmw-security",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -7061,7 +6916,7 @@
   },
   {
    "page": "/de/topics/service-zubehoer/bmw-service/repair-inclusive",
-   "status": "not re-captured (round-5 data)",
+   "status": "match",
    "widthsChecked": [
     1440,
     768,
@@ -7092,7 +6947,7 @@
   },
   {
    "page": "/de/topics/service-zubehoer/bmw-service/rueckrufe",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -7117,7 +6972,7 @@
   },
   {
    "page": "/de/topics/service-zubehoer/financial-services/bmw-financial-services",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -7155,7 +7010,7 @@
   },
   {
    "page": "/de/topics/service-zubehoer/financial-services/bmw-finanzierung",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
@@ -7195,13 +7050,13 @@
   },
   {
    "page": "/de/topics/service-zubehoer/financial-services/bmw-leasing",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "105% / 90% / 91%",
+   "heightRatioPreviewVsLive": "105% / 89% / 91%",
    "blocks": [
     "hero-teaser",
     "content-navigation",
@@ -7228,19 +7083,20 @@
    ],
    "remaining": [
     "1440: [layout] 29/167 text blocks placed differently: \"Ihre Vorteile\": cx 147/51 | \"BMW Leasing\": cx 263/167 | \"BMW Leasing Upgrades\": cx 422/326 | \"BMW Versicherungen\": cx 60",
+    "768: [height] preview 27819px vs live 31265px content height (89%)",
     "768: [layout] 30/167 text blocks placed differently: \"Ihre Vorteile\": cx 95/47 | \"BMW Leasing\": cx 202/154 | \"BMW Leasing Upgrades\": cx 347/299 | \"BMW Versicherungen\": cx 517"
    ],
    "notes": []
   },
   {
    "page": "/de-de/shop-online/bmw-business-offers",
-   "status": "not re-captured (round-5 data)",
+   "status": "differences remain",
    "widthsChecked": [
     1440,
     768,
     390
    ],
-   "heightRatioPreviewVsLive": "95% / 96% / 95%",
+   "heightRatioPreviewVsLive": "96% / 97% / 96%",
    "blocks": [
     "content-navigation",
     "hero-teaser",
@@ -7262,9 +7118,9 @@
     "R3: tablet width from source grid"
    ],
    "remaining": [
-    "1440: [layout] 11/76 text blocks placed differently: \"Leasingbeispiele der BMW Bank \": w 1/1179 | \"26.604,00 €\": w 106/296 | \"16.524,00 €\": w 99/296 | \"17.604,00 €\": w 98/296 ",
-    "768: [layout] 14/76 text blocks placed differently: \"Leasingbeispiele der BMW Bank \": w 1/627 | \"26.604,00 €\": w 98/616 | \"16.524,00 €\": w 92/616 | \"17.604,00 €\": w 91/616 | ",
-    "390: [layout] 13/75 text blocks placed differently: \"Leasingbeispiele der BMW Bank \": w 1/320 | \"BMW Plug-in-Hybride\": cx 195/94 | \"BMW Elektroautos.\": cx 84/195 | \"26.604,00"
+    "1440: [layout] 10/76 text blocks placed differently: \"26.604,00 €\": w 106/296 | \"16.524,00 €\": w 99/296 | \"17.604,00 €\": w 98/296 | \"15.444,00 €\": w 100/296 | \"21.564,00 €\": w",
+    "768: [layout] 13/76 text blocks placed differently: \"26.604,00 €\": w 98/616 | \"16.524,00 €\": w 92/616 | \"17.604,00 €\": w 91/616 | \"15.444,00 €\": w 92/616 | \"21.564,00 €\": w 9",
+    "390: [layout] 12/75 text blocks placed differently: \"BMW Plug-in-Hybride\": cx 195/94 | \"BMW Elektroautos.\": cx 84/195 | \"26.604,00 €\": w 92/294 | \"16.524,00 €\": w 87/294 | \"1"
    ],
    "notes": []
   }
