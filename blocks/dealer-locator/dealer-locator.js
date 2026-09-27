@@ -4,12 +4,19 @@
  * like the inline script of the source component.
  * Content: key/value rows = the widget config (source JSON). Values are JSON literals when they
  * look like one (true, 60, null, [...], {...}, "5" = the string 5), otherwise plain strings.
- * The OSA CSV (osatCsvPath, a www.bmw.de DAM path without CORS) is loaded through the bmw-proxy.
+ * Online service links (osatCsvPath): the widget expects a ";" CSV (dealer; outlet; url; name, one
+ * header row) and loads it with `${osatCsvPath}?_=${Date.now()}`. The rows come from the site sheet
+ * /de/data/dealer-services.json (source: www.bmw.de DAM 17012022_BMW_OTV.csv); the CSV is built
+ * in the browser and handed over as a Blob URL ending in "#", so the appended query lands in the
+ * fragment (blob URLs with a query fail). osatCsvPath may name another .json sheet or an absolute
+ * CSV URL; any other value (e.g. the original DAM path) maps to the default sheet.
  */
-import { bmwProxyUrl } from '../../scripts/bmw-utils.js';
+import { fetchSheet } from '../../scripts/bmw-utils.js';
 
 const DLO_SCRIPT = 'https://dlo.api.bmw/main.js';
 const CONTAINER_ID = 'dealerLocator';
+const OSAT_SHEET = '/de/data/dealer-services.json';
+const OSAT_COLUMNS = ['Dealer', 'Outlet', 'URL', 'Name'];
 const JSON_LITERAL_RE = /^(true|false|null|-?\d+(\.\d+)?([eE][+-]?\d+)?|".*"|\[.*\]|\{.*\})$/s;
 
 function parseValue(raw) {
@@ -37,9 +44,34 @@ export function readConfig(block) {
   return config;
 }
 
-function proxied(path) {
-  if (!path || /^https?:\/\//i.test(path)) return path;
-  return bmwProxyUrl(path.startsWith('/') ? path : `/${path}`);
+const csvField = (v) => {
+  const s = String(v ?? '').trim();
+  return /[";\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+};
+
+/** CSV text (as the source file: ";" separated, CRLF, header row) from the sheet rows. */
+export function osatCsv(rows) {
+  const lines = [['Dealer', 'Outlate', 'URL', 'Name'].join(';')];
+  rows.forEach((row) => {
+    if (!String(row.Dealer ?? '').trim()) return;
+    lines.push(OSAT_COLUMNS.map((c) => csvField(row[c])).join(';'));
+  });
+  return `${lines.join('\r\n')}\r\n`;
+}
+
+async function osatCsvUrl(path) {
+  const isSheet = /\.json(\?|#|$)/i.test(path);
+  // absolute CSV URLs (served with CORS) are used as they are
+  if (!isSheet && /^(https?|blob|data):/i.test(path)) return path;
+  const sheet = isSheet ? path : OSAT_SHEET;
+  try {
+    const { data } = await fetchSheet(sheet);
+    const blob = new Blob([osatCsv(data || [])], { type: 'text/csv;charset=utf-8' });
+    return `${URL.createObjectURL(blob)}#`;
+  } catch {
+    // no online service links: the widget works without them
+    return undefined;
+  }
 }
 
 let dloPromise;
@@ -68,7 +100,6 @@ export default function decorate(block) {
   if (!config.country) config.country = 'DE';
   if (!config.language) config.language = 'de';
   if (!config.configId) config.configId = 'master';
-  if (config.osatCsvPath) config.osatCsvPath = proxied(config.osatCsvPath);
   config.containerSelector = `#${CONTAINER_ID}`;
 
   const holder = document.createElement('div');
@@ -76,8 +107,13 @@ export default function decorate(block) {
   holder.className = 'dealer-locator-app';
   block.replaceChildren(holder);
 
-  const start = () => loadDlo()
-    .then((api) => api.start(config))
+  const osat = config.osatCsvPath ? osatCsvUrl(config.osatCsvPath) : Promise.resolve();
+  const start = () => Promise.all([loadDlo(), osat])
+    .then(([api, osatUrl]) => {
+      if (osatUrl) config.osatCsvPath = osatUrl;
+      else delete config.osatCsvPath;
+      return api.start(config);
+    })
     .catch(() => {
       block.classList.add('dealer-locator-error');
     });

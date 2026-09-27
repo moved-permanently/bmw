@@ -1063,3 +1063,47 @@ export function decorateResponsiveImages(root, { sizes = '100vw' } = {}) {
     p.remove();
   });
 }
+
+/* ------------------------------------------------------------------------------------------
+ * Site data sheets (Document Authoring sheets under /de/data/, e.g. /de/data/compare-models.json).
+ * ---------------------------------------------------------------------------------------- */
+
+const sheetCache = new Map();
+
+/**
+ * Loads a sheet JSON of the site (same origin), cached per path. Single sheets are returned as
+ * {data: [...]} with all rows (further pages are loaded when `total` exceeds the first page);
+ * multi-sheets as {<name>: [...rows]} for every name in `:names`.
+ * @param {string} path site path of the sheet ("/de/data/x.json")
+ * @returns {Promise<{data?: object[], [name: string]: object[]}>}
+ */
+export function fetchSheet(path) {
+  if (!sheetCache.has(path)) {
+    const load = async () => {
+      const get = async (url) => {
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error(`${path}: ${resp.status}`);
+        return resp.json();
+      };
+      const json = await get(path);
+      if (Array.isArray(json[':names'])) {
+        return Object.fromEntries(json[':names'].map((n) => [n, (json[n] && json[n].data) || []]));
+      }
+      const data = [...(json.data || [])];
+      const total = Number(json.total) || data.length;
+      const sep = path.includes('?') ? '&' : '?';
+      while (data.length < total) {
+        // eslint-disable-next-line no-await-in-loop
+        const page = await get(`${path}${sep}offset=${data.length}&limit=1000`);
+        if (!page.data || !page.data.length) break;
+        data.push(...page.data);
+      }
+      return { data };
+    };
+    sheetCache.set(path, load().catch((e) => {
+      sheetCache.delete(path);
+      throw e;
+    }));
+  }
+  return sheetCache.get(path);
+}

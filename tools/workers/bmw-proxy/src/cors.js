@@ -52,7 +52,8 @@ export function preflightHeaders(origin, methods, requestHeaders) {
     'Access-Control-Allow-Methods': [...methods, 'OPTIONS'].join(', '),
     'Access-Control-Max-Age': '86400',
   };
-  // request headers are never forwarded upstream (the worker builds its own), so reflecting is safe
+  // reflecting is safe: the worker builds its own upstream headers and copies only the per-route
+  // `forwardHeaders` allowlist (routes.js) from the browser request
   const allowHeaders = (requestHeaders || '')
     .split(',')
     .map((h) => h.trim())

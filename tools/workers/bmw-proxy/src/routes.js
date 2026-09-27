@@ -16,8 +16,9 @@
  *   ttl       edge + browser cache lifetime in seconds (0 = no caching)
  *   query     'keep' (default) | 'drop' | array of allowed parameter names
  *   dropParams  parameter names removed before forwarding/caching (e.g. cache busters)
- *   extract   names of allowed `?extract=` HTML reducers (see extract.js)
  *   headers   extra upstream request headers (override the browser-like defaults)
+ *   forwardHeaders  request header names copied from the browser request (printable ASCII,
+ *             max 200 chars); only for values the live site also sends from public sources
  *   cachePost cache POST responses keyed by a SHA-256 of the request body
  *
  * To add a route: append an object to ROUTES (and the host to UPSTREAM_HOSTS if new),
@@ -37,43 +38,19 @@ export const UPSTREAM_HOSTS = [
 
 const MIN = 60;
 const HOUR = 60 * MIN;
-const DAY = 24 * HOUR;
 
 // Referer used for Stock Locator APIs (the web component runs on this page on bmw.de)
 const STOLO_REFERER = 'https://www.bmw.de/de-de/sl/stocklocator';
+// The stolo data/vehicle-selection APIs (AWS API Gateway) answer 403 "Forbidden resource" without
+// `x-api-key`. The live component (bmw.de vendor.webcom.js) reads the key from the PUBLIC config
+// JSON (stocklocator.config.json -> config.general.dataService.apiKey, served to every browser
+// without cookies/login, see route stocklocator-config) and sends it as `x-api-key`. Browser code
+// on the replica (blocks/preview-slider) does the same through the proxy; the worker only forwards
+// that header.
+const STOLO_FORWARD = ['x-api-key'];
 
 export const ROUTES = [
   // --- www.bmw.de --------------------------------------------------------------------------
-  {
-    id: 'login-flyout',
-    host: 'www.bmw.de',
-    path: /^\/de-de\/login\/bmw\/api\/flyout\/data$/,
-    methods: ['GET'],
-    ttl: 5 * MIN,
-    query: 'drop',
-    headers: { Accept: 'application/json, text/plain, */*' },
-  },
-  {
-    id: 'datastore-csv',
-    host: 'www.bmw.de',
-    path: /^\/content\/dam\/bmw\/marketDE\/bmw_de\/datastore\/[A-Za-z0-9._-]+\.csv$/,
-    methods: ['GET'],
-    ttl: DAY,
-    query: 'drop',
-    headers: { Accept: 'text/csv, text/plain, */*' },
-  },
-  {
-    id: 'compare-fragment',
-    host: 'www.bmw.de',
-    // /de/bmw-modelle-vergleichen.html/content.q and
-    // /de/bmw-modelle-vergleichen.html/{series}/{range}/{model}/{trans}/content.q
-    path: /^\/de\/bmw-modelle-vergleichen\.html(\/[A-Za-z0-9_-]+){0,6}\/content\.q$/,
-    methods: ['GET'],
-    ttl: HOUR,
-    query: 'drop',
-    extract: ['compare'],
-    headers: { Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' },
-  },
   {
     id: 'stocklocator-config',
     host: 'www.bmw.de',
@@ -116,6 +93,7 @@ export const ROUTES = [
     path: /^\/dealer\/[A-Za-z0-9_-]+$/,
     methods: ['GET'],
     ttl: HOUR,
+    forwardHeaders: STOLO_FORWARD,
     headers: { Accept: 'application/json, text/plain, */*', Referer: STOLO_REFERER },
   },
   {
@@ -127,6 +105,7 @@ export const ROUTES = [
     methods: ['GET', 'POST'],
     ttl: 5 * MIN,
     cachePost: true,
+    forwardHeaders: STOLO_FORWARD,
     headers: { Accept: 'application/json, text/plain, */*', Referer: STOLO_REFERER },
   },
   {

@@ -7,9 +7,13 @@
 > **What you need to provide / create — summary:** one Cloudflare Worker (`bmw-proxy`, in
 > `tools/workers/bmw-proxy`). **No secrets, no KV namespaces, no D1/R2/Durable Objects**; configuration is
 > plain `[vars]` in `wrangler.toml` (`ALLOWED_ORIGINS`, `REQUIRE_ORIGIN`, `UPSTREAM_TIMEOUT_MS`, `CACHE`).
-> Optional: a custom domain on a Cloudflare zone (needed for edge caching). The DA redirects sheet and the
-> DA site config (`aem.assets.image.type = link`) were already uploaded during the migration — steps 5 and 6
-> are verification (plus publishing when you go live).
+> Optional: a custom domain on a Cloudflare zone (needed for edge caching). The worker is deployed at
+> `https://bmw-proxy.aem-poc-lab.workers.dev` by the GitHub workflow **Deploy bmw-proxy**
+> (`.github/workflows/deploy-bmw-proxy.yaml`) on every push to `main` that touches
+> `tools/workers/bmw-proxy/**` (repository secret `CLOUDFLARE_API_TOKEN`). The DA redirects sheet, the
+> static data sheets under `/de/data/` and the DA site config (`aem.assets.image.type = link`) were
+> already uploaded during the migration — steps 5, 5b and 6 are verification (plus publishing when you
+> go live).
 
 ---
 
@@ -32,14 +36,20 @@ below tells you to. Work through the steps in order and report the result of eac
    (a browser opens; ask me to confirm), then run `npx -y wrangler@4 whoami` and note the account id.
 3. The account's workers.dev subdomain. The browser code falls back to
    `https://bmw-proxy.aem-poc-lab.workers.dev`, which only works if the account's workers.dev
-   subdomain is `moved-permanently`. Check it in Dashboard, then Workers & Pages, then the Subdomain
+   subdomain is `aem-poc-lab`. Check it in Dashboard, then Workers & Pages, then the Subdomain
    box on the right.
-   - If the subdomain is free and I agree, set it to `moved-permanently`.
+   - If the subdomain is free and I agree, set it to `aem-poc-lab`.
    - Otherwise use the real URL `https://bmw-proxy.<subdomain>.workers.dev` (or a custom domain, see
      step 2) and set it in step 4.
 4. Run the unit tests: `cd tools/workers/bmw-proxy && node --test`. All tests must pass.
 
 ## 1. Deploy bmw-proxy
+
+Normal path: merge to `main`. The **Deploy bmw-proxy** workflow runs `node --test` and
+`npx -y wrangler@4 deploy` in `tools/workers/bmw-proxy` (needs the repository secret
+`CLOUDFLARE_API_TOKEN` with Workers Scripts:Edit; it can also be started by hand with
+`gh workflow run "Deploy bmw-proxy"`). Check the run with `gh run list --workflow deploy-bmw-proxy.yaml`.
+Manual deploy (first setup or another account):
 
 ```bash
 cd tools/workers/bmw-proxy
@@ -89,14 +99,6 @@ O=https://main--bmw--moved-permanently.aem.page
 H() { curl -sS -D - -o /tmp/body -H "Origin: $O" "$@"; head -c 300 /tmp/body; echo; echo; }
 
 H "$P/_health"                                                     # 200, JSON route table
-# login-flyout (5 min)
-H "$P/de-de/login/bmw/api/flyout/data"                             # 200 JSON
-# datastore-csv (1 day)
-H "$P/content/dam/bmw/marketDE/bmw_de/datastore/17012022_BMW_OTV.csv"   # 200 text/csv
-# compare-fragment (1 h): full HTML, then reduced
-H "$P/de/bmw-modelle-vergleichen.html/X/G65/61JF/content.q" | head -5
-H "$P/de/bmw-modelle-vergleichen.html/X/G65/61JF/content.q?extract=compare"   # starts with <div class="bmw-proxy-extract"
-H "$P/de/bmw-modelle-vergleichen.html/7/G70/61HZ/S02TB/content.q?extract=compare"
 # stocklocator-config (10 min)
 H "$P/de-de/sl/stocklocator/_jcr_content/stocklocator.config.json?t=1&brand=BMW"
 # stolo-dealers (1 h)
@@ -126,8 +128,13 @@ H "$P/etc/clientlibs/epaas/content/bmw/marketDE/bmw_de/de_DE.epaasclientlibinclu
 
 # negative checks
 H "$P/de/index.html"                                   # 403 {"error":"not_allowlisted"}
-curl -sS -o /dev/null -w '%{http_code}\n' -H 'Origin: https://evil.example.com' "$P/de-de/login/bmw/api/flyout/data"   # 403
-H "$P/content/dam/bmw/marketDE/bmw_de/datastore/17012022_BMW_OTV.csv"   # repeat: x-proxy-cache HIT (custom domain only)
+curl -sS -o /dev/null -w '%{http_code}\n' -H 'Origin: https://evil.example.com' "$P/de/bmw-modelle-vergleichen/_jcr_content.technicaldata.3.G20.28FF.json"   # 403
+H "$P/de/bmw-modelle-vergleichen/_jcr_content.technicaldata.3.G20.28FF.json"   # repeat: x-proxy-cache HIT (custom domain only)
+# retired routes (static data now in /de/data/*.json sheets, step 5b): all 403 not_allowlisted
+for p in /de-de/login/bmw/api/flyout/data /content/dam/bmw/marketDE/bmw_de/datastore/17012022_BMW_OTV.csv \
+  '/de/bmw-modelle-vergleichen.html/content.q?extract=compare'; do
+  curl -sS -o /dev/null -w "%{http_code}  $p\n" -H "Origin: $O" "$P$p"
+done
 ```
 
 **If upstream calls return `403 {"error":"upstream_error","upstreamStatus":403}`**, Akamai is blocking
@@ -212,6 +219,29 @@ Notes:
 - The sheet only matches exact paths. At go-live on a production CDN, also add a generic
   `/(.*)\.html$ → /$1` 301 rule there, as aem.live recommends for "remove .html" patterns.
 
+## 5b. Static data sheets in Document Authoring (`/de/data/`)
+
+**Status: already uploaded to DA and previewed on main during the migration — NOT published.**
+Static www.bmw.de data that used to go through the proxy lives in DA sheets and is fetched same-origin:
+
+| sheet | tabs / columns | used by |
+|---|---|---|
+| `/de/data/compare-models.json` | models, table, labels, placeholders | blocks/model-compare (template + model tree) |
+| `/de/data/mybmw-flyout.json` | labels, benefits, links | blocks/header (My BMW panel) |
+| `/de/data/dealer-services.json` | Dealer, Outlet, URL, Name | blocks/dealer-locator (online service links CSV) |
+
+Sources and scripts: `tools/importer/data/` (`src/` captures, `node tools/importer/data/build-static-data.mjs`
+regenerates the JSON, `tools/importer/data/upload.sh` uploads to DA and previews; add
+`-H "Authorization: Bearer $TOKEN"` to its curls when no token is injected). Authors can also edit the
+sheets directly in DA. Verify and publish at go-live:
+
+```bash
+for n in compare-models mybmw-flyout dealer-services; do
+  curl -s "https://main--bmw--moved-permanently.aem.page/de/data/$n.json" | head -c 120; echo
+  # go-live: curl -sS -X POST "https://admin.hlx.page/live/moved-permanently/bmw/main/de/data/$n.json" -H "Authorization: Bearer $TOKEN"
+done
+```
+
 ## 6. Site config: `aem.assets.image.type = link`
 
 **Status: already created during the migration** (`https://admin.da.live/config/moved-permanently/bmw`, data sheet
@@ -240,6 +270,7 @@ Give me:
 - the status of every curl in step 3 (flag any Akamai 403)
 - which option you used in step 4 and the PR link
 - the redirects verification output
+- the static data sheets verification output (step 5b)
 - confirmation of the config row
 
 ## Additional routes

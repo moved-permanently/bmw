@@ -16,7 +16,6 @@ import {
 import {
   parseAllowedOrigins, isAllowedOrigin, corsHeaders, preflightHeaders,
 } from './cors.js';
-import { EXTRACTORS } from './extract.js';
 
 const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36';
 const ACCEPT_LANGUAGE = 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7';
@@ -53,7 +52,7 @@ export function upstreamQuery(route, searchParams) {
   const params = new URLSearchParams();
   if (route.query === 'drop') return params;
   const allow = Array.isArray(route.query) ? route.query : null;
-  const drop = ['extract', ...(route.dropParams || [])];
+  const drop = route.dropParams || [];
   [...searchParams.entries()]
     .filter(([k]) => !drop.includes(k) && (!allow || allow.includes(k)))
     .sort(([a], [b]) => (a < b ? -1 : Number(a > b)))
@@ -124,11 +123,6 @@ function withHeaders(response, headers) {
 }
 
 async function proxy(request, env, ctx, url, route, host, path, cors) {
-  const extract = url.searchParams.get('extract');
-  if (extract && !(route.extract || []).includes(extract)) {
-    return error(400, 'bad_extract', `extract=${extract} is not supported on this route`, cors);
-  }
-
   let body;
   let contentType;
   if (request.method === 'POST') {
@@ -150,7 +144,6 @@ async function proxy(request, env, ctx, url, route, host, path, cors) {
   let cacheKey;
   if (cache) {
     const keyParams = new URLSearchParams(query);
-    if (extract) keyParams.set('~extract', extract);
     if (body !== undefined) keyParams.set('~body', await sha256(`${contentType}\n${body}`));
     cacheKey = new Request(`${url.origin}/~cache/${host}${path}?${keyParams}`, { method: 'GET' });
     const hit = await cache.match(cacheKey);
@@ -199,20 +192,7 @@ async function proxy(request, env, ctx, url, route, host, path, cors) {
   headers.set('X-Content-Type-Options', 'nosniff');
   Object.entries(meta).forEach(([k, v]) => headers.set(k, v));
 
-  let payload = upstream.body;
-  if (extract) {
-    const html = await upstream.text();
-    const fragment = EXTRACTORS[extract](html);
-    if (fragment === null) {
-      return error(502, 'extract_failed', `marker for extract=${extract} not found in upstream HTML`, { ...cors, ...meta }, { route: route.id });
-    }
-    payload = fragment;
-    headers.set('Content-Type', 'text/html; charset=utf-8');
-    headers.delete('etag');
-    headers.set('X-Proxy-Extract', extract);
-  }
-
-  let res = new Response(payload, { status: upstream.status, headers });
+  let res = new Response(upstream.body, { status: upstream.status, headers });
   if (cache && upstream.status === 200) {
     const put = cache.put(cacheKey, res.clone());
     if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(put);

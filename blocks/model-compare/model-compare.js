@@ -5,18 +5,26 @@
  * CTAs, highlights, design view exterior/interior, technical data with "only differences" toggle,
  * footnotes, sticky header, delete with confirmation).
  * Content: row 1 = headline, row 2 = link to the source compare page.
- * Runtime data (www.bmw.de endpoints without CORS, through the bmw-proxy / window.BMW_PROXY):
- *   app template + model tree: {page}.html/content.q?extract=compare  (series/range/model tree in
- *                              data-config, rows of the technical data tables with their data keys)
- *   model data:                {page}/_jcr_content.technicaldata.{series}.{range}.{model}.json
+ * Runtime data:
+ *   template + model tree: site sheet /de/data/compare-models.json (DA multi-sheet, source: bmw.de
+ *     {page}.html/content.q, see tools/importer/data/build-static-data.mjs), tabs
+ *       models        series, seriesName, range, rangeName, model, modelName, fuelType,
+ *                     otherFuelType, transmission, transmissionName (one row per transmission)
+ *       table         section, sectionTitle, groupTitle, groupFootnote, expanded, key, label,
+ *                     dataGroup, energy (rows of the highlights / technical data tables)
+ *       labels        key, value (UI texts, see TEXT)
+ *       placeholders  column, media, type, url (empty-column cosy image; media empty = <img>)
+ *   model data (www.bmw.de without CORS, through the bmw-proxy / window.BMW_PROXY):
+ *     {page}/_jcr_content.technicaldata.{series}.{range}.{model}.json
  * Selections live in the URL hash: #{series}/{range}/{model}/{transmission}[/{...} x3]
  * (vehicle pages link here as /de/bmw-modelle-vergleichen#X/U11/21HM/A).
  */
-import { bmwProxyUrl, createInfoButton } from '../../scripts/bmw-utils.js';
+import { bmwProxyUrl, createInfoButton, fetchSheet } from '../../scripts/bmw-utils.js';
 
 const MAX_COLUMNS = 3;
 const FIELDS = 4; // series, range, model, transmission
 const DEFAULT_PAGE = '/de/bmw-modelle-vergleichen.html';
+const DATA_SHEET = '/de/data/compare-models.json';
 
 const TEXT = {
   addVehicle: 'BMW Fahrzeug hinzufügen',
@@ -63,11 +71,6 @@ function icon(name, className = '') {
   return span;
 }
 
-function decodeB64Unicode(s) {
-  const hex = (c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`;
-  return decodeURIComponent(atob(s).split('').map(hex).join(''));
-}
-
 function pagePath(block) {
   const a = block.querySelector('a[href]');
   if (!a) return DEFAULT_PAGE;
@@ -102,93 +105,110 @@ function cosyPicture(image, alt = '', className = '') {
   return picture;
 }
 
-/** Cosy image object from a template <picture>. */
-function pictureData(picture) {
-  if (!picture) return null;
-  const sources = [...picture.querySelectorAll('source')].map((s) => ({
-    url: s.getAttribute('srcset'), media: s.getAttribute('media'), mimeType: s.getAttribute('type'),
-  }));
-  const img = picture.querySelector('img');
-  return { sources, fallback: { url: img ? img.getAttribute('src') : '' } };
-}
-
 /* ------------------------------------------------------------------ template */
 
-function readTemplate(doc) {
-  const cmp = doc.querySelector('.cmp-compare');
-  if (!cmp) throw new Error('compare template missing');
-  const config = JSON.parse(decodeB64Unicode(cmp.dataset.config || ''));
-  const t = { ...TEXT };
-  const q = (sel) => clean((cmp.querySelector(sel) || {}).textContent);
-  t.addVehicle = q('.cmp-compare__placeholder .cmp-title__text') || t.addVehicle;
-  t.chooseVehicle = q('.cmp-compare__placeholder p') || t.chooseVehicle;
-  t.confirmRemove = q('.cmp-compare__popover .cmp-popover__title') || t.confirmRemove;
-  t.onlyDifferences = q('.cmp-toggleswitch') || t.onlyDifferences;
-  t.galleryHint = q('#cmp-compare__galleryhint .cmp-notification__message') || t.galleryHint;
-  const selection = cmp.querySelector('.cmp-compare__selection');
-  if (selection) {
-    t.emptySeries = selection.dataset.emptySeriesText || t.emptySeries;
-    t.emptyRange = selection.dataset.emptyRangeText || t.emptyRange;
-    t.emptyModel = selection.dataset.emptyModelText || t.emptyModel;
-    const label = (type) => clean((selection.querySelector(`.cmp-compare__dropdown--${type} .cmp-dropdown__label`) || {}).textContent);
-    t.series = label('series') || t.series;
-    t.range = label('ranges') || t.range;
-    t.model = label('models') || t.model;
-  }
-  const ctas = [...cmp.querySelectorAll(
-    '.cmp-compare__column-description .cmp-compare__column-cta .cmp-button__text',
-  )];
-  if (ctas[0]) t.cta1 = clean(ctas[0].textContent);
-  if (ctas[1]) t.cta2 = clean(ctas[1].textContent);
-  const tabs = [...cmp.querySelectorAll('.cmp-compare__designcomparison .cmp-tabs__tab')]
-    .map((b) => clean(b.textContent));
-  if (tabs[0]) [t.exterior] = tabs;
-  if (tabs[1]) [, t.interior] = tabs;
-  const priceInfo = cmp.querySelector('.cmp-compare__column-price [data-cmp-hook-tooltip="template"]');
-  if (priceInfo) {
-    t.priceInfo = q('.cmp-compare__column-price [data-cmp-hook-tooltip="heading"]') || t.priceInfo;
-    const body = priceInfo.querySelector('[data-cmp-hook-tooltip="content"]');
-    t.priceInfoHtml = body ? body.innerHTML.trim() : '';
-  }
-  t.disclaimer = q('.cmp-compare__disclaimer-item');
+const val = (v) => String(v ?? '').trim();
+const isTrue = (v) => /^(true|ja|yes|1|x)$/i.test(val(v));
 
-  const sections = [];
-  const SECTIONS = [['highlights', '.cmp-compare__highlights'], ['technicaldetails', '.cmp-compare__technicaldetails']];
-  SECTIONS.forEach(([id, sel]) => {
-    const sec = cmp.querySelector(sel);
-    if (!sec) return;
-    const groups = [...sec.querySelectorAll('.cmp-accordion__item')].map((item) => {
-      const button = item.querySelector('.cmp-accordion__button');
-      const titleEl = item.querySelector('.cmp-accordion__title, .cmp-accordion__button-content') || button;
-      const groupRef = item.querySelector('.cmp-accordion__header [data-path]');
-      const rows = [...item.querySelectorAll('tr.cmp-comparetable__row')].map((tr) => {
-        const th = tr.querySelector('th');
-        const sup = th && th.querySelector('[data-path]');
-        const labelEl = th ? th.cloneNode(true) : null;
-        if (labelEl) labelEl.querySelectorAll('sup').forEach((s) => s.remove());
-        const valueSup = tr.querySelector('td [data-path]');
-        return {
-          key: tr.dataset.key,
-          label: clean(labelEl ? labelEl.textContent : tr.dataset.key),
-          labelRef: sup ? sup.dataset.path : '',
-          valueRef: valueSup ? valueSup.dataset.path.replace(/_\d+$/, '') : '',
-          isEnergy: !!tr.querySelector('[data-is-energy]'),
-        };
-      }).filter((r) => r.key);
-      return {
-        title: clean(titleEl ? titleEl.textContent : ''),
-        titleRef: groupRef ? groupRef.dataset.path : '',
-        expanded: !button || button.classList.contains('cmp-accordion__button--expanded'),
-        rows,
-      };
-    });
-    sections.push({ id, title: clean((sec.querySelector('.cmp-title__text') || {}).textContent), groups });
+/** Series → modelRanges → vehicles → transmissions tree from the flat "models" rows. */
+export function modelTree(rows) {
+  const tree = [];
+  const child = (list, code, make) => {
+    let item = list.find((x) => x.code === code);
+    if (!item) {
+      item = make();
+      list.push(item);
+    }
+    return item;
+  };
+  rows.forEach((r) => {
+    const [series, range, model] = [val(r.series), val(r.range), val(r.model)];
+    if (!series || !range || !model) return;
+    const s = child(tree, series, () => ({
+      code: series, description: val(r.seriesName) || series, modelRanges: [],
+    }));
+    const rg = child(s.modelRanges, range, () => ({
+      code: range, description: val(r.rangeName) || range, vehicles: [],
+    }));
+    const v = child(rg.vehicles, model, () => ({
+      code: model,
+      description: val(r.modelName) || model,
+      fuelType: val(r.fuelType),
+      otherFuelType: isTrue(r.otherFuelType),
+      transmissions: [],
+    }));
+    const trans = val(r.transmission);
+    if (trans && !v.transmissions.some((t) => t.code === trans)) {
+      v.transmissions.push({ code: trans, description: val(r.transmissionName) || trans });
+    }
   });
-  const designTitle = q('.cmp-compare__designcomparison .cmp-title__text');
-  const placeholders = [...cmp.querySelectorAll('.cmp-compare__header-area')]
-    .map((area) => pictureData(area.querySelector('picture')));
+  return tree;
+}
+
+/** Highlights / technical data sections from the flat "table" rows (grouped in row order). */
+export function tableSections(rows) {
+  const sections = [];
+  rows.forEach((r) => {
+    const id = val(r.section);
+    const key = val(r.key);
+    if (!id || !key) return;
+    let section = sections.find((x) => x.id === id);
+    if (!section) {
+      section = { id, title: val(r.sectionTitle), groups: [] };
+      sections.push(section);
+    }
+    const groupTitle = val(r.groupTitle);
+    let group = section.groups[section.groups.length - 1];
+    if (!group || group.title !== groupTitle) {
+      group = {
+        title: groupTitle,
+        titleRef: val(r.groupFootnote),
+        expanded: val(r.expanded) === '' || isTrue(r.expanded),
+        rows: [],
+      };
+      section.groups.push(group);
+    }
+    const dataGroup = val(r.dataGroup);
+    group.rows.push({
+      key,
+      label: val(r.label) || key,
+      labelRef: dataGroup ? `${dataGroup}_${key}_label` : '',
+      valueRef: dataGroup ? `${dataGroup}_${key}_value` : '',
+      isEnergy: isTrue(r.energy),
+    });
+  });
+  return sections;
+}
+
+/** Cosy image objects per column from the "placeholders" rows (media empty = fallback <img>). */
+function placeholderImages(rows) {
+  const images = [];
+  rows.forEach((r) => {
+    const url = val(r.url);
+    if (!url) return;
+    const i = Math.max(0, (parseInt(val(r.column), 10) || 1) - 1);
+    if (!images[i]) images[i] = { sources: [], fallback: { url: '' } };
+    if (val(r.media) || val(r.type)) {
+      images[i].sources.push({ url, media: val(r.media) || null, mimeType: val(r.type) || null });
+    } else images[i].fallback.url = url;
+  });
+  return images.filter(Boolean);
+}
+
+export function readTemplate(sheets) {
+  const config = modelTree(sheets.models || []);
+  if (!config.length) throw new Error('compare models missing');
+  const text = { ...TEXT };
+  (sheets.labels || []).forEach((r) => {
+    const key = val(r.key);
+    if (key && val(r.value)) text[key] = val(r.value);
+  });
   return {
-    config, text: t, sections, designTitle, placeholders,
+    config,
+    text,
+    sections: tableSections(sheets.table || []),
+    designTitle: text.designTitle || '',
+    placeholders: placeholderImages(sheets.placeholders || []),
   };
 }
 
@@ -251,10 +271,7 @@ export default async function decorate(block) {
 
   let tpl;
   try {
-    const resp = await fetch(bmwProxyUrl(`${page}/content.q?extract=compare`));
-    if (!resp.ok) throw new Error(`template ${resp.status}`);
-    const doc = new DOMParser().parseFromString(await resp.text(), 'text/html');
-    tpl = readTemplate(doc);
+    tpl = readTemplate(await fetchSheet(DATA_SHEET));
   } catch {
     status.textContent = TEXT.loadError;
     block.classList.add('model-compare-error');

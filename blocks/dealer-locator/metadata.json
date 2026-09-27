@@ -3,7 +3,7 @@
   "baseBlock": "dealer-locator",
   "canonicalModel": "config",
   "visualCharacteristics": "BMW DLO widget (dlo.api.bmw): search panel with location/name search and filters, dealer list, HERE map; full bleed up to 1920px",
-  "contentPattern": "Key/value rows = window.dloaas.api.start(config) of the source (country, language, configId, initialBrand, brands, dealerDetails, layoutMode, osatCsvPath, ...). Values are JSON literals (true, 60, null, [..], {..}, \"5\" = string) or plain strings. osatCsvPath (www.bmw.de DAM path) is fetched through the bmw-proxy (window.BMW_PROXY).",
+  "contentPattern": "Key/value rows = window.dloaas.api.start(config) of the source (country, language, configId, initialBrand, brands, dealerDetails, layoutMode, osatCsvPath, ...). Values are JSON literals (true, 60, null, [..], {..}, \"5\" = string) or plain strings. osatCsvPath: the online service links come from the site sheet /de/data/dealer-services.json (Dealer, Outlet, URL, Name; the original DAM path maps to it, another .json sheet path may be given) and are handed to DLO as a CSV Blob URL.",
   "options": [],
   "memberVariantIds": ["dealer-locator"],
   "usage": {

@@ -1,5 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
-import { bmwProxyUrl } from '../../scripts/bmw-utils.js';
+import { fetchSheet } from '../../scripts/bmw-utils.js';
 
 /*
  * BMW global navigation.
@@ -17,7 +17,9 @@ import { bmwProxyUrl } from '../../scripts/bmw-utils.js';
 const DESKTOP = window.matchMedia('(width >= 1280px)');
 const TABLET = window.matchMedia('(width >= 768px)');
 const STAGE_BLOCKS = ['hero-stage', 'hero-teaser'];
-const LOGIN_DATA_PATH = '/de-de/login/bmw/api/flyout/data';
+// My BMW flyout texts/links (DA sheet, tabs labels | benefits | links; source: bmw.de
+// /de-de/login/bmw/api/flyout/data, logged-out state)
+const LOGIN_DATA_PATH = '/de/data/mybmw-flyout.json';
 const BMW_ORIGIN = 'https://www.bmw.de';
 
 let uid = 0;
@@ -353,14 +355,12 @@ function buildMobileBar(brand, mobileLinks) {
 async function hydrateLoginPanel(panel) {
   if (!panel) return;
   try {
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 5000);
-    const resp = await fetch(bmwProxyUrl(LOGIN_DATA_PATH), { signal: ctrl.signal, credentials: 'omit' });
-    clearTimeout(timer);
-    if (!resp.ok) return;
-    const { data } = await resp.json();
-    // the logged-in state needs the BMW session cookie, which the proxy does not forward
-    if (!data || data.isLoggedIn) return;
+    const sheets = await fetchSheet(LOGIN_DATA_PATH);
+    // only the logged-out state (login/register) is rendered: the site has no BMW session
+    const data = Object.fromEntries((sheets.labels || [])
+      .filter((r) => r.key)
+      .map((r) => [r.key.trim(), (r.value || '').trim()]));
+    data.loginBenefits = (sheets.benefits || []).map((r) => (r.text || '').trim()).filter(Boolean);
     const content = panel.querySelector('.nav-panel-content');
     const abs = (p) => (p && p.startsWith('/') ? `${BMW_ORIGIN}${p}` : p);
     const heading = content.querySelector('.nav-panel-heading');
@@ -368,7 +368,7 @@ async function hydrateLoginPanel(panel) {
     const sub = content.querySelector('.nav-panel-heading + p');
     if (sub && data.loginSubHeadline) sub.textContent = data.loginSubHeadline;
     const benefits = content.querySelector('.nav-panel-benefits');
-    if (benefits && Array.isArray(data.loginBenefits) && data.loginBenefits.length) {
+    if (benefits && data.loginBenefits.length) {
       benefits.replaceChildren(...data.loginBenefits.map((b) => el('li', {}, b)));
     }
     const [login, register] = content.querySelectorAll('.nav-button');

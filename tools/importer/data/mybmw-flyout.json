@@ -1,0 +1,237 @@
+{
+ ":names": [
+  "labels",
+  "benefits",
+  "links"
+ ],
+ ":version": 3,
+ ":type": "multi-sheet",
+ "labels": {
+  "total": 13,
+  "limit": 13,
+  "offset": 0,
+  "data": [
+   {
+    "key": "cancelButtonText",
+    "value": "Abbrechen"
+   },
+   {
+    "key": "continueButtonText",
+    "value": "Rolle wechseln"
+   },
+   {
+    "key": "descriptionText",
+    "value": "Bitte beachten Sie: Wenn Sie ein Fahrzeug in Ihren Warenkorb gelegt haben, werden durch den Rollenwechsel Ihre Fahrzeugauswahl und die gewährten Rabatte aktualisiert. Alle unter dem aktuellen Profil hinzugefügten Fahrzeuge oder Rabatte können entfernt oder neu berechnet werden."
+   },
+   {
+    "key": "loggedinTitle",
+    "value": "Willkommen, ."
+   },
+   {
+    "key": "loginButtonText",
+    "value": "Anmelden"
+   },
+   {
+    "key": "loginHeadline",
+    "value": "Willkommen bei My BMW."
+   },
+   {
+    "key": "loginSubHeadline",
+    "value": "Registrieren Sie sich und nutzen Sie die Vorteile:"
+   },
+   {
+    "key": "loginUrl",
+    "value": "/de-de/login/bmw/mylogin"
+   },
+   {
+    "key": "logoutButtonText",
+    "value": "Logout"
+   },
+   {
+    "key": "logoutIcon",
+    "value": "/logout"
+   },
+   {
+    "key": "logoutUrl",
+    "value": "/de-de/login/bmw/mylogout"
+   },
+   {
+    "key": "registerButtonText",
+    "value": "Registrieren"
+   },
+   {
+    "key": "registerUrl",
+    "value": "/de-de/login/bmw/myregister"
+   }
+  ]
+ },
+ "benefits": {
+  "total": 4,
+  "limit": 4,
+  "offset": 0,
+  "data": [
+   {
+    "text": "Speichern Sie Ihre Wunschfahrzeuge und Konfigurationen."
+   },
+   {
+    "text": "Buchen Sie eine Probefahrt mit Ihrem Wunschfahrzeug."
+   },
+   {
+    "text": "Verwalten Sie Ihre Finanzierung."
+   },
+   {
+    "text": "Optimieren Sie Ihr Fahrzeug mit digitalen Diensten."
+   }
+  ]
+ },
+ "links": {
+  "total": 13,
+  "limit": 13,
+  "offset": 0,
+  "data": [
+   {
+    "group": "nextvehicle",
+    "groupTitle": "MEIN NÄCHSTER BMW",
+    "groupTracking": "my next vehicle",
+    "id": "nextvehicle-wishlist-oneshop",
+    "text": "Meine Wunschliste",
+    "path": "/de/shop/ls/wishlist",
+    "tracking": "my wishlist",
+    "icon": "/heart",
+    "disabled": "false"
+   },
+   {
+    "group": "vehicle",
+    "groupTitle": "MEINE FAHRZEUGE",
+    "groupTracking": "my vehicles",
+    "id": "vehicle-overview",
+    "text": "Fahrzeugübersicht",
+    "path": "/de-de/mybmw/vehicle-overview",
+    "tracking": "car overview",
+    "icon": "/car",
+    "disabled": "false"
+   },
+   {
+    "group": "vehicle",
+    "groupTitle": "MEINE FAHRZEUGE",
+    "groupTracking": "my vehicles",
+    "id": "service-appointments-overview",
+    "text": "Serviceterminübersicht",
+    "path": "/de/appointments/home",
+    "tracking": "service appointment overview",
+    "icon": "/calendar",
+    "disabled": "false"
+   },
+   {
+    "group": "vehicle",
+    "groupTitle": "MEINE FAHRZEUGE",
+    "groupTracking": "my vehicles",
+    "id": "vehicle-add-vehicle",
+    "text": "Fahrzeug hinzufügen",
+    "path": "/de-de/mybmw/mapping-info",
+    "tracking": "add a car",
+    "icon": "/new-car",
+    "disabled": "false"
+   },
+   {
+    "group": "account",
+    "groupTitle": "MEIN ACCOUNT",
+    "groupTracking": "my account",
+    "id": "account-orders",
+    "text": "Meine Bestellungen",
+    "path": "/de/shop/ls/orders",
+    "tracking": "my orders",
+    "icon": "",
+    "disabled": "false"
+   },
+   {
+    "group": "account",
+    "groupTitle": "MEIN ACCOUNT",
+    "groupTracking": "my account",
+    "id": "account-profile",
+    "text": "Mein Profil",
+    "path": "/de-de/mybmw/profile",
+    "tracking": "my profile",
+    "icon": "",
+    "disabled": "false"
+   },
+   {
+    "group": "account",
+    "groupTitle": "MEIN ACCOUNT",
+    "groupTracking": "my account",
+    "id": "account-profile-consents",
+    "text": "Einwilligungserklärungen",
+    "path": "/de-de/mybmw/profile?section=consents",
+    "tracking": "my consents",
+    "icon": "",
+    "disabled": "false"
+   },
+   {
+    "group": "account",
+    "groupTitle": "MEIN ACCOUNT",
+    "groupTracking": "my account",
+    "id": "account-payment-methods",
+    "text": "Meine Zahlungsmethoden",
+    "path": "/de/shop/ls/yourpayments",
+    "tracking": "my payment methods",
+    "icon": "",
+    "disabled": "false"
+   },
+   {
+    "group": "account",
+    "groupTitle": "MEIN ACCOUNT",
+    "groupTracking": "my account",
+    "id": "account-sf-portal",
+    "text": "Mein BMW Financial Services",
+    "path": "https://customer.bmwgroup.com/oneid/login?client=mybmwsf&state=ZGVfREV8Qk1XfG9jcA==&brand=bmw&country=DE&language=de&scope=authenticate_user&response_type=code&redirect_uri=https://meinfs.bmw.de/external-dispatch.html",
+    "tracking": "my financial services",
+    "icon": "",
+    "disabled": "false"
+   },
+   {
+    "group": "help",
+    "groupTitle": "WIE KÖNNEN WIR IHNEN HELFEN?",
+    "groupTracking": "service",
+    "id": "help-customer-service",
+    "text": "Kundenbetreuung",
+    "path": "/de/mehr-bmw/kundenbetreuung.html",
+    "tracking": "customer service",
+    "icon": "",
+    "disabled": "false"
+   },
+   {
+    "group": "help",
+    "groupTitle": "WIE KÖNNEN WIR IHNEN HELFEN?",
+    "groupTracking": "service",
+    "id": "help-online-appointment",
+    "text": "BMW Partner und Online-Termin",
+    "path": "/dlo/de-de/bmw/dealer-locator.html",
+    "tracking": "partner and online appointment",
+    "icon": "",
+    "disabled": "false"
+   },
+   {
+    "group": "help",
+    "groupTitle": "WIE KÖNNEN WIR IHNEN HELFEN?",
+    "groupTracking": "service",
+    "id": "help-TDA-faas",
+    "text": "Probefahrt vereinbaren",
+    "path": "/faas/form/de-de/bmw/tda/test-drive-request.html?midstatic=4g0agj01ba51d05hb4aar",
+    "tracking": "testdrive appointment",
+    "icon": "",
+    "disabled": "false"
+   },
+   {
+    "group": "help",
+    "groupTitle": "WIE KÖNNEN WIR IHNEN HELFEN?",
+    "groupTracking": "service",
+    "id": "help-trade-in",
+    "text": "Inzahlungnahme",
+    "path": "/de/inzahlungnahme/?icp=nav-to-trade-in&origin=nav",
+    "tracking": "trade in",
+    "icon": "",
+    "disabled": "false"
+   }
+  ]
+ }
+}

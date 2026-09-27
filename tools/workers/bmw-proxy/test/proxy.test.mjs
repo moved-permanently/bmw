@@ -42,13 +42,18 @@ afterEach(() => {
 
 const call = (path, init = {}, env = {}) => worker.fetch(new Request(`${W}${path}`, init), env, {});
 const readJson = async (res) => JSON.parse(await res.text());
+const TECHDATA = '/de/bmw-modelle-vergleichen/_jcr_content.technicaldata.3.G20.28FF.json';
 
 describe('allowlist', () => {
   test('health endpoint lists routes', async () => {
     const res = await call('/_health');
     assert.equal(res.status, 200);
     const body = await readJson(res);
-    assert.ok(body.routes.some((r) => r.id === 'compare-fragment'));
+    assert.ok(body.routes.some((r) => r.id === 'compare-techdata'));
+    // static data now lives in site sheets (/de/data/*.json)
+    ['login-flyout', 'datastore-csv', 'compare-fragment'].forEach((id) => {
+      assert.ok(!body.routes.some((r) => r.id === id), id);
+    });
     assert.equal(calls.length, 0);
   });
 
@@ -63,78 +68,85 @@ describe('allowlist', () => {
   });
 
   test('unknown host prefix is treated as bmw.de path and rejected', async () => {
-    const res = await call('/evil.example.com/de-de/login/bmw/api/flyout/data');
+    const res = await call('/evil.example.com/de-de/sl/stocklocator/_jcr_content/stocklocator.config.json');
     assert.equal(res.status, 403);
     assert.equal(calls.length, 0);
   });
 
   test('path traversal is normalised / rejected', async () => {
-    const r1 = await call('/de-de/login/bmw/api/flyout/data/../../../../../de/index.html');
+    const r1 = await call('/de-de/sl/stocklocator/../../../../../de/index.json');
     assert.equal(r1.status, 403);
-    const r2 = await call('/content/dam/bmw/marketDE/bmw_de/datastore/%2e%2e/x.csv');
+    const r2 = await call('/etc/clientlibs/epaas/%2e%2e/x.js');
     assert.equal(r2.status, 403);
-    const r3 = await call('/content/dam/bmw/marketDE/bmw_de/datastore//x.csv');
+    const r3 = await call('/etc/clientlibs/epaas//x.js');
     assert.equal(r3.status, 403);
     assert.equal(calls.length, 0);
   });
 
   test('wrong method on a GET route -> 405 with Allow', async () => {
-    const res = await call('/de-de/login/bmw/api/flyout/data', { method: 'POST', body: '{}', headers: { 'content-type': 'application/json' } });
+    const res = await call(TECHDATA, { method: 'POST', body: '{}', headers: { 'content-type': 'application/json' } });
     assert.equal(res.status, 405);
     assert.match(res.headers.get('allow'), /GET/);
     assert.equal(calls.length, 0);
   });
 
-  test('unsupported extract -> 400', async () => {
-    const res = await call('/de-de/login/bmw/api/flyout/data?extract=compare');
-    assert.equal(res.status, 400);
+  test('retired static-data routes (flyout, datastore CSV, compare fragment) -> 403', async () => {
+    const paths = [
+      '/de-de/login/bmw/api/flyout/data',
+      '/content/dam/bmw/marketDE/bmw_de/datastore/17012022_BMW_OTV.csv',
+      '/de/bmw-modelle-vergleichen.html/content.q?extract=compare',
+      '/de/bmw-modelle-vergleichen.html/X/G65/61JF/A/content.q',
+    ];
+    const results = await Promise.all(paths.map((p) => call(p, { headers: { Origin: PREVIEW } })));
+    results.forEach((r) => assert.equal(r.status, 403));
+    assert.equal(calls.length, 0);
   });
 });
 
 describe('upstream request', () => {
-  test('path-preserving flyout with browser-like headers, no cookies', async () => {
+  test('path-preserving tech data with browser-like headers, no cookies', async () => {
     responder = () => new Response('{"a":1}', {
       status: 200,
       headers: { 'content-type': 'application/json', 'set-cookie': 'akm=1; Path=/', 'x-internal': 'y' },
     });
-    const res = await call('/de-de/login/bmw/api/flyout/data?foo=bar', {
+    const res = await call(`${TECHDATA}?foo=bar`, {
       headers: { Origin: PREVIEW, Cookie: 'session=secret' },
     });
     assert.equal(res.status, 200);
     assert.equal(calls.length, 1);
-    assert.equal(calls[0].url, 'https://www.bmw.de/de-de/login/bmw/api/flyout/data');
+    assert.equal(calls[0].url, `https://www.bmw.de${TECHDATA}`); // query: 'drop'
     const h = calls[0].init.headers;
     assert.match(h['User-Agent'], /Chrome/);
     assert.match(h['Accept-Language'], /^de-DE/);
-    assert.equal(h.Referer, 'https://www.bmw.de/');
+    assert.equal(h.Referer, 'https://www.bmw.de/de/bmw-modelle-vergleichen.html');
     assert.equal(h.Origin, undefined); // same-origin GET: browsers send no Origin
     assert.ok(!Object.keys(h).some((k) => k.toLowerCase() === 'cookie'));
     assert.equal(calls[0].init.redirect, 'manual');
     assert.equal(res.headers.get('set-cookie'), null);
     assert.equal(res.headers.get('x-internal'), null);
     assert.equal(res.headers.get('access-control-allow-origin'), PREVIEW);
-    assert.equal(res.headers.get('cache-control'), 'public, max-age=300');
+    assert.equal(res.headers.get('cache-control'), 'public, max-age=3600');
     assert.equal(await res.text(), '{"a":1}');
   });
 
-  test('datastore CSV is cached for a day and served from cache the 2nd time', async () => {
-    responder = () => new Response('a;b\n1;2\n', { status: 200, headers: { 'content-type': 'text/csv' } });
-    const p = '/content/dam/bmw/marketDE/bmw_de/datastore/17012022_BMW_OTV.csv';
+  test('ePaaS script is cached for an hour and served from cache the 2nd time', async () => {
+    responder = () => new Response('/* js */', { status: 200, headers: { 'content-type': 'application/javascript' } });
+    const p = '/etc/clientlibs/epaas/content/bmw/marketDE/bmw_de/de_DE.epaasclientlibinclude.js';
     const r1 = await call(p);
     assert.equal(r1.status, 200);
-    assert.equal(r1.headers.get('cache-control'), 'public, max-age=86400');
+    assert.equal(r1.headers.get('cache-control'), 'public, max-age=3600');
     assert.equal(r1.headers.get('x-proxy-cache'), 'MISS');
-    assert.equal(await r1.text(), 'a;b\n1;2\n');
+    assert.equal(await r1.text(), '/* js */');
     const r2 = await call(p, { headers: { Origin: 'http://localhost:3000' } });
     assert.equal(r2.headers.get('x-proxy-cache'), 'HIT');
     assert.equal(r2.headers.get('access-control-allow-origin'), 'http://localhost:3000');
-    assert.equal(await r2.text(), 'a;b\n1;2\n');
+    assert.equal(await r2.text(), '/* js */');
     assert.equal(calls.length, 1);
     assert.equal(calls[0].url, `https://www.bmw.de${p}`);
   });
 
   test('CACHE=off bypasses the cache', async () => {
-    const p = '/content/dam/bmw/marketDE/bmw_de/datastore/x.csv';
+    const p = '/etc/clientlibs/epaas/x.js';
     await call(p, {}, { CACHE: 'off' });
     const r2 = await call(p, {}, { CACHE: 'off' });
     assert.equal(r2.headers.get('x-proxy-cache'), 'BYPASS');
@@ -143,7 +155,7 @@ describe('upstream request', () => {
 
   test('upstream errors are not cached and returned as JSON with upstream status', async () => {
     responder = () => new Response('<html>Access Denied</html>', { status: 403 });
-    const p = '/content/dam/bmw/marketDE/bmw_de/datastore/x.csv';
+    const p = '/etc/clientlibs/epaas/x.js';
     const r1 = await call(p);
     assert.equal(r1.status, 403);
     const body = await readJson(r1);
@@ -156,37 +168,37 @@ describe('upstream request', () => {
 
   test('network failure -> 502 JSON', async () => {
     responder = () => { throw new TypeError('fetch failed'); };
-    const res = await call('/de-de/login/bmw/api/flyout/data');
+    const res = await call(TECHDATA);
     assert.equal(res.status, 502);
     assert.equal((await readJson(res)).error, 'upstream_unreachable');
   });
 
   test('timeout -> 504 JSON', async () => {
     responder = () => { throw new DOMException('timeout', 'TimeoutError'); };
-    const res = await call('/de-de/login/bmw/api/flyout/data');
+    const res = await call(TECHDATA);
     assert.equal(res.status, 504);
   });
 
   test('redirects on upstream hosts are followed', async () => {
-    responder = (url) => (url.endsWith('/old.csv')
-      ? new Response(null, { status: 301, headers: { location: '/content/dam/bmw/marketDE/bmw_de/datastore/new.csv' } })
+    responder = (url) => (url.endsWith('/old.js')
+      ? new Response(null, { status: 301, headers: { location: '/etc/clientlibs/epaas/new.js' } })
       : new Response('new', { status: 200 }));
-    const res = await call('/content/dam/bmw/marketDE/bmw_de/datastore/old.csv');
+    const res = await call('/etc/clientlibs/epaas/old.js');
     assert.equal(res.status, 200);
     assert.equal(await res.text(), 'new');
-    assert.equal(calls[1].url, 'https://www.bmw.de/content/dam/bmw/marketDE/bmw_de/datastore/new.csv');
+    assert.equal(calls[1].url, 'https://www.bmw.de/etc/clientlibs/epaas/new.js');
   });
 
   test('redirects to foreign hosts are refused', async () => {
     responder = () => new Response(null, { status: 302, headers: { location: 'https://evil.example.com/x' } });
-    const res = await call('/content/dam/bmw/marketDE/bmw_de/datastore/old.csv');
+    const res = await call('/etc/clientlibs/epaas/old.js');
     assert.equal(res.status, 502);
     assert.equal((await readJson(res)).error, 'redirect_not_allowed');
     assert.equal(calls.length, 1);
   });
 
   test('HEAD returns headers without body', async () => {
-    const res = await call('/content/dam/bmw/marketDE/bmw_de/datastore/x.csv', { method: 'HEAD' });
+    const res = await call('/etc/clientlibs/epaas/x.js', { method: 'HEAD' });
     assert.equal(res.status, 200);
     assert.equal(await res.text(), '');
     assert.equal(calls[0].init.method, 'GET');
@@ -254,8 +266,6 @@ describe('other upstreams', () => {
 });
 
 describe('CORS', () => {
-  const flyout = '/de-de/login/bmw/api/flyout/data';
-
   test('branch preview, live and localhost origins are reflected', async () => {
     const origins = [
       'https://main--bmw--moved-permanently.aem.page',
@@ -263,7 +273,9 @@ describe('CORS', () => {
       'https://main--bmw--moved-permanently.aem.live',
       'http://localhost:3000',
     ];
-    const results = await Promise.all(origins.map((o) => call(flyout, { headers: { Origin: o } })));
+    const results = await Promise.all(origins.map((o) => call(TECHDATA, {
+      headers: { Origin: o },
+    })));
     results.forEach((r, i) => {
       assert.equal(r.status, 200);
       assert.equal(r.headers.get('access-control-allow-origin'), origins[i]);
@@ -279,7 +291,7 @@ describe('CORS', () => {
       'http://main--bmw--moved-permanently.aem.page',
       'http://localhost:3001',
     ];
-    const results = await Promise.all(bad.map((o) => call(flyout, { headers: { Origin: o } })));
+    const results = await Promise.all(bad.map((o) => call(TECHDATA, { headers: { Origin: o } })));
     results.forEach((r) => {
       assert.equal(r.status, 403);
       assert.equal(r.headers.get('access-control-allow-origin'), null);
@@ -289,14 +301,14 @@ describe('CORS', () => {
 
   test('ALLOWED_ORIGINS env overrides the default', async () => {
     const env = { ALLOWED_ORIGINS: 'https://www.example.org, https://*.example.net' };
-    const ok = await call(flyout, { headers: { Origin: 'https://cdn.example.net' } }, env);
+    const ok = await call(TECHDATA, { headers: { Origin: 'https://cdn.example.net' } }, env);
     assert.equal(ok.headers.get('access-control-allow-origin'), 'https://cdn.example.net');
-    const no = await call(flyout, { headers: { Origin: PREVIEW } }, env);
+    const no = await call(TECHDATA, { headers: { Origin: PREVIEW } }, env);
     assert.equal(no.status, 403);
   });
 
   test('REQUIRE_ORIGIN=true rejects requests without Origin', async () => {
-    const res = await call(flyout, {}, { REQUIRE_ORIGIN: 'true' });
+    const res = await call(TECHDATA, {}, { REQUIRE_ORIGIN: 'true' });
     assert.equal(res.status, 403);
   });
 
@@ -318,20 +330,20 @@ describe('CORS', () => {
   });
 
   test('preflight for a disallowed method / path / origin', async () => {
-    const m = await call(flyout, { method: 'OPTIONS', headers: { Origin: PREVIEW, 'Access-Control-Request-Method': 'DELETE' } });
+    const m = await call(TECHDATA, { method: 'OPTIONS', headers: { Origin: PREVIEW, 'Access-Control-Request-Method': 'DELETE' } });
     assert.equal(m.status, 405);
     const p = await call('/de/index.html', { method: 'OPTIONS', headers: { Origin: PREVIEW, 'Access-Control-Request-Method': 'GET' } });
     assert.equal(p.status, 403);
-    const o = await call(flyout, { method: 'OPTIONS', headers: { Origin: 'https://evil.example.com', 'Access-Control-Request-Method': 'GET' } });
+    const o = await call(TECHDATA, { method: 'OPTIONS', headers: { Origin: 'https://evil.example.com', 'Access-Control-Request-Method': 'GET' } });
     assert.equal(o.status, 403);
   });
 });
 
 describe('compare tech data + AI assistant routes', () => {
   test('compare technical data JSON is proxied to www.bmw.de', async () => {
-    const res = await call('/de/bmw-modelle-vergleichen/_jcr_content.technicaldata.3.G20.28FF.json', { headers: { Origin: PREVIEW } });
+    const res = await call(TECHDATA, { headers: { Origin: PREVIEW } });
     assert.equal(res.status, 200);
-    assert.equal(calls[0].url, 'https://www.bmw.de/de/bmw-modelle-vergleichen/_jcr_content.technicaldata.3.G20.28FF.json');
+    assert.equal(calls[0].url, `https://www.bmw.de${TECHDATA}`);
   });
 
   test('AI assistant POST forwards only allow-listed headers and sends bmw.de origin', async () => {
@@ -364,5 +376,54 @@ describe('AI assistant follow-up messages', () => {
     assert.equal(res.status, 200);
     assert.equal(calls[0].init.headers.conversationSessionId, 'abc-123');
     assert.equal(calls[0].init.headers.Origin, 'https://www.bmw.de');
+  });
+});
+
+describe('Stock Locator x-api-key (public key from stocklocator.config.json)', () => {
+  const KEY = '7f665f5b3cb8fe8e83293052367c575f666078b87570d5557f02f248ec98';
+
+  test('dealer service GET forwards x-api-key, drops other browser headers', async () => {
+    const res = await call('/stolo-data-service.prod.stolo.eu-central-1.aws.bmw.cloud/dealer/showAll?country=DE&category=BM&clientid=66_STOCK_DLO&language=de_DE&stl=true', {
+      headers: {
+        Origin: PREVIEW, 'x-api-key': KEY, Cookie: 'x=1', Authorization: 'Bearer y',
+      },
+    });
+    assert.equal(res.status, 200);
+    const { headers } = calls[0].init;
+    assert.equal(headers['x-api-key'], KEY);
+    assert.equal(headers.Origin, 'https://www.bmw.de');
+    assert.equal(headers.Cookie, undefined);
+    assert.equal(headers.Authorization, undefined);
+  });
+
+  test('vehicle search POST forwards x-api-key', async () => {
+    responder = () => new Response('{"hits":[]}', { status: 200, headers: { 'content-type': 'application/json' } });
+    const res = await call('/vehicle-selection.prod.stolo.eu-central-1.aws.bmw.cloud/vehiclesearch/search/de-de/stocklocator?maxResults=5&brand=BMW&context=preview-slider', {
+      method: 'POST',
+      headers: { Origin: PREVIEW, 'content-type': 'application/json', 'X-Api-Key': KEY },
+      body: '{"searchContext":[{"model":{"series":{"value":["4"]},"modelRange":{"value":["G23"]}}}]}',
+    });
+    assert.equal(res.status, 200);
+    assert.equal(calls[0].init.headers['x-api-key'], KEY);
+  });
+
+  test('x-api-key is not forwarded on other routes; malformed values are dropped', async () => {
+    await call('/sf-mco.aws.bmw.cloud/display-service/DE/bmwCar/de/STOCKLOCATOR/errorCodes.json', {
+      headers: { Origin: PREVIEW, 'x-api-key': KEY },
+    });
+    assert.equal(calls[0].init.headers['x-api-key'], undefined);
+    await call('/stolo-data-service.prod.stolo.eu-central-1.aws.bmw.cloud/dealer/showAll?country=DE', {
+      headers: { Origin: PREVIEW, 'x-api-key': 'k'.repeat(201) },
+    });
+    assert.equal(calls[1].init.headers['x-api-key'], undefined);
+  });
+
+  test('preflight allows the x-api-key request header', async () => {
+    const res = await call('/stolo-data-service.prod.stolo.eu-central-1.aws.bmw.cloud/dealer/showAll', {
+      method: 'OPTIONS',
+      headers: { Origin: PREVIEW, 'Access-Control-Request-Method': 'GET', 'Access-Control-Request-Headers': 'content-type,x-api-key' },
+    });
+    assert.equal(res.status, 204);
+    assert.match(res.headers.get('access-control-allow-headers'), /x-api-key/);
   });
 });

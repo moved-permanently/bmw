@@ -1,0 +1,4076 @@
+{
+ "total": 678,
+ "limit": 678,
+ "offset": 0,
+ "data": [
+  {
+   "Dealer": "4107",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=&WIEDERHOLEN(\"0\"; 5-LÄNGE(A2))&A2&\"_\"&B2",
+   "Name": "Niederlassung München"
+  },
+  {
+   "Dealer": "4107",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04107_4",
+   "Name": "Niederlassung München"
+  },
+  {
+   "Dealer": "4107",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04107_6",
+   "Name": "Niederlassung München"
+  },
+  {
+   "Dealer": "4107",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04107_9",
+   "Name": "Niederlassung München"
+  },
+  {
+   "Dealer": "4107",
+   "Outlet": "13",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04107_13",
+   "Name": "Niederlassung München"
+  },
+  {
+   "Dealer": "4107",
+   "Outlet": "17",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04107_17",
+   "Name": "Niederlassung München"
+  },
+  {
+   "Dealer": "4107",
+   "Outlet": "19",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04107_19",
+   "Name": "Niederlassung München"
+  },
+  {
+   "Dealer": "866",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00866_1",
+   "Name": "Widmann + Winterholler GmbH"
+  },
+  {
+   "Dealer": "866",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00866_3",
+   "Name": "Widmann + Winterholler GmbH"
+  },
+  {
+   "Dealer": "866",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00866_4",
+   "Name": "Widmann + Winterholler GmbH"
+  },
+  {
+   "Dealer": "866",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00866_6",
+   "Name": "Widmann + Winterholler GmbH"
+  },
+  {
+   "Dealer": "866",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00866_7",
+   "Name": "Widmann + Winterholler GmbH"
+  },
+  {
+   "Dealer": "866",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00866_8",
+   "Name": "Ein Unternehmen der"
+  },
+  {
+   "Dealer": "866",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00866_9",
+   "Name": "Ein Unternehmen der"
+  },
+  {
+   "Dealer": "1965",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01965_1",
+   "Name": "Hubauer GmbH"
+  },
+  {
+   "Dealer": "2319",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02319_1",
+   "Name": "Autohaus Langlinderer e. K."
+  },
+  {
+   "Dealer": "2319",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02319_2",
+   "Name": "Autohaus Langlinderer e. K."
+  },
+  {
+   "Dealer": "2348",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02348_1",
+   "Name": "Autohaus Thaler KG"
+  },
+  {
+   "Dealer": "2378",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02378_1",
+   "Name": "Autohaus Bachfrieder GmbH & Co. KG"
+  },
+  {
+   "Dealer": "2446",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02446_1",
+   "Name": "W. Maier GmbH"
+  },
+  {
+   "Dealer": "4413",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04413_1",
+   "Name": "Richard Wagner GmbH"
+  },
+  {
+   "Dealer": "4413",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04413_3",
+   "Name": "Richard Wagner GmbH"
+  },
+  {
+   "Dealer": "4649",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04649_1",
+   "Name": "Josef Bauer GmbH"
+  },
+  {
+   "Dealer": "20512",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=20512_1",
+   "Name": "Autohaus Unterberger GmbH"
+  },
+  {
+   "Dealer": "25784",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=25784_1",
+   "Name": "Autohaus Unterberger GmbH"
+  },
+  {
+   "Dealer": "33952",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33952_1",
+   "Name": "Autohaus Unterberger GmbH"
+  },
+  {
+   "Dealer": "33952",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33952_2",
+   "Name": "Autohaus Unterberger GmbH"
+  },
+  {
+   "Dealer": "39688",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=39688_1",
+   "Name": "Autohaus Unterberger GmbH"
+  },
+  {
+   "Dealer": "48875",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=48875_1",
+   "Name": "Autohaus Unterberger GmbH"
+  },
+  {
+   "Dealer": "22075",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=22075_1",
+   "Name": "Autohaus Vogl e. K."
+  },
+  {
+   "Dealer": "22075",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=22075_2",
+   "Name": "Autohaus Vogl e. K."
+  },
+  {
+   "Dealer": "22177",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=22177_1",
+   "Name": "Schwarz GmbH"
+  },
+  {
+   "Dealer": "22177",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=22177_3",
+   "Name": "Schwarz GmbH"
+  },
+  {
+   "Dealer": "23470",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23470_3",
+   "Name": "Spaett GmbH & Co.KG"
+  },
+  {
+   "Dealer": "23470",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23470_4",
+   "Name": "Spaett GmbH & Co.KG"
+  },
+  {
+   "Dealer": "23470",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23470_6",
+   "Name": "Spaett GmbH & Co.KG"
+  },
+  {
+   "Dealer": "28133",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28133_1",
+   "Name": "Erwin Martin GmbH"
+  },
+  {
+   "Dealer": "30568",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30568_1",
+   "Name": "Autohaus Hagl GmbH & Co. KG"
+  },
+  {
+   "Dealer": "31585",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31585_1",
+   "Name": "Michael Schmidt GmbH"
+  },
+  {
+   "Dealer": "31585",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31585_2",
+   "Name": "Michael Schmidt GmbH"
+  },
+  {
+   "Dealer": "31585",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31585_3",
+   "Name": "Michael Schmidt GmbH"
+  },
+  {
+   "Dealer": "31585",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31585_4",
+   "Name": "Michael Schmidt GmbH"
+  },
+  {
+   "Dealer": "32892",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32892_1",
+   "Name": "Autohaus Baierbrunn GmbH"
+  },
+  {
+   "Dealer": "31704",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31704_1",
+   "Name": "Autohaus Hengge GmbH"
+  },
+  {
+   "Dealer": "33291",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33291_1",
+   "Name": "Autohaus Moderegger GmbH"
+  },
+  {
+   "Dealer": "34007",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34007_1",
+   "Name": "Automag GmbH"
+  },
+  {
+   "Dealer": "34007",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34007_2",
+   "Name": "Automag GmbH"
+  },
+  {
+   "Dealer": "34052",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34052_1",
+   "Name": "Simon Gruber Autoservice GmbH & Co. KG"
+  },
+  {
+   "Dealer": "34052",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34052_2",
+   "Name": "Simon Gruber Autoservice GmbH & Co. KG"
+  },
+  {
+   "Dealer": "104",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00104_1",
+   "Name": "Autohaus Hofmann GmbH"
+  },
+  {
+   "Dealer": "104",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00104_2",
+   "Name": "Autohaus Hofmann GmbH"
+  },
+  {
+   "Dealer": "104",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00104_7",
+   "Name": "Autohaus Hofmann GmbH"
+  },
+  {
+   "Dealer": "104",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00104_8",
+   "Name": "Autohaus Hofmann GmbH"
+  },
+  {
+   "Dealer": "104",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00104_9",
+   "Name": "Autohaus Hofmann GmbH"
+  },
+  {
+   "Dealer": "116",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00116_1",
+   "Name": "Auto-Leebmann GmbH"
+  },
+  {
+   "Dealer": "116",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00116_2",
+   "Name": "Auto-Leebmann GmbH"
+  },
+  {
+   "Dealer": "33234",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33234_1",
+   "Name": "Schmid Service GmbH"
+  },
+  {
+   "Dealer": "341",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00341_1",
+   "Name": "Rene Partl GmbH"
+  },
+  {
+   "Dealer": "448",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00448_1",
+   "Name": "Autohaus Praller GmbH"
+  },
+  {
+   "Dealer": "449",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00449_1",
+   "Name": "Max Salmannsberger GmbH"
+  },
+  {
+   "Dealer": "887",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00887_1",
+   "Name": "J. B. Lell e.K."
+  },
+  {
+   "Dealer": "29337",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29337_1",
+   "Name": "J. B. Lell GmbH & Co. KG"
+  },
+  {
+   "Dealer": "33696",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33696_1",
+   "Name": "J. B. Lell GmbH & Co. KG"
+  },
+  {
+   "Dealer": "37132",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=37132_1",
+   "Name": "J. B. Lell GmbH"
+  },
+  {
+   "Dealer": "924",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00924_1",
+   "Name": "Autohaus Pielmeier"
+  },
+  {
+   "Dealer": "1415",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01415_1",
+   "Name": "Richard Hable"
+  },
+  {
+   "Dealer": "1416",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01416_1",
+   "Name": "Autohaus Waldmüller GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1570",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01570_1",
+   "Name": "Autohaus Schweitzer GmbH"
+  },
+  {
+   "Dealer": "1806",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01806_1",
+   "Name": "Autohaus Graser GmbH"
+  },
+  {
+   "Dealer": "1945",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01945_1",
+   "Name": "Autohaus Kimbeck GmbH"
+  },
+  {
+   "Dealer": "1945",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01945_3",
+   "Name": "Autohaus Kimbeck GmbH"
+  },
+  {
+   "Dealer": "2377",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02377_1",
+   "Name": "Vögl GmbH & Co."
+  },
+  {
+   "Dealer": "23303",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23303_1",
+   "Name": "Vögl GmbH & Co."
+  },
+  {
+   "Dealer": "29220",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29220_1",
+   "Name": "Vögl GmbH & Co."
+  },
+  {
+   "Dealer": "2606",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02606_1",
+   "Name": "Autohaus Reith GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4669",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04669_1",
+   "Name": "Heinrich Weiß GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4723",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04723_1",
+   "Name": "Autohaus Kornexl & Lenz GmbH"
+  },
+  {
+   "Dealer": "27847",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27847_1",
+   "Name": "BMW Service Moser GmbH & Co.KG"
+  },
+  {
+   "Dealer": "27921",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27921_1",
+   "Name": "Auto-Hübner GmbH & Co. KG"
+  },
+  {
+   "Dealer": "27944",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27944_1",
+   "Name": "Karl Jungmayer GmbH"
+  },
+  {
+   "Dealer": "28041",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28041_1",
+   "Name": "Autohaus Grieb GmbH"
+  },
+  {
+   "Dealer": "29202",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29202_1",
+   "Name": "Walter Hager & Sohn GmbH"
+  },
+  {
+   "Dealer": "30291",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30291_1",
+   "Name": "Neumeier & Seidl GmbH"
+  },
+  {
+   "Dealer": "316",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00316_1",
+   "Name": "Joas OHG"
+  },
+  {
+   "Dealer": "391",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00391_1",
+   "Name": "Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "391",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00391_3",
+   "Name": "Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "391",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00391_8",
+   "Name": "Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "391",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00391_9",
+   "Name": "Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "391",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00391_10",
+   "Name": "Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "391",
+   "Outlet": "12",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00391_12",
+   "Name": "Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "31117",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31117_1",
+   "Name": "Autohaus Mulfinger GmbH"
+  },
+  {
+   "Dealer": "39322",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=39322_1",
+   "Name": "Autohaus Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "39322",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=39322_2",
+   "Name": "Autohaus Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "39322",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=39322_3",
+   "Name": "Autohaus Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "39322",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=39322_4",
+   "Name": "Autohaus Walter Mulfinger GmbH"
+  },
+  {
+   "Dealer": "406",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00406_1",
+   "Name": "Auer Gruppe GmbH"
+  },
+  {
+   "Dealer": "406",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00406_2",
+   "Name": "Auer Gruppe GmbH"
+  },
+  {
+   "Dealer": "406",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00406_4",
+   "Name": "Auer Gruppe GmbH"
+  },
+  {
+   "Dealer": "406",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00406_6",
+   "Name": "Auer Gruppe GmbH"
+  },
+  {
+   "Dealer": "495",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00495_1",
+   "Name": "Autohaus Munding GmbH"
+  },
+  {
+   "Dealer": "495",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00495_2",
+   "Name": "Autohaus Munding GmbH"
+  },
+  {
+   "Dealer": "495",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00495_3",
+   "Name": "Autohaus Munding GmbH"
+  },
+  {
+   "Dealer": "502",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00502_1",
+   "Name": "Müller & Klöck GmbH"
+  },
+  {
+   "Dealer": "507",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00507_1",
+   "Name": "Auto Weiss GmbH & Co. KG"
+  },
+  {
+   "Dealer": "525",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00525_1",
+   "Name": "Konrad Fink e. K."
+  },
+  {
+   "Dealer": "35658",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35658_1",
+   "Name": "Autohaus Fink GmbH & Co. KG"
+  },
+  {
+   "Dealer": "536",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00536_1",
+   "Name": "Karl Feil GmbH"
+  },
+  {
+   "Dealer": "3988",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03988_1",
+   "Name": "Autohaus Feil GmbH"
+  },
+  {
+   "Dealer": "612",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00612_1",
+   "Name": "Auto Grimm GmbH"
+  },
+  {
+   "Dealer": "2365",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02365_1",
+   "Name": "Auto Grimm GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1419",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01419_1",
+   "Name": "Mayer & Kloos GmbH"
+  },
+  {
+   "Dealer": "1443",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01443_1",
+   "Name": "Autohaus Reisacher GmbH"
+  },
+  {
+   "Dealer": "1443",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01443_4",
+   "Name": "Autohaus Reisacher GmbH"
+  },
+  {
+   "Dealer": "1443",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01443_5",
+   "Name": "Autohaus Reisacher GmbH"
+  },
+  {
+   "Dealer": "1443",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01443_6",
+   "Name": "Autohaus Reisacher GmbH"
+  },
+  {
+   "Dealer": "1443",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01443_7",
+   "Name": "Autohaus Reisacher GmbH"
+  },
+  {
+   "Dealer": "30778",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30778_1",
+   "Name": "Autohaus Augsburg GmbH"
+  },
+  {
+   "Dealer": "30778",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30778_3",
+   "Name": "Autohaus Augsburg GmbH"
+  },
+  {
+   "Dealer": "2341",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02341_1",
+   "Name": "Drexl + Ziegler GmbH & Co. KG"
+  },
+  {
+   "Dealer": "2341",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02341_2",
+   "Name": "Drexl + Ziegler GmbH & Co. KG"
+  },
+  {
+   "Dealer": "34233",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34233_1",
+   "Name": "Drexl + Ziegler GmbH & Co. KG"
+  },
+  {
+   "Dealer": "3844",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03844_1",
+   "Name": "Fritz & Sickau GmbH"
+  },
+  {
+   "Dealer": "21920",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=21920_1",
+   "Name": "Autohaus Langer GmbH & Co. KG"
+  },
+  {
+   "Dealer": "21920",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=21920_2",
+   "Name": "Autohaus Langer GmbH & Co. KG"
+  },
+  {
+   "Dealer": "27988",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27988_1",
+   "Name": "Autohaus Pröschel GmbH"
+  },
+  {
+   "Dealer": "28238",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28238_1",
+   "Name": "Auto Katzenbogen GmbH"
+  },
+  {
+   "Dealer": "28728",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28728_1",
+   "Name": "Karl Fritz"
+  },
+  {
+   "Dealer": "2813",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02813_1",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "2813",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02813_2",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "33229",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33229_1",
+   "Name": "Autohaus Schenk GmbH & Co. KG"
+  },
+  {
+   "Dealer": "40833",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=40833_1",
+   "Name": "Autohaus Hasse GmbH"
+  },
+  {
+   "Dealer": "40872",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=40872_1",
+   "Name": "Autohaus Hannemann GmbH"
+  },
+  {
+   "Dealer": "89",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00089_1",
+   "Name": "Niederlassung Nürnberg"
+  },
+  {
+   "Dealer": "89",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00089_2",
+   "Name": "Niederlassung Nürnberg"
+  },
+  {
+   "Dealer": "89",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00089_5",
+   "Name": "Niederlassung Nürnberg"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_1",
+   "Name": "Heermann und Rhein GmbH"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_4",
+   "Name": "Heermann und Rhein GmbH"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_5",
+   "Name": "Stadel Zweig-NL der AH"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_6",
+   "Name": "Stadel Zweig-NL der AH"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_7",
+   "Name": "Stadel Zweig-NL der AH"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_8",
+   "Name": "Autohaus Rhein Würzburg"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_9",
+   "Name": "Autohaus Rhein Würzburg"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_10",
+   "Name": "Rhein Bodensee"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "12",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_12",
+   "Name": "Rhein Schweinfurt"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "14",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_14",
+   "Name": "Autohaus Rhein Rhön-Saale"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "16",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_16",
+   "Name": "Rhein Rothenburg"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "17",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_17",
+   "Name": "Rhein Ludwigsburg"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "19",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_19",
+   "Name": "Autohaus Rhein Bayreuth"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "20",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_20",
+   "Name": "Autohaus Rhein Kulmbach"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "21",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_21",
+   "Name": "Autohaus Rhein Hochfranken"
+  },
+  {
+   "Dealer": "120",
+   "Outlet": "22",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00120_22",
+   "Name": "Autohaus Rhein Hochfranken"
+  },
+  {
+   "Dealer": "32141",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32141_1",
+   "Name": "Tief-Dörfler"
+  },
+  {
+   "Dealer": "32929",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32929_1",
+   "Name": "Eichhorn Automotive GmbH"
+  },
+  {
+   "Dealer": "32929",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32929_2",
+   "Name": "Eichhorn Automotive GmbH"
+  },
+  {
+   "Dealer": "268",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00268_1",
+   "Name": "Autohaus Fuchs"
+  },
+  {
+   "Dealer": "490",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00490_1",
+   "Name": "Auto-Müller GmbH"
+  },
+  {
+   "Dealer": "490",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00490_3",
+   "Name": "Auto-Müller GmbH"
+  },
+  {
+   "Dealer": "607",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00607_1",
+   "Name": "Autohaus Fink GmbH & Co. KG"
+  },
+  {
+   "Dealer": "651",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00651_1",
+   "Name": "Autohaus Grötzinger GmbH"
+  },
+  {
+   "Dealer": "1024",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01024_1",
+   "Name": "Bernhard Holme GmbH"
+  },
+  {
+   "Dealer": "1459",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01459_1",
+   "Name": "Günter Reuter GmbH"
+  },
+  {
+   "Dealer": "1489",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01489_1",
+   "Name": "Autohaus Friedrich GmbH"
+  },
+  {
+   "Dealer": "2243",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02243_1",
+   "Name": "Autohaus Tschirley GmbH"
+  },
+  {
+   "Dealer": "2258",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02258_1",
+   "Name": "Auto-Müller GmbH"
+  },
+  {
+   "Dealer": "618",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00618_1",
+   "Name": "Wormser GmbH Coburg"
+  },
+  {
+   "Dealer": "1573",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01573_1",
+   "Name": "H. Wormser GmbH"
+  },
+  {
+   "Dealer": "2356",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02356_1",
+   "Name": "Wormser GmbH"
+  },
+  {
+   "Dealer": "35003",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35003_1",
+   "Name": "Wormser GmbH Forchheim"
+  },
+  {
+   "Dealer": "2519",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02519_1",
+   "Name": "Autohaus Stahmer GmbH"
+  },
+  {
+   "Dealer": "4502",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04502_1",
+   "Name": "Walter Kühnl GmbH"
+  },
+  {
+   "Dealer": "4552",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04552_1",
+   "Name": "Autohaus Köhler GmbH"
+  },
+  {
+   "Dealer": "4776",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04776_1",
+   "Name": "Autohaus Fischer GmbH"
+  },
+  {
+   "Dealer": "7315",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07315_1",
+   "Name": "Autohaus Matthes GmbH"
+  },
+  {
+   "Dealer": "7315",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07315_6",
+   "Name": "Autohaus Matthes GmbH"
+  },
+  {
+   "Dealer": "7315",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07315_10",
+   "Name": "Autosalon Suhl"
+  },
+  {
+   "Dealer": "7315",
+   "Outlet": "11",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07315_11",
+   "Name": "Autohaus Matthes GmbH"
+  },
+  {
+   "Dealer": "28413",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28413_1",
+   "Name": "Autohaus Schmauser GmbH"
+  },
+  {
+   "Dealer": "28531",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28531_1",
+   "Name": "Autohaus Sperber GmbH & Co. KG"
+  },
+  {
+   "Dealer": "28531",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28531_2",
+   "Name": "Autohaus Sperber GmbH & Co. KG"
+  },
+  {
+   "Dealer": "31058",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31058_1",
+   "Name": "Schwarz GmbH"
+  },
+  {
+   "Dealer": "45053",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=45053_1",
+   "Name": "Seifert Automobile GmbH"
+  },
+  {
+   "Dealer": "85",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00085_1",
+   "Name": "Niederlassung Stuttgart"
+  },
+  {
+   "Dealer": "85",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00085_2",
+   "Name": "Niederlassung Stuttgart"
+  },
+  {
+   "Dealer": "7850",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07850_1",
+   "Name": "Service Zentrum Regensburg"
+  },
+  {
+   "Dealer": "114",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00114_1",
+   "Name": "Hermann Menton GmbH & Co KG"
+  },
+  {
+   "Dealer": "114",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00114_3",
+   "Name": "Hermann Menton GmbH & Co KG"
+  },
+  {
+   "Dealer": "114",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00114_4",
+   "Name": "Hermann Menton GmbH & Co KG"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_1",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_2",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_3",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_4",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_8",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_9",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_10",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "11",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_11",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "12",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_12",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "13",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_13",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "15",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_15",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "17",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_17",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "19",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_19",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "20",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_20",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "21",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_21",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "22",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_22",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "23",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_23",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "24",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_24",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "27",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_27",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "29",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_29",
+   "Name": "Autohandelsgesellschaft mbH"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "30",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_30",
+   "Name": "Niederlassung der AHG-"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "31",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_31",
+   "Name": "Niederlassung der AHG-"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "32",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_32",
+   "Name": "Niederlassung der AHG-"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "33",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_33",
+   "Name": "Niederlassung der AHG-"
+  },
+  {
+   "Dealer": "250",
+   "Outlet": "34",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00250_34",
+   "Name": "Niederlassung der AHG-"
+  },
+  {
+   "Dealer": "427",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00427_1",
+   "Name": "Autohaus Fetzer GmbH"
+  },
+  {
+   "Dealer": "433",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00433_1",
+   "Name": "Autohaus Zeisler GmbH"
+  },
+  {
+   "Dealer": "920",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00920_1",
+   "Name": "Autohaus Briem GmbH & Co. KG"
+  },
+  {
+   "Dealer": "21519",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=21519_1",
+   "Name": "Autohaus Briem Leinfelden GmbH"
+  },
+  {
+   "Dealer": "23267",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23267_1",
+   "Name": "Autohaus Briem Nürtingen GmbH"
+  },
+  {
+   "Dealer": "985",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00985_1",
+   "Name": "Autohaus Schmid GmbH"
+  },
+  {
+   "Dealer": "1064",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01064_1",
+   "Name": "Märtin GmbH"
+  },
+  {
+   "Dealer": "1064",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01064_2",
+   "Name": "Märtin GmbH"
+  },
+  {
+   "Dealer": "1064",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01064_3",
+   "Name": "Märtin GmbH"
+  },
+  {
+   "Dealer": "1075",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01075_1",
+   "Name": "Autohaus Schmid GmbH"
+  },
+  {
+   "Dealer": "1569",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01569_1",
+   "Name": "Autohaus Netuschil GmbH"
+  },
+  {
+   "Dealer": "4508",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04508_2",
+   "Name": "Autohaus Revo GmbH"
+  },
+  {
+   "Dealer": "4621",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04621_1",
+   "Name": "H. Emmerich GmbH"
+  },
+  {
+   "Dealer": "4818",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04818_1",
+   "Name": "Autohaus Müller GmbH & Co. KG"
+  },
+  {
+   "Dealer": "30380",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30380_1",
+   "Name": "Autohaus Müller GmbH"
+  },
+  {
+   "Dealer": "29484",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29484_1",
+   "Name": "Autohaus Thoma GmbH"
+  },
+  {
+   "Dealer": "29925",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29925_1",
+   "Name": "Gottstein GmbH"
+  },
+  {
+   "Dealer": "29925",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29925_2",
+   "Name": "Gottstein GmbH"
+  },
+  {
+   "Dealer": "29925",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29925_3",
+   "Name": "Gottstein GmbH"
+  },
+  {
+   "Dealer": "29925",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29925_4",
+   "Name": "Gottstein GmbH"
+  },
+  {
+   "Dealer": "30976",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30976_1",
+   "Name": "Josef Mayer GmbH"
+  },
+  {
+   "Dealer": "34841",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34841_1",
+   "Name": "Bühler & Ruff KfZ-Technik GmbH"
+  },
+  {
+   "Dealer": "51",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00051_1",
+   "Name": "Service Zentrum"
+  },
+  {
+   "Dealer": "85",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00085_5",
+   "Name": "Niederlassung Mannheim"
+  },
+  {
+   "Dealer": "85",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00085_6",
+   "Name": "Niederlassung Mannheim"
+  },
+  {
+   "Dealer": "85",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00085_9",
+   "Name": "Niederlassung Saarbrücken"
+  },
+  {
+   "Dealer": "85",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00085_10",
+   "Name": "Niederlassung Saarlouis"
+  },
+  {
+   "Dealer": "85",
+   "Outlet": "11",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00085_11",
+   "Name": "Niederlassung Saar-Pfalz"
+  },
+  {
+   "Dealer": "282",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00282_1",
+   "Name": "Auto-Schmidt Rudolf Schmidt e.K."
+  },
+  {
+   "Dealer": "440",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00440_1",
+   "Name": "Adolf Cuntz KG"
+  },
+  {
+   "Dealer": "440",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00440_2",
+   "Name": "Adolf Cuntz KG"
+  },
+  {
+   "Dealer": "737",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00737_1",
+   "Name": "Autohaus Krauth GmbH & Co. KG"
+  },
+  {
+   "Dealer": "737",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00737_2",
+   "Name": "Autohaus Krauth GmbH & Co. KG"
+  },
+  {
+   "Dealer": "737",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00737_3",
+   "Name": "Autohaus Krauth GmbH & Co. KG"
+  },
+  {
+   "Dealer": "737",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00737_4",
+   "Name": "Autohaus Krauth GmbH & Co. KG"
+  },
+  {
+   "Dealer": "737",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00737_9",
+   "Name": "Autohaus Krauth GmbH & Co. KG"
+  },
+  {
+   "Dealer": "737",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00737_10",
+   "Name": "Autohaus Krauth GmbH & Co. KG"
+  },
+  {
+   "Dealer": "738",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00738_1",
+   "Name": "Autohaus Knopf GmbH & Co. KG"
+  },
+  {
+   "Dealer": "911",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00911_1",
+   "Name": "Klaus Scheller GmbH"
+  },
+  {
+   "Dealer": "911",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00911_2",
+   "Name": "Klaus Scheller GmbH"
+  },
+  {
+   "Dealer": "911",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00911_3",
+   "Name": "Klaus Scheller GmbH"
+  },
+  {
+   "Dealer": "1889",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01889_1",
+   "Name": "Autohaus Uwe Ratzel GmbH & Co. KG"
+  },
+  {
+   "Dealer": "2436",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02436_1",
+   "Name": "VOGEL Autohäuser GmbH & Co. KG"
+  },
+  {
+   "Dealer": "2436",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02436_2",
+   "Name": "VOGEL Autohäuser GmbH & Co. KG"
+  },
+  {
+   "Dealer": "2436",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02436_3",
+   "Name": "VOGEL Autohäuser GmbH & Co. KG"
+  },
+  {
+   "Dealer": "27945",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27945_1",
+   "Name": "Peter Nick GmbH"
+  },
+  {
+   "Dealer": "30315",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30315_1",
+   "Name": "Ungeheuer Automobile GmbH"
+  },
+  {
+   "Dealer": "30315",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30315_2",
+   "Name": "Ungeheuer Automobile GmbH"
+  },
+  {
+   "Dealer": "30315",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30315_3",
+   "Name": "Ungeheuer Automobile GmbH"
+  },
+  {
+   "Dealer": "30315",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30315_4",
+   "Name": "Ungeheuer Automobile GmbH"
+  },
+  {
+   "Dealer": "30400",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30400_1",
+   "Name": "Henning Orth Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "30636",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30636_1",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "30637",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30637_1",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "30637",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30637_2",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "30637",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30637_3",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "30637",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30637_4",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "30637",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30637_5",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "33854",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33854_1",
+   "Name": "Müller-Dynamic GmbH"
+  },
+  {
+   "Dealer": "33854",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33854_2",
+   "Name": "Müller-Dynamic GmbH"
+  },
+  {
+   "Dealer": "33854",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33854_3",
+   "Name": "Müller-Dynamic GmbH"
+  },
+  {
+   "Dealer": "33854",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33854_4",
+   "Name": "Müller-Dynamic GmbH"
+  },
+  {
+   "Dealer": "36342",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=36342_1",
+   "Name": "Auto-Albert GmbH"
+  },
+  {
+   "Dealer": "40330",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=40330_1",
+   "Name": "Hoffmann e. K."
+  },
+  {
+   "Dealer": "47793",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=47793_1",
+   "Name": "Autohaus Bock GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4109",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04109_1",
+   "Name": "Autohaus Fritze GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4109",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04109_5",
+   "Name": "Autohaus Fritze GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4109",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04109_7",
+   "Name": "Autohaus Fritze GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4109",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04109_8",
+   "Name": "Autohaus Fritze GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4111",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04111_1",
+   "Name": "Autohaus Fiebig GmbH"
+  },
+  {
+   "Dealer": "4114",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04114_1",
+   "Name": "Autohaus Zentral GmbH"
+  },
+  {
+   "Dealer": "4553",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04553_1",
+   "Name": "Autohaus Kühnert GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4553",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04553_2",
+   "Name": "Autohaus Kühnert GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4553",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04553_5",
+   "Name": "Autohaus Kühnert GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4553",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04553_6",
+   "Name": "Autohaus Kühnert GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4553",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04553_7",
+   "Name": "Autohaus Kühnert GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4553",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04553_8",
+   "Name": "Autohaus Kühnert GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4562",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04562_1",
+   "Name": "Langenhan GmbH"
+  },
+  {
+   "Dealer": "24769",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24769_1",
+   "Name": "Langenhan Mühlhausen GmbH"
+  },
+  {
+   "Dealer": "27040",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27040_1",
+   "Name": "Langenhan Eisenach GmbH"
+  },
+  {
+   "Dealer": "7466",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07466_1",
+   "Name": "Schubert Motors GmbH"
+  },
+  {
+   "Dealer": "7466",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07466_2",
+   "Name": "Schubert Motors GmbH"
+  },
+  {
+   "Dealer": "7466",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07466_7",
+   "Name": "Schubert Motors GmbH"
+  },
+  {
+   "Dealer": "7466",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07466_8",
+   "Name": "Schubert Motors GmbH"
+  },
+  {
+   "Dealer": "7466",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07466_10",
+   "Name": "Schubert Motors GmbH"
+  },
+  {
+   "Dealer": "7466",
+   "Outlet": "11",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07466_11",
+   "Name": "Schubert Motors GmbH"
+  },
+  {
+   "Dealer": "7466",
+   "Outlet": "12",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07466_12",
+   "Name": "Schubert Motors GmbH"
+  },
+  {
+   "Dealer": "7466",
+   "Outlet": "13",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07466_13",
+   "Name": "Schubert Motors GmbH"
+  },
+  {
+   "Dealer": "7466",
+   "Outlet": "15",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07466_15",
+   "Name": "Schubert Motors GmbH"
+  },
+  {
+   "Dealer": "29964",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29964_1",
+   "Name": "Kellner Erfurt GmbH"
+  },
+  {
+   "Dealer": "29964",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29964_2",
+   "Name": "Kellner Erfurt GmbH"
+  },
+  {
+   "Dealer": "22406",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=22406_1",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "22406",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=22406_2",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "22406",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=22406_3",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "43935",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=43935_1",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "31999",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31999_1",
+   "Name": "Autohaus Strauß GmbH"
+  },
+  {
+   "Dealer": "31999",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31999_2",
+   "Name": "Autohaus Strauß GmbH"
+  },
+  {
+   "Dealer": "31999",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31999_4",
+   "Name": "Autohaus Strauß GmbH"
+  },
+  {
+   "Dealer": "33269",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33269_1",
+   "Name": "Isert GmbH & Co.KG"
+  },
+  {
+   "Dealer": "39549",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=39549_1",
+   "Name": "Automobile Hünniger GmbH"
+  },
+  {
+   "Dealer": "4543",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04543_1",
+   "Name": "Niederlassung Leipzig"
+  },
+  {
+   "Dealer": "4543",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04543_3",
+   "Name": "Niederlassung Leipzig"
+  },
+  {
+   "Dealer": "4543",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04543_4",
+   "Name": "Niederlassung Dresden"
+  },
+  {
+   "Dealer": "4543",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04543_5",
+   "Name": "Niederlassung Chemnitz"
+  },
+  {
+   "Dealer": "3813",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03813_1",
+   "Name": "Autohaus Melkus GmbH"
+  },
+  {
+   "Dealer": "3813",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03813_2",
+   "Name": "Autohaus Melkus GmbH"
+  },
+  {
+   "Dealer": "3821",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03821_1",
+   "Name": "Müller Leipzig GmbH"
+  },
+  {
+   "Dealer": "7814",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07814_1",
+   "Name": "Müller Eilenburg GmbH"
+  },
+  {
+   "Dealer": "23258",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23258_1",
+   "Name": "Müller Wittenberg GmbH"
+  },
+  {
+   "Dealer": "30312",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30312_1",
+   "Name": "Müller Wurzen GmbH"
+  },
+  {
+   "Dealer": "4110",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04110_1",
+   "Name": "Autohaus Ruffert GmbH"
+  },
+  {
+   "Dealer": "4110",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04110_2",
+   "Name": "Autohaus Ruffert GmbH"
+  },
+  {
+   "Dealer": "4112",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04112_1",
+   "Name": "Autohaus Weigl GmbH"
+  },
+  {
+   "Dealer": "24127",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24127_1",
+   "Name": "Weigl Automobile GmbH"
+  },
+  {
+   "Dealer": "4536",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04536_1",
+   "Name": "Autohaus Andreas Pulz"
+  },
+  {
+   "Dealer": "4568",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04568_1",
+   "Name": "Autohaus Berger GmbH"
+  },
+  {
+   "Dealer": "7205",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07205_1",
+   "Name": "Autohaus Zwingenberger"
+  },
+  {
+   "Dealer": "7205",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07205_3",
+   "Name": "Autohaus Zwingenberger"
+  },
+  {
+   "Dealer": "7214",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07214_1",
+   "Name": "Autohaus Kühne GmbH"
+  },
+  {
+   "Dealer": "7214",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07214_2",
+   "Name": "Autohaus Kühne GmbH"
+  },
+  {
+   "Dealer": "7214",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07214_3",
+   "Name": "Autohaus Kühne GmbH"
+  },
+  {
+   "Dealer": "7830",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07830_1",
+   "Name": "Autohaus Ehrl GmbH Halle"
+  },
+  {
+   "Dealer": "31253",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31253_1",
+   "Name": "Autohaus Ehrl GmbH Halle Zentrum"
+  },
+  {
+   "Dealer": "32047",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32047_1",
+   "Name": "Autohaus Ehrl GmbH Dessau"
+  },
+  {
+   "Dealer": "33206",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33206_1",
+   "Name": "Autohaus C. Ehrl GmbH"
+  },
+  {
+   "Dealer": "35644",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35644_1",
+   "Name": "mobilforum GmbH"
+  },
+  {
+   "Dealer": "35644",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35644_3",
+   "Name": "mobilforum GmbH"
+  },
+  {
+   "Dealer": "35644",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35644_4",
+   "Name": "mobilforum GmbH"
+  },
+  {
+   "Dealer": "35644",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35644_5",
+   "Name": "mobilforum GmbH"
+  },
+  {
+   "Dealer": "39355",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=39355_1",
+   "Name": "Automobile Görnitz"
+  },
+  {
+   "Dealer": "74",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00074_1",
+   "Name": "Niederlassung Frankfurt"
+  },
+  {
+   "Dealer": "74",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00074_3",
+   "Name": "Niederlassung Offenbach"
+  },
+  {
+   "Dealer": "74",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00074_5",
+   "Name": "Niederlassung Dreieich"
+  },
+  {
+   "Dealer": "74",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00074_8",
+   "Name": "Niederlassung Darmstadt"
+  },
+  {
+   "Dealer": "74",
+   "Outlet": "16",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00074_16",
+   "Name": "Niederlassung Kassel"
+  },
+  {
+   "Dealer": "141",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00141_1",
+   "Name": "HANKO Kraftfahrzeughandel GmbH"
+  },
+  {
+   "Dealer": "141",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00141_2",
+   "Name": "HANKO Kraftfahrzeughandel GmbH"
+  },
+  {
+   "Dealer": "795",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00795_1",
+   "Name": "Hakvoort GmbH"
+  },
+  {
+   "Dealer": "795",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00795_2",
+   "Name": "Hakvoort GmbH"
+  },
+  {
+   "Dealer": "4603",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04603_1",
+   "Name": "Automobile Hakvoort GmbH"
+  },
+  {
+   "Dealer": "4603",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04603_2",
+   "Name": "Automobile Hakvoort GmbH"
+  },
+  {
+   "Dealer": "4603",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04603_3",
+   "Name": "Automobile Hakvoort GmbH"
+  },
+  {
+   "Dealer": "4603",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04603_4",
+   "Name": "Automobile Hakvoort GmbH"
+  },
+  {
+   "Dealer": "916",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00916_1",
+   "Name": "Auto Wüst GmbH"
+  },
+  {
+   "Dealer": "1032",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01032_1",
+   "Name": "Autohaus Bilia GmbH & Co KG"
+  },
+  {
+   "Dealer": "1032",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01032_2",
+   "Name": "Autohaus Bilia GmbH & Co KG"
+  },
+  {
+   "Dealer": "1032",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01032_3",
+   "Name": "Autohaus Bilia GmbH & Co KG"
+  },
+  {
+   "Dealer": "1032",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01032_4",
+   "Name": "Autohaus Bilia GmbH & Co KG"
+  },
+  {
+   "Dealer": "1032",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01032_5",
+   "Name": "Autohaus Bilia GmbH & Co KG"
+  },
+  {
+   "Dealer": "1032",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01032_6",
+   "Name": "Autohaus Bilia GmbH & Co KG"
+  },
+  {
+   "Dealer": "1032",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01032_7",
+   "Name": "Autohaus Bilia GmbH & Co KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "13",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_13",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "14",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_14",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1548",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01548_1",
+   "Name": "Autohaus Euler GmbH"
+  },
+  {
+   "Dealer": "1548",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01548_2",
+   "Name": "Autohaus Euler GmbH"
+  },
+  {
+   "Dealer": "28454",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28454_1",
+   "Name": "Euler Hofheim GmbH"
+  },
+  {
+   "Dealer": "30635",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30635_1",
+   "Name": "Euler Pirmasens GmbH"
+  },
+  {
+   "Dealer": "30635",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30635_2",
+   "Name": "Euler Pirmasens GmbH"
+  },
+  {
+   "Dealer": "30635",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30635_3",
+   "Name": "AH Euler Pirmasens GmbH"
+  },
+  {
+   "Dealer": "32112",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32112_1",
+   "Name": "Euler Kaiserslautern GmbH"
+  },
+  {
+   "Dealer": "32112",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32112_3",
+   "Name": "Euler Kaiserslautern GmbH"
+  },
+  {
+   "Dealer": "49003",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=49003_1",
+   "Name": "Autohaus Euler Mühlheim GmbH"
+  },
+  {
+   "Dealer": "49003",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=49003_2",
+   "Name": "Autohaus Euler Mühlheim GmbH"
+  },
+  {
+   "Dealer": "49003",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=49003_3",
+   "Name": "Autohaus Euler Mühlheim GmbH"
+  },
+  {
+   "Dealer": "131",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00131_1",
+   "Name": "Autohaus Karl + Co. GmbH & Co. KG"
+  },
+  {
+   "Dealer": "131",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00131_2",
+   "Name": "Autohaus Karl + Co. GmbH & Co. KG"
+  },
+  {
+   "Dealer": "131",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00131_7",
+   "Name": "Autohaus Karl + Co. GmbH & Co. KG"
+  },
+  {
+   "Dealer": "674",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00674_1",
+   "Name": "Krah & Enders GmbH"
+  },
+  {
+   "Dealer": "1822",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01822_1",
+   "Name": "Krah & Enders GmbH"
+  },
+  {
+   "Dealer": "1822",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01822_2",
+   "Name": "Krah & Enders GmbH"
+  },
+  {
+   "Dealer": "1822",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01822_4",
+   "Name": "Krah & Enders GmbH"
+  },
+  {
+   "Dealer": "1822",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01822_5",
+   "Name": "Krah & Enders GmbH"
+  },
+  {
+   "Dealer": "28864",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28864_1",
+   "Name": "Krah+Enders GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1868",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01868_1",
+   "Name": "Autohaus Weissenfels GmbH"
+  },
+  {
+   "Dealer": "4712",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04712_1",
+   "Name": "Hermann Arnold GmbH"
+  },
+  {
+   "Dealer": "4712",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04712_2",
+   "Name": "Hermann Arnold GmbH"
+  },
+  {
+   "Dealer": "4712",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04712_3",
+   "Name": "Hermann Arnold GmbH"
+  },
+  {
+   "Dealer": "27920",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27920_1",
+   "Name": "Autohaus Wallenwein GmbH"
+  },
+  {
+   "Dealer": "27923",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27923_1",
+   "Name": "Auto Reichold GmbH & Co. KG"
+  },
+  {
+   "Dealer": "28235",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28235_1",
+   "Name": "Team Pilz GmbH"
+  },
+  {
+   "Dealer": "35090",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35090_1",
+   "Name": "Team Pilz GmbH"
+  },
+  {
+   "Dealer": "28236",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28236_1",
+   "Name": "Autohaus Günther GmbH"
+  },
+  {
+   "Dealer": "30776",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30776_1",
+   "Name": "Autohaus Lauterbach"
+  },
+  {
+   "Dealer": "27",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00027_1",
+   "Name": "Niederlassung Düsseldorf"
+  },
+  {
+   "Dealer": "27",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00027_2",
+   "Name": "Niederlassung Düsseldorf"
+  },
+  {
+   "Dealer": "27",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00027_8",
+   "Name": "Niederlassung Bonn"
+  },
+  {
+   "Dealer": "153",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00153_1",
+   "Name": "Auto Becker Hans Klausmann GmbH & Co. KG"
+  },
+  {
+   "Dealer": "153",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00153_2",
+   "Name": "Auto Becker Hans Klausmann GmbH & Co. KG"
+  },
+  {
+   "Dealer": "219",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00219_1",
+   "Name": "Baum-Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "186",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00186_1",
+   "Name": "Autohaus Timmermanns GmbH"
+  },
+  {
+   "Dealer": "224",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00224_1",
+   "Name": "Autohaus Timmermanns GmbH"
+  },
+  {
+   "Dealer": "224",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00224_2",
+   "Name": "Autohaus Timmermanns GmbH"
+  },
+  {
+   "Dealer": "35404",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35404_1",
+   "Name": "Autohaus Timmermanns"
+  },
+  {
+   "Dealer": "508",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00508_1",
+   "Name": "Rolf Horn GmbH"
+  },
+  {
+   "Dealer": "508",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00508_3",
+   "Name": "Rolf Horn GmbH"
+  },
+  {
+   "Dealer": "508",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00508_4",
+   "Name": "Rolf Horn GmbH"
+  },
+  {
+   "Dealer": "508",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00508_5",
+   "Name": "Rolf Horn GmbH"
+  },
+  {
+   "Dealer": "508",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00508_8",
+   "Name": "Rolf Horn GmbH"
+  },
+  {
+   "Dealer": "508",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00508_9",
+   "Name": "Rolf Horn GmbH"
+  },
+  {
+   "Dealer": "1188",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01188_1",
+   "Name": "Hans Brandenburg GmbH"
+  },
+  {
+   "Dealer": "4071",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04071_1",
+   "Name": "Hans Brandenburg GmbH"
+  },
+  {
+   "Dealer": "26508",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=26508_1",
+   "Name": "Hans Brandenburg GmbH"
+  },
+  {
+   "Dealer": "32774",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32774_1",
+   "Name": "Hans Brandenburg GmbH"
+  },
+  {
+   "Dealer": "2732",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02732_1",
+   "Name": "Autohaus Kainz"
+  },
+  {
+   "Dealer": "4703",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04703_1",
+   "Name": "Autohaus Kainz"
+  },
+  {
+   "Dealer": "28323",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28323_1",
+   "Name": "Autohaus Kainz"
+  },
+  {
+   "Dealer": "4746",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04746_1",
+   "Name": "Kohl-Automobile GmbH"
+  },
+  {
+   "Dealer": "4746",
+   "Outlet": "11",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04746_11",
+   "Name": "Kohl-Automobile GmbH"
+  },
+  {
+   "Dealer": "4746",
+   "Outlet": "12",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04746_12",
+   "Name": "Kohl-Automobile GmbH"
+  },
+  {
+   "Dealer": "4746",
+   "Outlet": "14",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04746_14",
+   "Name": "Kohl-Automobile GmbH"
+  },
+  {
+   "Dealer": "21887",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=21887_1",
+   "Name": "Autohaus Schaal GmbH"
+  },
+  {
+   "Dealer": "21887",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=21887_2",
+   "Name": "Autohaus Schaal GmbH"
+  },
+  {
+   "Dealer": "36881",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=36881_1",
+   "Name": "Faba Autowelt GmbH"
+  },
+  {
+   "Dealer": "38866",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=38866_1",
+   "Name": "Proauto GmbH"
+  },
+  {
+   "Dealer": "40365",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=40365_3",
+   "Name": "Christian Braun"
+  },
+  {
+   "Dealer": "40917",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=40917_1",
+   "Name": "Martin Jacoby GmbH & Co. KG"
+  },
+  {
+   "Dealer": "27",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00027_4",
+   "Name": "Niederlassung Dortmund"
+  },
+  {
+   "Dealer": "139",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00139_1",
+   "Name": "Alfred Wahl GmbH & Co.KG"
+  },
+  {
+   "Dealer": "139",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00139_3",
+   "Name": "Alfred Wahl GmbH & Co. KG"
+  },
+  {
+   "Dealer": "139",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00139_4",
+   "Name": "Alfred Wahl GmbH & Co.KG"
+  },
+  {
+   "Dealer": "23970",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23970_1",
+   "Name": "Automobilgesellschaft Wahl"
+  },
+  {
+   "Dealer": "23970",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23970_4",
+   "Name": "Automobilgesellschaft Wahl mbH & Co. KG"
+  },
+  {
+   "Dealer": "32320",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32320_1",
+   "Name": "ASW Wahl GmbH & Co. KG"
+  },
+  {
+   "Dealer": "32320",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32320_2",
+   "Name": "ASW Wahl GmbH & Co. KG"
+  },
+  {
+   "Dealer": "46476",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=46476_1",
+   "Name": "Wahl Mittelhessen GmbH & Co. KG"
+  },
+  {
+   "Dealer": "46476",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=46476_2",
+   "Name": "Wahl Mittelhessen GmbH & Co. KG"
+  },
+  {
+   "Dealer": "46476",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=46476_3",
+   "Name": "Wahl Mittelhessen GmbH & Co. KG"
+  },
+  {
+   "Dealer": "193",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00193_1",
+   "Name": "Vogelsang Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "263",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00263_1",
+   "Name": "AHAG Dorsten"
+  },
+  {
+   "Dealer": "1066",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01066_1",
+   "Name": "AHAG Automobil-Handelsges."
+  },
+  {
+   "Dealer": "1066",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01066_2",
+   "Name": "AHAG Automobil-Handelsges."
+  },
+  {
+   "Dealer": "1861",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01861_1",
+   "Name": "Bernhard Ernst GmbH & Co. KG"
+  },
+  {
+   "Dealer": "2224",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02224_1",
+   "Name": "AHAG Coesfeld GmbH"
+  },
+  {
+   "Dealer": "21567",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=21567_1",
+   "Name": "Autohaus Cyran GmbH"
+  },
+  {
+   "Dealer": "33364",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33364_1",
+   "Name": "AHAG Dülmen GmbH"
+  },
+  {
+   "Dealer": "38476",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=38476_1",
+   "Name": "AHAG Bochum GmbH"
+  },
+  {
+   "Dealer": "38476",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=38476_2",
+   "Name": "AHAG Bochum GmbH"
+  },
+  {
+   "Dealer": "1575",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01575_1",
+   "Name": "Inhaber Christoph Backhaus e. K."
+  },
+  {
+   "Dealer": "1859",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01859_1",
+   "Name": "Erwin Schmidt GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1859",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01859_4",
+   "Name": "Erwin Schmidt GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1859",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01859_5",
+   "Name": "Erwin Schmidt GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1859",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01859_6",
+   "Name": "Erwin Schmidt GmbH & Co. KG"
+  },
+  {
+   "Dealer": "3454",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03454_1",
+   "Name": "Autohaus Walter Ritzel GmbH & Co. KG"
+  },
+  {
+   "Dealer": "3897",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03897_1",
+   "Name": "Autohaus Lange GmbH & Co. KG"
+  },
+  {
+   "Dealer": "353",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00353_1",
+   "Name": "Autohaus Kaltenbach GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1413",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01413_1",
+   "Name": "Autohaus Amelung GmbH"
+  },
+  {
+   "Dealer": "1914",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01914_1",
+   "Name": "Autohaus Kaltenbach GmbH & Co. KG"
+  },
+  {
+   "Dealer": "2712",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02712_1",
+   "Name": "Autohaus Kaltenbach GmbH & Co. KG"
+  },
+  {
+   "Dealer": "2807",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02807_1",
+   "Name": "AKG Automobile GmbH"
+  },
+  {
+   "Dealer": "4709",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04709_1",
+   "Name": "Kaltenbach Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "7322",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07322_1",
+   "Name": "Kaltenbach Automobile GmbH"
+  },
+  {
+   "Dealer": "23309",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23309_1",
+   "Name": "Autohaus Kaltenbach GmbH & Co. KG"
+  },
+  {
+   "Dealer": "23368",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23368_1",
+   "Name": "Autohaus Kaltenbach GmbH & Co. KG"
+  },
+  {
+   "Dealer": "31099",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31099_1",
+   "Name": "Autohaus Kaltenbach GmbH"
+  },
+  {
+   "Dealer": "37177",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=37177_1",
+   "Name": "Autohaus Kaltenbach GmbH"
+  },
+  {
+   "Dealer": "38573",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=38573_1",
+   "Name": "Kaltenbach Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "38574",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=38574_1",
+   "Name": "Autohaus Kaltenbach GmbH & Co. KG"
+  },
+  {
+   "Dealer": "27959",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27959_1",
+   "Name": "Autohaus Gubin GmbH"
+  },
+  {
+   "Dealer": "28023",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28023_1",
+   "Name": "Manfred Maurer GmbH"
+  },
+  {
+   "Dealer": "28964",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28964_1",
+   "Name": "Autohaus Rump GmbH"
+  },
+  {
+   "Dealer": "33232",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33232_1",
+   "Name": "Autohaus Cyran GmbH"
+  },
+  {
+   "Dealer": "33248",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33248_1",
+   "Name": "Autohaus E. Funke"
+  },
+  {
+   "Dealer": "39436",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=39436_1",
+   "Name": "Autohaus Haupt GmbH"
+  },
+  {
+   "Dealer": "27",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00027_5",
+   "Name": "Niederlassung Essen"
+  },
+  {
+   "Dealer": "232",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00232_1",
+   "Name": "Autohaus Muhra GmbH"
+  },
+  {
+   "Dealer": "1818",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01818_1",
+   "Name": "Autohaus Kruft GmbH"
+  },
+  {
+   "Dealer": "23337",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23337_1",
+   "Name": "Philipp Automobile GmbH"
+  },
+  {
+   "Dealer": "25997",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=25997_1",
+   "Name": "Götze & Gellermann GmbH"
+  },
+  {
+   "Dealer": "32913",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32913_1",
+   "Name": "Overdreef GmbH"
+  },
+  {
+   "Dealer": "37014",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=37014_1",
+   "Name": "Riedel Automobile GmbH"
+  },
+  {
+   "Dealer": "38445",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=38445_1",
+   "Name": "Felix Automobile GmbH"
+  },
+  {
+   "Dealer": "44164",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=44164_1",
+   "Name": "Ernst & Lappe GmbH"
+  },
+  {
+   "Dealer": "1911",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01911_1",
+   "Name": "Fett & Wirtz Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1911",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01911_3",
+   "Name": "Fett & Wirtz Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1911",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01911_4",
+   "Name": "Fett & Wirtz Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1911",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01911_5",
+   "Name": "Fett & Wirtz Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "3415",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03415_1",
+   "Name": "Horst Greiwing KG"
+  },
+  {
+   "Dealer": "3419",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03419_1",
+   "Name": "Autohaus Schneider GmbH & Co. KG"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_1",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_2",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_3",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_4",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_5",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_6",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_8",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_10",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "11",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_11",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "12",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_12",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "3892",
+   "Outlet": "13",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03892_13",
+   "Name": "Procar Automobile GmbH"
+  },
+  {
+   "Dealer": "26636",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=26636_1",
+   "Name": "Procar Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "26636",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=26636_2",
+   "Name": "Procar Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "26636",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=26636_3",
+   "Name": "Procar Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "26636",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=26636_5",
+   "Name": "Procar Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "26636",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=26636_6",
+   "Name": "Procar Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4146",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04146_1",
+   "Name": "Wilhelm Boomers GmbH & Co. KG"
+  },
+  {
+   "Dealer": "26505",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=26505_1",
+   "Name": "Boomers GmbH & Co. KG"
+  },
+  {
+   "Dealer": "35372",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35372_1",
+   "Name": "Jungeblut GmbH & Co. KG"
+  },
+  {
+   "Dealer": "44822",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=44822_1",
+   "Name": "Engelmeier GmbH & Co. KG"
+  },
+  {
+   "Dealer": "25742",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=25742_1",
+   "Name": "Procar Automobile Münsterland GmbH"
+  },
+  {
+   "Dealer": "25742",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=25742_2",
+   "Name": "Procar Automobile Münsterland GmbH"
+  },
+  {
+   "Dealer": "25742",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=25742_3",
+   "Name": "Procar Automobile Münsterland GmbH"
+  },
+  {
+   "Dealer": "25742",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=25742_4",
+   "Name": "Procar Automobile Münsterland GmbH"
+  },
+  {
+   "Dealer": "25742",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=25742_5",
+   "Name": "Procar Automobile Münsterland GmbH"
+  },
+  {
+   "Dealer": "3788",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03788_1",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "34244",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34244_1",
+   "Name": "L+K Hackelbörger GmbH"
+  },
+  {
+   "Dealer": "34842",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34842_1",
+   "Name": "Auto Deters Rheine GmbH"
+  },
+  {
+   "Dealer": "34894",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34894_1",
+   "Name": "Wiemer Automobile GmbH"
+  },
+  {
+   "Dealer": "43942",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=43942_1",
+   "Name": "Heiko Emde GmbH"
+  },
+  {
+   "Dealer": "81",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00081_1",
+   "Name": "Niederlassung Berlin"
+  },
+  {
+   "Dealer": "81",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00081_3",
+   "Name": "Niederlassung Berlin"
+  },
+  {
+   "Dealer": "81",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00081_6",
+   "Name": "Niederlassung Berlin"
+  },
+  {
+   "Dealer": "557",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00557_1",
+   "Name": "Nefzger GmbH & Co. KG"
+  },
+  {
+   "Dealer": "557",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00557_2",
+   "Name": "Nefzger GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_1",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_2",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_3",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_4",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_5",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_6",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_7",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_8",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_10",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "11",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_11",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "12",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_12",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "15",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_15",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "17",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_17",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1263",
+   "Outlet": "18",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01263_18",
+   "Name": "B & K GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1872",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01872_1",
+   "Name": "Riller & Schnauck GmbH"
+  },
+  {
+   "Dealer": "1872",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01872_2",
+   "Name": "Riller & Schnauck GmbH"
+  },
+  {
+   "Dealer": "1872",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01872_5",
+   "Name": "Riller & Schnauck GmbH"
+  },
+  {
+   "Dealer": "3846",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03846_1",
+   "Name": "Andreas Ehrl Potsdam GmbH & Co. KG"
+  },
+  {
+   "Dealer": "4119",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04119_1",
+   "Name": "Wernecke GmbH"
+  },
+  {
+   "Dealer": "4119",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04119_2",
+   "Name": "Wernecke GmbH"
+  },
+  {
+   "Dealer": "4119",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04119_4",
+   "Name": "Wernecke GmbH"
+  },
+  {
+   "Dealer": "4115",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04115_1",
+   "Name": "Autohaus Ludwig GmbH"
+  },
+  {
+   "Dealer": "7343",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07343_1",
+   "Name": "Michael Ludwig e. K."
+  },
+  {
+   "Dealer": "7343",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07343_2",
+   "Name": "Michael Ludwig e. K."
+  },
+  {
+   "Dealer": "7343",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07343_3",
+   "Name": "Michael Ludwig e. K."
+  },
+  {
+   "Dealer": "7808",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07808_1",
+   "Name": "Autohaus Skjellet GmbH"
+  },
+  {
+   "Dealer": "7808",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07808_2",
+   "Name": "Autohaus Skjellet GmbH"
+  },
+  {
+   "Dealer": "7808",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07808_3",
+   "Name": "Autohaus Skjellet GmbH"
+  },
+  {
+   "Dealer": "7825",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07825_1",
+   "Name": "Autohaus Reier GmbH & Co. KG"
+  },
+  {
+   "Dealer": "7825",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07825_2",
+   "Name": "Autohaus Reier GmbH & Co. KG"
+  },
+  {
+   "Dealer": "28147",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28147_1",
+   "Name": "Autohaus Graubaum GmbH"
+  },
+  {
+   "Dealer": "28750",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28750_1",
+   "Name": "Utzel & Littmann GmbH"
+  },
+  {
+   "Dealer": "36028",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=36028_1",
+   "Name": "Marco Buzziol e.K."
+  },
+  {
+   "Dealer": "48159",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=48159_1",
+   "Name": ""
+  },
+  {
+   "Dealer": "83",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00083_1",
+   "Name": "Niederlassung Hamburg"
+  },
+  {
+   "Dealer": "83",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00083_2",
+   "Name": "Niederlassung Hamburg"
+  },
+  {
+   "Dealer": "83",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00083_5",
+   "Name": "Niederlassung Hamburg"
+  },
+  {
+   "Dealer": "83",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00083_9",
+   "Name": "Niederlassung Hamburg"
+  },
+  {
+   "Dealer": "83",
+   "Outlet": "10",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00083_10",
+   "Name": "Niederlassung Hamburg"
+  },
+  {
+   "Dealer": "901",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00901_1",
+   "Name": "STADAC"
+  },
+  {
+   "Dealer": "901",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00901_2",
+   "Name": "STADAC"
+  },
+  {
+   "Dealer": "901",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00901_3",
+   "Name": "STADAC"
+  },
+  {
+   "Dealer": "901",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00901_6",
+   "Name": "STADAC"
+  },
+  {
+   "Dealer": "901",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00901_7",
+   "Name": "STADAC"
+  },
+  {
+   "Dealer": "914",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00914_1",
+   "Name": "Autohaus Steen GmbH"
+  },
+  {
+   "Dealer": "1052",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01052_1",
+   "Name": "Autohaus Heuchert GmbH & Co. KG"
+  },
+  {
+   "Dealer": "3829",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03829_1",
+   "Name": "Autohaus Wigger GmbH"
+  },
+  {
+   "Dealer": "3829",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03829_2",
+   "Name": "Autohaus Wigger GmbH"
+  },
+  {
+   "Dealer": "4373",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04373_1",
+   "Name": "Wolter & Steiner GmbH"
+  },
+  {
+   "Dealer": "4373",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04373_2",
+   "Name": "Wolter & Steiner GmbH"
+  },
+  {
+   "Dealer": "23483",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23483_1",
+   "Name": "Wolter & Steiner"
+  },
+  {
+   "Dealer": "1062",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01062_1",
+   "Name": "Albert Bauer Schleswig GmbH"
+  },
+  {
+   "Dealer": "4670",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04670_1",
+   "Name": "Albert Bauer GmbH"
+  },
+  {
+   "Dealer": "34000",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34000_1",
+   "Name": "Albert Bauer Husum GmbH"
+  },
+  {
+   "Dealer": "2277",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02277_1",
+   "Name": "Karl Raudzus & Söhne GmbH & Co. KG"
+  },
+  {
+   "Dealer": "24333",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24333_1",
+   "Name": "Raudzus & Bossen"
+  },
+  {
+   "Dealer": "24342",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24342_1",
+   "Name": "May & Olde GmbH"
+  },
+  {
+   "Dealer": "24342",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24342_2",
+   "Name": "May & Olde GmbH"
+  },
+  {
+   "Dealer": "24342",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24342_3",
+   "Name": "May & Olde GmbH"
+  },
+  {
+   "Dealer": "24342",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24342_4",
+   "Name": "May & Olde GmbH"
+  },
+  {
+   "Dealer": "24342",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24342_5",
+   "Name": "May & Olde GmbH"
+  },
+  {
+   "Dealer": "24342",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24342_6",
+   "Name": "May & Olde GmbH"
+  },
+  {
+   "Dealer": "24342",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24342_7",
+   "Name": "May & Olde GmbH"
+  },
+  {
+   "Dealer": "28043",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28043_1",
+   "Name": "Autohaus Riegel GmbH"
+  },
+  {
+   "Dealer": "28269",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28269_1",
+   "Name": "Autohaus Nord GmbH"
+  },
+  {
+   "Dealer": "28652",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28652_1",
+   "Name": "Stoltenberg Automobile GmbH & Co. KG"
+  },
+  {
+   "Dealer": "30310",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30310_1",
+   "Name": "Grotewohlt GmbH"
+  },
+  {
+   "Dealer": "33240",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33240_1",
+   "Name": "Manfred Eggert GmbH"
+  },
+  {
+   "Dealer": "33240",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33240_2",
+   "Name": "Manfred Eggert GmbH"
+  },
+  {
+   "Dealer": "33240",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33240_3",
+   "Name": "Manfred Eggert GmbH"
+  },
+  {
+   "Dealer": "33501",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33501_1",
+   "Name": "Hugo Pfohe GmbH"
+  },
+  {
+   "Dealer": "33985",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33985_1",
+   "Name": "Genzel & Co. GmbH"
+  },
+  {
+   "Dealer": "34269",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34269_1",
+   "Name": "M & M Parchim GmbH"
+  },
+  {
+   "Dealer": "34794",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34794_1",
+   "Name": "Autohaus Norbert Stang e. K."
+  },
+  {
+   "Dealer": "35136",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35136_1",
+   "Name": "Leschitzki GmbH"
+  },
+  {
+   "Dealer": "35232",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35232_1",
+   "Name": "Autohaus Hansa Nord GmbH"
+  },
+  {
+   "Dealer": "35232",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35232_2",
+   "Name": "Autohaus Hansa Nord GmbH"
+  },
+  {
+   "Dealer": "35232",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35232_3",
+   "Name": "Autohaus Hansa Nord GmbH"
+  },
+  {
+   "Dealer": "35232",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35232_4",
+   "Name": "Autohaus Hansa Nord GmbH"
+  },
+  {
+   "Dealer": "35232",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35232_5",
+   "Name": "Autohaus Hansa Nord GmbH"
+  },
+  {
+   "Dealer": "35232",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=35232_7",
+   "Name": "Autohaus Hansa Nord GmbH"
+  },
+  {
+   "Dealer": "36166",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=36166_1",
+   "Name": "Autohaus Lars Rosenkranz e.K."
+  },
+  {
+   "Dealer": "1288",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01288_1",
+   "Name": "Niederlassung Hannover"
+  },
+  {
+   "Dealer": "1288",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01288_2",
+   "Name": "Niederlassung Hannover"
+  },
+  {
+   "Dealer": "1288",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01288_5",
+   "Name": "Niederlassung Göttingen"
+  },
+  {
+   "Dealer": "161",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00161_1",
+   "Name": "Gebr. Siekmann GmbH"
+  },
+  {
+   "Dealer": "163",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00163_1",
+   "Name": "Block am Ring GmbH & Co. KG"
+  },
+  {
+   "Dealer": "163",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00163_2",
+   "Name": "Block am Ring GmbH & Co. KG"
+  },
+  {
+   "Dealer": "163",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00163_4",
+   "Name": "Block am Ring GmbH & Co. KG"
+  },
+  {
+   "Dealer": "163",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00163_6",
+   "Name": "Block am Ring GmbH & Co. KG"
+  },
+  {
+   "Dealer": "163",
+   "Outlet": "7",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00163_7",
+   "Name": "Block am Ring GmbH & Co. KG"
+  },
+  {
+   "Dealer": "163",
+   "Outlet": "8",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00163_8",
+   "Name": "Block am Ring"
+  },
+  {
+   "Dealer": "163",
+   "Outlet": "9",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00163_9",
+   "Name": "Block am Ring GmbH & Co. KG"
+  },
+  {
+   "Dealer": "863",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00863_1",
+   "Name": "Walkenhorst Melle GmbH"
+  },
+  {
+   "Dealer": "22149",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=22149_1",
+   "Name": "Walkenhorst Ibbenbüren GmbH"
+  },
+  {
+   "Dealer": "22481",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=22481_1",
+   "Name": "Walkenhorst Osnabrück GmbH"
+  },
+  {
+   "Dealer": "29150",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29150_1",
+   "Name": "Walkenhorst Gütersloh GmbH"
+  },
+  {
+   "Dealer": "33213",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33213_1",
+   "Name": "Walkenhorst Diepholz GmbH"
+  },
+  {
+   "Dealer": "40263",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=40263_1",
+   "Name": "Walkenhorst Vechta GmbH"
+  },
+  {
+   "Dealer": "40369",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=40369_1",
+   "Name": "Autohaus Walkenhorst Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "3433",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=03433_1",
+   "Name": "Autohaus Hinzmann GmbH"
+  },
+  {
+   "Dealer": "4210",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04210_1",
+   "Name": "Autohaus Leinetal GmbH"
+  },
+  {
+   "Dealer": "4210",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04210_2",
+   "Name": "Autohaus Leinetal GmbH"
+  },
+  {
+   "Dealer": "200",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00200_1",
+   "Name": "Autohaus Menke GmbH"
+  },
+  {
+   "Dealer": "4504",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04504_1",
+   "Name": "Autohaus Menke GmbH"
+  },
+  {
+   "Dealer": "30443",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=30443_1",
+   "Name": "Autohaus Menke GmbH Vechta"
+  },
+  {
+   "Dealer": "1068",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01068_1",
+   "Name": "Autohaus Becker-Tiemann Bielefeld"
+  },
+  {
+   "Dealer": "1068",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01068_2",
+   "Name": "Autohaus Becker-Tiemann Bielefeld"
+  },
+  {
+   "Dealer": "23463",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23463_1",
+   "Name": "Autohaus Becker-Tiemann GmbH & Co. KG"
+  },
+  {
+   "Dealer": "23463",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23463_3",
+   "Name": "Autohaus Becker-Tiemann GmbH & Co. KG"
+  },
+  {
+   "Dealer": "29344",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29344_1",
+   "Name": "Autohaus Becker-Tiemann"
+  },
+  {
+   "Dealer": "29344",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29344_2",
+   "Name": "Autohaus Becker-Tiemann"
+  },
+  {
+   "Dealer": "32292",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32292_1",
+   "Name": "Autohaus Becker-Tiemann"
+  },
+  {
+   "Dealer": "32292",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32292_2",
+   "Name": "Autohaus Becker-Tiemann"
+  },
+  {
+   "Dealer": "32292",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32292_3",
+   "Name": "Autohaus Becker-Tiemann"
+  },
+  {
+   "Dealer": "27916",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27916_1",
+   "Name": "Kattenstroth Automobile e.K."
+  },
+  {
+   "Dealer": "27916",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=27916_2",
+   "Name": "Kattenstroth Automobile e.K."
+  },
+  {
+   "Dealer": "28040",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28040_1",
+   "Name": "Walter Gülke GmbH & Co. KG"
+  },
+  {
+   "Dealer": "28497",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=28497_1",
+   "Name": "Autohaus Hilgert GmbH"
+  },
+  {
+   "Dealer": "29219",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=29219_1",
+   "Name": "Autohaus Möhring"
+  },
+  {
+   "Dealer": "2429",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02429_2",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "34062",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34062_1",
+   "Name": "Autohaus Felske GmbH"
+  },
+  {
+   "Dealer": "34767",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=34767_1",
+   "Name": "Gebr. Siekmann Springe GmbH"
+  },
+  {
+   "Dealer": "43526",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=43526_1",
+   "Name": "Autohaus Isernhagen e.K."
+  },
+  {
+   "Dealer": "1288",
+   "Outlet": "6",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01288_6",
+   "Name": "Niederlassung Bremen"
+  },
+  {
+   "Dealer": "23970",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23970_3",
+   "Name": "Automobilgesellschaft Wahl mbH & Co. KG"
+  },
+  {
+   "Dealer": "167",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00167_1",
+   "Name": "H. Freese GmbH & Co. KG"
+  },
+  {
+   "Dealer": "167",
+   "Outlet": "13",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00167_13",
+   "Name": "H. Freese GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1592",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01592_1",
+   "Name": "Kayser Autohaus GmbH & Co. KG"
+  },
+  {
+   "Dealer": "7491",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=07491_1",
+   "Name": "Autohaus H. Freese GmbH & Co. KG"
+  },
+  {
+   "Dealer": "893",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00893_1",
+   "Name": "Helming & Sohn GmbH"
+  },
+  {
+   "Dealer": "893",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00893_3",
+   "Name": "Helming & Sohn GmbH"
+  },
+  {
+   "Dealer": "893",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00893_4",
+   "Name": "Helming & Sohn GmbH"
+  },
+  {
+   "Dealer": "893",
+   "Outlet": "5",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00893_5",
+   "Name": "Helming & Sohn GmbH"
+  },
+  {
+   "Dealer": "1047",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01047_1",
+   "Name": "Autohaus Tekken GmbH"
+  },
+  {
+   "Dealer": "2726",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02726_1",
+   "Name": "Autohaus Tekken Emden GmbH & Co. KG"
+  },
+  {
+   "Dealer": "31227",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31227_1",
+   "Name": "Autohaus Tekken Leer GmbH & Co. KG"
+  },
+  {
+   "Dealer": "32517",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=32517_1",
+   "Name": "Autohaus Tekken Aurich GmbH & Co. KG"
+  },
+  {
+   "Dealer": "1574",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=01574_1",
+   "Name": "Gerd Hoyer GmbH"
+  },
+  {
+   "Dealer": "23532",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=23532_1",
+   "Name": "Autohaus Hoyer GmbH"
+  },
+  {
+   "Dealer": "24604",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=24604_1",
+   "Name": "Gerd Hoyer GmbH"
+  },
+  {
+   "Dealer": "332",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00332_1",
+   "Name": "Bobrink GmbH"
+  },
+  {
+   "Dealer": "332",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00332_2",
+   "Name": "Bobrink GmbH"
+  },
+  {
+   "Dealer": "332",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=00332_3",
+   "Name": "Bobrink GmbH"
+  },
+  {
+   "Dealer": "2428",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02428_1",
+   "Name": "Bobrink & Co. GmbH"
+  },
+  {
+   "Dealer": "2428",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02428_3",
+   "Name": "Bobrink & Co. GmbH"
+  },
+  {
+   "Dealer": "2428",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=02428_4",
+   "Name": "Bobrink & Co. GmbH"
+  },
+  {
+   "Dealer": "4755",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04755_1",
+   "Name": "E. Brinkmann GmbH"
+  },
+  {
+   "Dealer": "4755",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=04755_2",
+   "Name": "E. Brinkmann GmbH"
+  },
+  {
+   "Dealer": "33251",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33251_1",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "33251",
+   "Outlet": "2",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33251_2",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "33251",
+   "Outlet": "3",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33251_3",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "33251",
+   "Outlet": "4",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=33251_4",
+   "Name": "Cloppenburg GmbH"
+  },
+  {
+   "Dealer": "31668",
+   "Outlet": "1",
+   "URL": "https://www.bmw.de/de/shop/ls/cp/online-appointment?dealer=31668_1",
+   "Name": "Autohaus Stoffers GmbH"
+  }
+ ],
+ ":type": "sheet"
+}

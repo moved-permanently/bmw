@@ -3,7 +3,7 @@
   "baseBlock": "model-compare",
   "canonicalModel": "standalone",
   "visualCharacteristics": "BMW model comparison: 3 columns (cosy image, name, CTAs, price, series/model/engine selects), highlights, exterior/interior view, technical data accordions with \"Nur Unterschiede anzeigen\", footnotes, sticky header",
-  "contentPattern": "Row 1: headline (h1); row 2: link to the source compare page. The app template (content.q?extract=compare) and model data (_jcr_content.technicaldata.*.json) are loaded through the bmw-proxy; selections from the URL hash #series/range/model/transmission (x3).",
+  "contentPattern": "Row 1: headline (h1); row 2: link to the source compare page. The template (labels, table rows, placeholder image) and the model tree come from the site sheet /de/data/compare-models.json (tabs models, table, labels, placeholders); the per-model data (_jcr_content.technicaldata.*.json) is loaded through the bmw-proxy; selections from the URL hash #series/range/model/transmission (x3).",
   "options": [],
   "memberVariantIds": [
     "model-compare"

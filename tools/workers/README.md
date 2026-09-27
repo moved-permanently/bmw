@@ -12,7 +12,7 @@ Deployment steps: [DEPLOY-PROMPT.md](DEPLOY-PROMPT.md).
 ## bmw-proxy
 
 ES module worker, no npm dependencies. Source: `bmw-proxy/src/` (`index.js` handler, `routes.js` route
-table, `cors.js`, `extract.js`).
+table, `cors.js`).
 
 ### URL scheme
 
@@ -23,16 +23,17 @@ https://<worker>/_health                     -> JSON with the route table
 ```
 
 Browser code: `const proxy = window.BMW_PROXY || 'https://bmw-proxy.aem-poc-lab.workers.dev';`
-then `fetch(`${proxy}/de-de/login/bmw/api/flyout/data`)` or
-`fetch(`${proxy}/${url.host}${url.pathname}${url.search}`)` for the non-bmw.de upstreams.
+then `fetch(`${proxy}/de/bmw-modelle-vergleichen/_jcr_content.technicaldata.3.G20.28FF.json`)` or
+`fetch(`${proxy}/${url.host}${url.pathname}${url.search}`)` for the non-bmw.de upstreams
+(`bmwProxyUrl()` in `scripts/bmw-utils.js` does this).
+
+Static data is not proxied: the My BMW flyout texts, the compare template + model tree and the dealer
+online-service CSV are site sheets under `/de/data/` (see "Static data sheets" below).
 
 ### Routes
 
 | id | upstream | path | methods | TTL |
 |---|---|---|---|---|
-| login-flyout | www.bmw.de | `/de-de/login/bmw/api/flyout/data` | GET | 5 min |
-| datastore-csv | www.bmw.de | `/content/dam/bmw/marketDE/bmw_de/datastore/*.csv` | GET | 1 day |
-| compare-fragment | www.bmw.de | `/de/bmw-modelle-vergleichen.html[/seg…]/content.q` (0–6 segments), `?extract=compare` | GET | 1 h |
 | stocklocator-config | www.bmw.de | `/de-de/sl/**.json` (e.g. `stocklocator/_jcr_content/stocklocator.config.json`), `t` dropped | GET | 10 min |
 | epaas-bmw-de | www.bmw.de | `/etc/clientlibs/epaas/**` | GET | 1 h |
 | consentcontroller-fallback | www.bmw.com | `/etc/clientlibs/wcmp/consentcontroller.fallback/**` | GET | 1 h |
@@ -40,6 +41,8 @@ then `fetch(`${proxy}/de-de/login/bmw/api/flyout/data`)` or
 | stolo-dealers | stolo-data-service.prod.stolo.eu-central-1.aws.bmw.cloud | `/dealer/*` (e.g. `showAll`) | GET | 1 h |
 | stolo-vehiclesearch | vehicle-selection.prod.stolo.eu-central-1.aws.bmw.cloud | `/vehiclesearch/search/{ll-cc}/*` | GET, POST (JSON, cached by body hash) | 5 min |
 | stolo-sf-mco-api | sf-mco.aws.bmw.cloud | `/(gateway-service\|configuration-service\|display-service)/**` | GET | 10 min |
+| compare-techdata | www.bmw.de | `/de/bmw-modelle-vergleichen/_jcr_content.technicaldata.{series}.{range}.{model}.json` (blocks/model-compare), query dropped | GET | 1 h |
+| ai-assistant | crm-il-api-prod.bmwgroup.com | `/ckm-genai-chat-prod-api/api/v1/**` (AI Assistant sidebar; forwards `tenantId`, `language`, `brand`, `conversationSessionId`) | GET, POST | – |
 
 HEAD is allowed wherever GET is. OPTIONS preflight is answered for every route.
 Upstream hosts and routes come from `routes.js`. To add one, append an entry, add a test, and redeploy.
@@ -67,7 +70,7 @@ Upstream hosts and routes come from `routes.js`. To add one, append an entry, ad
   `Cache-Control: public, max-age=<ttl>`, `X-Proxy-Route`, `X-Proxy-Cache` (HIT/MISS/BYPASS) and
   `X-Upstream-Status`.
 - **Caching:** 200 responses go into the Cloudflare Cache API (`caches.default`). The cache key is the
-  upstream host + path + sorted query + extract (+ SHA-256 of the body for POST). Cookies and Origin
+  upstream host + path + sorted query (+ SHA-256 of the body for POST). Cookies and Origin
   are not part of the key, and CORS headers are added after the cache lookup. The Cache API only works
   when the worker runs on a custom domain or zone route; on `*.workers.dev` it does nothing. The
   subrequest also sets `cf.cacheTtlByStatus`. `CACHE=off` turns caching off.
@@ -76,35 +79,30 @@ Upstream hosts and routes come from `routes.js`. To add one, append an entry, ad
   - `not_allowlisted` 403
   - `origin_not_allowed` 403
   - `method_not_allowed` 405
-  - `bad_extract` 400
   - `unsupported_media_type` 415
   - `payload_too_large` 413
   - `upstream_error` (upstream status, including the Akamai 403)
-  - `upstream_unreachable` / `redirect_not_allowed` / `extract_failed` 502
+  - `upstream_unreachable` / `redirect_not_allowed` 502
   - `upstream_timeout` 504
 
   Error responses are never cached.
 
-### `?extract=compare` (compare-fragment route only)
+### Retired routes: static data moved into the site
 
-`content.q` returns the whole compare page, about 700 KB, including navigation, footer and scripts.
-With `extract=compare` the worker returns only this markup:
+`login-flyout` (`/de-de/login/bmw/api/flyout/data`), `datastore-csv`
+(`/content/dam/bmw/marketDE/bmw_de/datastore/*.csv`) and `compare-fragment`
+(`/de/bmw-modelle-vergleichen.html/**/content.q?extract=compare`, incl. `extract.js`) were removed.
+Their data changes rarely, so it now lives in Document Authoring sheets (same-origin, no proxy):
 
-```html
-<div class="bmw-proxy-extract" data-extract="compare">
-  <div class="cmp-compare" data-component-path="compare-v1" data-config="…base64 JSON of series/ranges/models…">…</div>
-  <ol class="cmp-compare__footnotes">…</ol>
-</div>
-```
+| DA sheet (`/de/data/…`) | tabs | used by | former route |
+|---|---|---|---|
+| `mybmw-flyout.json` | labels (key/value), benefits (text), links (group, groupTitle, id, text, path, icon, …) | blocks/header (My BMW panel) | login-flyout |
+| `compare-models.json` | models (series → range → model → transmission, one row per transmission), table (highlights / technical data rows), labels, placeholders | blocks/model-compare | compare-fragment |
+| `dealer-services.json` | Dealer, Outlet, URL, Name | blocks/dealer-locator (CSV for DLO's `osatCsvPath`, built in the browser as Blob URL) | datastore-csv |
 
-- Both elements are cut out by counting nested `<div>`/`<ol>` tags.
-- HTML comments are removed and whitespace runs are collapsed. On the real capture the response shrinks
-  from 698 KB to about 365 KB before gzip. Most of what remains is the component itself, whose
-  `data-config` alone is 72 KB.
-- `ETag` is dropped and `X-Proxy-Extract: compare` is set.
-- If the `cmp-compare` element is missing, the response is a 502 `extract_failed`, so the block can fall
-  back to its default.
-- The `extract` parameter is never sent upstream.
+Sources and generator: `tools/importer/data/` (`src/` = captures of the original endpoints,
+`build-static-data.mjs` → `*.json`, `upload.sh` → DA source API + preview). These paths now answer 403
+on the worker.
 
 ### Env vars (`wrangler.toml` `[vars]`)
 
@@ -123,8 +121,7 @@ No secrets and no KV are used.
 cd tools/workers/bmw-proxy && node --test        # or: node --test 'tools/workers/**/*.test.mjs'
 ```
 
-The tests use `node:test` with a mocked global `fetch` and `caches`. If
-`migration-work/raw/api/content.q` exists, the real capture is also run through `extract=compare`.
+The tests use `node:test` with a mocked global `fetch` and `caches`.
 
 ## redirects
 
