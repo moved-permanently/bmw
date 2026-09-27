@@ -178,17 +178,19 @@ export default function decorate(block) {
   window.addEventListener('resize', updateArrows);
 
   // source: the entry of the section in view is highlighted; before the first section is reached
-  // (and on load) the current page's entry, else the first entry, is highlighted
+  // only the current page's entry is highlighted (the mobile toggle shows the first entry) and the
+  // horizontal list keeps its scroll position
   const pageActive = links.find((a) => a.getAttribute('aria-current') === 'page');
   const setActive = (active) => {
-    const current = active || pageActive || links[0];
+    const current = active || pageActive;
     links.forEach((a) => {
       a.classList.toggle('is-active', a === current);
       if (a === active) a.setAttribute('aria-current', 'location');
       else if (a !== pageActive) a.removeAttribute('aria-current');
     });
-    toggleLabel.textContent = current ? current.textContent : '';
-    if (current && !MOBILE_MQ.matches) {
+    const label = current || links[0];
+    toggleLabel.textContent = label ? label.textContent : '';
+    if (active && !MOBILE_MQ.matches) {
       // keep the active entry visible in the horizontal list
       const l = current.offsetLeft;
       const r = l + current.offsetWidth;

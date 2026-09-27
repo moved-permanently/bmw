@@ -99,7 +99,8 @@ function applyRenderedSectionMetadata(main) {
 
 /**
  * The source home page renders its H1 for screen readers only (.a11y-only-screen-reader):
- * a standalone H1 that opens the page and is directly followed by the stage headline / hero.
+ * a standalone H1 that opens the page and is directly followed by the stage / hero block.
+ * (An H1 followed by more headings is a visible page title, e.g. EU-Batterieverordnung.)
  * @param {Element} main
  */
 function hidePageTitle(main) {
@@ -107,13 +108,11 @@ function hidePageTitle(main) {
   const wrapper = first && first.firstElementChild;
   if (!wrapper || !wrapper.classList.contains('default-content-wrapper')) return;
   const h1 = wrapper.firstElementChild;
-  if (!h1 || h1.tagName !== 'H1') return;
-  const next = h1.nextElementSibling;
+  if (!h1 || h1.tagName !== 'H1' || h1.nextElementSibling) return;
   const nextWrapper = wrapper.nextElementSibling;
-  const followedByHeading = next && /^H[1-3]$/.test(next.tagName);
-  const followedByHero = !next && nextWrapper
-    && [...nextWrapper.classList].some((c) => /^hero.*-wrapper$/.test(c));
-  if (followedByHeading || followedByHero) h1.classList.add('visually-hidden');
+  if (nextWrapper && [...nextWrapper.classList].some((c) => /^hero.*-wrapper$/.test(c))) {
+    h1.classList.add('visually-hidden');
+  }
 }
 
 /**
