@@ -918,7 +918,7 @@ export function createInfoButton(content, { label = 'Weitere Informationen', cla
  * The base URL can be overridden with window.BMW_PROXY (e.g. a local mock).
  * ---------------------------------------------------------------------------------------- */
 
-export const BMW_PROXY_DEFAULT = 'https://bmw-proxy.moved-permanently.workers.dev';
+export const BMW_PROXY_DEFAULT = 'https://bmw-proxy.aem-poc-lab.workers.dev';
 
 /**
  * URL of a www.bmw.de resource through the bmw-proxy worker.
@@ -966,4 +966,100 @@ export function eagerLoadWhenNear(block, rootMargin = '400px 0px') {
     if (entries.some((e) => e.isIntersecting)) { io.disconnect(); load(); }
   }, { rootMargin });
   io.observe(block);
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Responsive crops + EU AI label for images outside media blocks (default content, cards)
+ * ---------------------------------------------------------------------------------------- */
+
+const AI_LABEL_MARKER = ':ai_eu_label:';
+let mediaCssPromise;
+
+function loadMediaCss() {
+  if (!mediaCssPromise) {
+    mediaCssPromise = new Promise((resolve) => {
+      const base = (window.hlx && window.hlx.codeBasePath) || '';
+      const href = `${base}/scripts/bmw-media.css`;
+      if (document.querySelector(`head > link[href="${href}"]`)) {
+        resolve();
+        return;
+      }
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      link.onload = () => resolve();
+      link.onerror = () => resolve();
+      document.head.append(link);
+    });
+  }
+  return mediaCssPromise;
+}
+
+/**
+ * Whether el is an authored EU AI label marker paragraph (":ai_eu_label:", or the icon span
+ * aem.js decorateIcons made of it).
+ * @param {Element} el
+ * @returns {boolean}
+ */
+export function isAiLabelMarker(el) {
+  if (!el || el.tagName !== 'P') return false;
+  const t = el.textContent.trim();
+  if (t) return t === AI_LABEL_MARKER;
+  return el.children.length === 1 && el.firstElementChild.matches('span.icon-ai_eu_label');
+}
+
+/**
+ * Shows the EU AI label (ai_eu_label glyph top right + screen-reader text) on a picture or
+ * media element. Styles: /scripts/bmw-media.css (loaded on first use).
+ * @param {Element} el picture (or any media box)
+ */
+export function markAiLabel(el) {
+  if (!el) return;
+  el.classList.add('bmw-ai-label');
+  appendAiLabelText(el);
+  loadMediaCss();
+}
+
+/**
+ * Images authored as 2-3 Scene7 image links of one image in one paragraph (desktop, mobile
+ * [, tablet] smart crops, same alt text) become one responsive <picture> with the source
+ * breakpoints (mobile < 768px, tablet 768-1023px, desktop from 1024px) — the pictures
+ * scripts.js built from the single links are merged. A following ":ai_eu_label:" marker
+ * paragraph adds the EU AI label to the picture before it.
+ * Content inside blocks is skipped unless `root` is (inside) a block: blocks call this on
+ * themselves.
+ * @param {Element} root
+ * @param {{sizes?: string}} [opts]
+ */
+export function decorateResponsiveImages(root, { sizes = '100vw' } = {}) {
+  if (!root) return;
+  const own = (el) => !!root.closest('.block') || !el.closest('.block');
+  root.querySelectorAll('p').forEach((p) => {
+    if (!own(p)) return;
+    const kids = [...p.children];
+    if (kids.length < 2 || kids.length > 3 || p.textContent.trim()) return;
+    if (!kids.every((k) => k.tagName === 'PICTURE')) return;
+    const refs = kids.map((pic) => {
+      const img = pic.querySelector('img');
+      return img ? { url: img.currentSrc || img.src, alt: img.getAttribute('alt') || '' } : null;
+    });
+    if (refs.some((r) => !r || !isScene7Image(r.url) || r.alt !== refs[0].alt)) return;
+    const [desktop, mobile, tablet] = refs;
+    const eager = kids.some((k) => k.querySelector('img[loading="eager"]'));
+    const picture = buildResponsivePicture([
+      { media: '(max-width: 767px)', url: mobile.url, widths: [480, 768, 1024] },
+      { media: '(max-width: 1023px)', url: (tablet || mobile).url, widths: [768, 1024, 1536] },
+      { url: desktop.url, widths: [1024, 1440, 1920, 2560] },
+    ], { alt: desktop.alt, eager, sizes });
+    p.replaceWith(picture);
+  });
+  root.querySelectorAll('p').forEach((p) => {
+    if (!own(p) || !isAiLabelMarker(p)) return;
+    const prev = p.previousElementSibling;
+    let pic = null;
+    if (prev && prev.tagName === 'PICTURE') pic = prev;
+    else if (prev && prev.tagName === 'P' && prev.children.length === 1) pic = prev.querySelector(':scope > picture');
+    if (pic) markAiLabel(pic);
+    p.remove();
+  });
 }

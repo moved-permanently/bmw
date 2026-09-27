@@ -86,7 +86,7 @@
   border: 1px solid #8e8e8e;
   border-radius: 3px;
   background: #fff;
-  color: #262626;
+  color: #666;
   font: inherit;
   font-size: var(--bmw-body-2-font-size);
   font-weight: var(--bmw-font-weight-regular, 400);
@@ -263,6 +263,11 @@
   font-size: var(--bmw-headline-2-font-size, 2.25rem);
   font-weight: var(--bmw-font-weight-light, 300);
   line-height: var(--bmw-headline-2-line-height);
+}
+
+.all-models .all-models-series.all-models-series-manual {
+  font-size: var(--bmw-subsection-1-font-size);
+  line-height: var(--bmw-subsection-1-line-height);
 }
 
 .all-models .all-models-series-small {
@@ -468,6 +473,7 @@
 
   .all-models .all-models-toggle:not(:disabled, [aria-pressed="true"]):hover {
     border-color: #262626;
+    color: #262626;
   }
 }
 

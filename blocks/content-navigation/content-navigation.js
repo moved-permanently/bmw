@@ -177,20 +177,21 @@ export default function decorate(block) {
   list.addEventListener('scroll', updateArrows, { passive: true });
   window.addEventListener('resize', updateArrows);
 
+  // source: the entry of the section in view is highlighted; before the first section is reached
+  // (and on load) the current page's entry, else the first entry, is highlighted
+  const pageActive = links.find((a) => a.getAttribute('aria-current') === 'page');
   const setActive = (active) => {
-    if (anchorLinks.length) {
-      anchorLinks.forEach((a) => {
-        a.classList.toggle('is-active', a === active);
-        if (a === active) a.setAttribute('aria-current', 'location');
-        else a.removeAttribute('aria-current');
-      });
-    }
-    const current = links.find((a) => a.classList.contains('is-active')) || links[0];
+    const current = active || pageActive || links[0];
+    links.forEach((a) => {
+      a.classList.toggle('is-active', a === current);
+      if (a === active) a.setAttribute('aria-current', 'location');
+      else if (a !== pageActive) a.removeAttribute('aria-current');
+    });
     toggleLabel.textContent = current ? current.textContent : '';
-    if (active && !MOBILE_MQ.matches) {
+    if (current && !MOBILE_MQ.matches) {
       // keep the active entry visible in the horizontal list
-      const l = active.offsetLeft;
-      const r = l + active.offsetWidth;
+      const l = current.offsetLeft;
+      const r = l + current.offsetWidth;
       if (l < list.scrollLeft || r > list.scrollLeft + list.clientWidth) {
         list.scrollTo({ left: l - 48, behavior: 'smooth' });
       }

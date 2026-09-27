@@ -8,7 +8,8 @@
 //   text-top-N / text-bottom-N (spacing of the text box), cta-top-N / cta-bottom-N (spacing
 //   around the CTA row), cta-stack-md (CTAs stacked on tablet), sub-top-N (spacing above the
 //   text after the headline),
-//   gradient-left|oblique|top|right|bottom, ai-label, contained (not full-bleed), and for video
+//   gradient-left|oblique|top|right|bottom, ai-label, contained (not full-bleed), text-start
+//   (text start-aligned below 1024px instead of centred), and for video
 //   media: no-autoplay, loop, no-play-button, ratio-W-H, mobile-ratio-W-H
 // Without overlay text -> "Media" (full-width image or video): one row with the media cell.
 import { replaceWithBlock } from './_utils.js';
@@ -56,6 +57,14 @@ export default function parse(element, { document }) {
     const v = V_POS.find((p) => cls.includes(`style-container--${p}`));
     if (h && h !== 'start') options.push(h);
     if (v) options.push(v);
+    // mobile/tablet (text under the media): the source centres the text, except in a flex
+    // column container aligned to the start (cmp-container--layout-flex + flex-align-flex-start:
+    // live keeps title, text and CTAs start-aligned there)
+    const titleCol = [...overlay.querySelectorAll('.title')].find((t) => !isHiddenIn(t, overlay));
+    const titleBox = titleCol && titleCol.closest('.cmp-container');
+    const tb = titleBox ? titleBox.className : '';
+    if (h !== 'center' && /cmp-container--layout-flex/.test(tb) && /cmp-container--flex-align-flex-start/.test(tb)
+      && titleBox !== overlay.querySelector(':scope > .cmp-container')) options.push('text-start');
     const w = (cls.match(/aem-GridColumn--default--(\d+)/) || [])[1];
     if (w && Number(w) < 12) options.push(`cols-${w}`);
     // spacing of the positioned text box (source margin on style-container--top/bottom: moves
@@ -98,6 +107,22 @@ export default function parse(element, { document }) {
     if (g) options.push(`gradient-${g}`);
   }
 
+  // titles marked up as <p> in the source (e.g. a subsection-1 subline under the H1, or a
+  // headline-2 stage title) keep their title typography: emitted as headings (the block styles
+  // the first heading as the title, later ones as sublines). Model branding (iconization /
+  // stage-model) stays paragraphs.
+  let level = 1;
+  [...overlay.querySelectorAll('.title')].forEach((t) => {
+    const x = t.querySelector('.cmp-title__text');
+    if (!x) return;
+    if (/^H[1-6]$/.test(x.tagName)) { level = Number(x.tagName[1]); return; }
+    if (x.tagName !== 'P' || !/style-title--(headline|subsection)-\d/.test(t.className)) return;
+    level = Math.min(6, Math.max(2, level + 1));
+    const hx = document.createElement(`h${level}`);
+    hx.className = x.className;
+    hx.append(...x.childNodes);
+    x.replaceWith(hx);
+  });
   const content = contentNodes(document, overlay, element, extras);
   const block = replaceWithBlock(document, element, blockName('Hero Teaser', options), [
     [divCell(document, media.nodes)],

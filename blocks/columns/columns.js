@@ -4,7 +4,10 @@ import {
   getVideoRefs,
   buildResponsivePicture,
   decorateFontIcons,
+  decorateResponsiveImages,
   groupCtaLinks,
+  isAiLabelMarker,
+  markAiLabel,
 } from '../../scripts/bmw-utils.js';
 
 /*
@@ -18,6 +21,8 @@ import {
  * cells keep the authored order.
  * Image-only cells become responsive Scene7 pictures; stand-alone links become chevron text links,
  * formatted links buttons (grouped like default content).
+ * Images: 2-3 image links of one image (desktop, mobile[, tablet] crops) form one responsive
+ * picture; a ":ai_eu_label:" paragraph after an image shows the EU AI label on it.
  * Embedded blocks (source video / download components beside text):
  *  - video cell: only poster image link(s) + video link(s) → a nested Video block; its options come
  *    from the columns options video-<option> (e.g. video-loop, video-controls, video-ratio-3-2)
@@ -72,13 +77,21 @@ function isVideoCell(cell) {
   if (!videos.length) return false;
   const clone = cell.cloneNode(true);
   clone.querySelectorAll('picture, img').forEach((n) => n.remove());
+  clone.querySelectorAll(':scope > p').forEach((n) => { if (isAiLabelMarker(n)) n.remove(); });
   const refs = [...videos.map((v) => v.url), ...getImageRefs(cell).map((r) => r.url)];
   clone.querySelectorAll('a[href]').forEach((a) => { if (refs.includes(a.href)) a.remove(); });
   return !clone.textContent.trim();
 }
 
+function takeAiLabelMarkers(cell) {
+  const markers = [...cell.querySelectorAll(':scope > p')].filter(isAiLabelMarker);
+  markers.forEach((m) => m.remove());
+  return markers.length > 0;
+}
+
 function decorateVideoCell(cell, block) {
   const opts = [...block.classList].filter((c) => c.startsWith('video-')).map((c) => c.substring(6));
+  if (takeAiLabelMarkers(cell) && !opts.includes('ai-label')) opts.push('ai-label');
   const video = nestedBlock('video', opts, [[[...cell.childNodes]]]);
   cell.replaceChildren(video);
   cell.classList.add('columns-video-col');
@@ -110,9 +123,13 @@ function decorateLinkLists(cell, block) {
   return loads;
 }
 
+/** ":download: <a>" paragraph (the published pipeline turns the token into span.icon-download). */
 function isDownloadParagraph(el) {
-  return el.tagName === 'P' && el.textContent.trim().startsWith(DOWNLOAD_TOKEN)
-    && el.querySelectorAll('a[href]').length === 1;
+  if (el.tagName !== 'P' || el.querySelectorAll('a[href]').length !== 1) return false;
+  if (el.textContent.trim().startsWith(DOWNLOAD_TOKEN)) return true;
+  const first = el.firstElementChild;
+  return !!first && first.matches('span.icon-download') && !el.firstChild.textContent.trim()
+    && el.textContent.trim() === el.querySelector('a[href]').textContent.trim();
 }
 
 /** Consecutive ":download:" paragraphs of a text cell → one nested Download block. */
@@ -147,6 +164,7 @@ function isMediaCell(cell) {
   if (!refs.length) return false;
   const clone = cell.cloneNode(true);
   clone.querySelectorAll('picture, img').forEach((n) => n.remove());
+  clone.querySelectorAll(':scope > p').forEach((n) => { if (isAiLabelMarker(n)) n.remove(); });
   clone.querySelectorAll('a[href]').forEach((a) => {
     if (refs.some((r) => r.url === a.href)) a.remove();
   });
@@ -154,6 +172,7 @@ function isMediaCell(cell) {
 }
 
 function decorateMediaCell(cell, spanOf12) {
+  const aiLabel = takeAiLabelMarkers(cell);
   const [desktop, mobile, tablet] = getImageRefs(cell);
   const vw = Math.round((spanOf12 / 12) * 100);
   const picture = buildResponsivePicture([
@@ -163,6 +182,7 @@ function decorateMediaCell(cell, spanOf12) {
   ], { alt: desktop.alt, sizes: `(min-width: 768px) ${vw}vw, 100vw` });
   cell.replaceChildren(picture);
   cell.classList.add('columns-img-col');
+  if (aiLabel) markAiLabel(picture);
 }
 
 /** Text cells: loose text into a paragraph, links/buttons grouped like default content. */
@@ -241,6 +261,7 @@ export default async function decorate(block) {
         decorateMediaCell(cell, span);
       } else {
         cell.classList.add('columns-text-col');
+        decorateResponsiveImages(cell, { sizes: `(min-width: 768px) ${Math.round((span / 12) * 100)}vw, 100vw` });
         loads.push(...decorateDownloads(cell, block));
         if (block.classList.contains('link-lists')) loads.push(...decorateLinkLists(cell, block));
         decorateTextCell(cell);

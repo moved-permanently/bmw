@@ -167,6 +167,11 @@ function buildCard(data) {
       series.append(small);
     } else series.append(n.cloneNode(true));
   });
+  // source __series-manual: free-text names (concept cars, special vehicles), not a series code
+  const code = [...series.childNodes]
+    .filter((n) => !n.classList?.contains('all-models-series-small'))
+    .map((n) => n.textContent).join('').trim();
+  if (code.length > 8) series.classList.add('all-models-series-manual');
   labels.append(series);
   if (parts.description) {
     const s = document.createElement('span');

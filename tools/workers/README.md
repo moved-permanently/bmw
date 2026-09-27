@@ -22,7 +22,7 @@ https://<worker>/<upstream-host>/<path>      -> https://<upstream-host>/<path>  
 https://<worker>/_health                     -> JSON with the route table
 ```
 
-Browser code: `const proxy = window.BMW_PROXY || 'https://bmw-proxy.moved-permanently.workers.dev';`
+Browser code: `const proxy = window.BMW_PROXY || 'https://bmw-proxy.aem-poc-lab.workers.dev';`
 then `fetch(`${proxy}/de-de/login/bmw/api/flyout/data`)` or
 `fetch(`${proxy}/${url.host}${url.pathname}${url.search}`)` for the non-bmw.de upstreams.
 

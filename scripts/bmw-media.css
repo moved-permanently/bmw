@@ -1,0 +1,30 @@
+/* EU AI label on pictures outside media blocks (markAiLabel in bmw-utils.js; source
+   .cmp-image__ai-label: ai_eu_label glyph at the top right of the image) */
+@font-face {
+  font-family: 'bmw_next_icons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../fonts/bmw_next_icons_regular.woff2') format('woff2');
+}
+
+picture.bmw-ai-label {
+  display: block;
+  position: relative;
+}
+
+.bmw-ai-label::after {
+  content: 'ai_eu_label';
+  position: absolute;
+  z-index: 10;
+  top: 0.75rem;
+  right: 0.75rem;
+  color: #fff;
+  font-family: 'bmw_next_icons', sans-serif;
+  font-size: 1.5rem;
+  font-feature-settings: 'liga';
+  font-weight: 400;
+  line-height: 1;
+  text-shadow: 0 0 10px #000000f2;
+  pointer-events: none;
+}

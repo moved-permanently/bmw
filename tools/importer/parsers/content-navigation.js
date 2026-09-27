@@ -15,7 +15,9 @@ export const selectors = ['.contentnavigation.aem-GridColumn:not(.scrollnavigati
 function linkEl(document, a, label) {
   const link = document.createElement('a');
   // author-instance links (…adobeaemcloud.com/content/bmw/marketDE/bmw_de/…) point at the live page
-  const raw = (a.getAttribute('data-anchor') || a.getAttribute('href') || '').trim()
+  // data-anchor "#https://…" (page links on some pages) is no in-page anchor: use the href
+  const anchor = (a.getAttribute('data-anchor') || '').trim();
+  const raw = (/^#[^/:]+$/.test(anchor) ? anchor : a.getAttribute('href') || anchor).trim()
     .replace(/^https?:\/\/author-[^/]+\.adobeaemcloud\.com\//, 'https://www.bmw.de/');
   link.href = raw.startsWith('#') ? raw.replace(/%20/g, '').trim() : cleanHref(raw);
   link.textContent = label;

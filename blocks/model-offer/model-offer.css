@@ -50,8 +50,8 @@
   padding: 0.5rem 1.5rem 0.5rem 0.5rem;
   background: #4d4d4d;
   color: #fff;
-  font-size: var(--bmw-body-1-font-size);
-  line-height: var(--bmw-body-1-line-height);
+  font-size: var(--bmw-subsection-2-font-size);
+  line-height: var(--bmw-subsection-2-line-height);
   clip-path: polygon(0 0, 100% 0, calc(100% - 0.9rem) 100%, 0 100%);
 }
 
@@ -67,9 +67,9 @@
 
 .model-offer .model-offer-name {
   margin: 0;
-  font-size: var(--bmw-headline-4-font-size, 1.75rem);
+  font-size: var(--bmw-headline-3-font-size, 1.75rem);
   font-weight: var(--bmw-font-weight-light, 300);
-  line-height: var(--bmw-headline-4-line-height, 2.5rem);
+  line-height: var(--bmw-headline-3-line-height, 2.5rem);
 }
 
 .model-offer .model-offer-name .bmw-infoi {
@@ -107,11 +107,15 @@
   height: auto;
 }
 
+/* source __content-wrapper (column, align-items center): the pricing box is centred, shrink-wrapped */
 .model-offer .model-offer-pricing {
   display: flex;
   flex-direction: column;
+  align-self: center;
   gap: 0.75rem;
-  padding: 0 1.75rem 0 11%;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 0 1.75rem;
 }
 
 .model-offer .model-offer-price p {
@@ -132,9 +136,9 @@
 }
 
 .model-offer .model-offer-price-value {
-  font-size: var(--bmw-subsection-2-font-size);
+  font-size: var(--bmw-body-1-font-size);
   font-weight: var(--bmw-font-weight-light, 300);
-  line-height: var(--bmw-subsection-2-line-height);
+  line-height: var(--bmw-body-1-line-height);
 }
 
 .model-offer .model-offer-price-value strong {
@@ -153,9 +157,9 @@
 }
 
 .model-offer .model-offer-facts li {
-  font-size: var(--bmw-body-1-font-size);
+  font-size: var(--bmw-body-2-font-size);
   font-weight: var(--bmw-font-weight-light, 300);
-  line-height: var(--bmw-body-1-line-height);
+  line-height: var(--bmw-body-2-line-height);
 }
 
 .model-offer .model-offer-facts li::before {
@@ -246,10 +250,6 @@
   .model-offer {
     --mof-per-view: 2;
   }
-
-  .model-offer .model-offer-pricing {
-    padding-left: 30%;
-  }
 }
 
 @media (width >= 1024px) {
@@ -269,9 +269,5 @@
 @media (width >= 1280px) {
   .model-offer.slides-3 {
     --mof-per-view: 3;
-  }
-
-  .model-offer.slides-3 .model-offer-pricing {
-    padding-left: 1.75rem;
   }
 }

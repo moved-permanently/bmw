@@ -104,7 +104,7 @@
   width: 100%;
   min-height: 172px;
   margin-top: -172px;
-  padding: 3rem calc(100% / 12);
+  padding: 3rem calc(var(--bmw-grid-full, 1.5rem) + var(--bmw-grid-gutter, 0.5rem)); /* source: grid margin + text gutter */
   background: linear-gradient(180deg, #0000, #000 6rem);
   text-align: center;
   pointer-events: none;
@@ -112,6 +112,11 @@
 
 .hero-teaser.no-media .hero-teaser-overlay {
   margin-top: 0;
+}
+
+/* text-start: text in a configured source container stays start-aligned under the media */
+.hero-teaser.text-start .hero-teaser-overlay {
+  text-align: start;
 }
 
 .hero-teaser .hero-teaser-content {
@@ -249,6 +254,10 @@
     width: auto;
   }
 
+  .hero-teaser.text-start .hero-teaser-buttons {
+    justify-content: flex-start;
+  }
+
   .hero-teaser.ai-label .hero-teaser-media::before {
     top: 1rem;
     right: 1rem;
@@ -260,6 +269,10 @@
   .hero-teaser.cta-stack-md .hero-teaser-buttons {
     flex-flow: column;
     align-items: center;
+  }
+
+  .hero-teaser.cta-stack-md.text-start .hero-teaser-buttons {
+    align-items: flex-start;
   }
 }
 
@@ -308,6 +321,11 @@
 
   .hero-teaser.no-media .hero-teaser-overlay {
     position: relative;
+  }
+
+  /* contained teaser: the text box sits in the teaser's own grid (live: 48px inside the media) */
+  .hero-teaser.contained .hero-teaser-overlay {
+    padding-inline: 2.5rem;
   }
 
   .hero-teaser.top .hero-teaser-overlay {

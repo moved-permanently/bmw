@@ -190,11 +190,18 @@ const isCtaOnly = (n) => n.tagName === 'P' && n.querySelectorAll('a').length ===
 function columnsInfo(visible, gs) {
   const scale = (w) => Math.min(12, Math.max(1, Math.round((w * 12) / gs)));
   const widths = visible.map(gridWidth);
-  // tablet (768-1023): source medium widths; missing = same as desktop
-  const mdW = visible.map((k, i) => gridSpan(k, 'medium') || widths[i]);
+  // tablet (768-1023): source medium spans relative to the medium grid size (aem-Grid--medium--N);
+  // a column without a medium span keeps its default fraction
+  const pg = visible[0].parentElement && visible[0].parentElement.closest('.aem-Grid');
+  const mdGs = Number(((pg ? pg.className : '').match(/aem-Grid--medium--(\d+)/) || [])[1] || gs);
+  const mdF = visible.map((k, i) => {
+    const m = gridSpan(k, 'medium');
+    return m ? Math.min(1, m / mdGs) : widths[i] / gs;
+  });
+  const mdW = mdF.map((f) => Math.min(12, Math.max(1, Math.round(f * 12))));
   let md = null;
-  if (mdW.every((w) => w >= gs)) md = 'stack';
-  else if (mdW.some((w, i) => w !== widths[i])) md = mdW.map(scale);
+  if (mdF.every((f) => f >= 1)) md = 'stack';
+  else if (mdW.some((w, i) => w !== scale(widths[i]))) md = mdW;
   // vertical centring (flex container "align center")
   const holder = visible[0].parentElement && visible[0].parentElement.closest('.cmp-container');
   return {
@@ -215,30 +222,35 @@ function nestedColumns(ctx, nodes) {
 
 /** Merges nested single-row Columns into the parent row (a 6+6 grid of 3+3 cards = 4 cards). */
 function mergeNested(ctx, info, cells) {
-  const out = { ...info, spans: [], md: info.md === 'stack' ? 'stack' : [], insets: [], cells: [] };
+  const out = { ...info, spans: [], md: [], insets: [], cells: [] };
+  // tablet width of parent cell i (a parent stacked on tablet: full width)
+  const parentMdOf = (i) => {
+    if (info.md === 'stack') return 12;
+    return Array.isArray(info.md) ? info.md[i] : info.spans[i];
+  };
   cells.forEach((nodes, i) => {
     const child = nestedColumns(ctx, nodes);
+    const parentMd = parentMdOf(i);
     if (!child) {
       out.cells.push(nodes);
       out.spans.push(info.spans[i]);
-      if (Array.isArray(out.md)) out.md.push(info.md ? info.md[i] : info.spans[i]);
+      out.md.push(parentMd);
       out.insets.push(info.insets[i]);
       return;
     }
-    const parentMd = info.md ? info.md[i] : info.spans[i];
     child.cells.forEach((c, j) => {
       out.cells.push(c);
       out.spans.push(Math.max(1, Math.round((info.spans[i] * child.spans[j]) / 12)));
-      if (Array.isArray(out.md)) {
-        // a nested row stacked on tablet: each of its cells takes the parent cell's width
-        const childMd = Array.isArray(child.md) ? child.md[j] : child.spans[j];
-        out.md.push(child.md === 'stack' ? parentMd : Math.max(1, Math.round((parentMd * childMd) / 12)));
-      }
+      // a nested row stacked on tablet: each of its cells takes the parent cell's width
+      let childMd = child.spans[j];
+      if (Array.isArray(child.md)) childMd = child.md[j];
+      out.md.push(child.md === 'stack' ? parentMd : Math.max(1, Math.round((parentMd * childMd) / 12)));
       out.insets.push(child.insets[j] || '');
     });
     out.title = out.title || child.title;
   });
-  if (Array.isArray(out.md) && out.md.every((w, i) => w === out.spans[i])) out.md = null;
+  if (out.md.every((w) => w >= 12)) out.md = 'stack';
+  else if (out.md.every((w, i) => w === out.spans[i])) out.md = null;
   return out;
 }
 
@@ -389,6 +401,16 @@ function block(doc, name, rows) {
 function convertTitle(doc, col, ctx) {
   const h = col.querySelector('h1, h2, h3, h4, h5, h6, .cmp-title__text');
   if (!h) return [];
+  if (/style-title__text--eyebrow/.test(col.className || '')) {
+    // eyebrow (small uppercase label above a heading) -> <p><sub>label</sub></p> (runtime: p.eyebrow)
+    const p = doc.createElement('p');
+    const sub = doc.createElement('sub');
+    sub.append(...cleanInline(doc, h).childNodes);
+    if (!sub.textContent.trim()) return [];
+    p.append(sub);
+    recordLeaf(ctx, col, 'title', { h1Style: '' }, [p]);
+    return [p];
+  }
   const tag = headingTag(col, h);
   const out = doc.createElement(tag);
   out.append(...cleanInline(doc, h).childNodes);
@@ -515,12 +537,41 @@ function convertImage(doc, col) {
   }
   const url = normalizeImageUrl(src);
   if (!url || url.startsWith('data:')) return [];
-  const out = doc.createElement('img');
-  out.src = url;
-  out.alt = (img.getAttribute('alt') || '').trim();
+  const alt = (img.getAttribute('alt') || '').trim();
+  // responsive crops of the source <picture>: mobile (max-width <= 767), tablet (max-width <= 1023)
+  let mobile = '';
+  let tablet = '';
+  if (pic) {
+    pic.querySelectorAll('source').forEach((s) => {
+      const max = Number(((s.getAttribute('media') || '').match(/max-width:\s*(\d+)/) || [])[1] || 0);
+      const u = normalizeImageUrl(s.getAttribute('srcset') || s.getAttribute('data-srcset') || '');
+      if (!u || u.startsWith('data:') || !max) return;
+      if (max <= 767) mobile = mobile || u;
+      else if (max <= 1023) tablet = tablet || u;
+    });
+  }
+  mobile = mobile || url;
+  tablet = tablet || mobile;
+  // order desktop, mobile, tablet (tablet omitted when equal to mobile; single img when all equal)
+  const urls = [url];
+  if (mobile !== url || tablet !== url) {
+    urls.push(mobile);
+    if (tablet !== mobile) urls.push(tablet);
+  }
   const p = doc.createElement('p');
-  p.append(out);
+  urls.forEach((u) => {
+    const out = doc.createElement('img');
+    out.src = u;
+    out.alt = alt;
+    p.append(out);
+  });
   const res = [p];
+  // EU AI label (source .cmp-image__ai-label) -> :ai_eu_label: paragraph right after the image
+  if (col.querySelector('.cmp-image__ai-label')) {
+    const lbl = doc.createElement('p');
+    lbl.textContent = ':ai_eu_label:';
+    res.push(lbl);
+  }
   const caption = col.querySelector('figcaption, .cmp-image__title');
   if (caption && caption.textContent.trim()) {
     const c = doc.createElement('p');
@@ -562,6 +613,67 @@ function gridChildren(el) {
   return out;
 }
 
+const NEWLINE_RE = /aem-GridColumn--default--newline/;
+
+/** Whether grid columns form one row of side-by-side columns. */
+function isColumnsRow(visible, gs) {
+  const widths = visible.map(gridWidth);
+  const sum = visible.reduce((a, k, i) => a + widths[i] + gridOffset(k, 'default'), 0);
+  const newline = visible.slice(1).some((k) => NEWLINE_RE.test(k.className || ''));
+  return visible.length >= 2 && !newline && widths.every((w) => w < gs) && sum <= gs;
+}
+
+/** Splits grid columns into rows (aem-Grid wrapping: running width + offset > grid size, newline). */
+function gridRows(visible, gs) {
+  const rows = [];
+  let cur = [];
+  let sum = 0;
+  visible.forEach((k) => {
+    const w = gridWidth(k) + gridOffset(k, 'default');
+    if (cur.length && (sum + w > gs || NEWLINE_RE.test(k.className || ''))) {
+      rows.push(cur);
+      cur = [];
+      sum = 0;
+    }
+    cur.push(k);
+    sum += w;
+  });
+  if (cur.length) rows.push(cur);
+  return rows;
+}
+
+/** One row of side-by-side grid columns -> Columns block (or stacked content when not possible).
+ * Widths are relative to the parent grid (a 5-wide nested grid with two 5-wide children stacks them). */
+function flattenRow(doc, visible, gs, ctx) {
+  const leafMark = ctx.leaves ? ctx.leaves.length : 0;
+  let cells = visible.map((k) => flatten(doc, k, ctx));
+  let info = columnsInfo(visible, gs);
+  if (cells.some((c) => nestedColumns(ctx, c))) {
+    info = mergeNested(ctx, info, cells);
+    ({ cells } = info);
+  }
+  const hasBlock = cells.some((c) => c.some((n) => n.tagName === 'TABLE'));
+  // videos / downloads beside text stay side by side: embedded into the Columns cells
+  const embed = hasBlock ? embedBlocks(doc, cells) : null;
+  if (embed) cells = embed.cells;
+  // a row of CTAs is a button group, not columns
+  const ctaRow = cells.every((c) => c.every(isCtaOnly));
+  if ((!hasBlock || embed) && !ctaRow && cells.filter((c) => c.length).length >= 2) {
+    const row = cells.map((c) => { const d = doc.createElement('div'); c.forEach((n) => d.append(n)); return d; });
+    const table = block(doc, `Columns (${[...columnsOptions(info), ...(embed ? embed.options : [])].join(', ')})`, [row]);
+    // remember the layout so a parent grid can merge this row into its own (nested grids)
+    if (!ctx.columns) ctx.columns = new Map();
+    ctx.columns.set(table, { ...info, cells });
+    // components inside the columns block do not shape the section's default content
+    if (ctx.leaves) ctx.leaves.length = leafMark;
+    return [table];
+  }
+  // text beside a block (e.g. video | text) is stacked as default content: its source span is
+  // not a layout of the section's default content
+  if (hasBlock && ctx.leaves) ctx.leaves.slice(leafMark).forEach((l) => { l.side = true; });
+  return cells.flat();
+}
+
 function flatten(doc, el, ctx) {
   if (el.tagName === 'TABLE') return [el];
   if (LOOSE.test(el.tagName)) { el.removeAttribute('data-bmw-loose'); return [el]; }
@@ -590,37 +702,13 @@ function flatten(doc, el, ctx) {
   // parent grid (a 5-wide nested grid with two 5-wide children stacks them).
   const visible = kids.filter((k) => !isHidden(k));
   const gs = visible.length ? gridSize(visible[0]) : 12;
-  const widths = visible.map(gridWidth);
-  const sum = visible.reduce((a, k, i) => a + widths[i] + gridOffset(k, 'default'), 0);
-  const newline = visible.slice(1).some((k) => /aem-GridColumn--default--newline/.test(k.className || ''));
-  if (visible.length >= 2 && !newline && widths.every((w) => w < gs) && sum <= gs) {
-    const leafMark = ctx.leaves ? ctx.leaves.length : 0;
-    let cells = visible.map((k) => flatten(doc, k, ctx));
-    let info = columnsInfo(visible, gs);
-    if (cells.some((c) => nestedColumns(ctx, c))) {
-      info = mergeNested(ctx, info, cells);
-      ({ cells } = info);
-    }
-    const hasBlock = cells.some((c) => c.some((n) => n.tagName === 'TABLE'));
-    // videos / downloads beside text stay side by side: embedded into the Columns cells
-    const embed = hasBlock ? embedBlocks(doc, cells) : null;
-    if (embed) cells = embed.cells;
-    // a row of CTAs is a button group, not columns
-    const ctaRow = cells.every((c) => c.every(isCtaOnly));
-    if ((!hasBlock || embed) && !ctaRow && cells.filter((c) => c.length).length >= 2) {
-      const row = cells.map((c) => { const d = doc.createElement('div'); c.forEach((n) => d.append(n)); return d; });
-      const table = block(doc, `Columns (${[...columnsOptions(info), ...(embed ? embed.options : [])].join(', ')})`, [row]);
-      // remember the layout so a parent grid can merge this row into its own (nested grids)
-      if (!ctx.columns) ctx.columns = new Map();
-      ctx.columns.set(table, { ...info, cells });
-      // components inside the columns block do not shape the section's default content
-      if (ctx.leaves) ctx.leaves.length = leafMark;
-      return [table];
-    }
-    // text beside a block (e.g. video | text) is stacked as default content: its source span is
-    // not a layout of the section's default content
-    if (hasBlock && ctx.leaves) ctx.leaves.slice(leafMark).forEach((l) => { l.side = true; });
-    return cells.flat();
+  if (isColumnsRow(visible, gs)) return flattenRow(doc, visible, gs, ctx);
+  // several grid rows (running width > grid size or a newline column), e.g. image 7 | text 5 followed
+  // by a full-width disclaimer: rows of side-by-side columns become Columns blocks of their own
+  const rows = gridRows(visible, gs);
+  if (rows.length > 1 && rows.some((r) => isColumnsRow(r, gs))) {
+    return rows.flatMap((r) => (isColumnsRow(r, gs)
+      ? flattenRow(doc, r, gs, ctx) : r.flatMap((k) => flatten(doc, k, ctx))));
   }
   return visible.flatMap((k) => flatten(doc, k, ctx));
 }

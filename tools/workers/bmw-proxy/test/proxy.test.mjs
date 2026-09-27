@@ -4,7 +4,7 @@ import {
 import assert from 'node:assert/strict';
 import worker from '../src/index.js';
 
-const W = 'https://bmw-proxy.moved-permanently.workers.dev';
+const W = 'https://bmw-proxy.aem-poc-lab.workers.dev';
 const PREVIEW = 'https://main--bmw--moved-permanently.aem.page';
 
 let calls;
@@ -351,5 +351,18 @@ describe('compare tech data + AI assistant routes', () => {
     assert.equal(init.headers.Origin, 'https://www.bmw.de');
     assert.equal(init.headers.Cookie, undefined);
     assert.equal(init.headers['X-Evil'], undefined);
+  });
+});
+
+describe('AI assistant follow-up messages', () => {
+  test('conversationSessionId header is forwarded', async () => {
+    const res = await call('/crm-il-api-prod.bmwgroup.com/ckm-genai-chat-prod-api/api/v1/message', {
+      method: 'POST',
+      headers: { Origin: PREVIEW, 'content-type': 'application/json', conversationSessionId: 'abc-123' },
+      body: JSON.stringify({ message: 'Hallo', touchpoint: 'NSC-Web' }),
+    });
+    assert.equal(res.status, 200);
+    assert.equal(calls[0].init.headers.conversationSessionId, 'abc-123');
+    assert.equal(calls[0].init.headers.Origin, 'https://www.bmw.de');
   });
 });

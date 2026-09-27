@@ -31,7 +31,7 @@ below tells you to. Work through the steps in order and report the result of eac
 2. A Cloudflare account, with the Workers free plan or better. Log in with `npx -y wrangler@4 login`
    (a browser opens; ask me to confirm), then run `npx -y wrangler@4 whoami` and note the account id.
 3. The account's workers.dev subdomain. The browser code falls back to
-   `https://bmw-proxy.moved-permanently.workers.dev`, which only works if the account's workers.dev
+   `https://bmw-proxy.aem-poc-lab.workers.dev`, which only works if the account's workers.dev
    subdomain is `moved-permanently`. Check it in Dashboard, then Workers & Pages, then the Subdomain
    box on the right.
    - If the subdomain is free and I agree, set it to `moved-permanently`.
@@ -75,7 +75,7 @@ browser honours `Cache-Control`.
 
 ## 3. Verify every route with curl
 
-Set `P=https://bmw-proxy.moved-permanently.workers.dev` (or the real URL) and
+Set `P=https://bmw-proxy.aem-poc-lab.workers.dev` (or the real URL) and
 `O=https://main--bmw--moved-permanently.aem.page`. For every command, check:
 
 - the HTTP status
@@ -84,7 +84,7 @@ Set `P=https://bmw-proxy.moved-permanently.workers.dev` (or the real URL) and
 - the first bytes of the body
 
 ```bash
-P=https://bmw-proxy.moved-permanently.workers.dev
+P=https://bmw-proxy.aem-poc-lab.workers.dev
 O=https://main--bmw--moved-permanently.aem.page
 H() { curl -sS -D - -o /tmp/body -H "Origin: $O" "$@"; head -c 300 /tmp/body; echo; echo; }
 
@@ -136,10 +136,10 @@ protection. The options are asking BMW for an allowlist, or keeping the blocks' 
 
 ## 4. Point the site at the proxy
 
-The browser code reads `window.BMW_PROXY || 'https://bmw-proxy.moved-permanently.workers.dev'`.
+The browser code reads `window.BMW_PROXY || 'https://bmw-proxy.aem-poc-lab.workers.dev'`.
 
 1. Find the places that read it:
-   `grep -rn "BMW_PROXY\|bmw-proxy.moved-permanently.workers.dev" blocks scripts head.html`.
+   `grep -rn "BMW_PROXY\|bmw-proxy.aem-poc-lab.workers.dev" blocks scripts head.html`.
 2. If the deployed URL equals the default, nothing needs to change.
 3. Otherwise pick one of these:
    - **a. head.html (no code change in blocks).** Add this line to `head.html` right after the viewport

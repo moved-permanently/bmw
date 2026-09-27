@@ -9,6 +9,7 @@
  * Call decorateBmwSections(main) at the end of decorateMain (after decorateButtons).
  */
 import { readBlockConfig, toClassName, toCamelCase } from './aem.js';
+import { decorateResponsiveImages } from './bmw-utils.js';
 
 const LAYER_OPEN_CLASS = 'bmw-layer-open';
 const ANIMATION_MS = 300;
@@ -112,6 +113,21 @@ function soleLink(p) {
   if (a.querySelector('picture, img')) return null;
   if (p.textContent.trim() !== a.textContent.trim()) return null;
   return a;
+}
+
+/**
+ * Eyebrows (source style-title__text--eyebrow*): <p><sub>label</sub></p> right above a heading,
+ * in default content or a Columns cell → p.eyebrow (small uppercase label).
+ * @param {Element} main
+ */
+function decorateEyebrows(main) {
+  main.querySelectorAll('.default-content-wrapper > p, .columns > div > div > p').forEach((p) => {
+    const sub = p.children.length === 1 && p.firstElementChild.tagName === 'SUB' ? p.firstElementChild : null;
+    if (sub && p.textContent.trim() === sub.textContent.trim()
+      && /^H[1-6]$/.test(p.nextElementSibling?.tagName || '')) {
+      p.classList.add('eyebrow');
+    }
+  });
 }
 
 /**
@@ -309,9 +325,12 @@ function openLayerFromHash() {
 export function decorateBmwSections(main) {
   if (!main) return;
   fixScene7Crops(main);
+  // default-content images: desktop/mobile/tablet crops → one responsive picture (+ EU AI label)
+  decorateResponsiveImages(main);
   applySectionMetadata(main);
   hidePageTitle(main);
   decorateDefaultContent(main);
+  decorateEyebrows(main);
 
   const layerSections = [...main.querySelectorAll(':scope > .section.layer')];
   layerSections.forEach((section) => buildLayer(section, layers.size));

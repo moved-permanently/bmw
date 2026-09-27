@@ -880,6 +880,19 @@ main .default-content-wrapper {
   margin-top: 0;
 }
 
+/* eyebrow: small uppercase label right above a heading (source style-title__text--eyebrow*) */
+main p.eyebrow {
+  margin-bottom: 0;
+  font-size: var(--bmw-label-1-font-size);
+  font-weight: var(--bmw-font-weight-default, 300);
+  line-height: var(--bmw-label-1-line-height);
+  text-transform: uppercase;
+}
+
+main p.eyebrow + :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: var(--bmw-spacing-2);
+}
+
 /* images in default content span the content column (source .cmp-image__image) */
 main .default-content-wrapper picture,
 main .default-content-wrapper picture img {
@@ -1023,6 +1036,13 @@ main > .section.dark {
 sup,
 sub {
   line-height: 0;
+}
+
+/* eyebrow label (see p.eyebrow above): the <sub> only marks it in the content */
+main p.eyebrow sub {
+  font-size: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
 }
 
 /* ---------- layers (source .cmp-popover[data-popover-style=new-teaser-modal]) ---------- */

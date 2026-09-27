@@ -235,8 +235,10 @@
   margin: 0;
 }
 
+/* source style-text--disclaimer-1: text colour at 70.51 % opacity */
 .carousel .carousel-slide-content > .carousel-disclaimer {
-  color: var(--bmw-color-disclaimer, #666);
+  color: var(--bmw-color-text, #262626);
+  opacity: var(--bmw-disclaimer-opacity, 0.7051);
   font-size: var(--bmw-disclaimer-1-font-size);
   line-height: var(--bmw-disclaimer-1-line-height);
 }
@@ -259,7 +261,8 @@
 
 .carousel.cards .carousel-card-footnotes > .carousel-disclaimer {
   margin: 0;
-  color: var(--bmw-color-disclaimer, #666);
+  color: var(--bmw-color-text, #262626);
+  opacity: var(--bmw-disclaimer-opacity, 0.7051);
   font-size: var(--bmw-disclaimer-1-font-size);
   line-height: var(--bmw-disclaimer-1-line-height);
 }

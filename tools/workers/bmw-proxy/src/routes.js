@@ -159,7 +159,7 @@ export const ROUTES = [
     path: /^\/ckm-genai-chat-prod-api\/api\/v1\/[A-Za-z0-9_./-]+$/,
     methods: ['GET', 'POST'],
     ttl: 0,
-    forwardHeaders: ['tenantId', 'language', 'brand'],
+    forwardHeaders: ['tenantId', 'language', 'brand', 'conversationSessionId'],
     headers: { Accept: 'application/json, text/plain, */*', Origin: 'https://www.bmw.de', Referer: 'https://www.bmw.de/' },
   },
 ];

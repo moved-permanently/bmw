@@ -16,7 +16,8 @@ import {
  *   gradient-bottom, contained, ai-label, text-top-N | text-bottom-N (source spacing of the
  *   text box, N = --bmw-spacing-N), cta-top-N | cta-bottom-N (spacing above / below the CTAs,
  *   bottom default 12), cta-stack-md (CTAs stacked on tablet), sub-top-N (spacing above the
- *   first paragraph after the headline),
+ *   first paragraph after the headline), text-start (text start-aligned below 1024px, where it
+ *   is centred by default),
  *   video: no-autoplay, loop, no-play-button,
  *   ratio-W-H, mobile-ratio-W-H.
  */
