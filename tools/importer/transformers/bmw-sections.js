@@ -201,6 +201,8 @@ function columnsInfo(visible, gs) {
     spans: widths.map(scale),
     md,
     middle: !!holder && /cmp-container--flex-align-center/.test(holder.className),
+    // flex row-reverse container: cells side by side in reverse order (stacked: authored order)
+    reverse: !!holder && /cmp-container--flex-row-reverse/.test(holder.className),
     insets: visible.map(cellInset),
     title: titleStyle(visible),
   };
@@ -245,6 +247,7 @@ function columnsOptions(info) {
   if (info.md === 'stack') opts.push('stack-md');
   else if (info.md) opts.push(`md-${info.md.join('-')}`);
   if (info.middle) opts.push('middle');
+  if (info.reverse) opts.push('reverse');
   info.insets.forEach((side, i) => { if (side) opts.push(`inset-${i + 1}-${side}`); });
   if (info.title) opts.push(info.title);
   return opts;
@@ -252,6 +255,74 @@ function columnsOptions(info) {
 
 function isHidden(el) {
   return /aem-GridColumn--default--hide/.test(el.className || '');
+}
+
+/** Header text of a block table (WebImporter.Blocks.createBlock). */
+function tableName(t) {
+  const th = t.querySelector('tr > th, tr > td');
+  return th ? th.textContent.replace(/\s+/g, ' ').trim() : '';
+}
+
+function tableRows(t) {
+  return [...t.querySelectorAll('tr')].filter((tr) => tr.closest('table') === t).slice(1);
+}
+
+/** Content nodes of a table cell (a single wrapper div is unwrapped). */
+function cellNodes(td) {
+  if (!td) return [];
+  const kids = [...td.childNodes].filter((n) => n.nodeType === 1 || n.textContent.trim());
+  if (kids.length === 1 && kids[0].tagName === 'DIV') return [...kids[0].childNodes];
+  return kids;
+}
+
+/** Side-by-side cells holding Video / Download blocks (e.g. video | text, image | text + download):
+ * the blocks become Columns cell content (blocks/columns builds them at runtime):
+ *  - a video cell (the video alone) = poster + video links; its options → video-<option>
+ *  - a download row = <p>:download: <a href title="PDF, 1 MB">Label</a></p> (outline → download-outline)
+ *  - cells of only Link Lists: their heading + list nodes; options link-lists, link-list-<option>
+ * Returns { cells, options } or null when a cell holds any other block. */
+function embedBlocks(doc, cells) {
+  const options = [];
+  let ok = true;
+  const out = cells.map((c) => {
+    if (!ok) return c;
+    const res = [];
+    c.forEach((n) => {
+      if (!ok) return;
+      if (n.tagName !== 'TABLE') { res.push(n); return; }
+      const name = tableName(n);
+      const opts = ((name.match(/\(([^)]*)\)/) || [])[1] || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+      if (/^video\b/i.test(name) && c.length === 1) {
+        const td = tableRows(n)[0] && tableRows(n)[0].querySelector('td');
+        const nodes = cellNodes(td);
+        if (!nodes.length) { ok = false; return; }
+        res.push(...nodes);
+        opts.forEach((o) => options.push(`video-${o}`));
+      } else if (/^link list\b/i.test(name) && c.every((x) => x.tagName === 'TABLE' && /^link list\b/i.test(tableName(x)))) {
+        // link lists (e.g. sitemap columns): heading + list per list, rebuilt by blocks/columns
+        const td = tableRows(n)[0] && tableRows(n)[0].querySelector('td');
+        res.push(...cellNodes(td));
+        options.push('link-lists', ...opts.map((o) => `link-list-${o}`));
+      } else if (/^download\b/i.test(name)) {
+        if (opts.includes('outline')) options.push('download-outline');
+        tableRows(n).forEach((tr) => {
+          const [linkTd, metaTd] = [...tr.children];
+          const a = linkTd && linkTd.querySelector('a[href]');
+          if (!a) return;
+          const link = doc.createElement('a');
+          link.href = a.getAttribute('href');
+          link.textContent = a.textContent.trim();
+          const meta = metaTd ? metaTd.textContent.replace(/\s+/g, ' ').trim() : '';
+          if (meta) link.setAttribute('title', meta);
+          const p = doc.createElement('p');
+          p.append(':download: ', link);
+          res.push(p);
+        });
+      } else ok = false;
+    });
+    return res;
+  });
+  return ok ? { cells: out, options: [...new Set(options)] } : null;
 }
 
 function sectionStyles(el) {
@@ -531,11 +602,14 @@ function flatten(doc, el, ctx) {
       ({ cells } = info);
     }
     const hasBlock = cells.some((c) => c.some((n) => n.tagName === 'TABLE'));
+    // videos / downloads beside text stay side by side: embedded into the Columns cells
+    const embed = hasBlock ? embedBlocks(doc, cells) : null;
+    if (embed) cells = embed.cells;
     // a row of CTAs is a button group, not columns
     const ctaRow = cells.every((c) => c.every(isCtaOnly));
-    if (!hasBlock && !ctaRow && cells.filter((c) => c.length).length >= 2) {
+    if ((!hasBlock || embed) && !ctaRow && cells.filter((c) => c.length).length >= 2) {
       const row = cells.map((c) => { const d = doc.createElement('div'); c.forEach((n) => d.append(n)); return d; });
-      const table = block(doc, `Columns (${columnsOptions(info).join(', ')})`, [row]);
+      const table = block(doc, `Columns (${[...columnsOptions(info), ...(embed ? embed.options : [])].join(', ')})`, [row]);
       // remember the layout so a parent grid can merge this row into its own (nested grids)
       if (!ctx.columns) ctx.columns = new Map();
       ctx.columns.set(table, { ...info, cells });

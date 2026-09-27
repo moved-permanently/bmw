@@ -208,6 +208,13 @@
   margin: 0;
 }
 
+/* source .style-button--flex: buttons take the full content width on phones */
+@media (width < 768px) {
+  .text-media-teaser .text-media-teaser-buttons p:has(.button) {
+    width: 100%;
+  }
+}
+
 
 
 .text-media-teaser .bmw-icon {
@@ -312,12 +319,9 @@
     width: 91.6667%;
   }
 
+  /* source: the content takes the media width on tablets (--textmediateaser-media-flex-md) */
   .text-media-teaser:not(.intro) .text-media-teaser-content {
-    width: 75%;
-  }
-
-  .text-media-teaser.section .text-media-teaser-content {
-    width: 100%;
+    width: 91.6667%;
   }
 }
 

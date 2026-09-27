@@ -82,15 +82,23 @@ function buildCard(item, infoNode) {
 
   // header (branding + name)
   const content = item.contentCell || document.createElement('div');
+  // a cell starting with a picture (branding image) gets wrapped into one <p> by the block loader
+  const wrapper = content.children.length === 1 && content.firstElementChild.tagName === 'P'
+    ? content.firstElementChild : null;
+  if (wrapper && wrapper.querySelector(':scope > :is(h1, h2, h3, h4, h5, h6, p, ul, ol)')) {
+    wrapper.replaceWith(...wrapper.childNodes);
+  }
   const header = document.createElement('div');
   header.className = 'model-overview-header';
   const heading = content.querySelector('h1, h2, h3, h4, h5, h6');
-  const brandP = [...content.querySelectorAll('p')].find((p) => p.querySelector('img') && !p.textContent.trim());
-  if (brandP) {
-    const img = brandP.querySelector('img');
+  const brandEl = [...content.querySelectorAll(':scope > p, :scope > picture')]
+    .find((p) => p.querySelector('img') && !p.textContent.trim()
+      && (!heading || p.compareDocumentPosition(heading) === Node.DOCUMENT_POSITION_FOLLOWING));
+  if (brandEl) {
+    const img = brandEl.querySelector('img');
     img.className = 'model-overview-branding';
     header.append(img);
-    brandP.remove();
+    brandEl.remove();
   }
   if (heading) {
     const h = document.createElement('h3');

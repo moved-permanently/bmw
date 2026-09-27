@@ -1,5 +1,7 @@
+import { loadBlock } from '../../scripts/aem.js';
 import {
   getImageRefs,
+  getVideoRefs,
   buildResponsivePicture,
   decorateFontIcons,
   groupCtaLinks,
@@ -16,11 +18,127 @@ import {
  * cells keep the authored order.
  * Image-only cells become responsive Scene7 pictures; stand-alone links become chevron text links,
  * formatted links buttons (grouped like default content).
+ * Embedded blocks (source video / download components beside text):
+ *  - video cell: only poster image link(s) + video link(s) → a nested Video block; its options come
+ *    from the columns options video-<option> (e.g. video-loop, video-controls, video-ratio-3-2)
+ *  - download: paragraphs ":download: <a href title="PDF, 1 MB">Label</a>" → a nested Download
+ *    block (download-outline: outline variant)
  */
 
 const SPAN_RE = /^cols-(\d+(?:-\d+)+)$/;
 const MD_SPAN_RE = /^md-(\d+(?:-\d+)+)$/;
 const INSET_RE = /^inset-(\d+)-(start|end|both)$/;
+const DOWNLOAD_TOKEN = ':download:';
+
+/**
+ * aem.js wrapTextNodes wraps a cell that starts with a picture and has more content into one <p>
+ * (e.g. image + heading + text of a card): unwrap it again.
+ */
+function unwrapCell(cell) {
+  const only = cell.children.length === 1 ? cell.firstElementChild : null;
+  if (!only || only.tagName !== 'P') return;
+  if (!only.querySelector(':scope > :is(p, h1, h2, h3, h4, h5, h6, ul, ol, div, picture)')) return;
+  if (only.firstElementChild.tagName !== 'PICTURE') return;
+  only.replaceWith(...only.childNodes);
+}
+
+/** Block row: one div per cell (string = text, element(s) = content). */
+function blockRow(cells) {
+  const row = document.createElement('div');
+  cells.forEach((content) => {
+    const c = document.createElement('div');
+    if (typeof content === 'string') c.textContent = content;
+    else c.append(...[].concat(content));
+    row.append(c);
+  });
+  return row;
+}
+
+/** Nested block element inside a cell, loaded like a section block. */
+function nestedBlock(name, classes, rows) {
+  const el = document.createElement('div');
+  el.className = [name, ...classes].join(' ');
+  rows.forEach((cells) => el.append(blockRow(cells)));
+  el.classList.add('block');
+  el.dataset.blockName = name;
+  el.dataset.blockStatus = 'initialized';
+  return el;
+}
+
+/** A cell holding only a video (poster image + video links), no headings or other text. */
+function isVideoCell(cell) {
+  if (cell.querySelector('h1, h2, h3, h4, h5, h6')) return false;
+  const videos = getVideoRefs(cell);
+  if (!videos.length) return false;
+  const clone = cell.cloneNode(true);
+  clone.querySelectorAll('picture, img').forEach((n) => n.remove());
+  const refs = [...videos.map((v) => v.url), ...getImageRefs(cell).map((r) => r.url)];
+  clone.querySelectorAll('a[href]').forEach((a) => { if (refs.includes(a.href)) a.remove(); });
+  return !clone.textContent.trim();
+}
+
+function decorateVideoCell(cell, block) {
+  const opts = [...block.classList].filter((c) => c.startsWith('video-')).map((c) => c.substring(6));
+  const video = nestedBlock('video', opts, [[[...cell.childNodes]]]);
+  cell.replaceChildren(video);
+  cell.classList.add('columns-video-col');
+  return loadBlock(video);
+}
+
+/** Option link-lists: each (heading +) list of a text cell → a nested Link List block with the
+ * link-list-<option> options (e.g. the sitemap columns). */
+function decorateLinkLists(cell, block) {
+  const opts = [...block.classList].filter((c) => c.startsWith('link-list-')).map((c) => c.substring(10));
+  const loads = [];
+  let pending = [];
+  [...cell.children].forEach((el) => {
+    if (/^H[1-6]$/.test(el.tagName)) {
+      pending = [el];
+      return;
+    }
+    if (el.tagName !== 'UL' && el.tagName !== 'OL') {
+      pending = [];
+      return;
+    }
+    const nodes = [...pending, el];
+    const list = nestedBlock('link-list', opts, []);
+    nodes[0].before(list);
+    list.append(blockRow([nodes]));
+    loads.push(loadBlock(list));
+    pending = [];
+  });
+  return loads;
+}
+
+function isDownloadParagraph(el) {
+  return el.tagName === 'P' && el.textContent.trim().startsWith(DOWNLOAD_TOKEN)
+    && el.querySelectorAll('a[href]').length === 1;
+}
+
+/** Consecutive ":download:" paragraphs of a text cell → one nested Download block. */
+function decorateDownloads(cell, block) {
+  const loads = [];
+  let group = null;
+  [...cell.children].forEach((el) => {
+    if (!isDownloadParagraph(el)) {
+      group = null;
+      return;
+    }
+    const a = el.querySelector('a[href]');
+    const link = document.createElement('a');
+    link.href = a.href;
+    link.textContent = a.textContent.trim();
+    const meta = (a.title || '').trim();
+    if (!group) {
+      group = nestedBlock('download', block.classList.contains('download-outline') ? ['outline'] : [], []);
+      el.before(group);
+      loads.push(group);
+    }
+    group.append(blockRow(meta ? [link, meta] : [link]));
+    el.remove();
+  });
+  return loads.map((d) => loadBlock(d));
+}
 
 /** A cell whose only content is one or more images (picture/img or image links). */
 function isMediaCell(cell) {
@@ -89,7 +207,8 @@ function decorateTextCell(cell) {
   });
 }
 
-export default function decorate(block) {
+export default async function decorate(block) {
+  const loads = [];
   const rows = [...block.children];
   const firstRow = rows[0];
   const cols = firstRow ? [...firstRow.children] : [];
@@ -115,12 +234,18 @@ export default function decorate(block) {
       if (spans.length) cell.style.setProperty('--columns-span', Math.min(12, span));
       if (spans.length && mdSpans[i]) cell.style.setProperty('--columns-md-span', Math.min(12, mdSpans[i]));
       if (insets[i]) cell.classList.add(`columns-inset-${insets[i]}`);
-      if (isMediaCell(cell)) {
+      unwrapCell(cell);
+      if (isVideoCell(cell)) {
+        loads.push(decorateVideoCell(cell, block));
+      } else if (isMediaCell(cell)) {
         decorateMediaCell(cell, span);
       } else {
         cell.classList.add('columns-text-col');
+        loads.push(...decorateDownloads(cell, block));
+        if (block.classList.contains('link-lists')) loads.push(...decorateLinkLists(cell, block));
         decorateTextCell(cell);
       }
     });
   });
+  await Promise.all(loads);
 }

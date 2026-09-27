@@ -16,6 +16,9 @@ const WLTP_START = 'Die angegebenen Werte wurden nach dem vorgeschriebenen Messv
 export default function transform(hookName, element, payload) {
   const doc = element.ownerDocument;
   if (hookName === 'beforeTransform') {
+    // source page without footer content (e.g. the sitemap): recorded for bmw-metadata ("Footer: off")
+    const footer = doc.querySelector('footer');
+    if (footer && !footer.querySelector('a[href]')) doc.documentElement.setAttribute('data-bmw-empty-footer', 'true');
     // AEM personalization toggles: keep the default variation only
     element.querySelectorAll('.xftoggle').forEach((x) => {
       const variations = x.querySelectorAll(':scope [data-variation], :scope .cmp-xftoggle__variation');

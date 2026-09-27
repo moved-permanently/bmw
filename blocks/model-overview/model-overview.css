@@ -64,13 +64,17 @@
   display: none;
 }
 
-/* slider */
+/* slider (source .cmp-modeloverview__swiper: 4rem below the cards) */
 .model-overview .model-overview-slider {
   position: relative;
+  padding-bottom: 4rem;
 }
 
-.model-overview .model-overview-track {
+.model-overview .model-overview-slider > .model-overview-track {
+  /* (specific enough to beat section-level list rules such as `.section.center ul`) */
   display: grid;
+  width: auto;
+  text-align: start;
   grid-auto-columns: var(--mo-card-width);
   grid-auto-flow: column;
   grid-template-rows: repeat(var(--mo-rows, 5), auto);
@@ -156,6 +160,11 @@
   line-height: var(--bmw-subsection-1-line-height);
 }
 
+.model-overview.large-titles .model-overview-header h3 {
+  font-size: var(--bmw-headline-3-font-size);
+  line-height: var(--bmw-headline-3-line-height);
+}
+
 .model-overview .model-overview-branding {
   display: inline-block;
   width: auto;
@@ -166,6 +175,10 @@
 
 .model-overview .model-overview-price {
   padding: 1.25rem 1.75rem 1.25rem 0;
+}
+
+.model-overview .model-overview-price:empty {
+  padding-top: 0;
 }
 
 .model-overview .model-overview-price p {
@@ -181,7 +194,7 @@
 
 .model-overview .model-overview-fact {
   position: relative;
-  padding: 1.25rem 0;
+  padding: 1.25rem 1.75rem 1.25rem 0;
   border-top: 1px solid #bbb;
 }
 
@@ -214,13 +227,14 @@
 }
 
 .model-overview .model-overview-fact-value {
-  padding-top: 0.25rem;
+  padding-top: 0.625rem;
   font-size: var(--bmw-body-2-font-size);
   font-weight: var(--bmw-font-weight-light, 300);
   line-height: var(--bmw-body-2-line-height);
 }
 
-.model-overview .model-overview-bullets {
+.model-overview .model-overview-card > .model-overview-bullets {
+  display: block;
   margin: 0;
   padding: 1.25rem 0 0;
   border-top: 1px solid #bbb;
@@ -229,9 +243,9 @@
 
 .model-overview .model-overview-bullets li {
   position: relative;
-  font-size: var(--bmw-body-1-font-size);
+  font-size: var(--bmw-body-2-font-size);
   font-weight: var(--bmw-font-weight-light, 300);
-  line-height: var(--bmw-body-1-line-height);
+  line-height: var(--bmw-body-2-line-height);
 }
 
 .model-overview .model-overview-bullets li + li {
@@ -339,7 +353,7 @@
   }
 
   .model-overview .model-overview-fact,
-  .model-overview .model-overview-bullets {
+  .model-overview .model-overview-card > .model-overview-bullets {
     padding-left: 2rem;
   }
 
@@ -398,6 +412,7 @@
   }
 
   .model-overview .model-overview-fact-value {
+    padding-top: 0.75rem;
     font-size: var(--bmw-subsection-2-font-size);
     line-height: var(--bmw-subsection-2-line-height);
   }

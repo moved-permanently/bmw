@@ -4,12 +4,15 @@
 // Content model: one block row per table row, one cell per table cell (titles/texts/buttons/images inside
 // a cell become paragraphs/links/images).
 // Options: header (first row is the table head), highlight-N (row N, 1-based incl. header, has the grey
-// background of the source), center-N / end-N (column N is centered / end aligned).
+// background of the source), center-N / end-N (column N is centered / end aligned), width-N / width-lg-N /
+// width-md-N (centered narrower table), accordion (collapsible tables, see .tireinfo below).
 import { replaceWithBlock, text, pictureCell } from './_utils.js';
 import { cleanInline, ctaParagraph } from './_media.js';
+import { gridFraction } from './_nested.js';
 
 // .tireinfo (tyre label lists, bmw-reifenkennzeichnung): per series an h2 title and an accordion of plain
-// cmp-table tables (one per model) -> h2, then per model an h3 + "Content Table (header)"; footnotes -> <p>.
+// cmp-table tables (one per model) -> h2, then one "Content Table (accordion, header)" per series (a row
+// with a single h3 cell starts a collapsed item = model, the next row is its table head); footnotes -> <p>.
 export const selectors = ['.contenttable.aem-GridColumn', '.tireinfo.aem-GridColumn'];
 
 function loose(document, tag, txt) {
@@ -40,15 +43,19 @@ function parseTireInfo(element, document) {
   element.querySelectorAll('.accordionblock').forEach((ab) => {
     const h = text(ab.querySelector('.cmp-title__text'));
     if (h) out.push(loose(document, 'h2', h));
+    // one collapsible table per series: [h3 model] row starts an item, its first table row is the head
+    const cells = [];
     ab.querySelectorAll('.cmp-accordion__item').forEach((it) => {
       const t = text(it.querySelector('.cmp-accordion__title'));
       const table = it.querySelector('table');
       if (!table) return;
       const rows = plainTableRows(document, table);
       if (!rows.length) return;
-      if (t) out.push(loose(document, 'h3', t));
-      out.push(WebImporter.Blocks.createBlock(document, { name: 'Content Table (header)', cells: rows }));
+      const h3 = document.createElement('h3');
+      h3.textContent = t || '–';
+      cells.push([h3], ...rows);
     });
+    if (cells.length) out.push(WebImporter.Blocks.createBlock(document, { name: 'Content Table (accordion, header)', cells }));
   });
   element.querySelectorAll('.text .cmp-text > p, .text .cmp-text > ul').forEach((p) => {
     if (p.closest('.accordionblock') || !text(p)) return;
@@ -98,6 +105,27 @@ function cellNodes(document, td) {
   return out;
 }
 
+/**
+ * Centered narrower tables (a grid column with an offset around the table): width-N / width-lg-N /
+ * width-md-N in 12ths from 1280px / 1024-1279px / 768-1023px.
+ */
+function widthOptions(element) {
+  let n = element;
+  let centered = false;
+  while (n && n.classList) {
+    if (n.classList.contains('aem-GridColumn') && /aem-GridColumn--offset--default--[1-9]/.test(n.className)) centered = true;
+    n = n.parentElement;
+  }
+  if (!centered) return [];
+  const cols = (bp) => Math.max(1, Math.min(12, Math.round(gridFraction(element, bp) * 12)));
+  const [d, l, m] = [cols('default'), cols('large'), cols('medium')];
+  const out = [];
+  if (d < 12) out.push(`width-${d}`);
+  if (l !== d) out.push(`width-lg-${l}`);
+  if (m !== l) out.push(`width-md-${m}`);
+  return out;
+}
+
 function alignment(td) {
   const m = (td.className || '').match(/cmp-contenttable__cell--align-horizontal-(start|center|end)/);
   return m ? m[1] : 'start';
@@ -135,6 +163,7 @@ export default function parse(element, { document }) {
       if (al !== 'start') options.push(`${al}-${ci + 1}`);
     }
   });
+  options.push(...widthOptions(element));
   const name = options.length ? `Content Table (${options.join(', ')})` : 'Content Table';
   replaceWithBlock(document, element, name, rows);
 }

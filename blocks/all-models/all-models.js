@@ -125,7 +125,9 @@ function buildCard(data) {
   const after = paras.filter((p) => !before.includes(p));
   const flagP = before.find((p) => p.querySelector('em'));
   const bodyP = before.find((p) => p !== flagP);
-  const imgP = after.find((p) => p.querySelector('img'));
+  // (an image link alone in its paragraph arrives as a bare <picture>, see buildExternalImageLinks)
+  const imgP = after.find((p) => p.querySelector('img'))
+    || kids.find((k, i) => i > hIndex && k.tagName === 'PICTURE');
   const textPs = after.filter((p) => p !== imgP);
   const parts = {
     body: txt(bodyP),

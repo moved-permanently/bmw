@@ -34,6 +34,10 @@ export default function parse(element, { document }) {
   if (w) options.push(w);
   const wl = widthOption(element, 'large', 'width-lg');
   if (wl && wl.replace('width-lg', 'width') !== w) options.push(wl);
+  // tablet (768-1023): its own source width (full width = width-md-12) when it differs from large
+  const lgCols = Number((wl || w).replace(/\D+/g, '')) || 12;
+  const mdCols = Math.round(gridFraction(element, 'medium') * 12);
+  if (mdCols >= 4 && mdCols !== lgCols) options.push(`width-md-${Math.min(12, mdCols)}`);
 
   const cells = [];
   items.forEach((it) => {

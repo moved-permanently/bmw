@@ -154,8 +154,13 @@ main > .section > .multi-content-gallery-wrapper {
 
 .multi-content-gallery .mcg-scroll :is(h2, h3, h4, h5, h6) {
   color: var(--bmw-color-heading);
-  font-size: var(--bmw-subsection-1-font-size);
+  font-size: var(--bmw-subsection-2-font-size);
   font-weight: var(--bmw-font-weight-default);
+  line-height: var(--bmw-subsection-2-line-height);
+}
+
+.multi-content-gallery.large-titles .mcg-scroll :is(h2, h3, h4, h5, h6) {
+  font-size: var(--bmw-subsection-1-font-size);
   line-height: var(--bmw-subsection-1-line-height);
 }
 

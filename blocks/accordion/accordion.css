@@ -3,6 +3,13 @@
   color: var(--bmw-color-text, #262626);
 }
 
+@media (width >= 768px) and (width < 1024px) {
+  .accordion[style*='--accordion-cols-md'] {
+    max-width: calc((100% + 2 * var(--bmw-grid-gutter, 0.75rem)) * var(--accordion-cols-md) / 12 - 2 * var(--bmw-grid-gutter, 0.75rem));
+    margin-inline: auto;
+  }
+}
+
 @media (width >= 1024px) {
   .accordion[style*='--accordion-cols-lg'] {
     max-width: calc((100% + 2 * var(--bmw-grid-gutter, 0.75rem)) * var(--accordion-cols-lg) / 12 - 2 * var(--bmw-grid-gutter, 0.75rem));

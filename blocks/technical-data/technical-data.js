@@ -105,7 +105,15 @@ function buildGroup(g, idx) {
     btn.setAttribute('aria-controls', bodyId);
     const label = document.createElement('span');
     label.className = 'technical-data-toggle-label';
-    label.append(...g.title.childNodes);
+    // the title text in its own element, apart from footnote marks (as on the source)
+    [...g.title.childNodes].forEach((n) => {
+      if (n.nodeType === Node.TEXT_NODE && n.textContent.trim()) {
+        const text = document.createElement('span');
+        text.className = 'technical-data-toggle-text';
+        text.textContent = n.textContent;
+        label.append(text);
+      } else label.append(n);
+    });
     const icon = document.createElement('span');
     icon.className = 'bmw-icon technical-data-toggle-icon';
     icon.dataset.icon = 'arrow_chevron_up';

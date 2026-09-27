@@ -5,7 +5,7 @@
 // 2 columns, one row per item: cell 1 = media (desktop, mobile[, tablet] images, or poster image(s)
 // + desktop/mobile video links), cell 2 = card content (h3 title, paragraphs/lists, CTA paragraphs).
 // Options (videos; default muted autoplay without loop, progressive play button): no-autoplay, loop,
-// no-play-button.
+// no-play-button; large-titles (card titles subsection-1 instead of subsection-2).
 // Also called by the tabs parser for galleries placed directly in a tab panel.
 import { replaceWithBlock } from './_utils.js';
 import { mediaNodes, blockName, divCell, autoplayVideoOptions } from './_media.js';
@@ -54,5 +54,10 @@ export default function parse(element, { document }) {
     rows.push([divCell(document, m.nodes), divCell(document, content)]);
   }
   if (!rows.length) return;
-  replaceWithBlock(document, element, blockName('Multi Content Gallery', autoplayVideoOptions(video)), rows);
+  // card title typography: subsection-2 (default) or subsection-1 (large-titles), by majority
+  const styles = [...c.querySelectorAll('.cmp-multi-content__slider--content .title')]
+    .map((t) => ((t.className || '').match(/style-title--(subsection-[12])/) || [])[1]).filter(Boolean);
+  const large = styles.filter((st) => st === 'subsection-1').length * 2 > styles.length;
+  const options = [...autoplayVideoOptions(video), large ? 'large-titles' : ''];
+  replaceWithBlock(document, element, blockName('Multi Content Gallery', options), rows);
 }

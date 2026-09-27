@@ -3,7 +3,8 @@ import { decorateFontIcons, groupCtaLinks } from '../../scripts/bmw-utils.js';
 /*
  * Accordion (BMW accordion-v1). One row per item: cell 1 title, cell 2 content.
  * Options: faq, h2 (header level, default h3), expand-first, single (one item open at a time),
- * width-N / width-lg-N (centered width in 12ths from 1280px / 1024-1279px).
+ * width-N / width-lg-N / width-md-N (centered width in 12ths from 1280px / 1024-1279px /
+ * 768-1023px; lg falls back to N, md to lg).
  */
 
 let accordionId = 0;
@@ -25,8 +26,11 @@ export default function decorate(block) {
   accordionId += 1;
   const cols = option(block, /^width-(\d+)$/);
   const colsLg = option(block, /^width-lg-(\d+)$/) || cols;
-  if (cols) block.style.setProperty('--accordion-cols', cols);
+  // a tablet / small-desktop width alone keeps the full width from 1280px
+  if (cols || colsLg) block.style.setProperty('--accordion-cols', cols || 12);
   if (colsLg) block.style.setProperty('--accordion-cols-lg', colsLg);
+  const colsMd = option(block, /^width-md-(\d+)$/) || colsLg;
+  if (colsMd && colsMd < 12) block.style.setProperty('--accordion-cols-md', colsMd);
   const level = block.classList.contains('h2') ? 'h2' : 'h3';
   const single = block.classList.contains('single');
 

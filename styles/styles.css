@@ -897,8 +897,9 @@ main .default-content-wrapper picture img {
   justify-content: center;
 }
 
-.section.center ul,
-.section.center ol {
+/* centered default content: lists stay a left-aligned block in the middle (block lists keep their own layout) */
+.section.center .default-content-wrapper > ul,
+.section.center .default-content-wrapper > ol {
   display: inline-block;
   text-align: start;
 }
@@ -909,7 +910,7 @@ main .section.body-2 .default-content-wrapper {
   line-height: var(--bmw-body-2-line-height);
 }
 
-/* h1-<style>: the page H1 in the typography of another source title style */
+/* h1-\3c style>: the page H1 in the typography of another source title style */
 .section.h1-headline-2 .default-content-wrapper > h1 {
   font-size: var(--bmw-headline-2-font-size);
   line-height: var(--bmw-headline-2-line-height);

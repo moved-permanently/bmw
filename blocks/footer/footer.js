@@ -9,7 +9,11 @@
  * - icon list section: <ul> whose links only contain images -> social row
  * - link bar section: <ul> without heading -> legal bar (plain-text items allowed)
  * Links whose URL ends with "#_blank" open in a new tab (marker is stripped).
+ * Page metadata "Footer: off" renders no footer (source pages with an empty footer, e.g. the
+ * sitemap).
  */
+
+import { getMetadata } from '../../scripts/aem.js';
 
 const NEW_TAB_MARKER = '#_blank';
 const ACCORDION_QUERY = '(width < 768px)';
@@ -194,6 +198,12 @@ function setupAccordion(block) {
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
+  if (getMetadata('footer').toLowerCase() === 'off') {
+    block.textContent = '';
+    const footer = block.closest('footer');
+    if (footer) footer.hidden = true;
+    return;
+  }
   const fragment = await fetchFooterFragment();
   block.textContent = '';
   if (!fragment) return;

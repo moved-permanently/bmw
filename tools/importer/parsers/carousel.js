@@ -6,7 +6,8 @@
 // text content (heading, paragraphs, CTAs; inner images/icons stay in place; disclaimer text
 // paragraphs are wrapped in <sub> so the block can style them as footnotes).
 // Options: slides-M-T-D-X (slides per view mobile/tablet/desktop/desktop-xl, default 1-1-3-4),
-// no-arrows, no-pagination, cards (grey card slides, whole card clickable via the last plain
+// no-arrows, no-pagination, center (centered slide texts), body-2 (body text in the smaller body size; a
+// paragraph right below a disclaimer label keeps body-1 — source offer cards: label + value), cards (grey card slides, whole card clickable via the last plain
 // link), large-titles | small-titles (headline-3 / subsection-2 slide titles; p titles become h3); videos: autoplay, hover-play, loop, controls, no-play-button, ratio-W-H, mobile-ratio-W-H.
 // Nested components are flattened (icons -> :icon:, embeds -> image, inner block tables -> text).
 import { replaceWithBlock } from './_utils.js';
@@ -25,6 +26,42 @@ function leadingMedia(slide) {
   const first = comps[0];
   if (!first || !first.matches(MEDIA)) return null;
   return first;
+}
+
+const textKind = (c) => {
+  if (!c.matches('.text')) return 'o';
+  if (/style-text--disclaimer/.test(c.className)) return 'd';
+  return /style-text--body-1(?=\s|$)/.test(c.className) ? 'b1' : 'b2';
+};
+
+/**
+ * Whether the "body-2" rule (body-2 text, body-1 right after a disclaimer label) reproduces the
+ * source text sizes better than the default (all body-1).
+ */
+function prefersBody2(slides) {
+  let rule = 0;
+  let def = 0;
+  slides.forEach((slide) => {
+    let prev = 'o';
+    topComponents(slide, `${MEDIA}, .title, .text, .button`).forEach((c) => {
+      const k = textKind(c);
+      if ((k === 'b1' || k === 'b2') && c.textContent.trim()) {
+        if (k === (prev === 'd' ? 'b1' : 'b2')) rule += 1;
+        if (k === 'b1') def += 1;
+      }
+      if (k !== 'd' || c.textContent.trim()) prev = k;
+    });
+  });
+  return rule > def;
+}
+
+/** Slide texts centered (source style-container--center around the slide texts). */
+function isCentered(slides) {
+  return slides.every((s) => {
+    const t = s.querySelector('.title, .text');
+    const cen = t && t.closest('.style-container--center');
+    return !!cen && s.contains(cen);
+  });
 }
 
 /** Disclaimer paragraphs as <p><sub>…</sub></p> (lists are kept as they are). */
@@ -54,6 +91,8 @@ export default function parse(element, { document }) {
   const sw = c.querySelector('.swiper');
   if (sw && sw.classList.contains('cmp-carousel__no-pagination')) options.push('no-pagination');
   if (slides.some((s) => s.querySelector('.style-container--secondary'))) options.push('cards');
+  if (isCentered(slides)) options.push('center');
+  if (prefersBody2(slides)) options.push('body-2');
   // slide title typography (default subsection-1)
   const ts = titleStyle(slides.find((s) => s.querySelector('.title')) || null);
   if (/^headline-[1-3]$/.test(ts)) options.push('large-titles');
@@ -63,6 +102,24 @@ export default function parse(element, { document }) {
   const rows = [];
   slides.forEach((slide) => {
     normalizeNested(document, slide);
+    // offer card flags (style-title--flag) -> emphasis-only paragraph before the card title
+    if (options.includes('cards')) {
+      topComponents(slide, '.title').filter((t) => /style-title--flag/.test(t.className)).forEach((t) => {
+        const label = (t.querySelector('.cmp-title__text') || t).textContent.replace(/\s+/g, ' ').trim();
+        if (!label) return;
+        const comp = document.createElement('div');
+        comp.className = 'text';
+        const inner = document.createElement('div');
+        inner.className = 'cmp-text';
+        const p = document.createElement('p');
+        const em = document.createElement('em');
+        em.textContent = label;
+        p.append(em);
+        inner.append(p);
+        comp.append(inner);
+        t.replaceWith(comp);
+      });
+    }
     const mediaComp = leadingMedia(slide);
     let media = { nodes: [], video: null };
     if (mediaComp) {

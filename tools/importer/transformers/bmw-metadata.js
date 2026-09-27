@@ -58,6 +58,8 @@ export default function transform(hookName, element, payload) {
   if (tmpl && tmpl !== 'content-page') rows.push(['Template', tmpl]);
   const headerStyle = sourceHeaderStyle(payload.html || '');
   if (headerStyle) rows.push(['Header Style', headerStyle]);
+  // source page without footer content (e.g. the sitemap; recorded by bmw-cleanup): no footer
+  if (doc.documentElement.hasAttribute('data-bmw-empty-footer')) rows.push(['Footer', 'off']);
   if (!rows.length) return;
   main.append(WebImporter.Blocks.createBlock(doc, { name: 'Metadata', cells: rows }));
 }

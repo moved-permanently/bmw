@@ -69,6 +69,11 @@ function decorateContent(content, block) {
       p.firstElementChild.replaceWith(...p.firstElementChild.childNodes);
     }
   });
+  // body-2 slides: a value right below a disclaimer label keeps body-1 (source offer cards)
+  if (block.classList.contains('body-2')) {
+    content.querySelectorAll(':scope > .carousel-disclaimer + p:not(.carousel-disclaimer)')
+      .forEach((p) => p.classList.add('carousel-body-1'));
+  }
   // offer cards: the last plain link paragraph makes the whole card clickable
   if (block.classList.contains('cards')) {
     const last = [...content.querySelectorAll(':scope > p')].reverse()
@@ -80,9 +85,39 @@ function decorateContent(content, block) {
       a.setAttribute('aria-label', a.textContent.trim());
       last.replaceWith(a);
     }
+    // flag: an emphasis-only paragraph before the first heading (source style-title--flag)
+    const firstHeading = content.querySelector(':scope > :is(h1, h2, h3, h4, h5, h6)');
+    const flag = firstHeading && [...content.querySelectorAll(':scope > p')].find((p) => {
+      const before = p.compareDocumentPosition(firstHeading) === Node.DOCUMENT_POSITION_FOLLOWING;
+      if (!before) return false;
+      const em = p.children.length === 1 && p.firstElementChild.tagName === 'EM'
+        ? p.firstElementChild : null;
+      return em && !em.querySelector('a') && em.textContent.trim() === p.textContent.trim();
+    });
+    if (flag) {
+      flag.classList.add('carousel-flag');
+      flag.firstElementChild.replaceWith(...flag.firstElementChild.childNodes);
+    }
   }
   groupCtaLinks(content, 'carousel-buttons', 'carousel-link');
   decorateFontIcons(content, { text: true });
+}
+
+/**
+ * Offer cards: the trailing disclaimers (consumption / emission texts) sit below the grey card.
+ * @returns {HTMLElement|null} the footnote container
+ */
+function takeCardFootnotes(content) {
+  const kids = [...content.children].filter((c) => !c.classList.contains('carousel-card-link'));
+  const trailing = [];
+  for (let i = kids.length - 1; i >= 0 && kids[i].classList.contains('carousel-disclaimer'); i -= 1) {
+    trailing.unshift(kids[i]);
+  }
+  if (!trailing.length || trailing.length === kids.length) return null;
+  const notes = document.createElement('div');
+  notes.className = 'carousel-card-footnotes';
+  notes.append(...trailing);
+  return notes;
 }
 
 function videoOptions(block) {
@@ -175,6 +210,14 @@ export default function decorate(block) {
     }
     if (!li.children.length) return;
     if (content.querySelector('.carousel-card-link')) li.classList.add('is-clickable');
+    if (block.classList.contains('cards')) {
+      const notes = takeCardFootnotes(content);
+      const card = document.createElement('div');
+      card.className = 'carousel-card';
+      card.append(...li.childNodes);
+      li.append(card);
+      if (notes) li.append(notes);
+    }
     slides.push(li);
     track.append(li);
   });

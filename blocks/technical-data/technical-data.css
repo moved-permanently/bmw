@@ -340,6 +340,16 @@
   .technical-data .technical-data-measurement figcaption {
     letter-spacing: -0.0625rem;
   }
+
+  /* short (source base style): label above the value on phones */
+  .technical-data.short .technical-data-fact {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .technical-data.short .technical-data-fact dd {
+    text-align: start;
+  }
 }
 
 @media (width >= 768px) {
@@ -372,6 +382,22 @@
     text-align: start;
   }
 
+  /* short (source base style): three facts per row from 768px, zebra per row of three */
+  .technical-data.short {
+    --td-columns: 3;
+  }
+
+  .technical-data.short .technical-data-fact:nth-child(4n + 1),
+  .technical-data.short .technical-data-fact:nth-child(4n + 2) {
+    background: none;
+  }
+
+  .technical-data.short .technical-data-fact:nth-child(6n + 1),
+  .technical-data.short .technical-data-fact:nth-child(6n + 2),
+  .technical-data.short .technical-data-fact:nth-child(6n + 3) {
+    background: var(--td-zebra);
+  }
+
   /* a single fact in the last row keeps the zebra band across the full table width */
   .technical-data:not(.short) .technical-data-fact:last-child:nth-child(odd) {
     grid-column: 1 / -1;
@@ -389,19 +415,14 @@
     padding: 1.5rem;
   }
 
-  .technical-data.short {
-    --td-columns: 3;
+  /* short (source base style): label and value on one line, value at the end */
+  .technical-data.short .technical-data-fact {
+    flex-direction: row;
+    justify-content: space-between;
   }
 
-  .technical-data.short .technical-data-fact:nth-child(4n + 1),
-  .technical-data.short .technical-data-fact:nth-child(4n + 2) {
-    background: none;
-  }
-
-  .technical-data.short .technical-data-fact:nth-child(6n + 1),
-  .technical-data.short .technical-data-fact:nth-child(6n + 2),
-  .technical-data.short .technical-data-fact:nth-child(6n + 3) {
-    background: var(--td-zebra);
+  .technical-data.short .technical-data-fact dd {
+    text-align: end;
   }
 
   .technical-data .technical-data-footnotes {

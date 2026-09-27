@@ -7,6 +7,7 @@
 //     ("label <strong>value</strong>", the block derives the icon from the label) or bullet list |
 //     CTA links (compare link = compare icon)]
 //   [price info]                                  last row: text of the info-i next to the prices
+// Options: large-titles (card titles in the base h3 / headline-3 size instead of subsection-1).
 import { replaceWithBlock, cell, text, imgEl, normalizeImageUrl, cleanHref } from './_utils.js';
 import { cleanInline } from './_media.js';
 import { para, cosyImg, vehicleCta } from './_vehicle.js';
@@ -16,7 +17,8 @@ export const selectors = ['.modeloverview.aem-GridColumn'];
 function factItem(document, cellEl) {
   const label = cellEl.querySelector('.cmp-technicaldatafact__label');
   const value = cellEl.querySelector('.cmp-technicaldatafact__value');
-  if (!text(label) && !text(value)) return null;
+  // facts without a value are not rendered on the source page
+  if (!text(value)) return null;
   const li = document.createElement('li');
   // inline ":icon:" text does not survive the md conversion; the block maps fact labels to icons
   const l = cleanInline(document, label.querySelector('p') || label);
@@ -102,5 +104,10 @@ export default function parse(element, { document }) {
     cells.push([d]);
   }
   if (!cells.length) return;
-  replaceWithBlock(document, element, 'Model Overview', cells);
+  // card titles: subsection-1 (default) or the base h3 / headline style (large-titles)
+  const firstTitle = root.querySelector('.cmp-modeloverview__model-fact-header .title, .cmp-modeloverview__model-fact-header .cmp-title');
+  const titleCls = firstTitle ? firstTitle.className : '';
+  const options = [];
+  if (firstTitle && !/style-title--subsection-/.test(titleCls)) options.push('large-titles');
+  replaceWithBlock(document, element, options.length ? `Model Overview (${options.join(', ')})` : 'Model Overview', cells);
 }
