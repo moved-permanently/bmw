@@ -9,11 +9,16 @@ import {
  * Columns: side-by-side cells of a source aem-Grid.
  * Option cols-A-B[-C…]: 12-column grid spans per cell (e.g. "cols-7-5", "cols-4-4-4"); cells stack
  * below 768px. Without it, cells share the row equally (boilerplate behaviour).
+ * Tablet (768-1023px): stack-md (cells stay stacked until 1024px) or md-A-B (tablet spans).
+ * middle: cells vertically centred. inset-N-start|end|both: cell N gets the source grid's
+ * additional side spacing from 1024px. title-<headline-N|subsection-N>: heading typography.
  * Image-only cells become responsive Scene7 pictures; stand-alone links become chevron text links,
  * formatted links buttons (grouped like default content).
  */
 
 const SPAN_RE = /^cols-(\d+(?:-\d+)+)$/;
+const MD_SPAN_RE = /^md-(\d+(?:-\d+)+)$/;
+const INSET_RE = /^inset-(\d+)-(start|end|both)$/;
 
 /** A cell whose only content is one or more images (picture/img or image links). */
 function isMediaCell(cell) {
@@ -76,7 +81,10 @@ function decorateTextCell(cell) {
     outer.replaceWith(a);
   });
   decorateFontIcons(cell);
-  groupCtaLinks(cell, 'columns-links');
+  groupCtaLinks(cell, 'columns-links').forEach((group) => {
+    // text links only (source "as link" buttons, each on its own grid row): stacked list
+    if (!group.querySelector('.button')) group.classList.add('columns-links-text');
+  });
 }
 
 export default function decorate(block) {
@@ -88,12 +96,21 @@ export default function decorate(block) {
   const spanClass = [...block.classList].find((c) => SPAN_RE.test(c));
   const spans = spanClass ? spanClass.match(SPAN_RE)[1].split('-').map(Number) : [];
   if (spans.length) block.classList.add('columns-grid');
+  const mdClass = [...block.classList].find((c) => MD_SPAN_RE.test(c));
+  const mdSpans = mdClass ? mdClass.match(MD_SPAN_RE)[1].split('-').map(Number) : [];
+  const insets = {};
+  [...block.classList].forEach((c) => {
+    const [, index, side] = c.match(INSET_RE) || [];
+    if (side) insets[Number(index) - 1] = side;
+  });
 
   rows.forEach((row) => {
     row.classList.add('columns-row');
     [...row.children].forEach((cell, i) => {
       const span = spans[i] || Math.max(1, Math.floor(12 / row.children.length));
       if (spans.length) cell.style.setProperty('--columns-span', Math.min(12, span));
+      if (spans.length && mdSpans[i]) cell.style.setProperty('--columns-md-span', Math.min(12, mdSpans[i]));
+      if (insets[i]) cell.classList.add(`columns-inset-${insets[i]}`);
       if (isMediaCell(cell)) {
         decorateMediaCell(cell, span);
       } else {

@@ -42,6 +42,21 @@ export default function transform(hookName, element, payload) {
         });
       }
     });
+    // per-container side spacing lives in inline <style> (#container-x{--container-spacing-left: 1})
+    // which is removed below: keep the desktop (>= 1024px) value as data-bmw-inset=start|end|both
+    element.querySelectorAll('style').forEach((st) => {
+      const re = /min-width:\s*1024px\)\s*\{\s*#([\w-]+)\s*\{([^}]*)\}/g;
+      const css = st.textContent || '';
+      let m;
+      while ((m = re.exec(css))) {
+        const target = doc.getElementById(m[1]);
+        if (!target || !element.contains(target)) continue;
+        const l = /--container-spacing-left:\s*1\b/.test(m[2]);
+        const r = /--container-spacing-right:\s*1\b/.test(m[2]);
+        if (l || r) target.setAttribute('data-bmw-inset', l && r ? 'both' : (l ? 'start' : 'end'));
+        else target.removeAttribute('data-bmw-inset');
+      }
+    });
     CHROME.forEach((sel) => {
       try { element.querySelectorAll(sel).forEach((el) => el.remove()); } catch (e) { /* :has unsupported */ }
     });
@@ -54,8 +69,8 @@ export default function transform(hookName, element, payload) {
     comments.forEach((c) => c.remove());
   }
   if (hookName === 'afterTransform') {
-    element.querySelectorAll('[data-tracking-linkid], [data-component-path], [data-loader], [data-info], [data-info-html]').forEach((el) => {
-      ['data-tracking-linkid', 'data-component-path', 'data-loader', 'data-info', 'data-info-html'].forEach((a) => el.removeAttribute(a));
+    element.querySelectorAll('[data-tracking-linkid], [data-component-path], [data-loader], [data-info], [data-info-html], [data-bmw-inset]').forEach((el) => {
+      ['data-tracking-linkid', 'data-component-path', 'data-loader', 'data-info', 'data-info-html', 'data-bmw-inset'].forEach((a) => el.removeAttribute(a));
     });
   }
 }

@@ -98,3 +98,81 @@
     grid-column: span var(--columns-span, 6);
   }
 }
+
+/* text links only: stacked list (source as-link buttons on their own grid rows) */
+.columns .columns-links.columns-links-text {
+  flex-flow: column;
+  align-items: flex-start;
+  gap: var(--bmw-spacing-6, 1rem);
+}
+
+/* heading typography of the source title (title-<style>) */
+.columns.title-headline-2 .columns-text-col > :is(h1, h2, h3, h4, h5, h6) {
+  font-size: var(--bmw-headline-2-font-size);
+  line-height: var(--bmw-headline-2-line-height);
+}
+
+.columns.title-headline-3 .columns-text-col > :is(h1, h2, h3, h4, h5, h6) {
+  font-size: var(--bmw-headline-3-font-size);
+  line-height: var(--bmw-headline-3-line-height);
+}
+
+.columns:is(.title-headline-4, .title-subsection-1) .columns-text-col > :is(h1, h2, h3, h4, h5, h6) {
+  font-size: var(--bmw-subsection-1-font-size);
+  line-height: var(--bmw-subsection-1-line-height);
+}
+
+.columns:is(.title-headline-5, .title-subsection-2) .columns-text-col > :is(h1, h2, h3, h4, h5, h6) {
+  font-size: var(--bmw-subsection-2-font-size);
+  line-height: var(--bmw-subsection-2-line-height);
+}
+
+@media (width >= 768px) {
+  /* md-A-B: tablet spans (desktop spans from 1024px) */
+  .columns.columns-grid .columns-row > div {
+    grid-column: span var(--columns-md-span, var(--columns-span, 6));
+  }
+
+  .columns.middle .columns-row {
+    align-items: center;
+  }
+}
+
+/* stack-md: source columns are full width on tablet, side by side from 1024px */
+@media (width >= 768px) and (width < 1024px) {
+  .columns.stack-md .columns-row,
+  .columns.stack-md.columns-grid .columns-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--bmw-spacing-8, 1.25rem);
+  }
+
+  .columns.stack-md .columns-row > div {
+    flex: none;
+  }
+
+  .columns.stack-md .columns-row > .columns-img-col {
+    order: -1;
+  }
+
+  .columns.stack-md .columns-links:not(.columns-links-text) {
+    flex-flow: column;
+    align-items: flex-start;
+  }
+}
+
+@media (width >= 1024px) {
+  .columns.columns-grid .columns-row > div {
+    grid-column: span var(--columns-span, 6);
+  }
+
+  /* inset-N-start|end|both: source container side spacing (additional spacing minus gutters) */
+  .columns .columns-row > :is(.columns-inset-start, .columns-inset-both) {
+    padding-inline-start: calc(var(--bmw-grid-additional-spacing, 4rem) - 2 * var(--bmw-grid-gutter, 0.75rem));
+  }
+
+  .columns .columns-row > :is(.columns-inset-end, .columns-inset-both) {
+    padding-inline-end: calc(var(--bmw-grid-additional-spacing, 4rem) - 2 * var(--bmw-grid-gutter, 0.75rem));
+  }
+}

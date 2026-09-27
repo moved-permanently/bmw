@@ -12,7 +12,11 @@ import {
  * Row 2: heading(s), paragraphs, CTAs.
  * Options: center | end (horizontal text position), top | middle | bottom, cols-N (text width in
  *   12ths from 1024px), gradient-left | gradient-oblique | gradient-top | gradient-right |
- *   gradient-bottom, contained, ai-label, video: no-autoplay, loop, no-play-button,
+ *   gradient-bottom, contained, ai-label, text-top-N | text-bottom-N (source spacing of the
+ *   text box, N = --bmw-spacing-N), cta-top-N | cta-bottom-N (spacing above / below the CTAs,
+ *   bottom default 12), cta-stack-md (CTAs stacked on tablet), sub-top-N (spacing above the
+ *   first paragraph after the headline),
+ *   video: no-autoplay, loop, no-play-button,
  *   ratio-W-H, mobile-ratio-W-H.
  */
 
@@ -71,6 +75,19 @@ export default function decorate(block) {
   });
   const cols = [...block.classList].find((c) => /^cols-\d+$/.test(c));
   if (cols) content.style.setProperty('--ht-cols', cols.substring(5));
+  // source spacing of the text box / CTA row -> global spacing tokens (responsive)
+  [...block.classList].forEach((c) => {
+    const [, kind, n] = c.match(/^(text-top|text-bottom|cta-top|cta-bottom|sub-top)-(\d+)$/) || [];
+    if (!kind) return;
+    const prop = {
+      'text-top': '--ht-text-mt',
+      'text-bottom': '--ht-text-mb',
+      'cta-top': '--ht-cta-mt',
+      'cta-bottom': '--ht-cta-mb',
+      'sub-top': '--ht-sub-mt',
+    }[kind];
+    content.style.setProperty(prop, `var(--bmw-spacing-${n}, 0px)`);
+  });
   decorateFontIcons(content);
   groupCtaLinks(content, 'hero-teaser-buttons', 'hero-teaser-link');
   overlay.append(content);

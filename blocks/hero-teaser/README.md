@@ -8,4 +8,4 @@ Row 1 (media): desktop image, mobile image[, tablet image] - or poster images + 
 
 ## Options
 
-`center`, `end`, `top`, `middle`, `bottom`, `cols-N`, `gradient-left`, `gradient-oblique`, `gradient-top`, `gradient-right`, `gradient-bottom`, `contained`, `ai-label`, `no-autoplay`, `loop`, `no-play-button`, `ratio-W-H`, `mobile-ratio-W-H`
+`center`, `end`, `top`, `middle`, `bottom`, `cols-N`, `text-top-N`, `text-bottom-N`, `sub-top-N`, `cta-top-N`, `cta-bottom-N`, `cta-stack-md`, `gradient-left`, `gradient-oblique`, `gradient-top`, `gradient-right`, `gradient-bottom`, `contained`, `ai-label`, `no-autoplay`, `loop`, `no-play-button`, `ratio-W-H`, `mobile-ratio-W-H`

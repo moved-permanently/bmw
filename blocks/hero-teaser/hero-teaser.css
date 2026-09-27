@@ -115,6 +115,10 @@
 }
 
 .hero-teaser .hero-teaser-content {
+  /* source spacing of the text box (text-top-N / text-bottom-N) and of the CTA row
+     (cta-bottom-N; the overlay padding already covers the default spacing-bottom-12) */
+  margin-top: var(--ht-text-mt, 0);
+  margin-bottom: calc(var(--ht-text-mb, 0px) + var(--ht-cta-mb, var(--bmw-spacing-12, 2rem)) - var(--bmw-spacing-12, 2rem));
   pointer-events: auto;
 }
 
@@ -172,7 +176,7 @@
 }
 
 .hero-teaser .hero-teaser-content > :is(h1, h2, h3, h4, h5, h6) + p {
-  margin-top: 1.25rem;
+  margin-top: var(--ht-sub-mt, 1.25rem);
 }
 
 .hero-teaser .hero-teaser-buttons {
@@ -180,7 +184,7 @@
   flex-direction: column;
   align-items: stretch;
   gap: 1rem;
-  padding-top: 2.5rem;
+  padding-top: var(--ht-cta-mt, 2.5rem);
 }
 
 .hero-teaser .hero-teaser-buttons .button-wrapper,
@@ -251,6 +255,14 @@
   }
 }
 
+/* cta-stack-md: source CTAs take their own grid rows on tablet (centred) */
+@media (width >= 768px) and (width < 1024px) {
+  .hero-teaser.cta-stack-md .hero-teaser-buttons {
+    flex-flow: column;
+    align-items: center;
+  }
+}
+
 @media (width >= 1024px) {
   .hero-teaser .hero-teaser-media .bmw-media {
     aspect-ratio: var(--ht-ar-large, var(--bmw-media-ar-desktop, 3 / 1));
@@ -304,6 +316,12 @@
 
   .hero-teaser.middle .hero-teaser-overlay {
     justify-content: center;
+  }
+
+  /* source: vertically centred box (top 50%, translateY(-50%)) - only its top margin moves it */
+  .hero-teaser.middle .hero-teaser-content {
+    margin-block: 0;
+    translate: 0 var(--ht-text-mt, 0);
   }
 
   .hero-teaser.center .hero-teaser-overlay {

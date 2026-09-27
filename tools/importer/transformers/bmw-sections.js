@@ -7,12 +7,130 @@
 //  - remaining AEM default components (title/text/button/image/list) become default content
 //  - button popovers of type "page" become "layer" sections opened by a #layer-* link
 //  - side-by-side grid columns without blocks become a "columns" block
+//    (cols-A-B spans, stack-md | md-A-B tablet layout, middle, inset-N-start|end|both, title-<style>)
 
 const SPACING_RE = /style-common--cmp-spacing-(top|bottom)-(\d+)/g;
 
+// AEM grid classes: aem-GridColumn--<bp>--<N> = width, --<bp>--none/newline = row behaviour (not a
+// width!), --offset--<bp>--<N> = offset. Widths are relative to the parent aem-Grid--<bp>--<N>.
+function gridSpan(el, bp) {
+  const m = (el.className || '').match(new RegExp(`(?:^|\\s)aem-GridColumn--${bp}--(\\d+)(?=\\s|$)`));
+  return m ? Number(m[1]) : null;
+}
+
+function gridOffset(el, bp) {
+  const m = (el.className || '').match(new RegExp(`aem-GridColumn--offset--${bp}--(\\d+)`));
+  return m ? Number(m[1]) : 0;
+}
+
+/** Number of columns of the aem-Grid that holds grid column el (default 12). */
+function gridSize(el) {
+  const g = el.parentElement && el.parentElement.closest('.aem-Grid');
+  const cls = g ? g.className : '';
+  const m = cls.match(/aem-Grid--default--(\d+)/) || cls.match(/aem-Grid--(\d+)(?=\s|$)/);
+  return m ? Number(m[1]) : 12;
+}
+
 function gridWidth(el) {
-  const m = (el.className || '').match(/aem-GridColumn--default--(\d+|none)/);
-  return m && m[1] !== 'none' ? Number(m[1]) : 12;
+  return gridSpan(el, 'default') || gridSize(el);
+}
+
+/** Side spacing of a column's config-style container at >= 1024px (recorded by bmw-cleanup from
+ * the inline per-container <style>), looking through single nested containers. */
+function cellInset(kid) {
+  let node = kid;
+  for (let d = 0; d < 3 && node; d += 1) {
+    const c = node.querySelector(':scope > .cmp-container');
+    if (!c) return '';
+    if (c.hasAttribute('data-bmw-inset')) return c.getAttribute('data-bmw-inset');
+    const inner = gridChildren(c).filter((k) => !isHidden(k));
+    node = inner.length === 1 && componentName(inner[0]) === 'container' ? inner[0] : null;
+  }
+  return '';
+}
+
+/** Typography of the first title in the columns when it differs from its tag's default. */
+function titleStyle(kids) {
+  for (const k of kids) {
+    const t = k.matches('.title') ? k : k.querySelector('.title');
+    if (t) {
+      const m = (t.className || '').match(/style-title--((?:headline|subsection)-\d)/);
+      const h = t.querySelector('h1, h2, h3, h4, h5, h6');
+      if (!m || !h) return '';
+      // tag defaults as in the source base CSS: h1-h3 headline-N, h4/h5 subsection-1/2
+      const def = { 1: 'headline-1', 2: 'headline-2', 3: 'headline-3', 4: 'subsection-1', 5: 'subsection-2' }[h.tagName[1]];
+      return m[1] === def ? '' : `title-${m[1]}`;
+    }
+  }
+  return '';
+}
+
+const isCtaOnly = (n) => n.tagName === 'P' && n.querySelectorAll('a').length === 1
+  && n.textContent.trim() === n.querySelector('a').textContent.trim();
+
+/** Layout of side-by-side grid columns in 12ths (see blocks/columns):
+ * { spans, md: null | 'stack' | [spans], middle, insets: [side|''], title } */
+function columnsInfo(visible, gs) {
+  const scale = (w) => Math.min(12, Math.max(1, Math.round((w * 12) / gs)));
+  const widths = visible.map(gridWidth);
+  // tablet (768-1023): source medium widths; missing = same as desktop
+  const mdW = visible.map((k, i) => gridSpan(k, 'medium') || widths[i]);
+  let md = null;
+  if (mdW.every((w) => w >= gs)) md = 'stack';
+  else if (mdW.some((w, i) => w !== widths[i])) md = mdW.map(scale);
+  // vertical centring (flex container "align center")
+  const holder = visible[0].parentElement && visible[0].parentElement.closest('.cmp-container');
+  return {
+    spans: widths.map(scale),
+    md,
+    middle: !!holder && /cmp-container--flex-align-center/.test(holder.className),
+    insets: visible.map(cellInset),
+    title: titleStyle(visible),
+  };
+}
+
+/** A cell whose only content is a Columns block built by flatten (nested grid): its info. */
+function nestedColumns(ctx, nodes) {
+  return nodes.length === 1 && ctx.columns && ctx.columns.get(nodes[0]);
+}
+
+/** Merges nested single-row Columns into the parent row (a 6+6 grid of 3+3 cards = 4 cards). */
+function mergeNested(ctx, info, cells) {
+  const out = { ...info, spans: [], md: info.md === 'stack' ? 'stack' : [], insets: [], cells: [] };
+  cells.forEach((nodes, i) => {
+    const child = nestedColumns(ctx, nodes);
+    if (!child) {
+      out.cells.push(nodes);
+      out.spans.push(info.spans[i]);
+      if (Array.isArray(out.md)) out.md.push(info.md ? info.md[i] : info.spans[i]);
+      out.insets.push(info.insets[i]);
+      return;
+    }
+    const parentMd = info.md ? info.md[i] : info.spans[i];
+    child.cells.forEach((c, j) => {
+      out.cells.push(c);
+      out.spans.push(Math.max(1, Math.round((info.spans[i] * child.spans[j]) / 12)));
+      if (Array.isArray(out.md)) {
+        // a nested row stacked on tablet: each of its cells takes the parent cell's width
+        const childMd = Array.isArray(child.md) ? child.md[j] : child.spans[j];
+        out.md.push(child.md === 'stack' ? parentMd : Math.max(1, Math.round((parentMd * childMd) / 12)));
+      }
+      out.insets.push(child.insets[j] || '');
+    });
+    out.title = out.title || child.title;
+  });
+  if (Array.isArray(out.md) && out.md.every((w, i) => w === out.spans[i])) out.md = null;
+  return out;
+}
+
+function columnsOptions(info) {
+  const opts = [`cols-${info.spans.join('-')}`];
+  if (info.md === 'stack') opts.push('stack-md');
+  else if (info.md) opts.push(`md-${info.md.join('-')}`);
+  if (info.middle) opts.push('middle');
+  info.insets.forEach((side, i) => { if (side) opts.push(`inset-${i + 1}-${side}`); });
+  if (info.title) opts.push(info.title);
+  return opts;
 }
 
 function isHidden(el) {
@@ -274,16 +392,30 @@ function flatten(doc, el, ctx) {
     if (leftovers.length && !['zone'].includes(name)) ctx.unknown[name] = (ctx.unknown[name] || 0) + 1;
     return leftovers;
   }
-  // side-by-side columns → columns block (only if no nested blocks)
+  // side-by-side columns → columns block (only if no nested blocks). Widths are relative to the
+  // parent grid (a 5-wide nested grid with two 5-wide children stacks them).
   const visible = kids.filter((k) => !isHidden(k));
+  const gs = visible.length ? gridSize(visible[0]) : 12;
   const widths = visible.map(gridWidth);
-  const sum = widths.reduce((a, b) => a + b, 0);
-  if (visible.length >= 2 && widths.every((w) => w < 12) && sum <= 12 + 0.01) {
-    const cells = visible.map((k) => flatten(doc, k, ctx));
+  const sum = visible.reduce((a, k, i) => a + widths[i] + gridOffset(k, 'default'), 0);
+  const newline = visible.slice(1).some((k) => /aem-GridColumn--default--newline/.test(k.className || ''));
+  if (visible.length >= 2 && !newline && widths.every((w) => w < gs) && sum <= gs) {
+    let cells = visible.map((k) => flatten(doc, k, ctx));
+    let info = columnsInfo(visible, gs);
+    if (cells.some((c) => nestedColumns(ctx, c))) {
+      info = mergeNested(ctx, info, cells);
+      ({ cells } = info);
+    }
     const hasBlock = cells.some((c) => c.some((n) => n.tagName === 'TABLE'));
-    if (!hasBlock && cells.filter((c) => c.length).length >= 2) {
+    // a row of CTAs is a button group, not columns
+    const ctaRow = cells.every((c) => c.every(isCtaOnly));
+    if (!hasBlock && !ctaRow && cells.filter((c) => c.length).length >= 2) {
       const row = cells.map((c) => { const d = doc.createElement('div'); c.forEach((n) => d.append(n)); return d; });
-      return [block(doc, `Columns (cols-${widths.join('-')})`, [row])];
+      const table = block(doc, `Columns (${columnsOptions(info).join(', ')})`, [row]);
+      // remember the layout so a parent grid can merge this row into its own (nested grids)
+      if (!ctx.columns) ctx.columns = new Map();
+      ctx.columns.set(table, { ...info, cells });
+      return [table];
     }
     return cells.flat();
   }

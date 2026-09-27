@@ -5,6 +5,9 @@
 //   row 1 (media): desktop/mobile/tablet images, or poster images + desktop/mobile video links
 //   row 2 (content): heading(s), paragraphs, CTAs
 //   options: text position (center|end, top|middle|bottom), cols-N (text width in 12ths),
+//   text-top-N / text-bottom-N (spacing of the text box), cta-top-N / cta-bottom-N (spacing
+//   around the CTA row), cta-stack-md (CTAs stacked on tablet), sub-top-N (spacing above the
+//   text after the headline),
 //   gradient-left|oblique|top|right|bottom, ai-label, contained (not full-bleed), and for video
 //   media: no-autoplay, loop, no-play-button, ratio-W-H, mobile-ratio-W-H
 // Without overlay text -> "Media" (full-width image or video): one row with the media cell.
@@ -55,6 +58,39 @@ export default function parse(element, { document }) {
     if (v) options.push(v);
     const w = (cls.match(/aem-GridColumn--default--(\d+)/) || [])[1];
     if (w && Number(w) < 12) options.push(`cols-${w}`);
+    // spacing of the positioned text box (source margin on style-container--top/bottom: moves
+    // the text away from the media edge on desktop, adds space under the text on mobile/tablet)
+    const mt = (cls.match(/cmp-spacing-top-(\d+)/) || [])[1];
+    const mb = (cls.match(/cmp-spacing-bottom-(\d+)/) || [])[1];
+    if (mt) options.push(`text-top-${mt}`);
+    if (mb) options.push(`text-bottom-${mb}`);
+    // spacing below the CTA row (source: spacing-bottom of the container holding the buttons;
+    // the block default equals spacing-bottom-12)
+    const ctaBox = [...box.querySelectorAll('.container')].reverse()
+      .find((c) => c.querySelector(':scope > .cmp-container > .aem-Grid > .button'));
+    const cb = ctaBox && (ctaBox.className.match(/cmp-spacing-bottom-(\d+)/) || [])[1];
+    if (cb && cb !== '12') options.push(`cta-bottom-${cb}`);
+    // spacing above the CTA row and above the first text after the headline
+    const ct = ctaBox && (ctaBox.className.match(/cmp-spacing-top-(\d+)/) || [])[1];
+    if (ct) options.push(`cta-top-${ct}`);
+    // tablet: CTAs whose medium grid widths (+ offsets) exceed the row are stacked in the source
+    if (ctaBox) {
+      const grid = ctaBox.querySelector(':scope > .cmp-container > .aem-Grid');
+      const size = Number(((grid && grid.className.match(/aem-Grid--medium--(\d+)/)) || [])[1] || 12);
+      const btns = [...ctaBox.querySelectorAll(':scope > .cmp-container > .aem-Grid > .button')];
+      const md = btns.reduce((sum, b) => {
+        const w = Number((b.className.match(/aem-GridColumn--medium--(\d+)(?=\s|$)/) || [])[1] || 0);
+        const o = Number((b.className.match(/aem-GridColumn--offset--medium--(\d+)/) || [])[1] || 0);
+        return sum + w + o;
+      }, 0);
+      if (btns.length > 1 && md > size) options.push('cta-stack-md');
+    }
+    const sub = [...box.querySelectorAll('.text')].find((t) => {
+      const prev = t.previousElementSibling;
+      return prev && prev.classList.contains('title') && !isHiddenIn(t, overlay);
+    });
+    const st = sub && (sub.className.match(/cmp-spacing-top-(\d+)/) || [])[1];
+    if (st) options.push(`sub-top-${st}`);
   }
   const gradient = mediaRoot.querySelector('.cmp-gradient');
   if (gradient) {

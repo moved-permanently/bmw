@@ -321,10 +321,8 @@ export async function attachVideoSource(video, url) {
     return { destroy: () => { video.removeAttribute('src'); video.load(); } };
   }
   const Hls = await loadHls();
-  if (!Hls.isSupported()) {
-    video.src = url;
-    return { destroy: () => video.removeAttribute('src') };
-  }
+  // no MSE (or no H.264 in MSE): the stream cannot play, keep whatever poster the caller shows
+  if (!Hls.isSupported()) throw new Error('HLS playback not supported');
   const hls = new Hls({ capLevelToPlayerSize: true, startLevel: -1 });
   hls.loadSource(url);
   hls.attachMedia(video);
@@ -451,7 +449,9 @@ export function createBmwVideo(opts) {
     try {
       handle = await attachVideoSource(video, ref.url);
     } catch {
+      // not playable here (no native HLS, no MSE, hls.js blocked): the poster stays
       handle = null;
+      element.classList.add('is-unsupported');
       return;
     }
     if (time && currentUrl === ref.url) video.currentTime = time;
@@ -465,6 +465,7 @@ export function createBmwVideo(opts) {
   const play = async () => {
     userPaused = false;
     await ensure();
+    if (!handle) return; // no playable source: keep the poster, don't fake playback
     const p = video.play();
     if (p && p.catch) p.catch(() => {});
   };
@@ -538,10 +539,45 @@ export function createBmwVideo(opts) {
       bar.querySelector('.bmw-video-mute').setAttribute('aria-label', video.muted ? LABELS.mute : LABELS.unmute);
     }
   };
-  video.addEventListener('playing', () => {
-    element.classList.remove('is-not-started');
+  // The poster stays until the video has really presented a frame (not merely fired "playing":
+  // headless / no-MSE / throttled browsers report playback without painting anything -> black).
+  let frameWatch = false;
+  const markStarted = () => {
+    frameWatch = false;
+    if (video.paused || video.error || !video.videoWidth) return;
+    element.classList.remove('is-not-started', 'is-unsupported');
     element.classList.add('is-started');
     update();
+  };
+  const watchFirstFrame = () => {
+    if (frameWatch || element.classList.contains('is-started')) return;
+    frameWatch = true;
+    if (typeof video.requestVideoFrameCallback === 'function') {
+      video.requestVideoFrameCallback((now, meta) => {
+        if (meta && meta.presentedFrames === 0) {
+          frameWatch = false;
+          watchFirstFrame();
+          return;
+        }
+        markStarted();
+      });
+    } else {
+      const onTime = () => {
+        if (video.currentTime <= 0.05) return;
+        video.removeEventListener('timeupdate', onTime);
+        markStarted();
+      };
+      video.addEventListener('timeupdate', onTime);
+    }
+  };
+  video.addEventListener('playing', () => {
+    update();
+    watchFirstFrame();
+  });
+  video.addEventListener('error', () => {
+    // source failed (e.g. HLS without MSE): keep the poster for good
+    element.classList.remove('is-started', 'is-playing');
+    element.classList.add('is-not-started', 'is-unsupported');
   });
   ['pause', 'play', 'ended', 'volumechange'].forEach((ev) => video.addEventListener(ev, update));
   video.addEventListener('timeupdate', () => {
