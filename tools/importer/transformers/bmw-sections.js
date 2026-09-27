@@ -420,58 +420,20 @@ function convertTitle(doc, col, ctx) {
   return [out];
 }
 
-/** Plain running-text paragraph (no image, not a stand-alone link / button). */
-function isProse(n) {
-  if (!n || n.tagName !== 'P' || n.querySelector('img, picture')) return false;
-  const links = n.querySelectorAll('a');
-  return !(links.length === 1 && n.textContent.trim() === links[0].textContent.trim());
-}
-
-/** Paragraphs of one source text component have no gap between them (source p { margin: 0 });
- * authors space them with empty <p>&nbsp;</p> lines. Consecutive prose paragraphs are joined into
- * one paragraph with line breaks (<br> per paragraph break, one more per spacer line), which
- * renders the source rhythm without runtime support. Returns the nodes to keep. */
-function joinTightParagraphs(doc, items) {
-  const out = [];
-  let prev = null; // last kept node of the same component
-  let spacers = 0;
-  items.forEach((it) => {
-    if (it.spacer) {
-      if (prev) spacers += 1;
-      return;
-    }
-    const n = it.node;
-    if (prev && isProse(prev) && isProse(n)) {
-      for (let i = 0; i <= spacers; i += 1) prev.append(doc.createElement('br'));
-      prev.append(...n.childNodes);
-    } else {
-      out.push(n);
-      prev = n;
-    }
-    spacers = 0;
-  });
-  return out;
-}
-
 function convertText(doc, col, ctx) {
   const root = col.querySelector('.cmp-text') || col;
-  const items = [];
+  const nodes = [];
   [...root.children].forEach((c) => {
     if (c.matches('.cmp-infoi, [data-cmp-hook-tooltip]')) return;
     if (/^(P|UL|OL|H[1-6]|TABLE|BLOCKQUOTE)$/.test(c.tagName)) {
       const n = cleanInline(doc, c);
-      if (n.textContent.trim() || n.querySelector('img')) items.push({ node: n });
-      else if (c.tagName === 'P') items.push({ spacer: true });
+      if (n.textContent.trim() || n.querySelector('img')) nodes.push(n);
     } else if (c.textContent.trim()) {
       const p = doc.createElement('p');
       p.append(...cleanInline(doc, c).childNodes);
-      items.push({ node: p });
+      nodes.push(p);
     }
   });
-  const cls0 = col.className || '';
-  const nodes = /style-text--disclaimer/.test(cls0) || col.querySelector('blockquote.cmp-text__quote')
-    ? items.filter((it) => it.node).map((it) => it.node)
-    : joinTightParagraphs(doc, items);
   if (!nodes.length) return [];
   // quote variant: <blockquote class="cmp-text__quote"><div class="cmp-text">…</div><cite>source</cite></blockquote>
   const quote = col.querySelector('blockquote.cmp-text__quote');
@@ -800,25 +762,14 @@ function sectionGroups(nodes, leaves) {
   leaves.forEach((l) => (l.nodes || []).forEach((n) => byNode.set(n, l)));
   const runs = [];
   let cur = null;
-  const isText = (l) => !l.side && (l.kind === 'title' || l.kind === 'text');
-  const ownKey = (l) => layoutKey(leafStyles([l]));
   nodes.forEach((n) => {
     if (n.tagName === 'TABLE') { runs.push({ table: true, nodes: [n], leaves: [] }); cur = null; return; }
     const l = byNode.get(n);
     // text beside a block and the following regular default content form separate runs
     if (cur && l && cur.side !== undefined && cur.side !== !!l.side) cur = null;
-    // a title/text laid out differently from the texts before it (e.g. a centred 8-column title over
-    // full-width text) starts a run of its own: the source spans are per component
-    if (cur && l && isText(l) && !cur.leaves.includes(l) && cur.textKey !== undefined && ownKey(l) !== cur.textKey) {
-      cur = { nodes: [], leaves: [], split: n };
-      runs.push(cur);
-    }
     if (!cur) { cur = { nodes: [], leaves: [] }; runs.push(cur); }
     cur.nodes.push(n);
-    if (l && !cur.leaves.includes(l)) {
-      cur.leaves.push(l); cur.side = !!l.side;
-      if (isText(l) && cur.textKey === undefined) cur.textKey = ownKey(l);
-    }
+    if (l && !cur.leaves.includes(l)) { cur.leaves.push(l); cur.side = !!l.side; }
   });
   runs.forEach((r) => {
     if (r.table) return;
@@ -835,25 +786,14 @@ function sectionGroups(nodes, leaves) {
         const moved = [];
         while (g.runs.length && g.runs[g.runs.length - 1].table) moved.unshift(g.runs.pop());
         g = { runs: moved, key: r.key };
-        // continuation of the previous text (no block in between): the gap default content has
-        // between these elements
-        if (!moved.length && r.split) g.gap = contentGap(r.split);
         groups.push(g);
       }
     }
     g.runs.push(r);
   });
   return groups.filter((g) => g.runs.length).map((g) => ({
-    nodes: g.runs.flatMap((r) => r.nodes), leaves: g.runs.flatMap((r) => r.leaves), plain: g.key === 'side', gap: g.gap,
+    nodes: g.runs.flatMap((r) => r.nodes), leaves: g.runs.flatMap((r) => r.leaves), plain: g.key === 'side',
   }));
-}
-
-/** Top margin (spacing step) default content gives element n after another element (styles.css). */
-function contentGap(n) {
-  if (/^H[1-3]$/.test(n.tagName)) return 16;
-  if (/^H[4-6]$/.test(n.tagName)) return 10;
-  if (isCtaOnly(n) || (n.tagName === 'P' && n.querySelector('img'))) return 8;
-  return 4;
 }
 
 /** Block table whose name carries a spacing-top-N option. */
@@ -875,8 +815,7 @@ function emitSection(doc, nodes, base, leaves, extra, push) {
       if (i > 0) styles = styles.filter((st) => !st.startsWith('spacing-top-'));
       if (i < groups.length - 1) styles = styles.filter((st) => !st.startsWith('spacing-bottom-'));
       // the gap between the default content and the following block inside a section
-      if (i > 0 && g.gap) styles.unshift(`spacing-top-${g.gap}`);
-      else if (i > 0 && !blockTopSpacing(g.nodes[0])) styles.unshift('spacing-top-8');
+      if (i > 0 && !blockTopSpacing(g.nodes[0])) styles.unshift('spacing-top-8');
     }
     push(g.nodes, metaTable(doc, [...new Set(styles)], i === 0 ? extra : {}));
   });
