@@ -76,6 +76,45 @@ export default function decorate(block) {
       ? next.textContent.trim() : '';
     if (model && model.length <= 4 && !/\s/.test(model)) next.classList.add('hero-teaser-model');
   });
+  // title branding logo (source cmp-title__image-branding: inline-block, 1em high, in front of the
+  // title text): a logo-only picture / paragraph right before a heading moves into the heading
+  [...content.children].forEach((el) => {
+    const next = el.nextElementSibling;
+    if (!next || !/^H[1-6]$/.test(next.tagName)) return;
+    const logo = el.tagName === 'PICTURE' ? el : null;
+    const para = !logo && el.tagName === 'P' && !el.textContent.trim() && el.children.length === 1
+      && el.firstElementChild.tagName === 'PICTURE' ? el.firstElementChild : null;
+    const img = (logo || para)?.querySelector('img');
+    if (!img || !/logo/i.test(img.getAttribute('src') || '')) return;
+    const inline = document.createElement('span');
+    inline.className = 'hero-teaser-branding';
+    inline.append(logo || para);
+    next.prepend(inline);
+    if (para) el.remove();
+  });
+  // price tag (source style-container--price-tag): a bold price paragraph ("Ab 339 €") and the
+  // plain paragraphs after it ("im Monat leasen.") as its label
+  const isPrice = (el) => el.tagName === 'P' && el.children.length === 1
+    && el.firstElementChild.tagName === 'STRONG' && !el.querySelector('a')
+    && el.textContent.trim() === el.firstElementChild.textContent.trim()
+    && /\d[\d.,\s]*(€|EUR)|€\s*\d/.test(el.textContent);
+  const priceEl = [...content.children].find(isPrice);
+  if (priceEl) {
+    const tag = document.createElement('div');
+    tag.className = 'hero-teaser-pricetag';
+    const label = document.createElement('div');
+    label.className = 'hero-teaser-price-label';
+    let next = priceEl.nextElementSibling;
+    while (next && next.tagName === 'P' && !next.querySelector('a, picture, img') && next.textContent.trim()) {
+      const el = next;
+      next = next.nextElementSibling;
+      label.append(el);
+    }
+    priceEl.before(tag);
+    priceEl.classList.add('hero-teaser-price');
+    tag.append(priceEl);
+    if (label.children.length) tag.append(label);
+  }
   const cols = [...block.classList].find((c) => /^cols-\d+$/.test(c));
   if (cols) content.style.setProperty('--ht-cols', cols.substring(5));
   // source spacing of the text box / CTA row -> global spacing tokens (responsive)

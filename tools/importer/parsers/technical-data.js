@@ -3,7 +3,7 @@
 // Parser for block "technical-data" (source: .technicaldata.aem-GridColumn, cmp-technicaldata on the
 // *-technische-daten pages). All variants are server-rendered; the model / transmission dropdowns
 // switch between them. Block "Technical Data" (option "short" = 3 columns). Rows:
-//   [fuel type | model | transmission]      starts a variant (first variant = default)
+//   [fuel type | model | transmission (| default)]  starts a variant (first or the one marked 'default')
 //   [category heading (h3, footnote sup)]   collapsible group
 //   [image | "4.361 mm"]                    measurement (length, width, height images)
 //   [label | value]                         fact (footnote sups kept)
@@ -77,18 +77,23 @@ export default function parse(element, { document }) {
   Object.entries(data).forEach(([fuel, models]) => {
     (models || []).forEach((m) => {
       (m.transmissions && m.transmissions.length ? m.transmissions : [{ id: m.id, label: '' }]).forEach((t) => {
-        variants.push({ fuel, model: m.label || '', transmission: t.label || '', id: t.id || m.id });
+        variants.push({ fuel, model: m.label || '', transmission: t.label || '', id: t.id || m.id, active: m.active !== false });
       });
     });
   });
   const byId = new Map(wrappers.map((w) => [w.id, w]));
   const cells = [];
   const used = new Set();
+  // the source script shows the first model flagged "active" in dropdown order (not the server-side
+  // --show wrapper); mark it when it is not the first variant anyway
+  const firstActive = variants.find((v) => v.active && byId.get(v.id));
+  const shown = firstActive && byId.get(firstActive.id);
+  const firstShown = shown && variants.findIndex((v) => byId.get(v.id) === shown) > 0;
   variants.forEach((v) => {
     const w = byId.get(v.id);
     if (!w || used.has(w)) return;
     used.add(w);
-    cells.push([v.fuel, v.model, v.transmission || ' ']);
+    cells.push([v.fuel, v.model, v.transmission || ' ', ...(firstShown && w === shown ? ['default'] : [])]);
     cells.push(...variantRows(document, w));
   });
   // wrappers without dropdown data (single variant pages)

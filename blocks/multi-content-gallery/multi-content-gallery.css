@@ -80,7 +80,9 @@ main > .section > .multi-content-gallery-wrapper {
 .multi-content-gallery .mcg-card {
   position: relative;
   display: flex;
-  flex: 0 0 calc((100% + var(--mcg-gap)) * 5 / 6);
+
+  /* source Swiper slidesPerView 1.2: (width - 0.2 * spaceBetween) / 1.2 (556px of 672 at 768) */
+  flex: 0 0 calc((100% - var(--mcg-gap) * 0.2) / 1.2);
   align-items: flex-end;
   box-sizing: border-box;
   height: 100%;

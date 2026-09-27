@@ -4,8 +4,8 @@
 // 2 columns, one row per item: cell 1 = title (text), cell 2 = panel content as default content
 // (paragraphs, lists, links, CTAs, images, disclaimers). Nested components are flattened (icons ->
 // :icon:, embeds -> image, inner block tables -> their text), so there are no nested tables.
-// Options: faq (FAQ spacing), h2 (item headers are h2, default h3), expand-first (first item open
-// on load), single (only one item open at a time), width-N / width-lg-N (desktop width in 12ths
+// Options: faq (FAQ spacing), h2 (item headers are h2, default h3), expand-first / expand-N (first /
+// N-th item open on load), single (only one item open at a time), width-N / width-lg-N (desktop width in 12ths
 // from 1280px / 1024-1279px, centered; derived from the source grid).
 import { replaceWithBlock } from './_utils.js';
 import { blockName, divCell, cleanInline } from './_media.js';
@@ -28,7 +28,12 @@ export default function parse(element, { document }) {
   if (/style-accordion--faq/.test(element.className)) options.push('faq');
   const header = items[0].querySelector('.cmp-accordion__header');
   if (header && header.tagName === 'H2') options.push('h2');
-  if (items[0].hasAttribute('data-cmp-expanded') && items[0].getAttribute('data-cmp-expanded') !== 'false') options.push('expand-first');
+  // items open on load (source data-cmp-expanded): first -> expand-first, others -> expand-N (1-based)
+  const titled = items.filter((it) => it.querySelector('.cmp-accordion__title') && it.querySelector('.cmp-accordion__title').textContent.trim());
+  titled.forEach((it, i) => {
+    if (!it.hasAttribute('data-cmp-expanded') || it.getAttribute('data-cmp-expanded') === 'false') return;
+    options.push(i === 0 ? 'expand-first' : `expand-${i + 1}`);
+  });
   if (acc.hasAttribute('data-cmp-single-expansion')) options.push('single');
   const w = widthOption(element, 'default', 'width');
   if (w) options.push(w);

@@ -48,6 +48,12 @@
   line-height: var(--bmw-body-1-line-height, 1.625rem);
 }
 
+/* body-2: source cell texts without style-text--body-1 (base body size) */
+.columns.body-2 .columns-text-col {
+  font-size: var(--bmw-body-2-font-size, 0.9375rem);
+  line-height: var(--bmw-body-2-line-height, 1.5rem);
+}
+
 .columns .columns-text-col > * {
   margin: 0;
 }
@@ -74,6 +80,16 @@
 
 .columns .columns-text-col > * + .columns-links {
   margin-top: var(--bmw-spacing-8, 1.25rem);
+}
+
+/* center: cell texts centred (source cells in style-container--center containers) */
+.columns.center .columns-row > div {
+  text-align: center;
+}
+
+.columns.center .columns-row .columns-links {
+  align-items: center;
+  justify-content: center;
 }
 
 @media (width >= 768px) {

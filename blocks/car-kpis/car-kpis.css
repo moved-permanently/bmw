@@ -1,6 +1,7 @@
 /* Car KPIs (source .cmp-carKPIs) */
 .car-kpis {
-  --car-kpis-color: var(--bmw-color-text, #262626);
+  /* page theme colour (source --page-variables-primary-color) */
+  --car-kpis-color: var(--page-variables-primary-color, var(--bmw-color-text, #262626));
 
   color: var(--car-kpis-color);
   text-align: center;

@@ -1,0 +1,14 @@
+/* Cookie Policy (source .cookie-policy / .epaas-policy-page-container, rendered by ePaaS) */
+.cookie-policy .epaas-policy-page-container:empty {
+  display: none;
+}
+
+.cookie-policy .cookie-policy-fallback {
+  display: flex;
+  justify-content: center;
+  padding: var(--bmw-spacing-16, 3rem) 0;
+}
+
+.cookie-policy .cookie-policy-fallback[hidden] {
+  display: none;
+}

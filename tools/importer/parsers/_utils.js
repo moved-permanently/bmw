@@ -130,6 +130,11 @@ export function cleanHref(href) {
 /** Builds a block table and replaces `element` with it. */
 export function replaceWithBlock(document, element, name, cells) {
   const block = WebImporter.Blocks.createBlock(document, { name, cells });
+  // the component's own spacing (style-common--cmp-spacing-top|bottom-N) is lost with the element:
+  // kept for bmw-sections, which turns it into spacing-top-N / spacing-bottom-N block options
+  const sp = ((element.className || '').match(/style-common--cmp-spacing-(?:top|bottom)-\d+/g) || [])
+    .map((c) => c.replace('style-common--cmp-spacing-', ''));
+  if (sp.length) block.setAttribute('data-bmw-spacing', sp.join(' '));
   element.replaceWith(block);
   return block;
 }

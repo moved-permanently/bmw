@@ -7,6 +7,8 @@ import { decorateFontIcons, groupCtaLinks } from '../../scripts/bmw-utils.js';
  * (not centered), list (icon inline before the text), size-xxs|xs|s|m|ml|xl|xxl (default l),
  * offsets-A-B[-…]: desktop (from 1024px) grid offsets of the items in 12ths (source offsets),
  * offsets-md: offsets also from 768px. body-1: item text in body-1 size (default body-2).
+ * span-md-N: items span N of 12 grid columns at 768-1023 (source medium--N; with cols-1-1-3 and
+ * span-md-8 each item is one centred 8-column row).
  */
 
 const ICON_TEXT_RE = /^:[a-z0-9_-]+:$/i;
@@ -25,6 +27,12 @@ export default function decorate(block) {
     block.style.setProperty('--icon-teaser-cols-m', cols[1]);
     block.style.setProperty('--icon-teaser-cols-t', cols[2]);
     block.style.setProperty('--icon-teaser-cols-d', cols[3]);
+  }
+
+  const spanMd = [...block.classList].map((c) => c.match(/^span-md-(\d+)$/)).find(Boolean);
+  if (spanMd) {
+    block.classList.add('has-span-md');
+    block.style.setProperty('--icon-teaser-span-t', Math.min(12, Number(spanMd[1])));
   }
 
   const offsetsClass = [...block.classList].find((c) => /^offsets-\d+(-\d+)*$/.test(c));

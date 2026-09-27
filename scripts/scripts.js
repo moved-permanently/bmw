@@ -10,6 +10,7 @@ import {
   loadSections,
   loadCSS,
   buildBlock,
+  getMetadata,
 } from './aem.js';
 import { decorateBmwSections } from './bmw-sections.js';
 
@@ -407,11 +408,27 @@ function decorateButtons(main) {
 }
 
 /**
+ * aem.page renders authored `:icon_name:` text as <span class="icon icon-icon_name"></span> (the
+ * local content preview keeps the text). All blocks read the authored form (BMW icon-font
+ * ligatures, icon-only cells detected by their `:name:` text), so turn the empty spans back into
+ * the text before anything decorates (also avoids 404ing /icons/<name>.svg images).
+ * @param {Element} main The container element
+ */
+function restoreAuthoredIcons(main) {
+  main.querySelectorAll('span.icon').forEach((span) => {
+    if (span.children.length || span.textContent.trim()) return;
+    const cls = [...span.classList].find((c) => c.startsWith('icon-'));
+    if (cls) span.replaceWith(document.createTextNode(`:${cls.substring(5)}:`));
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
+  restoreAuthoredIcons(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
@@ -424,9 +441,24 @@ export function decorateMain(main) {
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
+/**
+ * Page theme colour (source --page-variables-primary-color, e.g. #3E527A on the BMW iX3 pages):
+ * metadata "Primary Color" → CSS variables used by the blocks (stage texts, card list, KPIs…);
+ * --page-variables-primary-color-rgb is space separated (for rgb(var(…) / a)).
+ */
+function applyPagePrimaryColor() {
+  const color = getMetadata('primary-color').trim();
+  const m = color.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+  if (!m) return;
+  const root = document.documentElement;
+  root.style.setProperty('--page-variables-primary-color', color);
+  root.style.setProperty('--page-variables-primary-color-rgb', m.slice(1).map((h) => parseInt(h, 16)).join(' '));
+}
+
 async function loadEager(doc) {
   document.documentElement.lang = 'de';
   decorateTemplateAndTheme();
+  applyPagePrimaryColor();
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);

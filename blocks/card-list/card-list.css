@@ -2,7 +2,8 @@
 
 /* Card List (source .cmp-cardlist) */
 .card-list {
-  --card-list-primary-rgb: 58 93 144;
+  /* page theme colour (source --page-variables-primary-color-rgb, default #3a5d90) */
+  --card-list-primary-rgb: var(--page-variables-primary-color-rgb, 58 93 144);
   --card-list-primary: rgb(var(--card-list-primary-rgb));
 
   display: flex;
@@ -129,6 +130,7 @@
 
 .card-list .card-list-icon {
   display: block;
+  color: var(--page-variables-primary-color, inherit);
   flex-shrink: 0;
   line-height: 1;
 }
@@ -165,7 +167,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  background-color: var(--bmw-grey-900, #262626);
+  background-color: var(--page-variables-primary-color, var(--bmw-grey-900, #262626));
   transform: translate(-50%, -50%);
 }
 

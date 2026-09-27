@@ -159,6 +159,14 @@
   line-height: var(--ht-body-lh);
 }
 
+/* title branding logo (source cmp-title__image-branding) inline in front of the heading text */
+.hero-teaser .hero-teaser-branding img {
+  display: inline-block;
+  width: auto;
+  height: 1em;
+  margin-inline-end: 0.5rem;
+}
+
 /* model branding: "THE" (source title iconization-1) + model designation (stage-model-1) */
 .hero-teaser .hero-teaser-content > p.hero-teaser-iconization {
   margin-bottom: var(--bmw-spacing-4, 0.5rem);
@@ -182,6 +190,74 @@
 
 .hero-teaser .hero-teaser-content > :is(h1, h2, h3, h4, h5, h6) + p {
   margin-top: var(--ht-sub-mt, 1.25rem);
+}
+
+/* price tag (source style-container--price-tag): headline-2 bold price + body-2 label; stacked and
+   centred on phones, side by side from 768px (centred on tablets) */
+.hero-teaser .hero-teaser-content > .hero-teaser-pricetag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--bmw-spacing-6, 1rem);
+}
+
+.hero-teaser .hero-teaser-pricetag p {
+  margin: 0;
+}
+
+.hero-teaser .hero-teaser-pricetag .hero-teaser-price {
+  padding-top: 0.5rem;
+  font-size: var(--bmw-headline-2-font-size);
+  font-weight: 700;
+  line-height: var(--bmw-headline-2-line-height);
+  white-space: nowrap;
+}
+
+.hero-teaser .hero-teaser-pricetag .hero-teaser-price strong {
+  font-weight: inherit;
+}
+
+.hero-teaser .hero-teaser-price-label {
+  padding-bottom: 0.5rem;
+  font-size: var(--bmw-body-2-font-size);
+  font-weight: 300;
+  line-height: var(--bmw-body-2-line-height);
+  text-align: center;
+}
+
+@media (width >= 768px) {
+  .hero-teaser .hero-teaser-content > .hero-teaser-pricetag {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .hero-teaser .hero-teaser-pricetag .hero-teaser-price {
+    padding: 0 0.25rem 0.5rem 0;
+  }
+
+  .hero-teaser .hero-teaser-price-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 0.25rem;
+    text-align: left;
+  }
+}
+
+@media (width >= 1024px) {
+  .hero-teaser .hero-teaser-content > .hero-teaser-pricetag {
+    justify-content: flex-start;
+  }
+
+  .hero-teaser.center .hero-teaser-content > .hero-teaser-pricetag {
+    justify-content: center;
+  }
+
+  .hero-teaser .hero-teaser-pricetag .hero-teaser-price,
+  .hero-teaser .hero-teaser-price-label {
+    padding-bottom: 0.75rem;
+  }
 }
 
 .hero-teaser .hero-teaser-buttons {

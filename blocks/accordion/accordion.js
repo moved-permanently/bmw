@@ -2,7 +2,8 @@ import { decorateFontIcons, groupCtaLinks } from '../../scripts/bmw-utils.js';
 
 /*
  * Accordion (BMW accordion-v1). One row per item: cell 1 title, cell 2 content.
- * Options: faq, h2 (header level, default h3), expand-first, single (one item open at a time),
+ * Options: faq, h2 (header level, default h3), expand-first / expand-N (first / N-th item open on
+ * load), single (one item open at a time),
  * width-N / width-lg-N / width-md-N (centered width in 12ths from 1280px / 1024-1279px /
  * 768-1023px; lg falls back to N, md to lg).
  */
@@ -83,5 +84,9 @@ export default function decorate(block) {
   });
 
   if (items.length && block.classList.contains('expand-first')) setOpen(items[0], true);
+  [...block.classList].forEach((c) => {
+    const m = c.match(/^expand-(\d+)$/);
+    if (m && items[Number(m[1]) - 1]) setOpen(items[Number(m[1]) - 1], true);
+  });
   block.replaceChildren(...items);
 }

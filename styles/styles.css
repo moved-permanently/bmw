@@ -910,6 +910,11 @@ main .default-content-wrapper picture img {
   justify-content: center;
 }
 
+/* download links built from ":download:" paragraphs (scripts/bmw-sections.js) */
+.section.center .default-content-wrapper > .download .download-list {
+  align-items: center;
+}
+
 /* centered default content: lists stay a left-aligned block in the middle (block lists keep their own layout) */
 .section.center .default-content-wrapper > ul,
 .section.center .default-content-wrapper > ol {

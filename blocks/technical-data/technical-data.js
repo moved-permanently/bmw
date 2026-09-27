@@ -6,7 +6,8 @@ import { decorateFontIcons } from '../../scripts/bmw-utils.js';
  * groups (Antrieb, Motor, Fahrleistung, Verbrauch, Abmessungen …) with zebra fact grids,
  * measurement images and the footnotes referenced by the visible variant.
  *  Rows:
- *   [fuel type | model | transmission]   starts a variant; the first variant is the default
+ *   [fuel type | model | transmission (| default)]  starts a variant; the first variant (or the one
+ *                                        marked "default" in a 4th cell) is shown initially
  *                                        (a URL hash with the model slug, e.g. #bmw-120, selects)
  *   [heading]                            group title (h3, may carry a footnote sup)
  *   [image | dimension]                  measurement image with its dimension ("4.361 mm")
@@ -62,6 +63,7 @@ function parseRows(block) {
         fuel: cellText(cells[0]),
         model: cellText(cells[1]),
         transmission: cellText(cells[2]),
+        isDefault: /^default$/i.test(cellText(cells[3])),
         groups: [],
       };
       variants.push(variant);
@@ -272,6 +274,14 @@ export default function decorate(block) {
     const n = sup ? sup.textContent.trim() : '';
     p.classList.add('technical-data-footnote');
     if (n) p.id = p.id || `technical-data-fn-${n}`;
+    // note text in its own element next to the number (source __footnote-link / __footnote-text)
+    const body = document.createElement('span');
+    body.className = 'technical-data-footnote-text';
+    body.append(...[...p.childNodes].filter((c) => c !== sup));
+    if (body.firstChild && body.firstChild.nodeType === Node.TEXT_NODE) {
+      body.firstChild.textContent = body.firstChild.textContent.replace(/^\s+/, '');
+    }
+    p.append(body);
     notes.append(p);
     return { n, p };
   }) : [];
@@ -286,7 +296,7 @@ export default function decorate(block) {
     }
     m.variants.push(i);
   });
-  let current = 0;
+  let current = Math.max(0, variants.findIndex((v) => v.isDefault));
   const dropdowns = document.createElement('div');
   dropdowns.className = 'technical-data-dropdowns';
   // eslint-disable-next-line no-use-before-define

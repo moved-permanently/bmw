@@ -78,6 +78,9 @@
   grid-auto-columns: var(--mo-card-width);
   grid-auto-flow: column;
   grid-template-rows: repeat(var(--mo-rows, 5), auto);
+
+  /* fewer cards than fit (e.g. 2 at 1440): centred like the source swiper (centerInsufficientSlides) */
+  justify-content: safe center;
   margin: 0;
   padding: 0 var(--mo-offset);
   overflow-x: auto;

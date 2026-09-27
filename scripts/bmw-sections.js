@@ -83,6 +83,21 @@ function applySectionMetadata(main) {
 }
 
 /**
+ * aem.page renders section metadata server-side: the styles arrive as classes on the section div,
+ * `id` as the id attribute and other keys as data-* attributes (no section-metadata table left).
+ * Normalises those sections to what applySectionMetadata produces for authored markup: content
+ * widths (content-N…), data-id (layers, tab panels) and no id attribute on layer sections.
+ * @param {Element} main
+ */
+function applyRenderedSectionMetadata(main) {
+  main.querySelectorAll(':scope > .section').forEach((section) => {
+    if (section.id && !section.dataset.id) section.dataset.id = section.id;
+    if (section.classList.contains('layer') && section.id) section.removeAttribute('id');
+    if (!section.classList.contains('content-grid')) applyContentWidth(section);
+  });
+}
+
+/**
  * The source home page renders its H1 for screen readers only (.a11y-only-screen-reader):
  * a standalone H1 that opens the page and is directly followed by the stage headline / hero.
  * @param {Element} main
@@ -127,6 +142,49 @@ function decorateEyebrows(main) {
       && /^H[1-6]$/.test(p.nextElementSibling?.tagName || '')) {
       p.classList.add('eyebrow');
     }
+  });
+}
+
+/**
+ * Source download components in default content (authored
+ * ":download: <a title="PDF, 1 MB">Label</a>" paragraphs): consecutive ones become one Download
+ * block (icon link), loaded with the section.
+ * @param {Element} main
+ */
+function decorateDefaultDownloads(main) {
+  const isDownload = (el) => el.tagName === 'P' && el.querySelectorAll('a[href]').length === 1
+    && /^:download:/.test(el.textContent.trim());
+  main.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
+    let block = null;
+    [...wrapper.children].forEach((el) => {
+      if (!isDownload(el)) {
+        block = null;
+        return;
+      }
+      const a = el.querySelector('a[href]');
+      const link = document.createElement('a');
+      link.href = a.href;
+      link.textContent = a.textContent.trim();
+      const row = document.createElement('div');
+      const linkCell = document.createElement('div');
+      linkCell.append(link);
+      row.append(linkCell);
+      const meta = (a.title || '').trim();
+      if (meta) {
+        const metaCell = document.createElement('div');
+        metaCell.textContent = meta;
+        row.append(metaCell);
+      }
+      if (!block) {
+        block = document.createElement('div');
+        block.className = 'download block';
+        block.dataset.blockName = 'download';
+        block.dataset.blockStatus = 'initialized';
+        el.before(block);
+      }
+      block.append(row);
+      el.remove();
+    });
   });
 }
 
@@ -328,7 +386,9 @@ export function decorateBmwSections(main) {
   // default-content images: desktop/mobile/tablet crops → one responsive picture (+ EU AI label)
   decorateResponsiveImages(main);
   applySectionMetadata(main);
+  applyRenderedSectionMetadata(main);
   hidePageTitle(main);
+  decorateDefaultDownloads(main);
   decorateDefaultContent(main);
   decorateEyebrows(main);
 

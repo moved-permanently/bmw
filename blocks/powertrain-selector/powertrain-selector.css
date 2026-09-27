@@ -11,6 +11,7 @@
 
 .powertrain-selector .powertrain-selector-title :is(h1, h2, h3, h4) {
   margin: 0;
+  color: var(--page-variables-primary-color, inherit);
   font-size: var(--bmw-headline-2-font-size);
   font-weight: var(--bmw-font-weight-light, 300);
   line-height: var(--bmw-headline-2-line-height);

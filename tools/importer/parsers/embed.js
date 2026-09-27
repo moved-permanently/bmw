@@ -10,6 +10,7 @@
 //      becomes a default-content image (or an image inside the surrounding carousel/teaser parser)
 //  - Scene7 viewer script only (no markup, e.g. weltcup) -> left alone (renders nothing on the source)
 import { replaceWithBlock, absUrl } from './_utils.js';
+import { cosyUrl } from './_vehicle.js';
 
 export const selectors = ['.embed.aem-GridColumn'];
 
@@ -34,7 +35,8 @@ function embedBlock(document, element, iframe) {
 function cosyImage(document, element, picture) {
   // re-type the component as an AEM image so the default-content / media parsers treat it as one
   const img = picture.querySelector('img');
-  const src = img && (img.getAttribute('src') || img.getAttribute('data-src'));
+  // the <img> fallback of COSY renderings is a JPEG (black background); the webp sources are transparent
+  const src = cosyUrl(picture) || (img && (img.getAttribute('src') || img.getAttribute('data-src')));
   if (!src) return;
   const holder = document.createElement('div');
   holder.className = element.className

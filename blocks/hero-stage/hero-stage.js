@@ -141,6 +141,19 @@ export default function decorate(block) {
   });
   if (heading) {
     heading.classList.add('hero-stage-heading');
+    // model stages use a regular headline title: its branding logo (source
+    // cmp-title__image-branding, inline-block 1em) sits inline in front of the text;
+    // stage-zone-1 titles keep it on its own row
+    const branding = zone.querySelector(':scope > .hero-stage-branding');
+    const logo = branding && (branding.tagName === 'PICTURE' ? branding
+      : branding.querySelector('picture') || branding.querySelector('img'));
+    if (block.classList.contains('model') && logo) {
+      const inline = document.createElement('span');
+      inline.className = 'hero-stage-branding-inline';
+      inline.append(logo);
+      heading.prepend(inline);
+      if (branding !== logo) branding.remove();
+    }
     zone.append(heading);
   }
 

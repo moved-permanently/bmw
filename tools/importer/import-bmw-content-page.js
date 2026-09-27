@@ -39,6 +39,8 @@ import modelCompareParser, { selectors as modelCompareParserSelectors } from './
 import questionnaireParser, { selectors as questionnaireParserSelectors } from './parsers/questionnaire.js';
 import micrositeParser, { selectors as micrositeParserSelectors } from './parsers/microsite.js';
 import aiEntryParser, { selectors as aiEntryParserSelectors } from './parsers/ai-entry.js';
+import modelOfferCardParser, { selectors as modelOfferCardParserSelectors } from './parsers/model-offer-card.js';
+import cookiePolicyParser, { selectors as cookiePolicyParserSelectors } from './parsers/cookie-policy.js';
 
 import { sidebarRows } from './parsers/help-sidebar.js';
 import cleanupTransformer from './transformers/bmw-cleanup.js';
@@ -83,6 +85,8 @@ const PARSERS = [
   { name: 'questionnaire', parse: questionnaireParser, selectors: questionnaireParserSelectors },
   { name: 'microsite', parse: micrositeParser, selectors: micrositeParserSelectors },
   { name: 'ai-entry', parse: aiEntryParser, selectors: aiEntryParserSelectors },
+  { name: 'model-offer-card', parse: modelOfferCardParser, selectors: modelOfferCardParserSelectors },
+  { name: 'cookie-policy', parse: cookiePolicyParser, selectors: cookiePolicyParserSelectors },
 ];
 
 const PAGE_TEMPLATE = {

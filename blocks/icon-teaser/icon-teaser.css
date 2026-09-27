@@ -218,3 +218,11 @@
     margin-inline-start: calc(var(--icon-teaser-offset, 0) * (100% + var(--icon-teaser-gap)) / 12);
   }
 }
+
+/* span-md-N: tablet items span N of the 12 grid columns (source medium--N, e.g. one centred 8-column
+   item per row); the item count per row comes from cols-S-M-D */
+@media (width >= 768px) and (width < 1024px) {
+  .icon-teaser.has-span-md .icon-teaser-item {
+    flex-basis: calc((100% + var(--icon-teaser-gap)) * var(--icon-teaser-span-t) / 12 - var(--icon-teaser-gap));
+  }
+}

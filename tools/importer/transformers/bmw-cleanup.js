@@ -19,6 +19,19 @@ export default function transform(hookName, element, payload) {
     // source page without footer content (e.g. the sitemap): recorded for bmw-metadata ("Footer: off")
     const footer = doc.querySelector('footer');
     if (footer && !footer.querySelector('a[href]')) doc.documentElement.setAttribute('data-bmw-empty-footer', 'true');
+    // "keep together" spans (<span class="text__nowrap">BMW X5</span>): non-breaking spaces instead
+    element.querySelectorAll('span.text__nowrap').forEach((s) => {
+      if (s.children.length) return;
+      const [, lead, core, trail] = s.textContent.match(/^(\s*)([\s\S]*?)(\s*)$/);
+      s.replaceWith(doc.createTextNode(`${lead ? ' ' : ''}${core.replace(/\s+/g, '\u00a0')}${trail ? ' ' : ''}`));
+    });
+    // formatting wrapped around line breaks only (<strong><br> </strong>): the empty wrapper would be
+    // dropped together with its <br> later -> keep the break, drop the wrapper
+    element.querySelectorAll('strong, b, em, i, u').forEach((f) => {
+      if (f.querySelector('br') && !f.textContent.trim() && ![...f.querySelectorAll('*')].some((c) => c.tagName !== 'BR')) {
+        f.replaceWith(...f.childNodes);
+      }
+    });
     // AEM personalization toggles: keep the default variation only
     element.querySelectorAll('.xftoggle').forEach((x) => {
       const variations = x.querySelectorAll(':scope [data-variation], :scope .cmp-xftoggle__variation');

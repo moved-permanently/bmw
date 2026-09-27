@@ -35,7 +35,7 @@
   --hs-price-size: 1.75rem;
   --hs-price-lh: 2.5rem;
   --hs-bg: #000;
-  --hs-fg: #fff;
+  --hs-fg: var(--page-variables-primary-color, #fff); /* source stage overlay texts: page theme colour */
 
   position: relative;
   color: var(--hs-fg);
@@ -43,7 +43,12 @@
 
 .hero-stage.light {
   --hs-bg: #fff;
-  --hs-fg: #262626;
+  --hs-fg: var(--page-variables-primary-color, #262626);
+}
+
+/* the "disclaimer" option also matches the Disclaimer block's .disclaimer / .disclaimer.light colours */
+main .hero-stage.disclaimer {
+  color: var(--hs-fg);
 }
 
 .hero-stage .hero-stage-stage {
@@ -193,6 +198,13 @@
   margin: 0 auto 0.375rem;
 }
 
+.hero-stage .hero-stage-branding-inline img {
+  display: inline-block;
+  width: auto;
+  height: 1em;
+  margin-inline-end: 0.5rem;
+}
+
 /* intro: "THE" + big model name, or a one-line claim */
 .hero-stage .hero-stage-intro .hero-stage-model {
   font-size: var(--hs-model-size);
@@ -268,11 +280,26 @@
 
 /* source: content-width buttons (padding 1.5rem), centred, wrapping onto own rows */
 @media (width < 768px) {
+  /* source style-container--price-tag: price and label stacked, label centred */
+  .hero-stage .hero-stage-pricetag {
+    flex-direction: column;
+  }
+
+  .hero-stage .hero-stage-price {
+    padding-right: 0;
+  }
+
+  .hero-stage .hero-stage-price-label {
+    padding-left: 0;
+    text-align: center;
+  }
+
   .hero-stage .hero-stage-buttons .hero-stage-cta {
     margin: 0 auto;
   }
 
-  .hero-stage .hero-stage-buttons .button {
+  .hero-stage .hero-stage-buttons .button,
+  .hero-stage .hero-stage-buttons .hero-stage-link {
     width: auto;
     padding-inline: 1.5rem;
   }
@@ -448,8 +475,9 @@
     width: 40%;
   }
 
+  /* source .cmp-stage__zone .title: 40% wide from 1024px (a claim like "DER NEUE BMW 7er" wraps) */
   .hero-stage .hero-stage-intro > * {
-    width: 100%;
+    width: 40%;
   }
 
   .hero-stage .hero-stage-pricetag {
@@ -505,6 +533,8 @@
   .hero-stage {
     --hs-model-size: 13.125rem;
     --hs-model-lh: 11.625rem;
+    --hs-claim-size: 4.625rem;
+    --hs-claim-lh: 4.75rem;
     --hs-iconization-size: 0.9375rem;
     --hs-headline2-size: 2.1875rem;
     --hs-headline2-lh: 3.125rem;

@@ -674,6 +674,45 @@ function flattenRow(doc, visible, gs, ctx) {
   return cells.flat();
 }
 
+/** Own spacing of a grid child ({ top, bottom } in source spacing steps): classes of a component /
+ * container, or the data-bmw-spacing recorded by replaceWithBlock for parsed components. */
+function ownSpacing(el) {
+  const src = el.tagName === 'TABLE' ? (el.getAttribute('data-bmw-spacing') || '').split(' ').map((x) => `style-common--cmp-spacing-${x}`).join(' ') : (el.className || '');
+  const out = {};
+  let m;
+  SPACING_RE.lastIndex = 0;
+  while ((m = SPACING_RE.exec(src))) out[m[1]] = Math.max(out[m[1]] || 0, Number(m[2]));
+  SPACING_RE.lastIndex = 0;
+  return out;
+}
+
+/** Adds (or raises) a spacing-top|bottom-N option on a block table. */
+function setTableSpacing(t, side, n) {
+  const head = t.querySelector('tr > th, tr > td');
+  if (!head || /^(section )?metadata\b/i.test(tableName(t))) return;
+  let name = tableName(t);
+  const re = new RegExp(`spacing-${side}-(\\d+)`);
+  const cur = name.match(re);
+  if (cur) {
+    if (Number(cur[1]) >= n) return;
+    name = name.replace(re, `spacing-${side}-${n}`);
+  } else if (/\)\s*$/.test(name)) name = name.replace(/\)\s*$/, `, spacing-${side}-${n})`);
+  else name = `${name} (spacing-${side}-${n})`;
+  head.textContent = name;
+}
+
+/** flatten() of a stacked grid child: the child's own spacing becomes a spacing option of the block
+ * it starts / ends with (source margins between components inside a section container). */
+function flattenChild(doc, k, ctx) {
+  const nodes = flatten(doc, k, ctx);
+  const sp = ownSpacing(k);
+  const first = nodes[0];
+  const last = nodes[nodes.length - 1];
+  if (sp.top && first && first.tagName === 'TABLE') setTableSpacing(first, 'top', sp.top);
+  if (sp.bottom && last && last.tagName === 'TABLE') setTableSpacing(last, 'bottom', sp.bottom);
+  return nodes;
+}
+
 function flatten(doc, el, ctx) {
   if (el.tagName === 'TABLE') return [el];
   if (LOOSE.test(el.tagName)) { el.removeAttribute('data-bmw-loose'); return [el]; }
@@ -708,9 +747,9 @@ function flatten(doc, el, ctx) {
   const rows = gridRows(visible, gs);
   if (rows.length > 1 && rows.some((r) => isColumnsRow(r, gs))) {
     return rows.flatMap((r) => (isColumnsRow(r, gs)
-      ? flattenRow(doc, r, gs, ctx) : r.flatMap((k) => flatten(doc, k, ctx))));
+      ? flattenRow(doc, r, gs, ctx) : r.flatMap((k) => flattenChild(doc, k, ctx))));
   }
-  return visible.flatMap((k) => flatten(doc, k, ctx));
+  return visible.flatMap((k) => flattenChild(doc, k, ctx));
 }
 
 const layoutKey = (styles) => (styles || []).filter((st) => st.startsWith('content-') || st === 'center').join(',');
@@ -846,5 +885,6 @@ export default function transform(hookName, element, payload) {
   });
   emit();
   main.replaceChildren(...out);
+  main.querySelectorAll('[data-bmw-spacing]').forEach((t) => t.removeAttribute('data-bmw-spacing'));
   payload.unknownComponents = ctx.unknown;
 }
