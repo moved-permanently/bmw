@@ -2,6 +2,16 @@
 
 Generated 2026-09-27T20:12:23.559Z (final — after round 6 (161 of 220 pages re-captured; the rest carry round-5 numbers)). Widths: 1440, 768, 390 px. Machine-readable: `parity-report.json`.
 
+> **Status note (22:15, after round 6).** Round 6 was deployed (57586bf) and 161 of 220 pages were re-captured before
+> the 22:30 cut-off; the other 59 are marked "not re-captured (round-5 data)". Compared with round 5 on the re-captured
+> pages, round 6 made **59 pages worse, 9 better, 93 unchanged**. Causes: (1) the content-navigation bar insets shifted
+> in-flow links (~84px at 1440) — **reverted in cf3a8f1** (code only, live on preview immediately; not re-captured);
+> (2) the importer's section regrouping / paragraph joining (bmw-sections transformer) hides or regroups text on some
+> pages (e.g. the two Service Inclusive calculator pages lose half their visible text runs). Fixing (2) needs the
+> transformer reverted to round 5 (tools/importer/transformers/bmw-sections.js from 9873336) and a full re-import,
+> upload and preview (~40 min) — not possible before 22:30. **Best parity state so far: the round-5 report
+> (9873336: 102 pages matching at all three widths, 429/657 page-widths).**
+
 ## Method
 - Every page captured on live and preview at each width (tools: `migration-work/parity-capture.mjs`, one page per process,
   screenshots capped at 8000 px). Signature per capture: page height, horizontal overflow, every visible text run
