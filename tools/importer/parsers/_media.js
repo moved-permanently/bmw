@@ -45,7 +45,8 @@ export function readVideo(root) {
     if (img) posters.desktop = normalizeImageUrl(img.getAttribute('src') || img.getAttribute('data-src') || '');
     if (pic) {
       const s = [...pic.querySelectorAll('source')].find((x) => /max-width/.test(x.getAttribute('media') || ''));
-      if (s) posters.mobile = normalizeImageUrl(s.getAttribute('srcset') || '');
+      // some source posters carry the video file itself as mobile <source> (authoring error): skip it
+      if (s && !/\.(mp4|m3u8|webm|mov)(\?|$)/i.test(s.getAttribute('srcset') || '')) posters.mobile = normalizeImageUrl(s.getAttribute('srcset') || '');
     }
     if (posters.mobile === posters.desktop) posters.mobile = '';
   }
@@ -125,6 +126,11 @@ export function isHiddenIn(el, stop) {
 export function cleanInline(document, node) {
   const clone = node.cloneNode(true);
   clone.querySelectorAll('.cmp-infoi, [data-cmp-hook-tooltip], script, style').forEach((e) => e.remove());
+  // responsive line breaks (source .text__linebreak--mobile|tablet|desktop, display:none otherwise):
+  // content has no breakpoints, so keep the desktop ones and turn the others into a space
+  clone.querySelectorAll('br.text__linebreak').forEach((br) => {
+    if (!br.classList.contains('text__linebreak--desktop')) br.replaceWith(document.createTextNode(' '));
+  });
   clone.querySelectorAll('[class]').forEach((e) => e.removeAttribute('class'));
   clone.querySelectorAll('span').forEach((s) => s.replaceWith(...s.childNodes));
   clone.querySelectorAll('a[href]').forEach((a) => {

@@ -1,4 +1,5 @@
 import {
+  appendAiLabelText,
   getImageRefs,
   getVideoRefs,
   buildBmwMedia,
@@ -79,6 +80,7 @@ export default function decorate(block) {
       },
     });
     if (element) mediaBox.append(element);
+    if (element && block.classList.contains('ai-label')) appendAiLabelText(mediaBox);
   }
   const large = ratioOption(block, 'ratio-');
   const small = ratioOption(block, 'mobile-ratio-');

@@ -4,12 +4,17 @@
 /* stylelint-disable no-descending-specificity */
 
 /* header element: in-flow for the solid variant, overlaying the stage for transparent variants */
-header.header-wrapper {
+
+/* :root prefix: must win over the global pre-decoration reservation in styles.css
+   (body:has(stage) > header / html:has(meta header-style) body > header) */
+header.header-wrapper,
+:root body > header.header-wrapper.header-solid {
   height: 68px;
 }
 
 header.header-transparent,
-header.header-gradient {
+header.header-gradient,
+:root body > header.header-wrapper:is(.header-transparent, .header-gradient) {
   height: 0;
 }
 
@@ -634,12 +639,14 @@ header.header-transparent {
 
 /* breakpoint-exception: source (www.bmw.de) tablet breakpoint is 768px */
 @media (width >= 768px) {
-  header.header-wrapper {
+  header.header-wrapper,
+  :root body > header.header-wrapper.header-solid {
     height: 84px;
   }
 
   header.header-transparent,
-  header.header-gradient {
+  header.header-gradient,
+  :root body > header.header-wrapper:is(.header-transparent, .header-gradient) {
     height: 0;
   }
 
@@ -762,12 +769,14 @@ header.header-transparent {
 
 /* breakpoint-exception: source (www.bmw.de) desktop navigation starts at 1280px */
 @media (width >= 1280px) {
-  header.header-wrapper {
+  header.header-wrapper,
+  :root body > header.header-wrapper.header-solid {
     height: 85px;
   }
 
   header.header-transparent,
-  header.header-gradient {
+  header.header-gradient,
+  :root body > header.header-wrapper:is(.header-transparent, .header-gradient) {
     height: 0;
   }
 

@@ -12,6 +12,21 @@ function normalizeImageUrl(src) {
   return keep.length ? `${base}?${keep.join('&')}` : base;
 }
 
+// Header variant as authored on the source page (the header markup itself is removed by cleanup before
+// this runs, so read it from the original HTML string the importer passes as payload.html):
+// cmp-globalnavigation--solid → solid bar; --transparent-wGradient → transparent with the white
+// gradient; --transparent → transparent overlay with the dark gradient. Always emitted: the runtime
+// fallback (first block is a stage → transparent) is wrong on ~10% of the pages.
+function sourceHeaderStyle(html) {
+  const m = html.match(/class="(cmp-globalnavigation\s[^"]*)"/);
+  if (!m) return '';
+  const mods = m[1].split(/\s+/).filter((c) => c.startsWith('cmp-globalnavigation--')).map((c) => c.slice(22));
+  if (mods.some((c) => c.startsWith('transparent-wGradient'))) return 'gradient';
+  if (mods.some((c) => c.startsWith('transparent'))) return 'transparent';
+  if (mods.some((c) => c.startsWith('solid'))) return 'solid';
+  return '';
+}
+
 export default function transform(hookName, element, payload) {
   if (hookName !== 'afterTransform') return;
   const { document } = payload;
@@ -41,6 +56,8 @@ export default function transform(hookName, element, payload) {
   if (kw) rows.push(['Keywords', kw]);
   const tmpl = meta('meta[name="template"]');
   if (tmpl && tmpl !== 'content-page') rows.push(['Template', tmpl]);
+  const headerStyle = sourceHeaderStyle(payload.html || '');
+  if (headerStyle) rows.push(['Header Style', headerStyle]);
   if (!rows.length) return;
   main.append(WebImporter.Blocks.createBlock(doc, { name: 'Metadata', cells: rows }));
 }

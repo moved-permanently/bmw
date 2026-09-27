@@ -1,4 +1,5 @@
 import {
+  appendAiLabelText,
   getImageRefs,
   getVideoRefs,
   buildBmwMedia,
@@ -48,6 +49,7 @@ export default function decorate(block) {
     if (element) mediaBox.append(element);
   }
   if (!mediaBox.children.length) block.classList.add('no-media');
+  else if (block.classList.contains('ai-label')) appendAiLabelText(mediaBox);
   const large = ratioOption(block, 'ratio-');
   const small = ratioOption(block, 'mobile-ratio-');
   if (large) mediaBox.style.setProperty('--ht-ar-large', large);

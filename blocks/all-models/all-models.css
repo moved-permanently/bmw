@@ -164,9 +164,9 @@
   align-items: center;
   gap: 0.75rem;
   margin: 0 1.5rem 1.5rem;
-  font-size: var(--bmw-subsection-2-font-size);
+  font-size: var(--bmw-subsection-1-font-size);
   font-weight: var(--bmw-font-weight-light, 300);
-  line-height: var(--bmw-subsection-2-line-height);
+  line-height: 1.75rem;
 }
 
 .all-models .all-models-group-icon {
@@ -595,6 +595,11 @@
 @media (width >= 1280px) {
   .all-models .all-models-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* source .cmp-allmodelscontainer: margin-left 1.5rem from 1280px */
+  .all-models .all-models-group {
+    margin-left: 1.5rem;
   }
 }
 

@@ -1,4 +1,5 @@
 import {
+  appendAiLabelText,
   getImageRefs,
   getVideoRefs,
   splitDesktopMobile,
@@ -77,6 +78,7 @@ function buildMedia(block, mediaRow, label) {
     picture.classList.add('hero-stage-picture');
     media.append(picture);
   }
+  if (media.children.length && block.classList.contains('ai-label')) appendAiLabelText(media);
   return media;
 }
 

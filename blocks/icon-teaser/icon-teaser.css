@@ -192,3 +192,29 @@
   font-size: var(--bmw-body-1-font-size);
   line-height: var(--bmw-body-1-line-height);
 }
+
+.icon-teaser.body-1 .icon-teaser-body {
+  font-size: var(--bmw-body-1-font-size);
+  line-height: var(--bmw-body-1-line-height);
+}
+
+/* offsets-A-B: source grid offsets of the items (12-column grid, from 1024px; offsets-md from 768px) */
+@media (width >= 768px) and (width < 1024px) {
+  .icon-teaser.has-offsets.offsets-md .icon-teaser-list {
+    justify-content: flex-start;
+  }
+
+  .icon-teaser.has-offsets.offsets-md .icon-teaser-item {
+    margin-inline-start: calc(var(--icon-teaser-offset, 0) * (100% + var(--icon-teaser-gap)) / 12);
+  }
+}
+
+@media (width >= 1024px) {
+  .icon-teaser.has-offsets .icon-teaser-list {
+    justify-content: flex-start;
+  }
+
+  .icon-teaser.has-offsets .icon-teaser-item {
+    margin-inline-start: calc(var(--icon-teaser-offset, 0) * (100% + var(--icon-teaser-gap)) / 12);
+  }
+}

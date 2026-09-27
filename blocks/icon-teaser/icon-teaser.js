@@ -4,7 +4,9 @@ import { decorateFontIcons, groupCtaLinks } from '../../scripts/bmw-utils.js';
  * Icon Teaser (BMW icon component + title / text / link items in a grid).
  * One row per item: cell 1 icon (":icon_name:" or an image), cell 2 content.
  * Options: cols-S-M-D (items per row below 768 / 768-1023 / from 1024; default 1-2-3), left
- * (not centered), list (icon inline before the text), size-xxs|xs|s|m|ml|xl|xxl (default l).
+ * (not centered), list (icon inline before the text), size-xxs|xs|s|m|ml|xl|xxl (default l),
+ * offsets-A-B[-…]: desktop (from 1024px) grid offsets of the items in 12ths (source offsets),
+ * offsets-md: offsets also from 768px. body-1: item text in body-1 size (default body-2).
  */
 
 const ICON_TEXT_RE = /^:[a-z0-9_-]+:$/i;
@@ -25,6 +27,10 @@ export default function decorate(block) {
     block.style.setProperty('--icon-teaser-cols-d', cols[3]);
   }
 
+  const offsetsClass = [...block.classList].find((c) => /^offsets-\d+(-\d+)*$/.test(c));
+  const offsets = offsetsClass ? offsetsClass.split('-').slice(1).map(Number) : [];
+  if (offsets.length) block.classList.add('has-offsets');
+
   const list = document.createElement('ul');
   list.className = 'icon-teaser-list';
   [...block.children].forEach((row) => {
@@ -33,6 +39,8 @@ export default function decorate(block) {
     const iconCell = cells.find(isIconCell) || null;
     const li = document.createElement('li');
     li.className = 'icon-teaser-item';
+    const offset = offsets[list.children.length];
+    if (offset) li.style.setProperty('--icon-teaser-offset', offset);
     if (iconCell) {
       const icon = document.createElement('div');
       icon.className = 'icon-teaser-icon';

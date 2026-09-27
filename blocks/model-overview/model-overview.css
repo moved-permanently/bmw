@@ -326,7 +326,8 @@
 
 @media (width >= 768px) {
   .model-overview {
-    --mo-card-width: 36vw;
+    /* live bmw.de at 768px: 336px slide pitch (~2.3 cards per view) */
+    --mo-card-width: 43.75vw;
   }
 
   .model-overview .model-overview-card {

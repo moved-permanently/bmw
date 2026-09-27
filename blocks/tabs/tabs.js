@@ -4,7 +4,8 @@ import { decorateFontIcons, groupCtaLinks } from '../../scripts/bmw-utils.js';
  * Tabs (BMW tabs-v1). One row per tab: cell 1 label, cell 2 content. A content cell holding only a
  * link to "#<id>" takes the section with that id (section metadata style "tab-panel") as the tab
  * panel, so panels can contain other blocks.
- * Options: buttons (segmented button bar; default underline bar), left (bar left-aligned).
+ * Options: buttons (segmented button bar; default underline bar), left (bar left-aligned),
+ * no-nav (tab bar hidden: the source hides it for single-tab containers).
  * Behaviour: click / arrow keys / Home / End switch tabs (automatic activation); the bar scrolls
  * horizontally (touch, wheel, mouse drag) when the labels do not fit, with faded edges.
  */

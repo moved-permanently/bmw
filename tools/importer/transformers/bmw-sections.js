@@ -49,20 +49,137 @@ function cellInset(kid) {
   return '';
 }
 
-/** Typography of the first title in the columns when it differs from its tag's default. */
+// ---------- typography / geometry of default components ----------
+
+// heading level per source title style, as mapped by the source base CSS (h1-h3 = headline-1..3,
+// h4 = subsection-1, h5 = subsection-2): imported headings take the level of their visual style
+const STYLE_LEVEL = { 'headline-2': 2, 'headline-3': 3, 'subsection-1': 4, 'subsection-2': 5 };
+const LEVEL_STYLE = { 1: 'headline-1', 2: 'headline-2', 3: 'headline-3', 4: 'subsection-1', 5: 'subsection-2' };
+
+function titleTypo(t) {
+  const m = (t.className || '').match(/style-title--((?:headline|subsection)-\d)(?=\s|$)/);
+  return m ? m[1] : '';
+}
+
+/** Tag for a source title: the level of its style; the page H1 stays H1 (styled via section/columns option). */
+function headingTag(t, h) {
+  const src = /^H[1-6]$/.test(h.tagName) ? Number(h.tagName[1]) : 2;
+  const style = titleTypo(t);
+  if (src === 1 || !STYLE_LEVEL[style]) return `h${src}`;
+  return `h${STYLE_LEVEL[style]}`;
+}
+
+/** Typography of the first title in the columns when it differs from its (imported) tag's default. */
 function titleStyle(kids) {
   for (const k of kids) {
     const t = k.matches('.title') ? k : k.querySelector('.title');
     if (t) {
-      const m = (t.className || '').match(/style-title--((?:headline|subsection)-\d)/);
+      const style = titleTypo(t);
       const h = t.querySelector('h1, h2, h3, h4, h5, h6');
-      if (!m || !h) return '';
-      // tag defaults as in the source base CSS: h1-h3 headline-N, h4/h5 subsection-1/2
-      const def = { 1: 'headline-1', 2: 'headline-2', 3: 'headline-3', 4: 'subsection-1', 5: 'subsection-2' }[h.tagName[1]];
-      return m[1] === def ? '' : `title-${m[1]}`;
+      if (!style || !h) return '';
+      const def = LEVEL_STYLE[headingTag(t, h)[1]];
+      return style === def ? '' : `title-${style}`;
     }
   }
   return '';
+}
+
+// grid breakpoints of the source (aem-Grid): default >= 1280, large 1024-1279, medium 768-1023,
+// small < 768 (the xlarge classes have no CSS on bmw.de)
+const BPS = ['default', 'large', 'medium', 'small'];
+
+function colGeo(el, bp) {
+  const cls = el.className || '';
+  const pick = (re) => { const m = cls.match(re); return m ? m[1] : null; };
+  let w = pick(new RegExp(`(?:^|\\s)aem-GridColumn--${bp}--(\\d+|hide)(?=\\s|$)`));
+  let o = pick(new RegExp(`aem-GridColumn--offset--${bp}--(\\d+)`));
+  if (bp !== 'default') {
+    if (w === null) w = pick(/(?:^|\s)aem-GridColumn--default--(\d+|hide)(?=\s|$)/);
+    if (o === null) o = pick(/aem-GridColumn--offset--default--(\d+)/);
+  }
+  if (w === 'hide') return null;
+  const g = el.parentElement && el.parentElement.closest('.aem-Grid');
+  const gc = g ? g.className : '';
+  const gm = gc.match(new RegExp(`aem-Grid--${bp}--(\\d+)`)) || gc.match(/aem-Grid--default--(\d+)/) || gc.match(/aem-Grid--(\d+)(?=\s|$)/);
+  const gs = gm ? Number(gm[1]) : 12;
+  return { w: Math.min(1, (Number(w) || gs) / gs), o: Math.min(1, (Number(o) || 0) / gs) };
+}
+
+/** Effective span/offset (12ths of the page grid) of a component per breakpoint: "w@o" or null. */
+function leafGeo(el) {
+  const chain = [];
+  for (let n = el; n && n.tagName !== 'MAIN'; n = n.parentElement) {
+    if (n.classList && n.classList.contains('aem-GridColumn')) chain.unshift(n);
+  }
+  const out = {};
+  BPS.forEach((bp) => {
+    let g = { o: 0, w: 1 };
+    for (const c of chain) {
+      const x = colGeo(c, bp);
+      if (!x) { g = null; break; }
+      g = { o: g.o + g.w * x.o, w: g.w * x.w };
+    }
+    out[bp] = g ? `${Math.max(1, Math.round(g.w * 12))}@${Math.round(g.o * 12)}` : null;
+  });
+  return out;
+}
+
+/** Text alignment of a component: style-title--centered or the nearest container alignment. */
+function isCentered(el) {
+  if (/style-title--centered/.test(el.className || '')) return true;
+  for (let n = el; n && n.tagName !== 'MAIN'; n = n.parentElement) {
+    const cl = n.classList;
+    if (cl && (cl.contains('style-container--center') || cl.contains('style-container--start') || cl.contains('style-container--end'))) {
+      return cl.contains('style-container--center');
+    }
+  }
+  return false;
+}
+
+/** Records a default component (title/text/button) that ends up as default content. */
+function recordLeaf(ctx, el, kind, extra, nodes) {
+  if (!ctx.leaves || ctx.inLayer) return;
+  ctx.leaves.push({
+    kind, geo: leafGeo(el), center: isCentered(el), nodes, ...extra,
+  });
+}
+
+const FULL = '12@0';
+function spanToken(sig) {
+  const [w, o] = sig.split('@').map(Number);
+  if (w >= 12) return '12';
+  if (o === 0) return `${w}`;
+  if (o * 2 + w === 12) return `${w}-center`;
+  return `${w}-offset-${o}`;
+}
+
+/** Section styles derived from the default components of a section: content-N[-center|-offset-O]
+ * (+ content-lg-/md-/sm- overrides), center, body-2, h1-<style>. */
+function leafStyles(all) {
+  const leaves = all.filter((l) => !l.side);
+  const styles = [];
+  const texts = leaves.filter((l) => l.kind === 'title' || l.kind === 'text');
+  const pool = texts.length ? texts : leaves;
+  if (!pool.length) return null;
+  // dominant geometry of the titles/texts (ties: first); button spans are button widths
+  if (texts.length) {
+    const key = (l) => BPS.map((bp) => l.geo[bp] || FULL).join(' ');
+    const counts = new Map();
+    texts.forEach((l) => counts.set(key(l), (counts.get(key(l)) || 0) + 1));
+    const best = [...counts.entries()].reduce((a, b) => (b[1] > a[1] ? b : a))[0].split(' ');
+    const [xl, lg, md, sm] = best;
+    if (xl !== FULL) styles.push(`content-${spanToken(xl)}`);
+    if (lg !== xl) styles.push(`content-lg-${spanToken(lg)}`);
+    if (md !== lg) styles.push(`content-md-${spanToken(md)}`);
+    if (sm !== FULL) styles.push(`content-sm-${spanToken(sm)}`);
+  }
+  const centered = pool.filter((l) => l.center).length;
+  if (centered * 2 > pool.length) styles.push('center');
+  const body = leaves.filter((l) => l.kind === 'text' && l.body);
+  if (body.filter((l) => l.body === 'body-2').length * 2 > body.length) styles.push('body-2');
+  const h1 = leaves.find((l) => l.kind === 'title' && l.h1Style);
+  if (h1) styles.push(`h1-${h1.h1Style}`);
+  return styles;
 }
 
 const isCtaOnly = (n) => n.tagName === 'P' && n.querySelectorAll('a').length === 1
@@ -198,17 +315,19 @@ function block(doc, name, rows) {
 
 // ---------- default components ----------
 
-function convertTitle(doc, col) {
+function convertTitle(doc, col, ctx) {
   const h = col.querySelector('h1, h2, h3, h4, h5, h6, .cmp-title__text');
   if (!h) return [];
-  const tag = /^H[1-6]$/.test(h.tagName) ? h.tagName.toLowerCase() : 'h2';
+  const tag = headingTag(col, h);
   const out = doc.createElement(tag);
   out.append(...cleanInline(doc, h).childNodes);
   if (!out.textContent.trim()) return [];
+  const style = titleTypo(col);
+  recordLeaf(ctx, col, 'title', { h1Style: tag === 'h1' && style && style !== 'headline-1' ? style : '' }, [out]);
   return [out];
 }
 
-function convertText(doc, col) {
+function convertText(doc, col, ctx) {
   const root = col.querySelector('.cmp-text') || col;
   const nodes = [];
   [...root.children].forEach((c) => {
@@ -257,6 +376,9 @@ function convertText(doc, col) {
     }
     return [block(doc, name, rows)];
   }
+  // source body text: style-text--body-1, else the base body size (body-2)
+  const body = /style-text--body-1(?=\s|$)/.test(cls) ? 'body-1' : 'body-2';
+  recordLeaf(ctx, col, 'text', { body }, nodes);
   return nodes;
 }
 
@@ -301,12 +423,13 @@ function convertButton(doc, col, ctx) {
   const p = doc.createElement('p');
   // bmw button styles: as-link → plain link, primary → blue (strong), outline → outline (em),
   // dark/nba/light default buttons → dark filled "accent" (strong+em)
-  if (/style-button--as-link/.test(cls)) p.append(link);
+  if (/style-button--as-link(?=\s|$)/.test(cls)) p.append(link);
   else if (/style-button--primary/.test(cls)) { const s = doc.createElement('strong'); s.append(link); p.append(s); }
   else if (/style-button--outline/.test(cls)) { const e = doc.createElement('em'); e.append(link); p.append(e); }
   else if (/style-button--(dark|nba-dark|light)/.test(cls)) {
     const s = doc.createElement('strong'); const e = doc.createElement('em'); e.append(link); s.append(e); p.append(s);
   } else p.append(link);
+  recordLeaf(ctx, col, 'button', {}, [p]);
   return [p];
 }
 
@@ -374,8 +497,8 @@ function flatten(doc, el, ctx) {
   if (isHidden(el)) return [];
   const name = componentName(el);
   switch (name) {
-    case 'title': return convertTitle(doc, el);
-    case 'text': return convertText(doc, el);
+    case 'title': return convertTitle(doc, el, ctx);
+    case 'text': return convertText(doc, el, ctx);
     case 'button': return convertButton(doc, el, ctx);
     case 'image': return convertImage(doc, el);
     default: break;
@@ -400,6 +523,7 @@ function flatten(doc, el, ctx) {
   const sum = visible.reduce((a, k, i) => a + widths[i] + gridOffset(k, 'default'), 0);
   const newline = visible.slice(1).some((k) => /aem-GridColumn--default--newline/.test(k.className || ''));
   if (visible.length >= 2 && !newline && widths.every((w) => w < gs) && sum <= gs) {
+    const leafMark = ctx.leaves ? ctx.leaves.length : 0;
     let cells = visible.map((k) => flatten(doc, k, ctx));
     let info = columnsInfo(visible, gs);
     if (cells.some((c) => nestedColumns(ctx, c))) {
@@ -415,11 +539,85 @@ function flatten(doc, el, ctx) {
       // remember the layout so a parent grid can merge this row into its own (nested grids)
       if (!ctx.columns) ctx.columns = new Map();
       ctx.columns.set(table, { ...info, cells });
+      // components inside the columns block do not shape the section's default content
+      if (ctx.leaves) ctx.leaves.length = leafMark;
       return [table];
     }
+    // text beside a block (e.g. video | text) is stacked as default content: its source span is
+    // not a layout of the section's default content
+    if (hasBlock && ctx.leaves) ctx.leaves.slice(leafMark).forEach((l) => { l.side = true; });
     return cells.flat();
   }
   return visible.flatMap((k) => flatten(doc, k, ctx));
+}
+
+const layoutKey = (styles) => (styles || []).filter((st) => st.startsWith('content-') || st === 'center').join(',');
+
+/** Splits a section's nodes into groups of default-content runs with the same layout (runs are
+ * separated by blocks; blocks before a layout change start the next group). Text beside a block
+ * (side leaves) forms plain groups without layout styles. */
+function sectionGroups(nodes, leaves) {
+  const byNode = new Map();
+  leaves.forEach((l) => (l.nodes || []).forEach((n) => byNode.set(n, l)));
+  const runs = [];
+  let cur = null;
+  nodes.forEach((n) => {
+    if (n.tagName === 'TABLE') { runs.push({ table: true, nodes: [n], leaves: [] }); cur = null; return; }
+    const l = byNode.get(n);
+    // text beside a block and the following regular default content form separate runs
+    if (cur && l && cur.side !== undefined && cur.side !== !!l.side) cur = null;
+    if (!cur) { cur = { nodes: [], leaves: [] }; runs.push(cur); }
+    cur.nodes.push(n);
+    if (l && !cur.leaves.includes(l)) { cur.leaves.push(l); cur.side = !!l.side; }
+  });
+  runs.forEach((r) => {
+    if (r.table) return;
+    const texts = r.leaves.filter((l) => !l.side && (l.kind === 'title' || l.kind === 'text'));
+    if (texts.length) r.key = layoutKey(leafStyles(texts));
+    else if (r.leaves.some((l) => l.side)) r.key = 'side';
+  });
+  const groups = [{ runs: [], key: undefined }];
+  runs.forEach((r) => {
+    let g = groups[groups.length - 1];
+    if (!r.table && r.key !== undefined) {
+      if (g.key === undefined) g.key = r.key;
+      else if (g.key !== r.key) {
+        const moved = [];
+        while (g.runs.length && g.runs[g.runs.length - 1].table) moved.unshift(g.runs.pop());
+        g = { runs: moved, key: r.key };
+        groups.push(g);
+      }
+    }
+    g.runs.push(r);
+  });
+  return groups.filter((g) => g.runs.length).map((g) => ({
+    nodes: g.runs.flatMap((r) => r.nodes), leaves: g.runs.flatMap((r) => r.leaves), plain: g.key === 'side',
+  }));
+}
+
+/** Block table whose name carries a spacing-top-N option. */
+function blockTopSpacing(n) {
+  if (!n || n.tagName !== 'TABLE') return false;
+  const head = n.querySelector('tr > th, tr > td');
+  return !!head && /spacing-top-\d+/.test(head.textContent);
+}
+
+/** Emits one source section (container styles + default components) as one or more EDS sections. */
+function emitSection(doc, nodes, base, leaves, extra, push) {
+  const splittable = !base.some((st) => /^(dark|grey|contained|layer)$/.test(st));
+  const groups = splittable ? sectionGroups(nodes, leaves) : [{ nodes, leaves, plain: false }];
+  groups.forEach((g, i) => {
+    const ls = g.plain ? null : leafStyles(g.leaves);
+    let styles = ls ? [...base.filter((st) => st !== 'center'), ...ls] : [...base];
+    if (g.plain) styles = styles.filter((st) => st !== 'center');
+    if (groups.length > 1) {
+      if (i > 0) styles = styles.filter((st) => !st.startsWith('spacing-top-'));
+      if (i < groups.length - 1) styles = styles.filter((st) => !st.startsWith('spacing-bottom-'));
+      // the gap between the default content and the following block inside a section
+      if (i > 0 && !blockTopSpacing(g.nodes[0])) styles.unshift('spacing-top-8');
+    }
+    push(g.nodes, metaTable(doc, [...new Set(styles)], i === 0 ? extra : {}));
+  });
 }
 
 function metaTable(doc, styles, extra = {}) {
@@ -434,11 +632,14 @@ export default function transform(hookName, element, payload) {
   if (hookName !== 'afterTransform') return;
   const doc = element.ownerDocument;
   const main = element.querySelector('main') || element;
-  const ctx = { layers: [], layerCount: 0, unknown: {} };
+  const ctx = { layers: [], layerCount: 0, unknown: {}, leaves: [] };
   let tops = gridChildren(main);
   // whole page wrapped in one container holding a second <main> (e.g. X1 technical data): its inner
   // containers are the real sections
-  if (tops.length === 1 && tops[0].querySelector && tops[0].querySelector('main')) {
+  // (same for a page whose content sits in one plain full-width container, e.g. BMW ALPINA)
+  const single = tops.length === 1 && tops[0].tagName !== 'TABLE' ? tops[0] : null;
+  if (single && (single.querySelector('main')
+    || (componentName(single) === 'container' && !sectionStyles(single).length && gridChildren(single).length > 1))) {
     tops = gridChildren(tops[0]).flatMap((t) => {
       const kids = t.tagName === 'TABLE' ? [] : gridChildren(t);
       const plain = componentName(t) === 'container' && !sectionStyles(t).length;
@@ -453,8 +654,11 @@ export default function transform(hookName, element, payload) {
     if (meta) out.push(meta);
   };
   let pending = [];
-  let pendingStyles = null;
-  const flush = () => { pushSection(pending, metaTable(doc, pendingStyles || [])); pending = []; pendingStyles = null; };
+  let pendingBase = null; // container styles of the pending section (null: loose components only)
+  const emit = (extra = {}) => {
+    if (pending.length) emitSection(doc, pending, pendingBase || [], ctx.leaves, extra, pushSection);
+    ctx.leaves = []; pending = []; pendingBase = null;
+  };
   tops.forEach((top) => {
     const nodes = flatten(doc, top, ctx);
     if (!nodes.length) return;
@@ -464,23 +668,21 @@ export default function transform(hookName, element, payload) {
       pending.push(...nodes);
       return;
     }
-    const styles = top.tagName === 'TABLE' ? [] : sectionStyles(top);
     pending.push(...nodes);
-    pendingStyles = styles;
+    pendingBase = top.tagName === 'TABLE' ? [] : sectionStyles(top);
     // keep in-page anchor targets such as the consumption footnotes (#bottom)
     const anchor = top.id === 'bottom' || (top.querySelector && top.querySelector('#bottom')) ? 'bottom' : null;
-    if (anchor) {
-      pushSection(pending, metaTable(doc, pendingStyles || [], { id: anchor }));
-      pending = []; pendingStyles = null;
-    } else flush();
+    emit(anchor ? { id: anchor } : {});
     // layers collected while flattening this section follow it
     while (ctx.layers.length) {
       const layer = ctx.layers.shift();
+      ctx.inLayer = true;
       const lnodes = flatten(doc, layer.el, ctx);
+      ctx.inLayer = false;
       pushSection(lnodes, metaTable(doc, ['layer'], { id: layer.id, title: layer.title }));
     }
   });
-  flush();
+  emit();
   main.replaceChildren(...out);
   payload.unknownComponents = ctx.unknown;
 }

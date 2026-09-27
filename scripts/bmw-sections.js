@@ -1,6 +1,7 @@
 /**
  * BMW section runtime:
- *  - section metadata (style → classes, other keys → data-*), incl. spacing/center/dark/grey
+ *  - section metadata (style → classes, other keys → data-*), incl. spacing/center/dark/grey,
+ *    body-2, h1-<style> and content-N[-center|-offset-O] grid widths (CSS variables)
  *  - visually hidden page title (home: the H1 only exists for screen readers on the source)
  *  - default-content text links with chevron + button groups
  *  - "layer" sections → BMW new-teaser-modal popover, opened by links to #<layer id>
@@ -14,6 +15,40 @@ const ANIMATION_MS = 300;
 const layers = new Map();
 let lastTrigger = null;
 let listenersBound = false;
+
+const CONTENT_RE = /^content-(?:(lg|md|sm)-)?(\d+)(?:-(center)|-offset-(\d+))?$/;
+
+/**
+ * Section styles content-N[-center|-offset-O] (+ content-lg-…, content-md-…, content-sm-…):
+ * default content spans N of the 12 grid columns (source grid spans/offsets). The plain value
+ * applies from 1280px and cascades down to lg (1024-1279) and md (768-1023) unless those are
+ * given; phones (< 768) stay full width unless content-sm-… is set. Exposed as CSS variables
+ * (--content-span-<bp> / --content-offset-<bp>) used by styles.css.
+ * @param {Element} section
+ */
+function applyContentWidth(section) {
+  const spec = {};
+  [...section.classList].forEach((cls) => {
+    const m = cls.match(CONTENT_RE);
+    if (!m) return;
+    const span = Math.min(12, Math.max(1, Number(m[2])));
+    const offset = m[3] ? (12 - span) / 2 : Math.min(12 - span, Number(m[4] || 0));
+    spec[m[1] || 'xl'] = { span, offset };
+  });
+  if (!Object.keys(spec).length) return;
+  const full = { span: 12, offset: 0 };
+  const xl = spec.xl || full;
+  const lg = spec.lg || xl;
+  const md = spec.md || lg;
+  const sm = spec.sm || full;
+  section.classList.add('content-grid');
+  Object.entries({
+    xl, lg, md, sm,
+  }).forEach(([bp, v]) => {
+    section.style.setProperty(`--content-span-${bp}`, v.span);
+    section.style.setProperty(`--content-offset-${bp}`, v.offset);
+  });
+}
 
 /**
  * Applies section metadata tables (whether or not decorateBlocks already ran) and removes them.
@@ -42,6 +77,7 @@ function applySectionMetadata(main) {
     meta.remove();
     if (wrapper && wrapper !== section && !wrapper.children.length) wrapper.remove();
     section.classList.remove('section-metadata-container');
+    applyContentWidth(section);
   });
 }
 

@@ -1,4 +1,4 @@
-import { buildBmwMedia } from '../../scripts/bmw-utils.js';
+import { appendAiLabelText, buildBmwMedia } from '../../scripts/bmw-utils.js';
 
 /*
  * Video: BMW inline video player.
@@ -39,4 +39,5 @@ export default function decorate(block) {
   box.style.setProperty('--video-ar-large', large);
   box.style.setProperty('--video-ar-small', small);
   block.replaceChildren(box);
+  if (block.classList.contains('ai-label')) appendAiLabelText(box);
 }

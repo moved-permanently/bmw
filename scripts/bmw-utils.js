@@ -929,3 +929,41 @@ export function bmwProxyUrl(path = '/') {
   const base = String(window.BMW_PROXY || BMW_PROXY_DEFAULT).replace(/\/+$/, '');
   return `${base}${path.startsWith('/') ? '' : '/'}${path}`;
 }
+
+/**
+ * Adds the screen-reader text of the source's EU AI label ("AI-generated content", source
+ * `.cmp-image__ai-label > .a11y-only-screen-reader`) to a media container. The visible label
+ * (ai_eu_label icon) is drawn by the block CSS; this only adds the visually hidden text.
+ * @param {Element} container media element that carries the label
+ * @param {string} [text]
+ * @returns {HTMLSpanElement|null}
+ */
+export function appendAiLabelText(container, text = 'AI-generated content') {
+  if (!container) return null;
+  const existing = container.querySelector(':scope > .bmw-ai-label-text');
+  if (existing) return existing;
+  const span = document.createElement('span');
+  span.className = 'bmw-ai-label-text';
+  span.textContent = text;
+  span.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;'
+    + 'clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap;border:0;';
+  container.append(span);
+  return span;
+}
+
+/**
+ * Horizontal sliders: native lazy loading never fetches the images of slides that sit outside
+ * the (overflow: hidden) viewport, so they pop in only while swiping. Once the slider gets close
+ * to the viewport, switch all its images to eager loading (the source Swiper preloads them too).
+ * @param {Element} block slider root
+ * @param {string} [rootMargin]
+ */
+export function eagerLoadWhenNear(block, rootMargin = '400px 0px') {
+  if (!block) return;
+  const load = () => block.querySelectorAll('img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; });
+  if (!('IntersectionObserver' in window)) { load(); return; }
+  const io = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) { io.disconnect(); load(); }
+  }, { rootMargin });
+  io.observe(block);
+}

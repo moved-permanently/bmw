@@ -106,8 +106,17 @@ function labelNodes(li) {
 
 /* ------------------------------------------------------------------ header style */
 
+/** Page metadata; falls back to the metadata table of the local preview (.plain.html). */
+function pageMetadata(name) {
+  const value = getMetadata(name);
+  if (value) return value;
+  const row = [...document.querySelectorAll('main .metadata > div')].find((r) => r.children.length > 1
+    && r.children[0].textContent.trim().toLowerCase().replace(/\s+/g, '-') === name);
+  return row ? row.children[1].textContent.trim() : '';
+}
+
 function headerStyle() {
-  const meta = (getMetadata('header-style') || '').toLowerCase().trim();
+  const meta = (pageMetadata('header-style') || '').toLowerCase().trim();
   if (meta.includes('gradient')) return 'gradient';
   if (meta.startsWith('trans')) return 'transparent';
   if (meta.startsWith('solid')) return 'solid';

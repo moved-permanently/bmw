@@ -105,7 +105,13 @@ function buildCard(item, infoNode) {
   price.className = 'model-overview-price';
   [...content.querySelectorAll(':scope > p')].forEach((p, i) => {
     if (!p.textContent.trim()) return;
-    if (i === 0 && infoNode) p.append(createInfoButton(infoNode, { label: 'Preisinformationen' }));
+    if (i === 0 && infoNode) {
+      // keep the price text in its own element, separate from the info-i button
+      const value = document.createElement('span');
+      value.className = 'model-overview-price-value';
+      value.append(...p.childNodes);
+      p.append(value, createInfoButton(infoNode, { label: 'Preisinformationen' }));
+    }
     price.append(p);
   });
   parts.price = price;

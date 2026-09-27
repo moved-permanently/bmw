@@ -297,11 +297,11 @@ export default function decorate(block) {
     const h = document.createElement('h2');
     h.className = 'all-models-group-title';
     if (ICONS.fuelType[g.code]) h.append(icon(ICONS.fuelType[g.code], 'all-models-group-icon'));
-    const label = document.createElement('span');
-    label.textContent = g.title;
+    // label and count in one text run (source: "Vollelektrisch (15)")
     const count = document.createElement('span');
-    count.className = 'all-models-group-count';
-    h.append(label, count);
+    count.className = 'all-models-group-label';
+    count.textContent = g.title;
+    h.append(count);
     const ul = document.createElement('ul');
     ul.className = 'all-models-grid';
     const cards = g.cards.map((c, i) => {
@@ -316,7 +316,7 @@ export default function decorate(block) {
     section.append(ul);
     results.append(section);
     return {
-      section, ul, count, cards,
+      section, ul, count, cards, title: g.title,
     };
   });
 
@@ -396,7 +396,7 @@ export default function decorate(block) {
         if (ok) n += 1;
         g.ul.append(e.card);
       });
-      g.count.textContent = ` (${n})`;
+      g.count.textContent = `${g.title} (${n})`;
       g.section.hidden = n === 0;
     });
     filterUi.forEach(({ key, buttons, heading }) => {

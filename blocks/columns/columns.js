@@ -12,6 +12,8 @@ import {
  * Tablet (768-1023px): stack-md (cells stay stacked until 1024px) or md-A-B (tablet spans).
  * middle: cells vertically centred. inset-N-start|end|both: cell N gets the source grid's
  * additional side spacing from 1024px. title-<headline-N|subsection-N>: heading typography.
+ * reverse: cells side by side in reverse order (source cmp-container--flex-row-reverse); stacked
+ * cells keep the authored order.
  * Image-only cells become responsive Scene7 pictures; stand-alone links become chevron text links,
  * formatted links buttons (grouped like default content).
  */
@@ -104,9 +106,11 @@ export default function decorate(block) {
     if (side) insets[Number(index) - 1] = side;
   });
 
+  const reverse = block.classList.contains('reverse');
   rows.forEach((row) => {
     row.classList.add('columns-row');
     [...row.children].forEach((cell, i) => {
+      if (reverse) cell.style.setProperty('--columns-order', row.children.length - i);
       const span = spans[i] || Math.max(1, Math.floor(12 / row.children.length));
       if (spans.length) cell.style.setProperty('--columns-span', Math.min(12, span));
       if (spans.length && mdSpans[i]) cell.style.setProperty('--columns-md-span', Math.min(12, mdSpans[i]));

@@ -1,5 +1,5 @@
 import {
-  buildResponsivePicture, getImageRefs, swapScene7Crop, sizedImageUrl,
+  buildResponsivePicture, eagerLoadWhenNear, getImageRefs, swapScene7Crop, sizedImageUrl,
 } from '../../scripts/bmw-utils.js';
 
 /*
@@ -49,6 +49,7 @@ function lightboxUrl(url) {
 }
 
 export default function decorate(block) {
+  eagerLoadWhenNear(block);
   const autoplay = !block.classList.contains('no-autoplay')
     && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const items = [];

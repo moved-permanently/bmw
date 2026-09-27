@@ -1,4 +1,4 @@
-import { buildBmwMedia } from '../../scripts/bmw-utils.js';
+import { appendAiLabelText, buildBmwMedia } from '../../scripts/bmw-utils.js';
 
 /*
  * Media: full-width responsive image or background video without text (source: backgroundmedia
@@ -36,4 +36,5 @@ export default function decorate(block) {
   if (small || large) box.style.setProperty('--media-ar-small', small || large);
   if (box.querySelector('.bmw-video')) block.classList.add('is-video');
   block.replaceChildren(box);
+  if (block.classList.contains('ai-label')) appendAiLabelText(box);
 }

@@ -1,4 +1,4 @@
-import { buildBmwMedia, decorateFontIcons } from '../../scripts/bmw-utils.js';
+import { buildBmwMedia, decorateFontIcons, eagerLoadWhenNear } from '../../scripts/bmw-utils.js';
 
 /*
  * Multi Content Gallery (source: multicontentgallery-v1): full-bleed media (cross-fading images or
@@ -28,6 +28,7 @@ function splitRow(row) {
 }
 
 export default function decorate(block) {
+  eagerLoadWhenNear(block);
   seq += 1;
   const id = `mcg-${seq}`;
   const autoplay = !block.classList.contains('no-autoplay');

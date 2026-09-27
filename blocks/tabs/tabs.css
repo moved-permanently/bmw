@@ -205,6 +205,11 @@
   }
 }
 
+/* no-nav: source cmp-tabs__navigation--hide */
+.tabs.no-nav .tabs-nav {
+  display: none;
+}
+
 /* panels */
 .tabs .tabs-panel {
   padding-top: 1rem;
@@ -259,6 +264,11 @@
   max-width: none;
   margin: 0;
   padding: 0;
+}
+
+/* full-bleed blocks (multi content gallery) inside a tab panel break out of the page grid */
+.tabs .tabs-panel > .section > .multi-content-gallery-wrapper {
+  margin-inline: calc(-1 * var(--bmw-grid-full, 1.5rem));
 }
 
 .tabs .tabs-panel > .section > div + div {

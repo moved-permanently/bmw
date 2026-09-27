@@ -1,6 +1,8 @@
 import {
+  appendAiLabelText,
   buildBmwMedia,
   decorateFontIcons,
+  eagerLoadWhenNear,
   getImageRefs,
   getVideoRefs,
   groupCtaLinks,
@@ -94,7 +96,23 @@ function videoOptions(block) {
   };
 }
 
+/**
+ * Removes the ":ai_eu_label:" marker (EU AI label of the slide image) from a media cell.
+ * @returns {boolean} whether the cell carried the marker
+ */
+function takeAiLabel(cell) {
+  if (!cell || !/ai_eu_label/.test(cell.innerHTML)) return false;
+  cell.querySelectorAll('span.icon-ai_eu_label').forEach((s) => s.remove());
+  const walker = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT);
+  const hits = [];
+  while (walker.nextNode()) if (walker.currentNode.nodeValue.includes(':ai_eu_label:')) hits.push(walker.currentNode);
+  hits.forEach((n) => { n.nodeValue = n.nodeValue.replace(/:ai_eu_label:/g, ''); });
+  cell.querySelectorAll('p').forEach((p) => { if (!p.textContent.trim() && !p.children.length) p.remove(); });
+  return true;
+}
+
 export default function decorate(block) {
+  eagerLoadWhenNear(block);
   carouselId += 1;
   const id = `carousel-${carouselId}`;
   const slidesOpt = option(block, /^slides-(\d)-(\d)-(\d)-(\d)$/);
@@ -119,6 +137,7 @@ export default function decorate(block) {
   rows.forEach((row, i) => {
     const cells = [...row.children];
     if (!cells.length) return;
+    const aiLabel = cells.length > 1 && takeAiLabel(cells[0]);
     const mediaCell = isMediaCell(cells[0]) && cells.length > 1 ? cells[0] : null;
     const contentCells = cells.filter((c) => c !== mediaCell);
     const li = document.createElement('li');
@@ -136,6 +155,10 @@ export default function decorate(block) {
         const media = document.createElement('div');
         media.className = 'carousel-slide-media';
         media.append(element);
+        if (aiLabel) {
+          media.classList.add('ai-label');
+          appendAiLabelText(media);
+        }
         li.append(media);
         if (player && hoverPlay) {
           li.addEventListener('mouseenter', () => player.play());

@@ -68,6 +68,12 @@ export default function parse(element, { document }) {
     if (mediaComp) {
       const vid = mediaComp.querySelector('video');
       media = mediaNodes(document, mediaComp);
+      // EU AI label on the slide image -> ":ai_eu_label:" marker paragraph in the media cell
+      if (media.nodes.length && mediaComp.querySelector('[class*="__ai-label"]')) {
+        const mark = document.createElement('p');
+        mark.textContent = ':ai_eu_label:';
+        media.nodes = [...media.nodes, mark];
+      }
       if (media.video && !videoOpts) {
         const v = media.video;
         videoOpts = [];

@@ -9,7 +9,8 @@
 //    section and the block moves the section into the tab at runtime. So nested blocks never end
 //    up inside a table cell.
 // Options: buttons (segmented button tab bar, source style-tabs--buttons; default: underline tab
-// bar), left (tab bar left-aligned; default centered).
+// bar), left (tab bar left-aligned; default centered), no-nav (tab bar hidden, source
+// cmp-tabs__navigation--hide).
 // Components placed directly in a panel carry no .aem-GridColumn class, so their parsers never
 // matched them: known ones are parsed here (multicontentgallery, carousel).
 import { replaceWithBlock, text } from './_utils.js';
@@ -63,6 +64,9 @@ export default function parse(element, ctx) {
   const options = [];
   if (/style-tabs--buttons/.test(element.className)) options.push('buttons');
   if (!/style-tabs-horizontal-alignment--center/.test(element.className)) options.push('left');
+  // source hides the tab bar (single-tab containers): cmp-tabs__navigation--hide
+  const nav = tabs.querySelector('[class*="cmp-tabs__navigation--hide"]');
+  if (nav && nav.closest('.cmp-tabs') === tabs) options.push('no-nav');
 
   const rows = [];
   const holders = [];

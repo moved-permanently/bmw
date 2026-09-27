@@ -176,3 +176,16 @@
     padding-inline-end: calc(var(--bmw-grid-additional-spacing, 4rem) - 2 * var(--bmw-grid-gutter, 0.75rem));
   }
 }
+
+/* reverse: side-by-side cells in reverse order (source cmp-container--flex-row-reverse) */
+@media (width >= 768px) {
+  .columns.reverse:not(.stack-md) .columns-row > div {
+    order: var(--columns-order, 0);
+  }
+}
+
+@media (width >= 1024px) {
+  .columns.reverse.stack-md .columns-row > div {
+    order: var(--columns-order, 0);
+  }
+}

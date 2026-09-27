@@ -903,6 +903,68 @@ main .default-content-wrapper picture img {
   text-align: start;
 }
 
+/* body-2: running text in the smaller body size (source .style-text--body-2 / unstyled text) */
+main .section.body-2 .default-content-wrapper {
+  font-size: var(--bmw-body-2-font-size);
+  line-height: var(--bmw-body-2-line-height);
+}
+
+/* h1-<style>: the page H1 in the typography of another source title style */
+.section.h1-headline-2 .default-content-wrapper > h1 {
+  font-size: var(--bmw-headline-2-font-size);
+  line-height: var(--bmw-headline-2-line-height);
+}
+
+.section.h1-headline-3 .default-content-wrapper > h1 {
+  font-size: var(--bmw-headline-3-font-size);
+  line-height: var(--bmw-headline-3-line-height);
+}
+
+.section.h1-subsection-1 .default-content-wrapper > h1 {
+  font-size: var(--bmw-subsection-1-font-size);
+  line-height: var(--bmw-subsection-1-line-height);
+}
+
+.section.h1-subsection-2 .default-content-wrapper > h1 {
+  font-size: var(--bmw-subsection-2-font-size);
+  line-height: var(--bmw-subsection-2-line-height);
+}
+
+/* content-N[-center|-offset-O] (+ -lg-/-md-/-sm- overrides): default content spans N of the 12
+   source grid columns (variables set by scripts/bmw-sections.js). Column = (content + 2 gutters) / 12,
+   as in the source aem-Grid where every component carries a gutter on both sides. Images keep the
+   full width. */
+main > .section.content-grid {
+  --content-span: var(--content-span-sm, 12);
+  --content-offset: var(--content-offset-sm, 0);
+}
+
+@media (width >= 768px) {
+  main > .section.content-grid {
+    --content-span: var(--content-span-md, 12);
+    --content-offset: var(--content-offset-md, 0);
+  }
+}
+
+@media (width >= 1024px) {
+  main > .section.content-grid {
+    --content-span: var(--content-span-lg, 12);
+    --content-offset: var(--content-offset-lg, 0);
+  }
+}
+
+@media (width >= 1280px) {
+  main > .section.content-grid {
+    --content-span: var(--content-span-xl, 12);
+    --content-offset: var(--content-offset-xl, 0);
+  }
+}
+
+main > .section.content-grid > .default-content-wrapper > :not(p:has(> picture), picture) {
+  width: calc(var(--content-span) * (100% + 2 * var(--bmw-grid-gutter)) / 12 - 2 * var(--bmw-grid-gutter));
+  margin-inline-start: calc(var(--content-offset) * (100% + 2 * var(--bmw-grid-gutter)) / 12);
+}
+
 main > .section.grey,
 main > .section.dark {
   padding: 3rem 0;
