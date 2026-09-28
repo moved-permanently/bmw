@@ -18,7 +18,7 @@ clicked. Content lives under `/aida/`; the migrated site is unchanged.
    [FR](https://aida--bmw--moved-permanently.aem.page/aida/data/wdh-fr.json).
 3. **Translate and roll out.** In [Translate](https://da.live/apps/loc#/moved-permanently/bmw),
    open the project *i5-launch--rehearsal-* to see a finished run, or create a new one:
-   - URL: `https://main--bmw--moved-permanently.aem.page/aida/en/i5` (the
+   - URL: [https://main--bmw--moved-permanently.aem.page/aida/en/i5](https://main--bmw--moved-permanently.aem.page/aida/en/i5) (the
      [English source](https://aida--bmw--moved-permanently.aem.page/aida/en/i5)) → *Validate sources*
      → *Confirm options*: choose *Translate* for all languages (Austria and Belgium are preselected,
      rollout uses *merge*) → *Start project* → *Translate all* → *Rollout locales* → *Rollout all ready*.
@@ -38,7 +38,8 @@ clicked. Content lives under `/aida/`; the migrated site is unchanged.
    [Belgium page](https://aida--bmw--moved-permanently.aem.page/aida/fr/be/i5) still carries German
    data: the panel says "20 of 20 values need an update (FR)". In the
    [editor](https://da.live/edit#/moved-permanently/bmw/aida/fr/be/i5), prepare menu → *Preflight*
-   lists them and updates them in one click. It also checks the WLTP statement, market features
+   lists them and updates them in one click. **Leave the drift in place for the demo** unless rehearsing.
+   It also checks the WLTP statement, market features
    (the Highway Assistant is not available in France, see the
    [French page in the editor](https://da.live/edit#/moved-permanently/bmw/aida/fr/fr/i5)), brand
    terms and SEO basics. The side panel → *WDH values* inserts tech values for the page's market
@@ -74,10 +75,10 @@ translation memory (#8), no workflow engine (#9); "chat with your analytics" (#7
 - Pages link each tech value to its sheet row and keep the formatted value, so HTML, Markdown,
   crawlers and LLMs get it without JavaScript. On preview, a small script compares values with the sheet.
 - Every page is also `.md` and `.plain.html`; sheets are JSON. No headless tier, nothing extra to run.
-- Translate is Document Authoring's app, driven by `.da/translate.json` (English `/aida/en` → German
+- Translate is Document Authoring's app, driven by the [translation configuration](https://github.com/moved-permanently/bmw/blob/aida/tools/aida/content/da/translate.json) in DA (English `/aida/en` → German
   `/aida/de` → `/aida/de/de`, `/aida/de/at`; French `/aida/fr` → `/aida/fr/fr`, `/aida/fr/be`).
 - Preflight, the WDH picker and the radar are editor extensions served from this repository.
-- The agent (`agent/aida.mjs`) reads and writes content through the Document Authoring API with any
+- The [agent](https://github.com/moved-permanently/bmw/blob/aida/tools/aida/agent/aida.mjs) reads and writes content through the Document Authoring API with any
   OpenAI-compatible model.
 
 ## Operating the demo
