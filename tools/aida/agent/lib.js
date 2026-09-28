@@ -131,17 +131,30 @@ export async function translateHtml(html, {
     + 'holds the translations and nothing else. Keep placeholders such as ⟦0⟧ exactly as they are. '
     + 'Keep numbers, units, product names and the brand voice: confident, precise, never casual.';
 
+  const ask = async (batch) => parseJsonArray(await complete([
+    { role: 'system', content: system },
+    { role: 'user', content: JSON.stringify(batch) },
+  ]));
+  // Models occasionally merge or drop strings: retry once, then split the batch in halves.
+  const translateBatch = async (batch) => {
+    let answer = await ask(batch);
+    if (answer.length !== batch.length) answer = await ask(batch);
+    if (answer.length === batch.length) return answer;
+    if (batch.length === 1) {
+      throw new Error(`model returned ${answer.length} segments, expected 1`);
+    }
+    const half = Math.ceil(batch.length / 2);
+    return [
+      ...(await translateBatch(batch.slice(0, half))),
+      ...(await translateBatch(batch.slice(half))),
+    ];
+  };
+
   const translated = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const batch of batches(segments.map(protect))) {
     // eslint-disable-next-line no-await-in-loop
-    const answer = parseJsonArray(await complete([
-      { role: 'system', content: system },
-      { role: 'user', content: JSON.stringify(batch) },
-    ]));
-    if (answer.length !== batch.length) {
-      throw new Error(`model returned ${answer.length} segments, expected ${batch.length}`);
-    }
+    const answer = await translateBatch(batch);
     translated.push(...answer.map((s) => restore(String(s))));
   }
   return setMetadata(rebuild(translated), 'html-lang', to);

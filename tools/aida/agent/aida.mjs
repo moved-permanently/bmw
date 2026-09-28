@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 /*
  * Content agent CLI: what a customer-side agent does with the public Document Authoring API and
- * the customer's own model (any OpenAI-compatible chat-completions endpoint). No Adobe model involved.
+ * the customer's own model (any OpenAI-compatible chat-completions endpoint).
+ * No Adobe model involved.
  *
  *   node tools/aida/agent/aida.mjs get <path>
  *   node tools/aida/agent/aida.mjs put <local-file> <path>
  *   node tools/aida/agent/aida.mjs bind <path> --code <model-code>
  *   node tools/aida/agent/aida.mjs sync <path> [<path> ...]
- *   node tools/aida/agent/aida.mjs translate <source-path> <target-path> --to <lang> [--from <lang>]
+ *   node tools/aida/agent/aida.mjs translate <source-path> <target-path>
+ *     --to <lang> [--from <lang>]
  *   node tools/aida/agent/aida.mjs review <path>
  *
  * Paths are site paths ("/aida/en/i5", "/aida/data/wdh-de.json"); documents without an extension

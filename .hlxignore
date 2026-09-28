@@ -14,3 +14,4 @@ tools/reports/*
 tools/aida/wdh/*
 tools/aida/agent/*
 tools/aida/consumer/*
+tools/aida/content/*

@@ -1,0 +1,57 @@
+{
+  "config": {
+    "total": 3,
+    "offset": 0,
+    "limit": 3,
+    "data": [
+      {
+        "key": "source.language",
+        "value": "English"
+      },
+      {
+        "key": "rollout.conflict.behavior",
+        "value": "merge, overwrite"
+      },
+      {
+        "key": "translate.conflict.behavior",
+        "value": "merge, overwrite"
+      }
+    ],
+    ":type": "sheet"
+  },
+  "languages": {
+    "total": 3,
+    "offset": 0,
+    "limit": 3,
+    "data": [
+      {
+        "name": "English",
+        "code": "en",
+        "location": "/aida/en",
+        "actions": "Translate, Rollout",
+        "locales": ""
+      },
+      {
+        "name": "German",
+        "code": "de",
+        "location": "/aida/de",
+        "actions": "Translate, Rollout",
+        "locales": "/aida/de/de"
+      },
+      {
+        "name": "French",
+        "code": "fr",
+        "location": "/aida/fr",
+        "actions": "Translate, Rollout",
+        "locales": "/aida/fr/fr, /aida/fr/be"
+      }
+    ],
+    ":type": "sheet"
+  },
+  ":names": [
+    "config",
+    "languages"
+  ],
+  ":version": 3,
+  ":type": "multi-sheet"
+}

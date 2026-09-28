@@ -1,0 +1,44 @@
+{
+  "total": 9,
+  "offset": 0,
+  "limit": 9,
+  "data": [
+    {
+      "term": "xDrive",
+      "variants": "X-Drive, x-Drive, XDrive, x-drive"
+    },
+    {
+      "term": "eDrive",
+      "variants": "E-Drive, e-Drive, EDrive, e-drive"
+    },
+    {
+      "term": "BMW i5",
+      "variants": "BMW I5, BMW-i5"
+    },
+    {
+      "term": "BMW iX3",
+      "variants": "BMW IX3, BMW ix3, BMW-iX3"
+    },
+    {
+      "term": "My BMW App",
+      "variants": "MyBMW App, My-BMW-App, MyBMW-App"
+    },
+    {
+      "term": "BMW Curved Display",
+      "variants": "BMW curved Display, BMW Curved-Display"
+    },
+    {
+      "term": "Driving Assistant Professional",
+      "variants": "Driving Assistent Professional, Driving-Assistant Professional"
+    },
+    {
+      "term": "Parking Assistant",
+      "variants": "Parking Assistent, Parking-Assistant"
+    },
+    {
+      "term": "M Sport",
+      "variants": "M-Sport, MSport"
+    }
+  ],
+  ":type": "sheet"
+}

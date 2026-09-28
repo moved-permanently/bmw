@@ -21,4 +21,5 @@ const items = await Promise.all(paths.map(async (path) => toStreamItem({
   markdown: await text(`${origin}${path}.md`),
   html: await text(`${origin}${path}.plain.html`),
 })));
-console.log(JSON.stringify({ generated: new Date().toISOString(), source: origin, items }, null, 2));
+const stream = { generated: new Date().toISOString(), source: origin, items };
+console.log(JSON.stringify(stream, null, 2));

@@ -1,0 +1,20 @@
+{
+  "total": 2,
+  "offset": 0,
+  "limit": 2,
+  "data": [
+    {
+      "feature": "Highway Assistant",
+      "terms": "Autobahnassistent, Highway Assistant, assistant autoroute, assistant d'autoroute, assistant de conduite sur autoroute",
+      "de": "yes",
+      "fr": "no"
+    },
+    {
+      "feature": "BMW Drive Recorder",
+      "terms": "Drive Recorder",
+      "de": "yes",
+      "fr": "yes"
+    }
+  ],
+  ":type": "sheet"
+}

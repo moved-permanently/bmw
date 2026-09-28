@@ -1,0 +1,177 @@
+/* eslint-disable no-console */
+/*
+ * Seeds the AIDA demo content from the migrated bmw.de i5 page and the WDH sheets.
+ *
+ *   node tools/aida/content/seed.mjs [--no-translate]
+ *
+ * Writes
+ *  - drafts/aida/**.plain.html          for `aem up --html-folder drafts` (local)
+ *  - tools/aida/content/out/**.html     full documents for Document Authoring (aida.mjs put)
+ *  - aida/news-index.json, aida/data/*  sheets served locally (DA sheets of the same name)
+ *
+ * The DE market page is bmw.de's i5 page with its tech values bound to WDH. The EN language
+ * source and the FR market copy are produced by the customer's model (OpenAI-compatible endpoint,
+ * see aida.mjs); FR keeps DE values until `aida.mjs sync` runs, which is the drift the demo shows.
+ * News articles contain only WDH values and fixed copy, no invented claims.
+ */
+import {
+  mkdirSync, readFileSync, writeFileSync, existsSync, copyFileSync,
+} from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { autoBind, bindingHref, valuesFromSheet } from '../../../scripts/aida-wdh.js';
+import { setMetadata } from '../../../scripts/aida-doc.js';
+import { translateHtml } from '../agent/lib.js';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../../..');
+const HERE = dirname(fileURLToPath(import.meta.url));
+const SOURCE = 'https://main--bmw--moved-permanently.aem.page/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick.plain.html';
+const AI_URL = (process.env.AIDA_AI_URL || 'https://api.openai.com/v1').replace(/\/$/, '');
+const AI_KEY = process.env.AIDA_AI_KEY || process.env.OPENAI_API_KEY;
+const AI_MODEL = process.env.AIDA_AI_MODEL || 'gpt-4.1-mini';
+const translate = !process.argv.includes('--no-translate');
+
+const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
+const wdh = (market) => readJson(join(ROOT, `tools/aida/wdh/out/wdh-${market}.json`));
+const terms = readJson(join(HERE, 'data/brand-terms.json')).data.map((r) => r.term);
+
+function write(path, plain) {
+  const draft = join(ROOT, 'drafts', `${path}.plain.html`);
+  const doc = join(HERE, 'out', `${path}.html`);
+  [draft, doc].forEach((f) => mkdirSync(dirname(f), { recursive: true }));
+  writeFileSync(draft, plain);
+  writeFileSync(doc, `<body><header></header><main>${plain}</main><footer></footer></body>\n`);
+  console.log(`  ${path}`);
+}
+
+async function complete(messages) {
+  if (!AI_KEY) throw new Error('AIDA_AI_KEY (or OPENAI_API_KEY) is not set');
+  const resp = await fetch(`${AI_URL}/chat/completions`, {
+    method: 'POST',
+    headers: { authorization: `Bearer ${AI_KEY}`, 'content-type': 'application/json' },
+    body: JSON.stringify({ model: AI_MODEL, messages, temperature: 0.2 }),
+  });
+  if (!resp.ok) throw new Error(`model endpoint: ${resp.status} ${await resp.text()}`);
+  return (await resp.json()).choices[0].message.content;
+}
+
+const deSheet = wdh('de');
+const deValues = valuesFromSheet(deSheet);
+const deModels = deSheet.models.data;
+const ldOf = (code) => deModels.find((m) => m.code === code)?.jsonld;
+const v = (key) => (deValues.has(key)
+  ? `<a href="${bindingHref('de', key)}">${deValues.get(key)}</a>` : null);
+
+function article({
+  code, title, description, date, facts, image,
+}) {
+  const lines = facts.map(([label, key, unit]) => {
+    const value = v(`${code}.${key}`);
+    return value ? `<li>${label}: ${value}${unit ? ` ${unit}` : ''}</li>` : null;
+  }).filter(Boolean);
+  const wltp = v(`${code}.wltp`);
+  const car = ldOf(code) ? JSON.parse(ldOf(code)) : undefined;
+  const ld = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: title,
+    description,
+    datePublished: date,
+    publisher: { '@type': 'Organization', name: 'BMW' },
+    ...(car ? { about: { ...car, '@context': undefined } } : {}),
+  };
+  const meta = [['Title', title], ['Description', description], ['Date', date], ['wdh-model', code],
+    ['json-ld', JSON.stringify(ld)], ...(image ? [['Image', `<img src="${image}" alt="">`]] : [])];
+  return `<div><h1>${title}</h1><p>${description}</p>`
+    + `<h2>Key figures</h2><ul>${lines.join('')}</ul>`
+    + `${wltp ? `<p><sub>${wltp}</sub></p>` : ''}</div>`
+    + `<div><div class="metadata">${meta.map(([k, val]) => `<div><div>${k}</div><div>${val}</div></div>`).join('')}</div></div>`;
+}
+
+console.log('i5 market page (DE), bound to WDH');
+const bmwDe = await (await fetch(SOURCE)).text();
+const bound = autoBind(bmwDe, 'de', deValues, '61HG');
+let dePage = setMetadata(bound.html, 'wdh-model', '61HG');
+dePage = setMetadata(dePage, 'json-ld', ldOf('61HG'));
+write('/aida/de/de/i5', dePage);
+console.log(`  ${bound.bound.length} values bound`);
+const heroImage = bmwDe.match(/<img[^>]+src="([^"]+)"/)?.[1];
+
+if (translate) {
+  console.log(`EN language source and FR market copy via ${AI_MODEL}`);
+  const en = await translateHtml(dePage, {
+    from: 'de', to: 'en', terms, complete,
+  });
+  write('/aida/en/i5', en);
+  const fr = await translateHtml(en, {
+    from: 'en', to: 'fr', terms, complete,
+  });
+  write('/aida/fr/fr/i5', fr);
+}
+
+console.log('news (EN), WDH values only');
+const facts = [
+  ['Electric range (WLTP)', 'electricRange', 'km'],
+  ['Electric consumption (WLTP)', 'electricConsumption', 'kWh/100 km'],
+  ['Power', 'power'],
+  ['0–100 km/h', 'acceleration', 's'],
+  ['Top speed', 'topSpeed', 'km/h'],
+  ['DC charging 10–80 %', 'dcCharge10to80', 'min'],
+  ['From', 'fromPrice'],
+];
+const news = [
+  {
+    slug: 'bmw-i5-edrive40',
+    code: '61HG',
+    date: '2026-09-15',
+    image: heroImage,
+    title: 'BMW i5 eDrive40 Sedan: the key figures',
+    description: 'Range, consumption and performance of the BMW i5 eDrive40, straight from the vehicle data.',
+  },
+  {
+    slug: 'bmw-ix3-50-xdrive',
+    code: '31HR',
+    date: '2026-09-22',
+    title: 'BMW iX3 50 xDrive: the key figures',
+    description: 'Range, charging and performance of the BMW iX3 50 xDrive, straight from the vehicle data.',
+  },
+  {
+    slug: 'bmw-530e-sedan',
+    code: '71FJ',
+    date: '2026-09-08',
+    title: 'BMW 530e Sedan: the key figures',
+    description: 'Electric range, consumption and performance of the BMW 530e, straight from the vehicle data.',
+  },
+];
+news.forEach((n) => write(`/aida/en/news/${n.slug}`, article({ ...n, facts })));
+
+const index = news.map((n) => ({
+  path: `/aida/en/news/${n.slug}`, title: n.title, description: n.description, image: n.image || '', date: n.date,
+}));
+const sheet = (rows) => ({
+  total: rows.length, offset: 0, limit: rows.length, data: rows, ':type': 'sheet',
+});
+mkdirSync(join(ROOT, 'aida/data'), { recursive: true });
+writeFileSync(join(ROOT, 'aida/news-index.json'), JSON.stringify(sheet(index), null, 2));
+writeFileSync(join(HERE, 'out/aida/news-index.json'), JSON.stringify(sheet(index), null, 2));
+['brand-terms.json', 'market-features.json'].forEach((f) => copyFileSync(join(HERE, 'data', f), join(ROOT, 'aida/data', f)));
+['de', 'fr'].forEach((m) => {
+  const src = join(ROOT, `tools/aida/wdh/out/wdh-${m}.json`);
+  if (existsSync(src)) copyFileSync(src, join(ROOT, `aida/data/wdh-${m}.json`));
+});
+
+console.log('hub');
+write('/aida/index', '<div><h1>AIDA on Edge Delivery Services</h1>'
+  + '<p>The bmw.de migration, extended with WDH-bound product data, '
+  + 'the customer\'s own AI, one content for every channel, governance and rollout.</p>'
+  + '<ul><li><a href="/aida/en/i5">BMW i5, EN language source</a></li>'
+  + '<li><a href="/aida/de/de/i5">BMW i5, DE market (WDH-bound)</a></li>'
+  + '<li><a href="/aida/fr/fr/i5">BMW i5, FR market (before WDH sync)</a></li></ul></div>'
+  + '<div><h2>One page, every channel</h2>'
+  + '<div class="channels"><div><div><a href="/aida/de/de/i5">/aida/de/de/i5</a></div></div>'
+  + '<div><div><a href="/aida/data/wdh-de.json">/aida/data/wdh-de.json</a></div></div></div></div>'
+  + '<div><h2>News</h2><div class="news-list"><div><div><a href="/aida/news-index.json">/aida/news-index.json</a></div></div>'
+  + '<div><div>/aida/en/news/</div></div><div><div>3</div></div></div></div>'
+  + '<div><div class="metadata"><div><div>Title</div><div>AIDA on Edge Delivery Services</div></div>'
+  + '<div><div>html-lang</div><div>en</div></div></div></div>');
+console.log('done');

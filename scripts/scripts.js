@@ -475,7 +475,7 @@ function applyPagePrimaryColor() {
 }
 
 async function loadEager(doc) {
-  if (!document.documentElement.lang) document.documentElement.lang = 'de';
+  if (!document.documentElement.lang) document.documentElement.lang = getMetadata('html-lang') || 'de';
   decorateTemplateAndTheme();
   applyPagePrimaryColor();
   const main = doc.querySelector('main');
