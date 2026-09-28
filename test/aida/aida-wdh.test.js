@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   parseBinding, bindingHref, marketForPath, valuesFromSheet, findBindings, syncBindings, autoBind,
-  textOf,
+  textOf, staleBindings,
 } from '../../scripts/aida-wdh.js';
 
 const WLTP = 'BMW i5 eDrive40 Limousine: Energieverbrauch kombiniert: 17,9 kWh/100 km (WLTP); CO₂-Emissionen kombiniert: 0 g/km (WLTP); CO₂-Klasse(n): A; Elektrische Reichweite: 513–627 km (WLTP)';
@@ -142,4 +142,32 @@ test('autoBind turns hard-coded values of one model into bindings', () => {
     + '<p><a href="/x">513–627 km</a></p>',
   );
   assert.equal(bound.length, 5);
+});
+
+test('staleBindings reports outdated values, foreign markets and unknown keys', () => {
+  const bindings = [
+    {
+      href: '/aida/data/wdh-fr.json#61HG.electricRange', key: '61HG.electricRange', market: 'fr', text: '513–627 km',
+    },
+    {
+      href: '/aida/data/wdh-de.json#61HG.power', key: '61HG.power', market: 'de', text: '250 kW (340 ch)',
+    },
+    {
+      href: '/aida/data/wdh-fr.json#61HG.power', key: '61HG.power', market: 'fr', text: '250 kW (340 ch)',
+    },
+    {
+      href: '/aida/data/wdh-fr.json#99XX.power', key: '99XX.power', market: 'fr', text: '1 kW',
+    },
+  ];
+  assert.deepEqual(staleBindings(bindings, 'fr', valuesFromSheet(frSheet)), [
+    {
+      href: '/aida/data/wdh-fr.json#61HG.electricRange', key: '61HG.electricRange', text: '513–627 km', expected: '518–627 km', reason: 'value',
+    },
+    {
+      href: '/aida/data/wdh-de.json#61HG.power', key: '61HG.power', text: '250 kW (340 ch)', expected: '250 kW (340 ch)', reason: 'market',
+    },
+    {
+      href: '/aida/data/wdh-fr.json#99XX.power', key: '99XX.power', text: '1 kW', expected: null, reason: 'unknown',
+    },
+  ]);
 });

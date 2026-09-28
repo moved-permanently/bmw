@@ -152,3 +152,5 @@ export function autoBind(html, market, values, code) {
   }).join('');
   return { html: out, bound };
 }
+
+export function staleBindings() {}
