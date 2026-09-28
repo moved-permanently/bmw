@@ -407,13 +407,6 @@ function decorateButtons(main) {
   });
 }
 
-/**
- * aem.page renders authored `:icon_name:` text as <span class="icon icon-icon_name"></span> (the
- * local content preview keeps the text). All blocks read the authored form (BMW icon-font
- * ligatures, icon-only cells detected by their `:name:` text), so turn the empty spans back into
- * the text before anything decorates (also avoids 404ing /icons/<name>.svg images).
- * @param {Element} main The container element
- */
 const wdhBindings = [];
 
 /**
@@ -432,6 +425,13 @@ function decorateWdhValues(main) {
   });
 }
 
+/**
+ * aem.page renders authored `:icon_name:` text as <span class="icon icon-icon_name"></span> (the
+ * local content preview keeps the text). All blocks read the authored form (BMW icon-font
+ * ligatures, icon-only cells detected by their `:name:` text), so turn the empty spans back into
+ * the text before anything decorates (also avoids 404ing /icons/<name>.svg images).
+ * @param {Element} main The container element
+ */
 function restoreAuthoredIcons(main) {
   main.querySelectorAll('span.icon').forEach((span) => {
     if (span.children.length || span.textContent.trim()) return;
