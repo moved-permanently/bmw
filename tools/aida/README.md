@@ -19,7 +19,7 @@ M4 (launch release with account-free review) is product configuration; see "Rele
 ## Local
 
 ```sh
-npm test                                           # 45 unit tests, node --test
+npm test                                           # unit tests (node --test)
 node tools/aida/wdh/build.mjs <folder-with-wdh-extracts> tools/aida/wdh/out
 OPENAI_API_KEY=… node tools/aida/content/seed.mjs  # drafts/, content/out/, aida/data/
 npx -y @adobe/aem-cli up --html-folder drafts --html-mount /
