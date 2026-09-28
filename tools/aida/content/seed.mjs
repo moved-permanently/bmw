@@ -37,7 +37,9 @@ const AI_MODEL = process.env.AIDA_AI_MODEL || 'gpt-4.1-mini';
 const translate = !process.argv.includes('--no-translate');
 
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
-const wdh = (market) => readJson(join(ROOT, `tools/aida/wdh/out/wdh-${market}.json`));
+// market sheets from the WDH connector (kept outside this repo); default: the locally served folder
+const SHEETS = process.env.WDH_SHEETS || join(ROOT, 'aida/data');
+const wdh = (market) => readJson(join(SHEETS, `wdh-${market}.json`));
 const terms = readJson(join(HERE, 'data/brand-terms.json')).data.map((r) => r.term);
 
 function write(path, plain) {
@@ -178,8 +180,9 @@ writeFileSync(join(ROOT, 'aida/news-index.json'), JSON.stringify(sheet(index), n
 writeFileSync(join(HERE, 'out/aida/news-index.json'), JSON.stringify(sheet(index), null, 2));
 ['brand-terms.json', 'market-features.json'].forEach((f) => copyFileSync(join(HERE, 'data', f), join(ROOT, 'aida/data', f)));
 ['de', 'fr'].forEach((m) => {
-  const src = join(ROOT, `tools/aida/wdh/out/wdh-${m}.json`);
-  if (existsSync(src)) copyFileSync(src, join(ROOT, `aida/data/wdh-${m}.json`));
+  const src = join(SHEETS, `wdh-${m}.json`);
+  const dest = join(ROOT, `aida/data/wdh-${m}.json`);
+  if (src !== dest && existsSync(src)) copyFileSync(src, dest);
 });
 
 console.log('hub');

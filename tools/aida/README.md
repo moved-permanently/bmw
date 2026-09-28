@@ -6,7 +6,7 @@ is additive; the migrated site is unchanged apart from `<html lang>` now honouri
 
 | Module | What | Code |
 |---|---|---|
-| M1 WDH | Extracts → per-market sheets; tech values bound in documents; drift check on preview; value picker in the editor | `wdh/`, `scripts/aida-wdh.js`, `scripts/aida.js`, `wdh-picker/` |
+| M1 WDH | Per-market sheets (from the WDH connector, kept outside this repo); tech values bound in documents; drift check on preview; value picker in the editor | `scripts/aida-wdh.js`, `scripts/aida.js`, `wdh-picker/` |
 | M2 Agent | CLI for the customer's agent: get, put, bind, sync, translate, review over the DA API | `agent/aida.mjs`, `agent/lib.js` |
 | M3 Channels | Page, `.md`, `.plain.html`, JSON-LD, data side by side; `llms.txt`; app stream from `.md` + `.plain.html` | `blocks/channels`, `/llms.txt`, `consumer/` |
 | M5 Rollout | EN source → languages → markets, brand terms protected, WDH values follow the market | `agent/`, `content/da/translate.json` |
@@ -20,7 +20,7 @@ M4 (launch release with account-free review) is product configuration; see "Rele
 
 ```sh
 npm test                                           # unit tests (node --test)
-node tools/aida/wdh/build.mjs <folder-with-wdh-extracts> tools/aida/wdh/out
+# market sheets: aida/data/wdh-<market>.json from the WDH connector (not in this repo)
 OPENAI_API_KEY=… node tools/aida/content/seed.mjs  # drafts/, content/out/, aida/data/
 npx -y @adobe/aem-cli up --html-folder drafts --html-mount /
 ```
@@ -45,7 +45,7 @@ Order matters; each step is outward-facing and needs a go.
    done
    ```
    Sheets: `aida/data/wdh-de`, `wdh-fr`, `brand-terms`, `market-features`, `aida/news-index`
-   (JSON from `wdh/out/`, `content/data/`, `content/out/aida/`). Then preview `/aida/**`.
+   (JSON from `aida/data/`, `content/data/`, `content/out/aida/`). Then preview `/aida/**`.
 3. **Site config** (`https://da.live/config#/moved-permanently/bmw/`):
    - `library` tab: `WDH values` | `https://aida--bmw--moved-permanently.aem.page/tools/aida/wdh-picker/wdh-picker.html`
    - `prepare` tab: `Preflight` | `https://aida--bmw--moved-permanently.aem.page/tools/aida/preflight/preflight.html`

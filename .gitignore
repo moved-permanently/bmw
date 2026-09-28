@@ -29,7 +29,6 @@ tools/workers/**/node_modules/
 tools/workers/**/.wrangler/
 migration-work/navigation-validation/
 migration-work/footer-validation/
-tools/aida/wdh/out/
 drafts/
 /aida/
 tools/aida/content/out/
