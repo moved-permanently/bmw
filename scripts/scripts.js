@@ -414,6 +414,24 @@ function decorateButtons(main) {
  * the text before anything decorates (also avoids 404ing /icons/<name>.svg images).
  * @param {Element} main The container element
  */
+const wdhBindings = [];
+
+/**
+ * WDH tech values are authored as links to their market sheet row
+ * (/aida/data/wdh-<market>.json#<code>.<field>) and rendered as plain text; preview hosts check
+ * them against the sheet (scripts/aida.js).
+ */
+function decorateWdhValues(main) {
+  main.querySelectorAll('a[href*="/data/wdh-"][href*="#"]').forEach((a) => {
+    const span = document.createElement('span');
+    span.className = 'wdh-value';
+    span.dataset.wdh = a.getAttribute('href');
+    span.textContent = a.textContent;
+    wdhBindings.push({ href: span.dataset.wdh, text: a.textContent.replace(/\s+/g, ' ').trim() });
+    a.replaceWith(span);
+  });
+}
+
 function restoreAuthoredIcons(main) {
   main.querySelectorAll('span.icon').forEach((span) => {
     if (span.children.length || span.textContent.trim()) return;
@@ -428,6 +446,7 @@ function restoreAuthoredIcons(main) {
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
+  decorateWdhValues(main);
   restoreAuthoredIcons(main);
   decorateIcons(main);
   buildAutoBlocks(main);
@@ -456,7 +475,7 @@ function applyPagePrimaryColor() {
 }
 
 async function loadEager(doc) {
-  document.documentElement.lang = 'de';
+  if (!document.documentElement.lang) document.documentElement.lang = 'de';
   decorateTemplateAndTheme();
   applyPagePrimaryColor();
   const main = doc.querySelector('main');
@@ -497,6 +516,9 @@ async function loadLazy(doc) {
 
   import('./bmw-consent.js').then((m) => m.default());
   import('./bmw-sidebar.js').then((m) => m.default());
+  if (wdhBindings.length && /(\.aem\.page|\.preview\.da\.live|^localhost)$/.test(window.location.hostname)) {
+    import('./aida.js').then((m) => m.checkWdhValues(wdhBindings));
+  }
 }
 
 /**
