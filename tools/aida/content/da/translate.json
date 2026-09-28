@@ -1,57 +1,136 @@
 {
+  ":version": 3,
+  ":names": [
+    "config",
+    "languages",
+    "custom-doc-rules",
+    "dnt-content-rules"
+  ],
+  ":type": "multi-sheet",
   "config": {
-    "total": 3,
+    "total": 9,
+    "limit": 9,
     "offset": 0,
-    "limit": 3,
     "data": [
       {
         "key": "source.language",
         "value": "English"
       },
       {
+        "key": "sync.conflict.behavior",
+        "value": "overwrite, merge"
+      },
+      {
+        "key": "translate.conflict.behavior",
+        "value": "overwrite, merge"
+      },
+      {
         "key": "rollout.conflict.behavior",
         "value": "merge, overwrite"
       },
       {
-        "key": "translate.conflict.behavior",
-        "value": "merge, overwrite"
+        "key": "copy.conflict.behavior",
+        "value": "overwrite, merge"
+      },
+      {
+        "key": "translation.service.name",
+        "value": "Google"
+      },
+      {
+        "key": "translation.service.all.env",
+        "value": "prod"
+      },
+      {
+        "key": "translation.service.prod.link",
+        "value": "https://cloud.google.com/translate/docs/overview"
+      },
+      {
+        "key": "translation.service.prod.origin",
+        "value": "https://translate.da.live/google"
       }
-    ],
-    ":type": "sheet"
+    ]
   },
   "languages": {
     "total": 3,
-    "offset": 0,
     "limit": 3,
+    "offset": 0,
     "data": [
       {
         "name": "English",
         "code": "en",
         "location": "/aida/en",
-        "actions": "Translate, Rollout",
-        "locales": ""
+        "actions": "Skip",
+        "locales": "",
+        "default locales": ""
       },
       {
         "name": "German",
         "code": "de",
         "location": "/aida/de",
-        "actions": "Translate, Rollout",
-        "locales": "/aida/de/de"
+        "actions": "Skip, Translate, Rollout",
+        "locales": "/aida/de/de, /aida/de/at",
+        "default locales": "/aida/de/at"
       },
       {
         "name": "French",
         "code": "fr",
         "location": "/aida/fr",
-        "actions": "Translate, Rollout",
-        "locales": "/aida/fr/fr, /aida/fr/be"
+        "actions": "Skip, Translate, Rollout",
+        "locales": "/aida/fr/fr, /aida/fr/be",
+        "default locales": "/aida/fr/be"
       }
-    ],
-    ":type": "sheet"
+    ]
   },
-  ":names": [
-    "config",
-    "languages"
-  ],
-  ":version": 3,
-  ":type": "multi-sheet"
+  "custom-doc-rules": {
+    "total": 2,
+    "limit": 2,
+    "offset": 0,
+    "data": [
+      {
+        "block": "metadata",
+        "rule": "translate col 2 if col 1 is \"title\" or \"description\""
+      },
+      {
+        "block": "section-metadata",
+        "rule": "do-not-translate"
+      }
+    ]
+  },
+  "dnt-content-rules": {
+    "total": 10,
+    "limit": 10,
+    "offset": 0,
+    "data": [
+      {
+        "content": "THE"
+      },
+      {
+        "content": "xDrive"
+      },
+      {
+        "content": "eDrive"
+      },
+      {
+        "content": "BMW i5"
+      },
+      {
+        "content": "BMW iX3"
+      },
+      {
+        "content": "My BMW App"
+      },
+      {
+        "content": "BMW Curved Display"
+      },
+      {
+        "content": "Driving Assistant Professional"
+      },
+      {
+        "content": "Parking Assistant"
+      },
+      {
+        "content": "M Sport"
+      }
+    ]
+  }
 }

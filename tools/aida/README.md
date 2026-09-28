@@ -1,100 +1,93 @@
-# AIDA demo layer
+# AIDA demo: composable without headless
 
-A demo layer on the migrated bmw.de: WDH-bound product data, the customer's own AI,
-one content for every channel, governance and rollout. Everything lives under `/aida/` in content and
-is additive; the migrated site is unchanged apart from `<html lang>` now honouring `html-lang`.
+A demo layer on the migrated bmw.de that answers the RfP's content-creator and Vendor Briefing I/III
+scenarios, told as the BMW i5 launch. It is built, live on preview, and everything below can be
+clicked. Content lives under `/aida/`; the migrated site is unchanged.
 
-| Module | What | Code |
-|---|---|---|
-| M1 WDH | Per-market sheets (from the WDH connector, kept outside this repo); tech values bound in documents; drift check on preview; value picker in the editor | `scripts/aida-wdh.js`, `scripts/aida.js`, `wdh-picker/` |
-| M2 Agent | CLI for the customer's agent: get, put, bind, sync, translate, review over the DA API | `agent/aida.mjs`, `agent/lib.js` |
-| M3 Channels | Page, `.md`, `.plain.html`, JSON-LD, data side by side; `llms.txt`; app stream from `.md` + `.plain.html` | `blocks/channels`, `/llms.txt`, `consumer/` |
-| M5 Rollout | EN source → languages → markets, brand terms protected, WDH values follow the market | `agent/`, `content/da/translate.json` |
-| M6 Governance | Custom Preflight: WDH current and from the page's market (one-click sync), WLTP statement, market features, brand terms, SEO basics | `preflight/` |
-| M7 Radar | Source pages × languages and markets, stale copies, WDH drift | `radar/` |
-| M8 News | News built from WDH values, `NewsArticle` JSON-LD, news list | `blocks/news-list`, `content/seed.mjs` |
+## Check it yourself
 
-M4 (launch release with account-free review) is product configuration; see "Release" below.
+1. **Open formats, LLM visibility.** [Hub](https://aida--bmw--moved-permanently.aem.page/aida/):
+   one page as web page, Markdown for LLMs, HTML fragment, JSON-LD and data, plus a news list built
+   from WDH data. Also: [i5 as Markdown](https://aida--bmw--moved-permanently.aem.page/aida/fr/fr/i5.md),
+   [llms.txt](https://aida--bmw--moved-permanently.aem.page/llms.txt),
+   [a news article](https://aida--bmw--moved-permanently.aem.page/aida/en/news/bmw-i5-edrive40).
+2. **One source for every tech value (WDH).**
+   [i5, Germany](https://aida--bmw--moved-permanently.aem.page/aida/de/de/i5): all 20 tech values
+   come from WDH; the panel bottom right says "All 20 values match WDH (DE)". The data as served:
+   [DE](https://aida--bmw--moved-permanently.aem.page/aida/data/wdh-de.json),
+   [FR](https://aida--bmw--moved-permanently.aem.page/aida/data/wdh-fr.json).
+3. **Translate and roll out.** In [Translate](https://da.live/apps/loc#/moved-permanently/bmw),
+   open the project *i5-launch--rehearsal-* to see a finished run, or create a new one:
+   - URL: `https://main--bmw--moved-permanently.aem.page/aida/en/i5` (the
+     [English source](https://aida--bmw--moved-permanently.aem.page/aida/en/i5)) → *Validate sources*
+     → *Confirm options*: choose *Translate* for all languages (Austria and Belgium are preselected,
+     rollout uses *merge*) → *Start project* → *Translate all* → *Rollout locales* → *Rollout all ready*.
+   - Results: [German](https://aida--bmw--moved-permanently.aem.page/aida/de/i5),
+     [Austria](https://aida--bmw--moved-permanently.aem.page/aida/de/at/i5),
+     [French](https://aida--bmw--moved-permanently.aem.page/aida/fr/i5),
+     [Belgium](https://aida--bmw--moved-permanently.aem.page/aida/fr/be/i5). Brand terms such as
+     "eDrive" stay untranslated (translation config).
+   - Local edits survive: [Belgium in the editor](https://da.live/edit#/moved-permanently/bmw/aida/fr/be/i5)
+     has a local launch-offer line under the headline. After French was rolled out again, the line is
+     still there and the editor marks where the page differs from the French version, to keep or drop.
+   - Translation runs on Google by default; Lionbridge, Smartling and Trados connectors exist, and
+     BMW's own AI would be a custom connector. The [English source](https://aida--bmw--moved-permanently.aem.page/aida/en/i5)
+     and the [French market page](https://aida--bmw--moved-permanently.aem.page/aida/fr/fr/i5) were
+     translated by a model through the API instead, standing in for BMW's AI platform.
+4. **Governance before publishing.** The translated
+   [Belgium page](https://aida--bmw--moved-permanently.aem.page/aida/fr/be/i5) still carries German
+   data: the panel says "20 of 20 values need an update (FR)". In the
+   [editor](https://da.live/edit#/moved-permanently/bmw/aida/fr/be/i5), prepare menu → *Preflight*
+   lists them and updates them in one click. It also checks the WLTP statement, market features
+   (the Highway Assistant is not available in France, see the
+   [French page in the editor](https://da.live/edit#/moved-permanently/bmw/aida/fr/fr/i5)), brand
+   terms and SEO basics. The side panel → *WDH values* inserts tech values for the page's market
+   (pick the i5 in the list).
+5. **Rollout status across markets.**
+   [Rollout radar](https://da.live/app/moved-permanently/bmw/tools/aida/radar/radar?ref=aida)
+   (confirm the trust prompt once): pages × languages and markets, status, and red badges for tech
+   values that differ from WDH.
+6. **Baseline.** [The plain 1:1 migration](https://main--bmw--moved-permanently.aem.page/de/home),
+   migrated by EMA in under three days.
 
-## Local
+Translate and the radar are also listed under *Apps* for the site.
 
-```sh
-npm test                                           # unit tests (node --test)
-# market sheets: aida/data/wdh-<market>.json from the WDH connector (not in this repo)
-OPENAI_API_KEY=… node tools/aida/content/seed.mjs  # drafts/, content/out/, aida/data/
-npx -y @adobe/aem-cli up --html-folder drafts --html-mount /
-```
+## RfP coverage
 
-Open `/aida/index`, `/aida/de/de/i5` (all values current) and `/aida/fr/fr/i5` (French copy that
-still carries DE values: outlined, listed in the check panel). Locally there is no `.md` and no
-JSON-LD rendering for draft pages; both come from preview.
+| RfP ask | Step |
+|---|---|
+| VB III: WDH connector, single tech value, per-market formatting, feature availability | 2, 4 |
+| Architecture session: fragments for web/app/banner, LLM visibility; questionnaire BCK-009, LEG-007 (export as JSON/Markdown) | 1 |
+| Content creators #1, #8; VB III localisation; VB I rollout | 3 |
+| Architecture session: BMW's own AI, API read/write for their agents | 3 |
+| Content creators #10; VB III governance | 4 |
+| VB III: work status within one country and across countries | 5 |
+| VB I news pilot (proposed first production step) | 1 |
+| Content creators #4–6: release calendar, review without accounts, publish with CDN purge | product features (snapshots, review link, Akamai purge on publish); not prepared in this demo |
 
-The model is any OpenAI-compatible endpoint (`AIDA_AI_URL`, `AIDA_AI_KEY`, `AIDA_AI_MODEL`, default
-`gpt-4.1-mini`), standing in for the BMW AI platform. No Adobe model is used.
+Not covered, and said openly: no field- or block-level locking (#11), no native glossary or
+translation memory (#8), no workflow engine (#9); "chat with your analytics" (#7) would be a build.
 
-## Setup in Document Authoring
+## How it works
 
-Order matters; each step is outward-facing and needs a go.
+- WDH extract → connector → one sheet per market in Document Authoring (`/aida/data/wdh-<market>.json`).
+- Pages link each tech value to its sheet row and keep the formatted value, so HTML, Markdown,
+  crawlers and LLMs get it without JavaScript. On preview, a small script compares values with the sheet.
+- Every page is also `.md` and `.plain.html`; sheets are JSON. No headless tier, nothing extra to run.
+- Translate is Document Authoring's app, driven by `.da/translate.json` (English `/aida/en` → German
+  `/aida/de` → `/aida/de/de`, `/aida/de/at`; French `/aida/fr` → `/aida/fr/fr`, `/aida/fr/be`).
+- Preflight, the WDH picker and the radar are editor extensions served from this repository.
+- The agent (`agent/aida.mjs`) reads and writes content through the Document Authoring API with any
+  OpenAI-compatible model.
 
-1. **Code:** push branch `aida`. Code is then served from `https://aida--bmw--moved-permanently.aem.page`.
-2. **Content** (org `moved-permanently`, site `bmw`, only under `/aida/`), with a DA token in
-   `DA_TOKEN`:
-   ```sh
-   for f in $(cd tools/aida/content/out && find aida -name '*.html'); do
-     node tools/aida/agent/aida.mjs put "tools/aida/content/out/$f" "/${f%.html}"
-   done
-   ```
-   Sheets: `aida/data/wdh-de`, `wdh-fr`, `brand-terms`, `market-features`, `aida/news-index`
-   (JSON from `aida/data/`, `content/data/`, `content/out/aida/`). Then preview `/aida/**`.
-3. **Site config** (`https://da.live/config#/moved-permanently/bmw/`):
-   - `library` tab: `WDH values` | `https://aida--bmw--moved-permanently.aem.page/tools/aida/wdh-picker/wdh-picker.html`
-   - `prepare` tab: `Preflight` | `https://aida--bmw--moved-permanently.aem.page/tools/aida/preflight/preflight.html`
-     (replaces the built-in Preflight for this site; remove the row to restore it)
-   - `.da/translate.json`: from `content/da/translate.json` (source English `/aida/en`; German
-     `/aida/de` → `/aida/de/de`; French `/aida/fr` → `/aida/fr/fr`, `/aida/fr/be`; rollout `merge`).
-     Check first whether the site already has one.
-4. **Radar:** `https://da.live/app/moved-permanently/bmw/tools/aida/radar/radar?ref=aida`
-   (no config needed; DA asks once to trust the app because it is not an Adobe org app).
+## Operating the demo
 
-State on 2026-09-28: steps 1–3 are done (branch `aida` pushed; content and sheets in DA and on
-preview; `library`, `prepare` and `.da/translate.json` set). Sheets were previewed with DA's own
-Preview button in the sheet editor, because a `.json` path cannot be previewed by path alone.
-The previous site config is kept as a backup outside the repo.
-
-**Reset after a rehearsal.** The FR page ships with its values bound to the DE sheet, so the
-drift shows. After a live Preflight sync, restore it and preview again:
-
-```sh
-node tools/aida/agent/aida.mjs put tools/aida/content/out/aida/fr/fr/i5.html /aida/fr/fr/i5
-```
-
-## Release (M4, product features)
-
-1. Protect the preview with site authentication before sharing anything with BMW
-   ([docs](https://www.aem.live/docs/authentication-setup-site)); it is an Admin API config change.
-2. Snapshot `i5-launch` with `/aida/de/de/i5`, `/aida/fr/fr/i5` and the news pages; set a review
-   password; share the `*.aem.reviews` link (no Adobe account, no Sidekick)
-   ([docs](https://www.aem.live/docs/snapshots-reviews)).
-3. Reject → fix → approve → publish as a unit. Scheduled snapshot publishing is early access and
-   must be enabled for the org ([docs](https://www.aem.live/docs/ew/authoring/snapshots)).
-
-## Workshop click path
-
-1. `/aida/de/de/i5`: bmw.de on EDS. The i5 range appears six times (three values, three WLTP
-   statements); all are bound to WDH, 20 values in total. Check panel: 20 of 20 current.
-2. `/aida/fr/fr/i5`: the customer's model translated the page, brand terms intact; tech values
-   are still German → outlined. In DA, Preflight lists them and syncs them in one click; the
-   Highway Assistant is flagged because it is not available in France.
-3. `aida.mjs translate /aida/en/i5 /aida/fr/be/i5 --to fr`: an agent writes a new market copy
-   through the API with French values and JSON-LD; the radar shows it appear.
-4. `/aida/index`: the same page as Markdown for LLMs, HTML fragment, JSON-LD and data; news
-   built from WDH values. `node tools/aida/consumer/app-stream.mjs` builds app cards from the
-   same URLs.
-5. Release: snapshot, review link without an account, publish as a unit.
-
-## Known limits
-
-- Values are kept in the document and synced by the agent or Preflight; production would re-sync
-  on every WDH change (webhook → `aida.mjs sync`).
-- No field-level locking, native glossary or translation memory in DA; brand terms are protected
-  by the agent, translation memory stays with the customer's AI or TMS.
+- Reset after a rehearsal: restore the French page with
+  `node tools/aida/agent/aida.mjs put tools/aida/content/out/aida/fr/fr/i5.html /aida/fr/fr/i5`, and
+  delete `/aida/de/i5`, `/aida/de/at`, `/aida/fr/i5` and `/aida/fr/be` in the editor before a fresh
+  translation run.
+- Rebuild content: `OPENAI_API_KEY=… node tools/aida/content/seed.mjs` (needs the WDH market sheets in
+  `aida/data/`). Tests: `npm test`.
+- Site config: `library` (WDH values), `prepare` (Preflight, replaces the built-in one for this site)
+  and `apps` (Translate, Rollout radar) in the
+  [site config](https://da.live/config#/moved-permanently/bmw/).
