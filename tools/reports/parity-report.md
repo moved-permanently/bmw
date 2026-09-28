@@ -22,6 +22,8 @@ Generated 2026-09-28T02:37:46.847Z (final — after round 7 (all pages re-captur
 
 Remaining issue kinds (page-widths): layout 158, typography 37, missing-text 27, height 18, image-geometry 15, broken-images 11
 
+**Regression check against round 5:** all 102 pages that matched live at all three widths in round 5 still match, and none of the 429 page-widths that matched in round 5 has regressed.
+
 ## Fix rounds
 - R0 (home findings): stage poster, teaser spacing variants, grid-width columns detection.
 - R1/R2: type styles from source classes, centered intros, content spans, header style per page, block crops/tabs.
