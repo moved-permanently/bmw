@@ -85,3 +85,17 @@ test('seo checks title, description and a single h1', () => {
   assert.equal(seo.status, 'warn');
   assert.equal(seo.details.length, 2);
 });
+
+test('wdh details group repeated values and name data taken from another market', () => {
+  const de = '<a href="/aida/data/wdh-de.json#61HG.power">250 kW (340 PS)</a>';
+  const results = run(page(`<h1>X</h1><p>${de} ${de} ${de} `
+    + '<a href="/aida/data/wdh-de.json#61HG.electricRange">518–627 km</a></p>'
+    + `<p><a href="/aida/data/wdh-fr.json#61HG.wltp">${WLTP_FR}</a></p>`));
+  const wdh = check(results, 'wdh');
+  assert.equal(wdh.summary, '4 values differ from WDH (FR)');
+  assert.deepEqual(wdh.details, [
+    '61HG.power (3×): "250 kW (340 PS)" → "250 kW (340 ch)"',
+    '61HG.electricRange: "518–627 km" is DE data, FR has the same text',
+  ]);
+  assert.equal(wdh.fixable, 4);
+});
