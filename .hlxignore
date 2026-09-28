@@ -13,3 +13,4 @@ catalog/*
 tools/reports/*
 tools/aida/wdh/*
 tools/aida/agent/*
+tools/aida/consumer/*

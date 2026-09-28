@@ -1,0 +1,53 @@
+.channels {
+  border: 1px solid var(--bmw-border, #bbb);
+}
+
+.channels .channels-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background: var(--bmw-surface-grey, #f6f6f6);
+}
+
+.channels .channels-nav button {
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--bmw-color-text, #262626);
+  font: inherit;
+  cursor: pointer;
+}
+
+.channels .channels-nav button[aria-selected="true"] {
+  border-color: var(--bmw-color-text, #262626);
+  background: var(--bmw-surface, #fff);
+}
+
+.channels .channels-panel {
+  padding: 1rem;
+}
+
+.channels .channels-url {
+  margin: 0 0 0.75rem;
+  font-family: monospace;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.channels pre {
+  max-height: 32rem;
+  margin: 0;
+  padding: 1rem;
+  overflow: auto;
+  background: var(--bmw-surface-grey, #f6f6f6);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.channels iframe {
+  width: 100%;
+  height: 32rem;
+  border: 0;
+}

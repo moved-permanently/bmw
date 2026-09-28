@@ -1,0 +1,38 @@
+.news-list ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.news-list a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.news-list picture img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.news-list .news-list-body {
+  padding-top: 1rem;
+}
+
+.news-list time {
+  color: var(--bmw-color-disclaimer, #666);
+  font-size: 0.875rem;
+}
+
+.news-list h3 {
+  margin: 0.25rem 0 0.5rem;
+}
+
+.news-list a:hover h3 {
+  color: var(--bmw-link-hover, #1c69d4);
+}

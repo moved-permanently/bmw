@@ -1,0 +1,26 @@
+# BMW (Edge Delivery Services replica, demo)
+
+> Demo replica of www.bmw.de on Adobe Experience Manager Edge Delivery Services. Every page is also
+> served as Markdown (append `.md` to the path) and as an HTML fragment (`.plain.html`). Tech values
+> such as range, consumption and power link to their source record in the market's vehicle data sheet.
+
+## Models
+
+- [BMW i5 (German market)](/aida/de/de/i5.md): overview, drivetrains, charging, WLTP statements
+- [BMW i5 (French market)](/aida/fr/fr/i5.md): same page, French market data
+- [BMW i5 (English source)](/aida/en/i5.md): language source of the model page
+- [BMW i5 on www.bmw.de replica](/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick.md)
+
+## Topics
+
+- [Electric cars (English source)](/aida/en/electric-mobility.md)
+- [Elektroautos (www.bmw.de replica)](/de/elektroauto.md)
+
+## News
+
+- [News (English source)](/aida/en/news/index.md)
+
+## Data
+
+- [Vehicle data, German market](/aida/data/wdh-de.json): formatted values, models, JSON-LD, data-quality issues
+- [Vehicle data, French market](/aida/data/wdh-fr.json)
