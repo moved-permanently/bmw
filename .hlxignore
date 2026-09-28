@@ -11,3 +11,5 @@ tools/workers/*
 tools/importer/*
 catalog/*
 tools/reports/*
+tools/aida/wdh/*
+tools/aida/agent/*

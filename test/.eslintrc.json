@@ -1,0 +1,4 @@
+{
+  "env": { "node": true },
+  "rules": { "import/no-unresolved": ["error", { "ignore": ["^node:"] }] }
+}
