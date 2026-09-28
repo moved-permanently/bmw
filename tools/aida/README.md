@@ -56,6 +56,18 @@ Order matters; each step is outward-facing and needs a go.
 4. **Radar:** `https://da.live/app/moved-permanently/bmw/tools/aida/radar/radar?ref=aida`
    (no config needed; DA asks once to trust the app because it is not an Adobe org app).
 
+State on 2026-09-28: steps 1–3 are done (branch `aida` pushed; content and sheets in DA and on
+preview; `library`, `prepare` and `.da/translate.json` set). Sheets were previewed with DA's own
+Preview button in the sheet editor, because a `.json` path cannot be previewed by path alone.
+The previous site config is kept as a backup outside the repo.
+
+**Reset after a rehearsal.** The FR page ships with its values bound to the DE sheet, so the
+drift shows. After a live Preflight sync, restore it and preview again:
+
+```sh
+node tools/aida/agent/aida.mjs put tools/aida/content/out/aida/fr/fr/i5.html /aida/fr/fr/i5
+```
+
 ## Release (M4, product features)
 
 1. Protect the preview with site authentication before sharing anything with BMW
