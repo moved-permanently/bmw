@@ -153,4 +153,17 @@ export function autoBind(html, market, values, code) {
   return { html: out, bound };
 }
 
-export function staleBindings() {}
+export function staleBindings(bindings, market, values) {
+  return bindings.map(({
+    href, key, text, ...binding
+  }) => {
+    const current = values.get(key);
+    let reason = null;
+    if (!current) reason = 'unknown';
+    else if (text !== current.display) reason = 'value';
+    else if (binding.market !== market) reason = 'market';
+    return reason && {
+      href, key, text, expected: current ? current.display : null, reason,
+    };
+  }).filter(Boolean);
+}
