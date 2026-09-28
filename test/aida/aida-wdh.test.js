@@ -9,16 +9,28 @@ const WLTP = 'BMW i5 eDrive40 Limousine: Energieverbrauch kombiniert: 17,9 kWh/1
 
 const deSheet = {
   values: [
-    { key: '61HG.electricRange', value: '513–627', unit: 'km', label: 'Elektrische Reichweite (WLTP)' },
-    { key: '61HG.acceleration', value: '6', unit: 's', label: 'Beschleunigung 0–100 km/h' },
-    { key: '61HG.power', value: '250 kW (340 PS)', unit: '', label: 'Max. Leistung' },
-    { key: '61HG.wltp', value: WLTP, unit: '', label: 'WLTP-Pflichtangabe' },
+    {
+      key: '61HG.electricRange', value: '513–627', unit: 'km', label: 'Elektrische Reichweite (WLTP)',
+    },
+    {
+      key: '61HG.acceleration', value: '6', unit: 's', label: 'Beschleunigung 0–100 km/h',
+    },
+    {
+      key: '61HG.power', value: '250 kW (340 PS)', unit: '', label: 'Max. Leistung',
+    },
+    {
+      key: '61HG.wltp', value: WLTP, unit: '', label: 'WLTP-Pflichtangabe',
+    },
   ],
 };
 const frSheet = {
   values: [
-    { key: '61HG.electricRange', value: '518–627', unit: 'km', label: 'Autonomie électrique (WLTP)' },
-    { key: '61HG.power', value: '250 kW (340 ch)', unit: '', label: 'Puissance max.' },
+    {
+      key: '61HG.electricRange', value: '518–627', unit: 'km', label: 'Autonomie électrique (WLTP)',
+    },
+    {
+      key: '61HG.power', value: '250 kW (340 ch)', unit: '', label: 'Puissance max.',
+    },
   ],
 };
 
