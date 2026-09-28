@@ -471,6 +471,22 @@ blockquote {
   margin: 0;
 }
 
+/* quotes (source .cmp-text__quote): headline-3 size, German quotation marks */
+main blockquote {
+  font-size: var(--bmw-headline-3-font-size);
+  font-weight: var(--bmw-font-weight-light, 300);
+  line-height: var(--bmw-headline-3-line-height);
+  quotes: "„" "“";
+}
+
+main blockquote p:first-of-type::before {
+  content: open-quote;
+}
+
+main blockquote p:last-of-type::after {
+  content: close-quote;
+}
+
 b,
 strong {
   font-weight: var(--bmw-font-weight-bold);
@@ -908,6 +924,12 @@ main .default-content-wrapper picture img {
 .section.center .button-group {
   align-items: center;
   justify-content: center;
+}
+
+/* download blocks in centred sections are centred too (source: centred container) */
+.section.center .download-wrapper .download-list {
+  align-items: center;
+  text-align: center;
 }
 
 /* download links built from ":download:" paragraphs (scripts/bmw-sections.js) */

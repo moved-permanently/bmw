@@ -23,6 +23,7 @@
   font-size: var(--bmw-body-2-font-size, 0.875rem);
   font-weight: var(--bmw-font-weight-clickable, 500);
   line-height: var(--bmw-body-2-line-height, 1.375rem);
+  text-align: center; /* source .cmp-download__action */
   text-decoration: none;
 }
 

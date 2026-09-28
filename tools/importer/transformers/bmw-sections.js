@@ -289,7 +289,7 @@ function cellNodes(td) {
 
 /** Side-by-side cells holding Video / Download blocks (e.g. video | text, image | text + download):
  * the blocks become Columns cell content (blocks/columns builds them at runtime):
- *  - a video cell (the video alone) = poster + video links; its options → video-<option>
+ *  - a video cell (the video alone, or first above texts) = poster + video links; its options → video-<option>
  *  - a download row = <p>:download: <a href title="PDF, 1 MB">Label</a></p> (outline → download-outline)
  *  - cells of only Link Lists: their heading + list nodes; options link-lists, link-list-<option>
  * Returns { cells, options } or null when a cell holds any other block. */
@@ -304,7 +304,8 @@ function embedBlocks(doc, cells) {
       if (n.tagName !== 'TABLE') { res.push(n); return; }
       const name = tableName(n);
       const opts = ((name.match(/\(([^)]*)\)/) || [])[1] || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
-      if (/^video\b/i.test(name) && c.length === 1) {
+      // a video alone, or leading the cell's texts (video above title/text: blocks/columns nests it)
+      if (/^video\b/i.test(name) && (c.length === 1 || (n === c[0] && !c.slice(1).some((x) => x.tagName === 'TABLE')))) {
         const td = tableRows(n)[0] && tableRows(n)[0].querySelector('td');
         const nodes = cellNodes(td);
         if (!nodes.length) { ok = false; return; }
@@ -642,12 +643,37 @@ function gridRows(visible, gs) {
   return rows;
 }
 
+/** Width of a cell's leading image (the cell's first component is an image, followed by texts) as
+ * 12ths of the cell per breakpoint [default, medium, small], or null when it spans (almost) the
+ * whole cell. Source: icons in a narrow nested grid column above the cell's title/text. */
+function leadImageSpans(cell) {
+  const first = cell.querySelector('.image, .title, .text, .button, .video');
+  if (!first || !first.matches('.image') || !cell.querySelector('.title, .text')) return null;
+  const frac = (bp) => {
+    let f = 1;
+    for (let n = first; n && n !== cell; n = n.parentElement) {
+      if (n.classList && n.classList.contains('aem-GridColumn')) {
+        const g = colGeo(n, bp);
+        if (!g) return null;
+        f *= g.w;
+      }
+    }
+    return f;
+  };
+  const fr = ['default', 'medium', 'small'].map(frac);
+  if (fr.some((f) => f === null) || fr[0] >= 0.75) return null;
+  return fr.map((f) => Math.min(12, Math.max(1, Math.round(f * 12))));
+}
+
 /** One row of side-by-side grid columns -> Columns block (or stacked content when not possible).
  * Widths are relative to the parent grid (a 5-wide nested grid with two 5-wide children stacks them). */
 function flattenRow(doc, visible, gs, ctx) {
   const leafMark = ctx.leaves ? ctx.leaves.length : 0;
   let cells = visible.map((k) => flatten(doc, k, ctx));
   let info = columnsInfo(visible, gs);
+  // nested rows record their own centring (their leaves are dropped once they became Columns)
+  const nestedCenter = cells.some((c) => { const ch = nestedColumns(ctx, c); return !!(ch && ch.center); });
+  const nestedImg = cells.map((c) => { const ch = nestedColumns(ctx, c); return ch && ch.imgSpans; }).find(Boolean);
   if (cells.some((c) => nestedColumns(ctx, c))) {
     info = mergeNested(ctx, info, cells);
     ({ cells } = info);
@@ -660,10 +686,16 @@ function flattenRow(doc, visible, gs, ctx) {
   const ctaRow = cells.every((c) => c.every(isCtaOnly));
   if ((!hasBlock || embed) && !ctaRow && cells.filter((c) => c.length).length >= 2) {
     const row = cells.map((c) => { const d = doc.createElement('div'); c.forEach((n) => d.append(n)); return d; });
-    const table = block(doc, `Columns (${[...columnsOptions(info), ...(embed ? embed.options : [])].join(', ')})`, [row]);
+    // cell texts centred (most of their titles/texts sit in style-container--center containers)
+    const texts = ctx.leaves ? ctx.leaves.slice(leafMark).filter((l) => l.kind === 'title' || l.kind === 'text') : [];
+    const center = texts.length > 0 ? texts.filter((l) => l.center).length * 2 > texts.length : nestedCenter;
+    // narrow leading images (icons above the texts): img-<default>-<medium>-<small> spans of the cell
+    const imgSpans = info.cells ? nestedImg : visible.map(leadImageSpans).find(Boolean);
+    const opts = [...columnsOptions(info), ...(center ? ['center'] : []), ...(imgSpans ? [`img-${imgSpans.join('-')}`] : []), ...(embed ? embed.options : [])];
+    const table = block(doc, `Columns (${opts.join(', ')})`, [row]);
     // remember the layout so a parent grid can merge this row into its own (nested grids)
     if (!ctx.columns) ctx.columns = new Map();
-    ctx.columns.set(table, { ...info, cells });
+    ctx.columns.set(table, { ...info, cells, center, imgSpans });
     // components inside the columns block do not shape the section's default content
     if (ctx.leaves) ctx.leaves.length = leafMark;
     return [table];

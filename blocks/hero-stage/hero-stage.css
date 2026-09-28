@@ -229,6 +229,7 @@ main .hero-stage.disclaimer {
   font-weight: 500;
   line-height: var(--hs-claim-lh);
   letter-spacing: normal;
+  text-transform: none; /* source stage-zone-0 titles keep their authored case */
 }
 
 .hero-stage .hero-stage-pricetag {

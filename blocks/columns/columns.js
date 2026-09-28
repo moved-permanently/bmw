@@ -33,6 +33,7 @@ import {
 const SPAN_RE = /^cols-(\d+(?:-\d+)+)$/;
 const MD_SPAN_RE = /^md-(\d+(?:-\d+)+)$/;
 const INSET_RE = /^inset-(\d+)-(start|end|both)$/;
+const IMG_RE = /^img-(\d+)-(\d+)-(\d+)$/;
 const DOWNLOAD_TOKEN = ':download:';
 
 /**
@@ -95,6 +96,34 @@ function decorateVideoCell(cell, block) {
   const video = nestedBlock('video', opts, [[[...cell.childNodes]]]);
   cell.replaceChildren(video);
   cell.classList.add('columns-video-col');
+  return loadBlock(video);
+}
+
+/**
+ * Leading video of a text cell (source video component above the cell's title/text): the first
+ * paragraphs holding only the poster picture(s) and video link(s) → a nested Video block.
+ */
+function decorateLeadingVideo(cell, block) {
+  const lead = [];
+  const kids = [...cell.children];
+  for (let i = 0; i < kids.length; i += 1) {
+    const el = kids[i];
+    if (el.tagName !== 'P' && el.tagName !== 'PICTURE') break;
+    const clone = el.cloneNode(true);
+    clone.querySelectorAll('picture, img').forEach((n) => n.remove());
+    const refs = [...getVideoRefs(el).map((v) => v.url), ...getImageRefs(el).map((r) => r.url)];
+    clone.querySelectorAll('a[href]').forEach((a) => { if (refs.includes(a.href)) a.remove(); });
+    const media = el.querySelector('picture, img') || refs.length;
+    if (!media || (clone.textContent.trim() && !isAiLabelMarker(el))) break;
+    lead.push(el);
+  }
+  if (!lead.length || !lead.some((el) => getVideoRefs(el).length)) return null;
+  const opts = [...block.classList].filter((c) => c.startsWith('video-')).map((c) => c.substring(6));
+  if (lead.some((el) => isAiLabelMarker(el)) && !opts.includes('ai-label')) opts.push('ai-label');
+  lead.filter((el) => isAiLabelMarker(el)).forEach((el) => el.remove());
+  const media = lead.filter((el) => el.isConnected);
+  const video = nestedBlock('video', opts, [[media]]);
+  cell.prepend(video);
   return loadBlock(video);
 }
 
@@ -245,6 +274,15 @@ export default async function decorate(block) {
     if (side) insets[Number(index) - 1] = side;
   });
 
+  // img-D-M-S: leading images of text cells span D/M/S twelfths of the cell (desktop/tablet/phone)
+  const imgClass = [...block.classList].find((c) => IMG_RE.test(c));
+  if (imgClass) {
+    const [, d, m, sm] = imgClass.match(IMG_RE);
+    block.style.setProperty('--columns-img-span', d);
+    block.style.setProperty('--columns-img-md-span', m);
+    block.style.setProperty('--columns-img-sm-span', sm);
+  }
+
   const reverse = block.classList.contains('reverse');
   rows.forEach((row) => {
     row.classList.add('columns-row');
@@ -262,6 +300,13 @@ export default async function decorate(block) {
       } else {
         cell.classList.add('columns-text-col');
         decorateResponsiveImages(cell, { sizes: `(min-width: 768px) ${Math.round((span / 12) * 100)}vw, 100vw` });
+        const leadVideo = decorateLeadingVideo(cell, block);
+        if (leadVideo) loads.push(leadVideo);
+        if (imgClass) {
+          const lead = cell.firstElementChild;
+          const pic = lead && (lead.tagName === 'PICTURE' ? lead : lead.querySelector(':scope > picture'));
+          if (pic && (lead === pic || !lead.textContent.trim())) lead.classList.add('columns-lead-img');
+        }
         loads.push(...decorateDownloads(cell, block));
         if (block.classList.contains('link-lists')) loads.push(...decorateLinkLists(cell, block));
         decorateTextCell(cell);

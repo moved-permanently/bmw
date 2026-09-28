@@ -219,3 +219,32 @@
     order: var(--columns-order, 0);
   }
 }
+
+/* img-D-M-S: narrow leading image of a text cell (source icon in a nested grid column above the
+   texts), D/M/S twelfths of the cell on desktop / tablet / phone */
+.columns .columns-lead-img {
+  --columns-lead-gap: calc(2 * var(--bmw-grid-gutter, 0.75rem));
+
+  display: block;
+  width: calc(var(--columns-img-sm-span, 12) / 12 * (100% + var(--columns-lead-gap)) - var(--columns-lead-gap));
+}
+
+.columns .columns-lead-img picture {
+  display: block;
+}
+
+.columns.center .columns-lead-img {
+  margin-inline: auto;
+}
+
+@media (width >= 768px) {
+  .columns .columns-lead-img {
+    width: calc(var(--columns-img-md-span, 12) / 12 * (100% + var(--columns-lead-gap)) - var(--columns-lead-gap));
+  }
+}
+
+@media (width >= 1024px) {
+  .columns .columns-lead-img {
+    width: calc(var(--columns-img-span, 12) / 12 * (100% + var(--columns-lead-gap)) - var(--columns-lead-gap));
+  }
+}

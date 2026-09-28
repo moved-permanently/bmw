@@ -67,12 +67,13 @@ export default function decorate(block) {
     if (el.tagName === 'P' && !el.textContent.trim() && !el.querySelector('img, picture, .icon')) el.remove();
   });
   // model branding: a "THE" paragraph (source iconization title), optionally followed by a
-  // short model designation paragraph ("1", "X5", "iX2"; source stage-model title)
+  // short model designation ("1", "X5", "iX2"; source stage-model title)
   [...content.querySelectorAll(':scope > p')].forEach((p) => {
     if (p.textContent.trim() !== 'THE' || p.children.length) return;
     p.classList.add('hero-teaser-iconization');
     const next = p.nextElementSibling;
-    const model = next && next.tagName === 'P' && !next.querySelector('a, img, picture')
+    // (imported as a paragraph, or as a heading when the source title was a heading)
+    const model = next && /^(P|H[1-6])$/.test(next.tagName) && !next.querySelector('a, img, picture')
       ? next.textContent.trim() : '';
     if (model && model.length <= 4 && !/\s/.test(model)) next.classList.add('hero-teaser-model');
   });

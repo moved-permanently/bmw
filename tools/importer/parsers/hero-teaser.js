@@ -101,6 +101,10 @@ export default function parse(element, { document }) {
     const st = sub && (sub.className.match(/cmp-spacing-top-(\d+)/) || [])[1];
     if (st) options.push(`sub-top-${st}`);
   }
+  // subline typography: a second title in headline-2/3 style (default: subsection-1 size)
+  const titles = overlay ? [...overlay.querySelectorAll('.title')].filter((t) => !isHiddenIn(t, overlay) && t.textContent.trim()) : [];
+  const subStyle = titles[1] && (titles[1].className.match(/style-title--headline-([23])(?=\s|$)/) || [])[1];
+  if (subStyle) options.push(`sub-headline-${subStyle}`);
   const gradient = mediaRoot.querySelector('.cmp-gradient');
   if (gradient) {
     const g = (gradient.className.match(/cmp-gradient--(left|oblique|top|right|bottom)/) || [])[1];

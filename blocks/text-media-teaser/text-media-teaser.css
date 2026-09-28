@@ -249,6 +249,8 @@
 
 /* special section: title + text, no media */
 .text-media-teaser.section .text-media-teaser-title > * {
+  /* source: special-section titles take the page theme colour (--page-variables-primary-color) */
+  color: var(--page-variables-primary-color, inherit);
   font-size: var(--tmt-h2-size);
   line-height: var(--tmt-h2-lh);
 }
