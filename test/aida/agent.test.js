@@ -80,9 +80,25 @@ test('translateHtml protects brand terms and keeps the structure', async () => {
   assert.equal(getMetadata(out, 'html-lang'), 'en');
 });
 
-test('translateHtml fails loudly when the model drops segments', async () => {
-  const complete = async () => '["only one"]';
+test('translateHtml retries and splits a batch when the model drops segments', async () => {
+  const sizes = [];
+  const complete = async (messages) => {
+    const input = JSON.parse(messages.at(-1).content);
+    sizes.push(input.length);
+    const out = input.map((t) => t.toUpperCase());
+    return JSON.stringify(input.length > 1 ? out.slice(0, -1) : out);
+  };
+  const out = await translateHtml(DOC, {
+    from: 'de', to: 'en', terms: [], complete,
+  });
+  assert.match(out, /<h1 id="x">DER BMW I5\.<\/h1>/);
+  assert.deepEqual(sizes.slice(0, 3), [6, 6, 3]);
+  assert.ok(sizes.includes(1));
+});
+
+test('translateHtml fails loudly when a single segment cannot be translated', async () => {
+  const complete = async () => '[]';
   await assert.rejects(translateHtml(DOC, {
     from: 'de', to: 'en', terms: [], complete,
-  }), /expected 6/);
+  }), /expected 1/);
 });
