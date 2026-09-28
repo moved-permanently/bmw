@@ -6,7 +6,9 @@ import { representations } from '../../scripts/aida-feeds.js';
  *  Row 1: link or path of the page.  Row 2 (optional): link or path of a JSON resource.
  */
 
-const MAX = 8000;
+// whole documents (a model reads all of it); the panel scrolls
+const MAX = 400000;
+const kb = (n) => `${Math.max(1, Math.round(n / 1024))} KB`;
 const pathOf = (cell) => {
   if (!cell) return null;
   const raw = cell.querySelector('a')?.getAttribute('href') || cell.textContent.trim();
@@ -75,6 +77,7 @@ export default function decorate(block) {
     pre.textContent = 'Loading…';
     panel.replaceChildren(head, pre);
     const text = await load(rep);
+    if (rep.id === 'md' || rep.id === 'plain') head.append(` · ${kb(new Blob([text]).size)}`);
     pre.textContent = text.length > MAX ? `${text.slice(0, MAX)}\n…` : text;
   };
 

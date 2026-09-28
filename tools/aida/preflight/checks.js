@@ -3,7 +3,7 @@
  * Used by the Preflight plugin (preflight.js); pure functions, covered by tests.
  */
 import {
-  findBindings, staleBindings, autoBind, textOf,
+  findBindings, staleBindings, autoBind, textOf, parseBinding,
 } from '../../../scripts/aida-wdh.js';
 import { getMetadata } from '../../../scripts/aida-doc.js';
 
@@ -13,13 +13,32 @@ const list = (s) => (s || '').split(',').map((t) => t.trim()).filter(Boolean);
 const reEscape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const status = (details, level) => (details.length ? level : 'pass');
 
+// one line per distinct value; same text from another market's sheet is named as such
+function describeStale(stale, market) {
+  const groups = new Map();
+  stale.forEach((s) => {
+    const id = `${s.key}|${s.text}|${s.expected}|${s.reason}`;
+    const group = groups.get(id) || { ...s, count: 0 };
+    group.count += 1;
+    groups.set(id, group);
+  });
+  return [...groups.values()].map((g) => {
+    const label = g.count > 1 ? `${g.key} (${g.count}×)` : g.key;
+    if (g.reason === 'market') {
+      const from = parseBinding(g.href)?.market?.toUpperCase() || 'other';
+      return `${label}: "${g.text}" is ${from} data, ${market.toUpperCase()} has the same text`;
+    }
+    return `${label}: "${g.text}" → "${g.expected ?? 'not in WDH'}"`;
+  });
+}
+
 function wdhCheck(html, market, values) {
   const stale = staleBindings(findBindings(html), market, values);
   if (stale.length) {
     return {
       status: 'fail',
       summary: `${stale.length} values differ from WDH (${market.toUpperCase()})`,
-      details: stale.map((s) => `${s.key}: "${s.text}" → "${s.expected ?? 'not in WDH'}"`),
+      details: describeStale(stale, market),
       fixable: stale.filter((s) => s.expected).length,
     };
   }
