@@ -308,7 +308,30 @@ function startFallback() {
 
 /* ---------------------------------------------------------------- public API */
 
+/**
+ * DA Quick Edit renders the page inside an editor iframe, where the (modal) consent banner would
+ * block authoring. How Quick Edit loads the page:
+ * - da.live editor (adobe/da-live ew-editor-wysiwyg.js):
+ *   <ref>--<site>--<org>.preview.da.live/<path>
+ *   ?rum=off&consent=disabled&quick-edit=on&controller=parent
+ * - standalone from aem.page (adobe/da-nx quick-edit standalone.js): the aem.page shell carries
+ *   ?quick-edit=…, the embedded preview.da.live page gets quick-edit=on&controller=parent.
+ * In all of these, consent is not initialised at all (no ePaaS, no fallback banner).
+ * @returns {boolean}
+ */
+export function isConsentDisabled() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('consent') === 'disabled'
+    || params.has('quick-edit')
+    || params.get('controller') === 'parent';
+}
+
 export function loadConsent() {
+  if (!state.promise && isConsentDisabled()) {
+    state.mode = 'disabled';
+    window.bmwConsent.mode = 'disabled';
+    state.promise = Promise.resolve('disabled');
+  }
   if (!state.promise) {
     const forced = window.BMW_CONSENT_MODE === 'fallback';
     state.promise = (forced ? Promise.reject(new Error('forced fallback')) : startEpaas())
@@ -358,6 +381,7 @@ export async function isUsageAllowed(itemId) {
 /** Opens the consent drawer (ePaaS) or the fallback banner. */
 export async function showConsentSettings() {
   await loadConsent();
+  if (state.mode === 'disabled') return;
   if (state.mode === 'epaas' && state.api && state.api.showDisclaimer) {
     try {
       state.api.showDisclaimer();
