@@ -192,3 +192,13 @@ test('a market cannot release a stale source after HQ changes its release condit
   flow.edit(actors.author, id, { embargo: '2026-10-01T10:00:00Z' });
   assert.throws(() => flow.publish(actors.publisher, de.id), /source/i);
 });
+
+test('market decisions and publication actively notify HQ in the local inbox', () => {
+  const { flow, id } = setup();
+  approve(flow, id);
+  const [de] = flow.rollout(actors.author, id, ['de']);
+  approve(flow, de.id, actors.deAuthor, actors.deReviewer);
+  assert.ok(flow.notifications(actors.author).some((n) => n.type === 'market-approved' && n.id === de.id));
+  flow.publish(actors.publisher, de.id);
+  assert.ok(flow.notifications(actors.author).some((n) => n.type === 'market-published' && n.id === de.id));
+});
