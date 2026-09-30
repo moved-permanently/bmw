@@ -20,6 +20,8 @@ test('preflight and WDH picker use the matching connector data root for the curr
   assert.equal(typeof wdh.dataRootForPath, 'function');
   assert.equal(wdh.dataRootForPath('/aida/showcase/fr/be/i5'), '/aida/showcase/data');
   assert.equal(wdh.dataRootForPath('/aida/fr/be/i5'), '/aida/data');
+  const runtime = readFileSync(new URL('../../scripts/aida.js', import.meta.url), 'utf8');
+  assert.match(runtime, /dataRootForPath/);
   ['preflight/preflight.js', 'wdh-picker/wdh-picker.js'].forEach((path) => {
     const source = readFileSync(new URL(`../../tools/aida/${path}`, import.meta.url), 'utf8');
     assert.match(source, /dataRootForPath/);
