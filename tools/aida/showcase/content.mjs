@@ -25,10 +25,12 @@ const sheet = (data) => ({
   total: data.length, offset: 0, limit: data.length, data, ':type': 'sheet',
 });
 const rows = (value) => (Array.isArray(value) ? value : value?.data || []);
-const wrap = (name, variant, content) => {
-  const flat = content.replace(/<\/?(?:div|article)\b[^>]*>/g, '').replace(/ class="aida-showcase-[^"]*"/g, '');
-  return `<div><div class="aida-showcase ${variant}"><div><div><p><em>component:${name}</em></p>${flat}</div></div></div></div>`;
-};
+const block = (classes, cells) => `<div class="${classes}">${cells.map((row) => `<div>${row.map((cell) => `<div>${cell}</div>`).join('')}</div>`).join('')}</div>`;
+const section = (id, content, style = 'spacing-top-16, spacing-bottom-16') => ({
+  id,
+  blocks: [...content.matchAll(/<div class="([^"]+)"/g)].map((match) => match[1].split(' ')[0]),
+  html: `<div>${content}${block('section-metadata', [['Style', esc(style)]])}</div>`,
+});
 const heading = (text, level = 2) => `<h${level}>${esc(text)}</h${level}>`;
 const paragraph = (text) => `<p>${esc(text)}</p>`;
 const cta = (href, label, primary = true) => `<p><${primary ? 'strong' : 'em'}><a href="${esc(href)}">${esc(label)}</a></${primary ? 'strong' : 'em'}></p>`;
@@ -122,10 +124,10 @@ export function buildContent({ catalogue, wdh } = {}) {
     const fact = (key) => `<a href="/aida/showcase/data/wdh-${market}.json#${key}">${esc(display(key))}</a>`;
     const image = (name, video = false) => `<p><a href="${esc(assets[name].url)}">${esc(assets[name].alt)}</a></p>${video ? `<p><a href="${esc((name === 'i5' ? editorial.i5Video : editorial.video).url)}">BMW ${name} film</a></p>` : ''}`;
     const note = () => `<p>${esc(t.demo)}${context.fallback ? ` ${esc(t.belgium)}` : ''}${context.sparse ? ` ${esc(t.austria)}` : ''}</p>`;
-    const fallback = () => (market === 'fr' ? `<p class="aida-showcase-note">${esc(t.fallback)}</p>` : '');
-    const legal = () => `<p class="aida-showcase-note">BMW i5 eDrive40: ${esc(t.consumptionLabel)}: ${fact('61HG.electricConsumption')} (WLTP); ${esc(t.co2)}: ${fact('61HG.co2')} (WLTP); ${esc(t.co2Class)}: ${fact('61HG.co2Class')}; ${esc(t.rangeLabel)}: ${fact('61HG.electricRange')}. ${fact('61HG.wltp')}. ${esc(t.legal)}</p>`;
+    const fallback = () => (market === 'fr' ? paragraph(t.fallback) : '');
+    const legal = () => `<p>BMW i5 eDrive40: ${esc(t.consumptionLabel)}: ${fact('61HG.electricConsumption')} (WLTP); ${esc(t.co2)}: ${fact('61HG.co2')} (WLTP); ${esc(t.co2Class)}: ${fact('61HG.co2Class')}; ${esc(t.rangeLabel)}: ${fact('61HG.electricRange')}. ${fact('61HG.wltp')}. ${esc(t.legal)}</p>`;
     const local = (slug) => `${context.sparse && slug.startsWith('news/') && slug !== 'news/i5-launch' ? `/aida/showcase/${context.sourceContext}` : base}/${slug}`;
-    const price = (code) => `<p>${esc(t.from)} ${fact(`${code}.fromPrice`)}</p><p>${esc(t.leasing)} ${fact(`${code}.leasePrice`)}</p><p class="aida-showcase-note">${esc(t.leaseFixture)}</p>`;
+    const price = (code) => `<p>${esc(t.from)} ${fact(`${code}.fromPrice`)}</p><p>${esc(t.leasing)} ${fact(`${code}.leasePrice`)}</p>${paragraph(t.leaseFixture)}`;
     const configure = () => (market === 'fr'
       ? 'https://configure.bmw.fr/fr_FR/configure/G60E/61HG'
       : 'https://configure.bmw.de/de_DE/configure/G60E/61HG');
@@ -153,71 +155,79 @@ export function buildContent({ catalogue, wdh } = {}) {
       if (type === 'Vehicle') Object.assign(ld, vehicle(code), { '@id': path, url: path });
       const metadata = [['Title', title], ['Description', description], ['html-lang', lang], ['aida-context', id], ['aida-demo', 'true'], ['json-ld', JSON.stringify(ld)], ...(code ? [['wdh-model', code]] : [])];
       const meta = `<div><div class="metadata">${metadata.map(([key, value]) => `<div><div>${esc(key)}</div><div>${esc(value)}</div></div>`).join('')}</div></div>`;
-      pages[path] = `<body><header></header><main>${content}${meta}</main><footer></footer></body>\n`;
+      const html = content.map((part, index) => (index === content.length - 1 ? part.html.replace(/<\/div>$/, `${note()}</div>`) : part.html)).join('');
+      pages[path] = `<body><header></header><main>${html}${meta}</main><footer></footer></body>\n`;
       compositions.push({
-        path, type, context: id, components: [...content.matchAll(/<p><em>component:([^<]+)<\/em><\/p>/g)].map((match) => match[1]).join(','), demo: true,
+        path,
+        type,
+        context: id,
+        components: content.map((part) => part.id).join(','),
+        fixtureOnly: true,
+        fixtureComponents: content.map((part, sectionIndex) => ({ id: part.id, sectionIndex, blocks: part.blocks })),
+        demo: true,
       });
     };
-    const stage = (name, title, subtitle, asset, extra = '') => wrap(name, 'stage', `${image(asset, name === 'main-teaser-i5')}<div class="aida-showcase-copy">${heading(title, 1)}${paragraph(subtitle)}${extra}</div>`);
+    const disclaimer = () => block('disclaimer', [[legal()]]);
+    const stage = (name, title, subtitle, asset, extra = '', kind = 'hero-teaser') => section(name,
+      block(kind === 'hero-teaser' ? 'hero-teaser no-autoplay middle cols-5 gradient-left ratio-16-7 mobile-ratio-3-4' : `${kind} small`, [
+        [image(asset, name === 'main-teaser-i5')],
+        [`${heading(title, 1)}${paragraph(subtitle)}${extra}`],
+      ]) + (name === 'main-teaser-i5' ? disclaimer() : ''), 'spacing-bottom-4');
+    const feature = (name, asset, content, video = false) => section(name,
+      block(`columns cols-7-5 middle inset-2-start${video ? ' video-controls' : ''}`, [[image(asset, video), content]]));
     const story = (storyId) => editorial.news.find((entry) => entry.id === storyId);
-    const teaser = (entry, short = false) => `<article>${image(entry.asset)}<div class="aida-showcase-copy">${heading(entry[lang].title, 3)}${paragraph(entry[lang][short ? 'teaserShort' : 'teaserLong'])}${cta(local(`news/${entry.id}`), t.learn, false)}</div></article>`;
-    const modelCard = (model) => `<article>${image(model.asset)}<div class="aida-showcase-copy">${heading(model.name, 3)}${paragraph(model.drivetrain === 'BEVE' ? t.electric : 'Plug-in hybrid')}${price(model.code)}${stats(model.code, model.drivetrain === 'BEVE' ? [[t.rangeLabel, 'electricRange'], [t.acceleration, 'acceleration']] : [[t.power, 'power'], [t.acceleration, 'acceleration']])}${cta(model.code === '61HG' ? local('i5') : `https://www.bmw.de${assets[model.asset].sources[0]}.html`, t.discover, false)}</div></article>`;
+    const teaser = (entry, short = false) => [image(entry.asset),
+      `${heading(entry[lang].title, 3)}${paragraph(entry[lang][short ? 'teaserShort' : 'teaserLong'])}${cta(local(`news/${entry.id}`), t.learn, false)}`];
+    const modelCard = (model) => [image(model.asset),
+      `${heading(model.name, 3)}${paragraph(model.drivetrain === 'BEVE' ? t.electric : 'Plug-in hybrid')}${price(model.code)}${stats(model.code, model.drivetrain === 'BEVE' ? [[t.rangeLabel, 'electricRange'], [t.acceleration, 'acceleration']] : [[t.power, 'power'], [t.acceleration, 'acceleration']])}${cta(model.code === '61HG' ? local('i5') : `https://www.bmw.de${assets[model.asset].sources[0]}.html`, t.discover, false)}`];
     const related = editorial.models.filter((model) => model.discovery && ['BEVE', 'PHEV'].includes(model.drivetrain) && model.code !== '61HG');
     const electricModels = editorial.models.filter((model) => model.discovery && model.drivetrain === 'BEVE');
-    const emob = () => wrap('emob-section', 'grid', `${heading(t.allElectric)}<div class="aida-showcase-grid"><article>${image('charging')}${heading(t.charging, 3)}${paragraph(t.chargingCopy)}<p>${esc(t.chargeSentence)}: ${fact('61HG.additionalRangeDC')}.</p>${cta(local('e-mobility'), t.learn, false)}</article><article>${image('range')}${heading(t.range, 3)}${paragraph(t.rangeShort)}${cta(local('e-mobility'), t.learn, false)}</article><article>${image('i5')}${heading(t.electric, 3)}${paragraph(t.electricCopy)}${cta(local('e-mobility'), t.learn, false)}</article></div>`);
+    const emob = () => section('emob-section', heading(t.allElectric) + block('carousel slides-1-2-3-3', [
+      [image('charging'), `${heading(t.charging, 3)}${paragraph(t.chargingCopy)}<p>${esc(t.chargeSentence)}: ${fact('61HG.additionalRangeDC')}.</p>${cta(local('e-mobility'), t.learn, false)}`],
+      [image('range'), `${heading(t.range, 3)}${paragraph(t.rangeShort)}${cta(local('e-mobility'), t.learn, false)}`],
+      [image('i5'), `${heading(t.electric, 3)}${paragraph(t.electricCopy)}${cta(local('e-mobility'), t.learn, false)}`],
+    ]));
 
-    document(
-      'home',
-      t.home,
-      t.subtitle,
-      'WebPage',
-      `${stage('main-teaser-i5', t.home, t.subtitle, 'i5', `${cta(configure(), t.configure)}${cta(local('i5'), t.discover, false)}${legal()}`)
-      + wrap('video-teaser-ix3', 'feature video', `${image('ix3', true)}<div class="aida-showcase-copy">${heading(t.ix3)}<p>${esc(t.rangeLabel)}: ${fact('31HR.electricRange')}.</p>${cta(local('e-mobility'), t.discover)}${fallback()}</div>`)
-      + wrap('small-teaser-emob', 'feature', `${image('charging')}<div class="aida-showcase-copy">${heading(t.charging)}${paragraph(t.chargingCopy)}${cta(local('e-mobility'), t.learn)}</div>`)
-      + wrap('teaser-list', 'grid', `${heading(t.newsList)}<div class="aida-showcase-grid">${['cannes', 'concept-m'].map((key) => teaser(story(key))).join('')}<article>${image('ix3')}${heading(t.xTitle, 3)}${paragraph(t.xCopy)}${cta(local('e-mobility'), t.learn, false)}</article>${['interior', '3-series'].map((key) => teaser(story(key))).join('')}</div>`)
-      + (id === 'de/de' ? wrap('summer-offer', 'feature', `${image('range')}<div class="aida-showcase-copy">${heading(t.summer)}${paragraph(t.summerCopy)}${cta('https://www.bmw.de/de/shop/ls/dp/ConnectedDrive', t.summerCta)}</div>`) : '')
-      }<div>${note()}</div>`,
-    );
+    document('home', t.home, t.subtitle, 'WebPage', [
+      stage('main-teaser-i5', t.home, t.subtitle, 'i5', `${cta(configure(), t.configure)}${cta(local('i5'), t.discover, false)}`),
+      feature('video-teaser-ix3', 'ix3', `${heading(t.ix3)}<p>${esc(t.rangeLabel)}: ${fact('31HR.electricRange')}.</p>${cta(local('e-mobility'), t.discover)}${fallback()}`, true),
+      feature('small-teaser-emob', 'charging', `${heading(t.charging)}${paragraph(t.chargingCopy)}${cta(local('e-mobility'), t.learn)}`),
+      section('teaser-list', heading(t.newsList) + block('carousel slides-1-2-3-3', [
+        ...['cannes', 'concept-m'].map((key) => teaser(story(key))),
+        [image('ix3'), `${heading(t.xTitle, 3)}${paragraph(t.xCopy)}${cta(local('e-mobility'), t.learn, false)}`],
+        ...['interior', '3-series'].map((key) => teaser(story(key))),
+      ])),
+      ...(id === 'de/de' ? [feature('summer-offer', 'range', `${heading(t.summer)}${paragraph(t.summerCopy)}${cta('https://www.bmw.de/de/shop/ls/cp/connected-drive', t.summerCta)}`)] : []),
+    ]);
 
-    document(
-      'i5',
-      t.car,
-      t.subtitle,
-      'Vehicle',
-      stage('main-teaser-i5', t.car, t.subtitle, 'i5', `${price('61HG')}${cta(configure(), t.configure)}${cta(local('news/i5-launch'), t.offer, false)}`)
-      + wrap('car-kpi', 'kpi', `${heading(t.keyFigures)}${stats('61HG', i5Fields)}${legal()}`)
-      + emob()
-      + wrap('news-teaser', 'grid', `<div class="aida-showcase-grid">${teaser(story('interior'), true)}</div>`)
-      + wrap('electrified-models', 'grid', `${heading(t.related)}<div class="aida-showcase-grid">${related.map(modelCard).join('')}</div>${fallback()}`)
-      + wrap('assist-features', 'grid', `${heading(t.features)}<div class="aida-showcase-grid"><article>${heading('Driving Assistant Professional', 3)}<p>${esc(t.drivingCopy)}: ${fact('61HG.drivingAssistantSpeed')}.</p></article>${market === 'de' ? `<article>${heading(t.highway, 3)}<p>${esc(t.highwayCopy)}: ${fact('61HG.highwayAssistantSpeed')}.</p></article>` : ''}<article>${heading(t.parking, 3)}${paragraph(t.parkingCopy)}</article></div>`)
-      + wrap('fact-refresh', 'refresh', `${heading(t.refresh)}${paragraph(t.refreshCopy)}<p><a href="/aida/showcase/data/wdh-${market}.json">${esc(t.refreshButton)}</a></p><p role="status">${esc(t.initialStatus)}</p>${note()}`),
-      '61HG',
-    );
+    document('i5', t.car, t.subtitle, 'Vehicle', [
+      stage('main-teaser-i5', t.car, t.subtitle, 'i5', `${price('61HG')}${cta(configure(), t.configure)}${cta(local('news/i5-launch'), t.learn, false)}`),
+      section('car-kpi', heading(t.keyFigures) + block('car-kpis', i5Fields.map(([label, field]) => [fact(`61HG.${field}`), esc(label)])) + disclaimer()),
+      emob(),
+      section('news-teaser', block('columns cols-7-5 middle inset-2-start', [teaser(story('interior'), true)])),
+      section('electrified-models', heading(t.related) + block('carousel cards slides-1-2-2-2', related.map(modelCard)) + fallback()),
+      section('assist-features', block('card-list', [
+        [heading(t.features)],
+        ['Driving Assistant Professional', `<p>${esc(t.drivingCopy)}: ${fact('61HG.drivingAssistantSpeed')}.</p>`],
+        ...(market === 'de' ? [[esc(t.highway), `<p>${esc(t.highwayCopy)}: ${fact('61HG.highwayAssistantSpeed')}.</p>`]] : []),
+        [esc(t.parking), paragraph(t.parkingCopy)],
+      ])),
+    ], '61HG');
 
-    document(
-      'e-mobility',
-      t.topic,
-      t.topicSubtitle,
-      'WebPage',
-      `${stage('stage-emob', t.topic, t.topicSubtitle, 'range')
-      + wrap('topic-range', 'feature', `${image('range')}<div class="aida-showcase-copy">${heading(t.topicRange)}${paragraph(t.topicRangeCopy)}${cta(local('i5'), t.learn)}</div>`)
-      + wrap('model-range', 'grid', `${heading(t.lineup)}<div class="aida-showcase-grid">${electricModels.map(modelCard).join('')}</div>${legal()}${fallback()}`)
-      + wrap('topic-charging', 'feature', `${image('charging')}<div class="aida-showcase-copy">${heading(t.topicCharging)}${paragraph(t.topicChargingCopy)}${cta('https://www.bmw.de/de/elektroauto/laden/zuhause-laden.html', t.homeCharging)}${cta('https://www.bmw.de/de/elektroauto/laden/unterwegs-laden.html', t.publicCharging, false)}</div>`)
-      + wrap('news-hydrogen', 'grid', `<div class="aida-showcase-grid">${teaser(story('hydrogen'))}</div>`)
-      }<div>${note()}</div>`,
-    );
+    document('e-mobility', t.topic, t.topicSubtitle, 'WebPage', [
+      stage('stage-emob', t.topic, t.topicSubtitle, 'range', '', 'hero-stage'),
+      feature('topic-range', 'range', `${heading(t.topicRange)}${paragraph(t.topicRangeCopy)}${cta(local('i5'), t.learn)}`),
+      section('model-range', heading(t.lineup) + block('carousel cards slides-1-2-2-2', electricModels.map(modelCard)) + disclaimer() + fallback()),
+      feature('topic-charging', 'charging', `${heading(t.topicCharging)}${paragraph(t.topicChargingCopy)}${cta('https://www.bmw.de/de/elektroauto/home-charging.html', t.homeCharging)}${cta('https://www.bmw.de/de/elektroauto/public-charging.html', t.publicCharging, false)}`),
+      section('news-hydrogen', block('columns cols-7-5 middle inset-2-start', [teaser(story('hydrogen'))])),
+    ]);
 
     editorial.news.filter((entry) => !context.sparse || entry.id === 'i5-launch').forEach((entry) => {
       const news = entry[lang];
-      document(
-        `news/${entry.id}`,
-        news.title,
-        news.teaserShort,
-        'NewsArticle',
-        stage('news-stage', news.title, news.teaserShort, entry.asset)
-        + wrap('news-body', 'article', `${paragraph(news.teaserLong)}${entry.code ? `${stats(entry.code, i5Fields)}${legal()}${cta(local('i5'), t.discover)}` : ''}<p class="aida-showcase-note">${esc(entry.sourceKind)} · ${esc(editorial.source)}</p>${note()}`),
-        entry.code,
-      );
+      document(`news/${entry.id}`, news.title, news.teaserShort, 'NewsArticle', [
+        stage('news-stage', news.title, news.teaserShort, entry.asset, '', 'hero-stage'),
+        section('news-body', `${paragraph(news.teaserLong)}${entry.code ? `${stats(entry.code, i5Fields)}${legal()}${cta(local('i5'), t.discover)}` : ''}${paragraph(`${entry.sourceKind} · ${editorial.source}`)}`, 'content-8-center, spacing-top-12, spacing-bottom-16'),
+      ], entry.code);
       newsIndex.push({
         path: local(`news/${entry.id}`), id: entry.id, context: id, title: news.title, description: news.teaserShort, image: assets[entry.asset].url, demo: true,
       });
