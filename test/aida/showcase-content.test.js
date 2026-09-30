@@ -1,3 +1,4 @@
+/* global globalThis */
 /* eslint-disable no-restricted-syntax */
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
@@ -144,6 +145,53 @@ test('an optional public WDH sheet overrides known values without dropping requi
   assert.match(result.pages['/aida/showcase/en/i5'], /500–600 km/);
   assert.match(result.pages['/aida/showcase/fr/fr/i5'], /518–627 km/);
   assert.equal(JSON.stringify(wdh), before);
+});
+
+test('video and stage containers have intrinsic sizing independent of the absolute poster/player', () => {
+  const css = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.css', import.meta.url), 'utf8');
+  const video = css.match(/\.aida-showcase \.bmw-video \{([^}]+)\}/)?.[1] || '';
+  const media = css.match(/\.aida-showcase\.stage \.aida-showcase-media \{([^}]+)\}/)?.[1] || '';
+  const overlay = css.match(/\.aida-showcase\.stage \.aida-showcase-copy \{([^}]+)\}/)?.[1] || '';
+  assert.match(video, /aspect-ratio:\s*16\s*\/\s*9/);
+  assert.match(media, /min-height:\s*540px/);
+  assert.match(media, /aspect-ratio:\s*16\s*\/\s*8/);
+  assert.match(overlay, /position:\s*relative/);
+});
+
+test('explicit refresh makes zero initial requests, updates text safely and never retries on repeated clicks', async () => {
+  const { default: install } = await import('../../scripts/aida-showcase.js');
+  const originalDocument = globalThis.document;
+  const originalFetch = globalThis.fetch;
+  const status = { textContent: 'Initial authored values' };
+  const binding = { dataset: { wdh: '/aida/showcase/data/wdh-de.json#61HG.electricRange' }, textContent: '513–627 km' };
+  let button;
+  let listener;
+  let requests = 0;
+  const link = { textContent: 'Refresh facts once', getAttribute: () => '/aida/showcase/data/wdh-de.json', replaceWith: (value) => { button = value; } };
+  globalThis.document = {
+    createElement: () => ({ addEventListener: (type, callback) => { assert.equal(type, 'click'); listener = callback; } }),
+    querySelectorAll: () => [binding],
+  };
+  globalThis.fetch = async (path, options) => {
+    requests += 1;
+    assert.equal(path, '/aida/showcase/data/wdh-de.json');
+    assert.ok(options.signal instanceof AbortSignal);
+    return { ok: true, text: async () => JSON.stringify({ values: { data: [{ key: '61HG.electricRange', value: '500–600', unit: 'km' }] } }) };
+  };
+  try {
+    install({ querySelector: (selector) => (selector === '[role="status"]' ? status : link) });
+    assert.equal(requests, 0);
+    assert.equal(binding.textContent, '513–627 km');
+    await listener();
+    await listener();
+    assert.equal(requests, 1);
+    assert.equal(button.disabled, true);
+    assert.equal(binding.textContent, '500–600 km');
+    assert.match(status.textContent, /1 fact request.*1 displayed values updated/);
+  } finally {
+    globalThis.document = originalDocument;
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test('generator accepts an external sheet without mutation and refresh is explicit one-request-only', () => {
