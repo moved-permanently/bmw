@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import * as view from '../../tools/aida/showcase/view.js';
+import { createDemo } from '../../tools/aida/showcase/model.js';
 
 const { escape, links, tabs } = view;
 
@@ -59,4 +60,14 @@ test('radar deep links select only a known market context and never imply authen
   assert.equal(view.marketFromSearch('?market=be'), 'be');
   assert.equal(view.marketFromSearch('?market=unknown'), null);
   assert.equal(view.marketFromSearch('?actor=publisher'), null);
+});
+
+test('architecture preserves all named independent organizations and separates environments from them', () => {
+  const architecture = createDemo().architecture;
+  assert.ok(architecture);
+  const names = architecture.organizations.map((org) => org.name);
+  ['BMW', 'MINI', 'Motorrad', 'M', 'Alpina', 'Rolls-Royce', 'Alphabet', 'BMW Group / Jobs', 'BMW Welt', 'BMW BKK', 'BMW Golfsport'].forEach((name) => assert.ok(names.includes(name)));
+  assert.equal(new Set(architecture.organizations.map((org) => org.space)).size, names.length);
+  assert.ok(architecture.organizations.every((org) => org.shareCapabilities && !org.shareContent));
+  assert.deepEqual(architecture.environments, ['DEV', 'TEST', 'STAGE', 'LIVE']);
 });
