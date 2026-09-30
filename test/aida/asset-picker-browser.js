@@ -174,13 +174,13 @@ await test('DA context is received even when the catalogue loads after the initi
       ? new Promise(resolve => setTimeout(() => resolve(new Response('[]')), 1400))
       : originalFetch(input, ...args);
   </script>`;
-  const markup = html.replace('<head>', `<head><base href="${location.origin}/tools/aida/asset-picker/">${delayedFetch}`);
+  const markup = html.replace('<head>', `<head><base href="${window.location.origin}/tools/aida/asset-picker/">${delayedFetch}`);
   frame.onload = () => {
     const channel = new MessageChannel();
     frame.contentWindow.postMessage({
       ready: true,
       context: { org: 'demo', repo: 'demo', path: '/aida/fr/be/check' },
-    }, location.origin, [channel.port2]);
+    }, window.location.origin, [channel.port2]);
   };
   frame.srcdoc = markup;
   document.body.append(frame);

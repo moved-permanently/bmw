@@ -1,6 +1,7 @@
 import {
   countryForContext, filterAssets, facetValues, cropRegion, scene7Url, assetLink,
 } from './model.js';
+import connect from '../da.js';
 
 const PAGE_SIZE = 36;
 const COUNTRY_NAMES = new Intl.DisplayNames(['en'], { type: 'region' });
@@ -235,7 +236,6 @@ async function init() {
     const assets = await response.json();
     let connection = { context: { path: new URLSearchParams(window.location.search).get('path') || '' } };
     if (window.parent !== window) {
-      const { default: connect } = await import('../da.js');
       connection = await connect();
     }
     mountPicker(main, { assets, ...connection });
