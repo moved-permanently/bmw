@@ -13,7 +13,7 @@ test('all seeded news uses escaped WDH display strings, never data objects or do
     { key: `${code}.power`, value: '250 kW & <test>' },
     { key: `${code}.wltp`, value: 'WLTP: test statement & terms' },
   ]);
-  writeFileSync(join(dir, 'wdh-de.json'), JSON.stringify({ values: { data: values }, models: { data: [] } }));
+  writeFileSync(join(dir, 'wdh-de.json'), JSON.stringify({ values: { data: values }, models: { data: [{ code: '61HG', jsonld: '{"@type":"Car"}' }] } }));
   try {
     const run = spawnSync(process.execPath, ['--input-type=module', '-e',
       "globalThis.fetch = async () => ({ text: async () => '<div><h1>Test i5</h1></div><div></div>' }); await import('./tools/aida/content/seed.mjs');",
