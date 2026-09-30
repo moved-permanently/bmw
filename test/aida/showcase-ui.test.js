@@ -43,3 +43,11 @@ test('playground persists only its own versioned rehearsal state and never publi
   assert.doesNotMatch(app, /admin\.hlx\.page|api\.aem\.live|Bearer/);
   assert.match(app, /Storage unavailable/);
 });
+
+test('reviewers can preview the exact rehearsal revision without mistaking a static published fixture for it', () => {
+  const app = read('tools/aida/showcase/app.js');
+  assert.match(app, /Preview rehearsal revision/);
+  assert.match(app, /simulated-preview/);
+  assert.match(app, /doc\.fields\.title/);
+  assert.match(app, /doc\.fields\.body/);
+});
