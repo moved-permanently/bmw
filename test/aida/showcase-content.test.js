@@ -60,7 +60,7 @@ test('car has mandatory KPI, shortened shared interior, attribute-derived M5/iX3
   for (const context of contexts) {
     const html = pages[`/aida/showcase/${context}/i5`];
     assert.deepEqual([...html.matchAll(/data-component="([^"]+)"/g)].map((m) => m[1]), ['main-teaser-i5', 'car-kpi', 'emob-section', 'news-teaser', 'electrified-models', 'assist-features', 'fact-refresh']);
-    assert.equal(factLinks(section(html, 'car-kpi')).length, 3);
+    assert.equal(factLinks(section(html, 'car-kpi').match(/<dl[^>]*>([\s\S]*?)<\/dl>/)?.[1]).length, 3);
     assert.match(section(html, 'news-teaser'), /news\/interior/);
     assert.ok(section(pages[`/aida/showcase/${context}/home`], 'teaser-list').length > section(html, 'news-teaser').length);
     const models = section(html, 'electrified-models');
@@ -102,7 +102,7 @@ test('initial HTML contains exact market WDH display values, provenance, prices 
   assert.match(pages['/aida/showcase/fr/fr/i5'], /14,7–17,8 kWh\/100 km/);
   assert.ok(data['/aida/showcase/data/wdh-fr.json'].values.data.filter((row) => row.key.startsWith('31HR.')).every((row) => row.sourceMarket === 'de' && row.fallback === true));
   assert.match(pages['/aida/showcase/fr/be/i5'], /Belgique|Belgium/);
-  const boundRange = /<a href="\/aida\/showcase\/data\/wdh-de\.json#61HG\.electricRange">513–627 km<\/a>/g;
+  const boundRange = /<a href="\/aida\/showcase\/data\/wdh-de\.json#61HG\.electricRange">513–627 km<\/a>/;
   for (const slug of ['home', 'i5', 'e-mobility', 'news/i5-launch']) assert.match(pages[`/aida/showcase/en/${slug}`], boundRange);
 });
 
@@ -132,6 +132,15 @@ test('only observed catalogue images are authored and missing catalogue assets f
     }
   }
   assert.throws(() => module.buildContent({ catalogue: [] }), /catalogue|asset/i);
+});
+
+test('an optional public WDH sheet overrides known values without dropping required briefing fixtures', () => {
+  const wdh = { de: { values: { data: [{ key: '61HG.electricRange', value: '500–600', unit: 'km' }] } } };
+  const before = JSON.stringify(wdh);
+  const result = module.buildContent({ catalogue, wdh });
+  assert.match(result.pages['/aida/showcase/en/i5'], /500–600 km/);
+  assert.match(result.pages['/aida/showcase/fr/fr/i5'], /518–627 km/);
+  assert.equal(JSON.stringify(wdh), before);
 });
 
 test('generator accepts an external sheet without mutation and refresh is explicit one-request-only', () => {
