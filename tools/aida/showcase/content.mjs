@@ -197,11 +197,11 @@ export function buildContent({ catalogue, wdh } = {}) {
         [image('ix3'), `${heading(t.xTitle, 3)}${paragraph(t.xCopy)}${cta(local('e-mobility'), t.learn, false)}`],
         ...['interior', '3-series'].map((key) => teaser(story(key))),
       ])),
-      ...(id === 'de/de' ? [feature('summer-offer', 'range', `${heading(t.summer)}${paragraph(t.summerCopy)}${cta('https://www.bmw.de/de/shop/ls/dp/ConnectedDrive', t.summerCta)}`)] : []),
+      ...(id === 'de/de' ? [feature('summer-offer', 'range', `${heading(t.summer)}${paragraph(t.summerCopy)}${cta('https://www.bmw.de/de/shop/ls/cp/connected-drive', t.summerCta)}`)] : []),
     ]);
 
     document('i5', t.car, t.subtitle, 'Vehicle', [
-      stage('main-teaser-i5', t.car, t.subtitle, 'i5', `${price('61HG')}${cta(configure(), t.configure)}${cta(local('news/i5-launch'), t.offer, false)}`),
+      stage('main-teaser-i5', t.car, t.subtitle, 'i5', `${price('61HG')}${cta(configure(), t.configure)}${cta(local('news/i5-launch'), t.learn, false)}`),
       section('car-kpi', heading(t.keyFigures) + block('car-kpis', i5Fields.map(([label, field]) => [fact(`61HG.${field}`), esc(label)])) + disclaimer()),
       emob(),
       section('news-teaser', block('columns cols-7-5 middle inset-2-start', [teaser(story('interior'), true)])),
@@ -218,7 +218,7 @@ export function buildContent({ catalogue, wdh } = {}) {
       stage('stage-emob', t.topic, t.topicSubtitle, 'range', '', 'hero-stage'),
       feature('topic-range', 'range', `${heading(t.topicRange)}${paragraph(t.topicRangeCopy)}${cta(local('i5'), t.learn)}`),
       section('model-range', heading(t.lineup) + block('carousel cards slides-1-2-2-2', electricModels.map(modelCard)) + disclaimer() + fallback()),
-      feature('topic-charging', 'charging', `${heading(t.topicCharging)}${paragraph(t.topicChargingCopy)}${cta('https://www.bmw.de/de/elektroauto/laden/zuhause-laden.html', t.homeCharging)}${cta('https://www.bmw.de/de/elektroauto/laden/unterwegs-laden.html', t.publicCharging, false)}`),
+      feature('topic-charging', 'charging', `${heading(t.topicCharging)}${paragraph(t.topicChargingCopy)}${cta('https://www.bmw.de/de/elektroauto/home-charging.html', t.homeCharging)}${cta('https://www.bmw.de/de/elektroauto/public-charging.html', t.publicCharging, false)}`),
       section('news-hydrogen', block('columns cols-7-5 middle inset-2-start', [teaser(story('hydrogen'))])),
     ]);
 
