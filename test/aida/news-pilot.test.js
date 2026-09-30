@@ -142,9 +142,9 @@ test('revision-scoped guest review links expire, are revoked by rejection and co
 test('expired tokens cannot read or approve any content', () => {
   const { flow, id } = setup();
   flow.submit(actors.author, id);
-  flow.grantReview(actors.reviewer, id, 'expired-test-token', '2026-09-30T09:00:00Z');
-  assert.equal(flow.guestReview('expired-test-token'), null);
-  assert.throws(() => flow.guestDecide('expired-test-token', 'approve', '', 'body'), /expired|invalid/i);
+  flow.grantReview(actors.reviewer, id, 'expired-test-capability-token', '2026-09-30T09:00:00Z');
+  assert.equal(flow.guestReview('expired-test-capability-token'), null);
+  assert.throws(() => flow.guestDecide('expired-test-capability-token', 'approve', '', 'body'), /expired|invalid/i);
 });
 test('operational KPIs are calculated from actual audit events, not seeded marketing results', () => {
   const { flow, id } = setup();

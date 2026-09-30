@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { request as httpRequest } from 'node:http';
 
 const implementation = await import('../../tools/aida/pilot/server.js').catch(() => ({}));
 
@@ -55,7 +56,12 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
     assert.doesNotMatch(html, /<script>alert/);
     assert.match(published.headers.get('content-security-policy'), /default-src 'self'/);
     assert.equal((await request('/..%2f..%2fpackage.json')).status, 404);
-    assert.equal((await request('/api/state', { headers: { host: 'evil.invalid' } })).status, 403);
+    const wrongHost = await new Promise((resolve, reject) => {
+      const req = httpRequest(`${base}/api/state`, { headers: { host: 'evil.invalid' } }, (res) => { res.resume(); resolve(res.statusCode); });
+      req.on('error', reject);
+      req.end();
+    });
+    assert.equal(wrongHost, 403);
     await new Promise((resolve) => app.server.close(resolve));
     app = implementation.createPilotServer({ storePath, now: () => Date.parse('2026-09-30T10:00:00Z') });
     assert.equal(app.workflow.publicArticle(id).title, '<img src=x onerror=alert(1)>');
