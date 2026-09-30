@@ -41,7 +41,8 @@ test('self-contained fixtures expose independent contexts and simulation boundar
   assert.equal(state.markets.at.path, '/aida/showcase/de/at/news/i5-launch');
   assert.equal(state.planning.length, 64);
   assert.equal(state.planning.filter((market) => market.populated).length, 4);
-  assert.ok(state.planning.filter((market) => !market.populated).every((market) => market.simulated));
+  assert.ok(state.planning.filter((market) => !market.populated)
+    .every((market) => market.simulated));
   assert.deepEqual(Object.keys(state.contexts.hq).sort(), [
     'brand', 'org', 'language', 'region', 'market', 'importer', 'dealer', 'env', 'vehicle', 'topic',
   ].sort());
@@ -125,7 +126,7 @@ test('reject needs actionable field, feedback, simulated mention and review team
   assert.equal(rejected.hq.review, 'rejected');
   assert.equal(rejected.inbox.at(-1).mention, 'hq-author');
   assert.equal(rejected.hq.feedback.field, 'legal');
-  const corrected = act(rejected, 'SAVE', { actor: 'hq-author', fields: { legal: 'BMW i5 eDrive40 combined energy consumption: 14.7–17.8 kWh/100 km (WLTP).' } });
+  const corrected = act(rejected, 'SAVE', { actor: 'hq-author', fields: { legal: 'BMW i5 eDrive40 combined energy consumption: 17.9 kWh/100 km; range: 513–627 km (WLTP).' } });
   assert.equal(approve(corrected).hq.review, 'approved');
 });
 
@@ -190,8 +191,10 @@ test('rerollout preserves local intro/CTA and moved teaser id while upstream tex
   state = reroll(updated(state, { update: [{ id: 'teaser', fields: { text: 'Updated upstream BMW i5 teaser.' } }] }));
   const market = state.markets.de;
   assert.equal(market.components[0].id, 'teaser');
-  assert.equal(market.components[0].text,
-    state.translations.de.document.components.find((c) => c.id === 'teaser').text);
+  assert.equal(
+    market.components[0].text,
+    state.translations.de.document.components.find((c) => c.id === 'teaser').text,
+  );
   assert.equal(market.fields.localIntro, 'Local introduction');
   assert.equal(market.fields.localCta, 'Local offer');
   assert.equal(market.conflicts.length, 0);
@@ -214,7 +217,8 @@ test('rerollout creates property conflicts for local headline, asset, CTA and di
     ],
   }));
   assert.equal(state.markets.de.conflicts.length, 4);
-  assert.ok(state.markets.de.conflicts.every((conflict) => conflict.id && conflict.path && conflict.upstream !== undefined));
+  assert.ok(state.markets.de.conflicts.every((conflict) => conflict.id
+    && conflict.path && conflict.upstream !== undefined));
   assert.notEqual(state.markets.de.acceptedSourceRevision, state.hq.revision);
   assert.equal(state.markets.de.sourceRevision, state.hq.revision);
   assert.throws(() => submit(state, 'de'), /conflict|check|governance/i);
@@ -409,27 +413,39 @@ test('full-page fixture translation localizes copy without appending original En
   });
   const rolled = act(state, 'ROLLOUT', { actor: 'hq-author' });
   ['de', 'fr', 'be', 'at'].forEach((market) => {
-    assert.deepEqual(rolled.markets[market].fields,
-      state.translations[rolled.contexts[market].language].document.fields);
-    assert.deepEqual(rolled.markets[market].components,
-      state.translations[rolled.contexts[market].language].document.components);
+    assert.deepEqual(
+      rolled.markets[market].fields,
+      state.translations[rolled.contexts[market].language].document.fields,
+    );
+    assert.deepEqual(
+      rolled.markets[market].components,
+      state.translations[rolled.contexts[market].language].document.components,
+    );
   });
 });
 
 test('translated snapshots inherit technical values and distinguish upstream text updates', () => {
   let state = updated(rollout(), {
-    add: [{ id: 'technical', type: 'data', modelId: '61HG', range: '513–627 km', power: '250 kW' }],
+    add: [{
+      id: 'technical', type: 'data', modelId: '61HG', range: '513–627 km', power: '250 kW',
+    }],
     update: [{ id: 'teaser', fields: { text: 'Updated upstream BMW i5 teaser.' } }],
   });
   state = act(state, 'TRANSLATE', { actor: 'translator' });
   const doc = state.translations.de.document;
-  assert.deepEqual(doc.components.find((c) => c.id === 'technical'),
-    state.hq.components.find((c) => c.id === 'technical'));
-  assert.notEqual(doc.components.find((c) => c.id === 'teaser').text,
-    state.hq.components.find((c) => c.id === 'teaser').text);
+  assert.deepEqual(
+    doc.components.find((c) => c.id === 'technical'),
+    state.hq.components.find((c) => c.id === 'technical'),
+  );
+  assert.notEqual(
+    doc.components.find((c) => c.id === 'teaser').text,
+    state.hq.components.find((c) => c.id === 'teaser').text,
+  );
   const initial = act(approve(createDemo()), 'TRANSLATE', { actor: 'translator' });
-  assert.notEqual(doc.components.find((c) => c.id === 'teaser').text,
-    initial.translations.de.document.components.find((c) => c.id === 'teaser').text);
+  assert.notEqual(
+    doc.components.find((c) => c.id === 'teaser').text,
+    initial.translations.de.document.components.find((c) => c.id === 'teaser').text,
+  );
 });
 
 test('manual correction changes the authoritative translated document and rollout body', () => {
@@ -455,8 +471,10 @@ test('initial fixture makes no unsupported numeric WDH legal claims and assets a
 
 test('radar workflow and rollout action links carry the exact document context', () => {
   radarRows(createDemo()).forEach((row) => {
-    assert.deepEqual(row.actions.map((action) => new URL(action.href, 'https://demo.invalid').hash),
-      ['#workflow', '#rollout']);
+    assert.deepEqual(
+      row.actions.map((action) => new URL(action.href, 'https://demo.invalid').hash),
+      ['#workflow', '#rollout'],
+    );
     row.actions.forEach((action) => {
       const url = new URL(action.href, 'https://demo.invalid');
       assert.equal(url.pathname, '/tools/aida/showcase/index.html');
@@ -479,12 +497,99 @@ test('HQ changes invalidate source and market publication checks and frozen sour
   assert.equal(checks(state, 'de').find((c) => c.id === 'source').pass, false);
   state = act(state, 'ADVANCE_TIME', { minutes: 120 });
   ['hq', 'de'].forEach((market) => {
-    assert.throws(() => act(state, 'SCHEDULE', { actor: 'publisher', market, at: state.embargo }),
-      /approval|approv|source|check/i);
-    assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market, dryRun: true }),
-      /approval|approv|schedule|source|check/i);
+    assert.throws(
+      () => act(state, 'SCHEDULE', { actor: 'publisher', market, at: state.embargo }),
+      /approval|approv|source|check/i,
+    );
+    assert.throws(
+      () => act(state, 'PUBLISH', { actor: 'publisher', market, dryRun: true }),
+      /approval|approv|schedule|source|check/i,
+    );
   });
   assert.equal(state.markets.de.publishedRevision, null);
+});
+
+test('translation preserves path and HTTP(S) CTA destinations exactly through rollout', () => {
+  ['/aida/showcase/en/i5', '/aida/showcase/en/i5?campaign=launch#charging',
+    'https://www.bmw.example/i5?campaign=launch#charging', 'http://demo.invalid/i5']
+    .forEach((cta) => {
+      let state = updated(rollout(), { update: [{ id: 'hero', fields: { cta } }] });
+      state = act(state, 'TRANSLATE', { actor: 'translator' });
+      ['de', 'fr'].forEach((language) => {
+        assert.equal(state.translations[language].document.components
+          .find((c) => c.id === 'hero').cta, cta);
+      });
+      state = act(state, 'REROLLOUT', { actor: 'hq-author' });
+      Object.values(state.markets).forEach((market) => {
+        assert.equal(market.components.find((c) => c.id === 'hero').cta, cta);
+      });
+    });
+});
+
+test('scripted source update copy has meaningful DE/FR dictionary translations without hashes', () => {
+  let state = updated(rollout(), {
+    update: [
+      { id: 'hero', fields: { headline: 'The BMW i5. A new charging chapter.', cta: '/aida/showcase/en/i5' } },
+      { id: 'teaser', fields: { text: 'BMW i5 eDrive: the updated upstream electric story.' } },
+      { id: 'features', fields: { text: 'Parking Assistant, updated availability fixture.' } },
+    ],
+    add: [{ id: 'charging', type: 'text', text: 'BMW Charging: a new upstream section.' }],
+  }, {
+    title: 'The BMW i5 launch. Now with a charging story.',
+    headline: 'The BMW i5. A new charging chapter.',
+    disclaimer: 'Updated source WLTP statement. Fixture only.',
+  });
+  state = act(state, 'TRANSLATE', { actor: 'translator' });
+  const expected = {
+    de: {
+      title: 'Die BMW i5 Premiere. Jetzt mit einer Geschichte rund ums Laden.',
+      headline: 'Der BMW i5. Ein neues Kapitel beim Laden.',
+      disclaimer: 'Aktualisierter WLTP Hinweis der Quelle. Nur ein Demobeispiel.',
+      teaser: 'BMW i5 eDrive: die aktualisierte elektrische Geschichte der Quelle.',
+      features: 'Parking Assistant: aktualisiertes Verfügbarkeitsbeispiel.',
+      charging: 'BMW Charging: ein neuer Abschnitt aus der Quelle.',
+      cta: 'BMW i5 entdecken',
+    },
+    fr: {
+      title: 'Le lancement de la BMW i5. Avec une nouvelle histoire de recharge.',
+      headline: 'La BMW i5. Un nouveau chapitre de recharge.',
+      disclaimer: 'Mention WLTP de la source mise à jour. Exemple uniquement.',
+      teaser: 'BMW i5 eDrive : le récit électrique actualisé de la source.',
+      features: 'Parking Assistant : exemple de disponibilité mis à jour.',
+      charging: 'BMW Charging : une nouvelle section issue de la source.',
+      cta: 'Découvrir la BMW i5',
+    },
+  };
+  ['de', 'fr'].forEach((language) => {
+    const doc = state.translations[language].document;
+    ['title', 'headline', 'disclaimer'].forEach((field) => {
+      assert.equal(doc.fields[field], expected[language][field]);
+    });
+    assert.equal(doc.components.find((c) => c.id === 'hero').headline,
+      expected[language].headline);
+    assert.equal(doc.components.find((c) => c.id === 'hero').cta, '/aida/showcase/en/i5');
+    ['teaser', 'features', 'charging'].forEach((id) => {
+      assert.equal(doc.components.find((c) => c.id === id).text, expected[language][id]);
+    });
+    assert.doesNotMatch(JSON.stringify(doc), /\[[a-z0-9]+\]/);
+    const seed = act(approve(createDemo()), 'TRANSLATE', { actor: 'translator' });
+    assert.equal(seed.translations[language].document.components
+      .find((c) => c.id === 'hero').cta, expected[language].cta);
+  });
+});
+
+test('unknown prose keeps source copy in a human-readable untranslated fixture fallback', () => {
+  const body = 'Unmapped BMW i5 eDrive editorial text. WLTP range 513–627 km, consumption 17.9 kWh/100 km.';
+  const source = approve(act(createDemo(), 'SAVE', { actor: 'hq-author', fields: { body } }));
+  const state = act(source, 'TRANSLATE', { actor: 'translator' });
+  ['de', 'fr'].forEach((language) => {
+    const doc = state.translations[language].document;
+    const expected = `Fixture fallback — source copy (not translated): ${body}`;
+    assert.equal(doc.fields.body, expected);
+    assert.equal(doc.components.find((c) => c.id === 'story').text, expected);
+    assert.doesNotMatch(doc.fields.body, /\[[a-z0-9]+\]/);
+    assert.doesNotMatch(state.translations[language].style, /digest|hash|token/);
+  });
 });
 
 test('RESET is a fresh deterministic initial state without retaining browser session changes', () => {
