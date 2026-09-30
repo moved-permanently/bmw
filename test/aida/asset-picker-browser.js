@@ -2,7 +2,7 @@ import mountPicker from '../../tools/aida/asset-picker/asset-picker.js';
 
 const results = [];
 const assert = (condition, message) => { if (!condition) throw new Error(message); };
-const tick = () => new Promise((resolve) => setTimeout(resolve, 10));
+const tick = () => new Promise((resolve) => { setTimeout(resolve, 10); });
 const change = (element, value) => {
   element.value = value;
   element.dispatchEvent(new Event('change', { bubbles: true }));
@@ -26,6 +26,7 @@ const assets = [
   {
     id: 'i5-front',
     title: 'BMW i5 front',
+    alt: 'BMW i5 front',
     kind: 'marketing',
     url: 'https://bmw.scene7.com/is/image/BMW/g60-front:3to2',
     crops: { '3to2': 'https://bmw.scene7.com/is/image/BMW/g60-front:3to2' },
@@ -38,6 +39,7 @@ const assets = [
   {
     id: 'm5-render',
     title: 'BMW M5 render',
+    alt: '',
     kind: 'cosy',
     url: 'https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-fixture',
     crops: {},
@@ -127,6 +129,7 @@ await test('COSY selection hides Scene7 controls and preserves its URL', async (
   await tick();
   assert(find('scene7').hidden, 'No Scene7 options for COSY');
   assert(find('url').value === assets[1].url, 'COSY URL must be unchanged');
+  assert(find('alt').value === '' && find('insert').disabled, 'Derived labels must not become default alt');
 });
 
 await test('reset keeps the document country but clears other filters', () => {
@@ -135,6 +138,30 @@ await test('reset keeps the document country but clears other filters', () => {
   assert(find('country').value === 'be', 'Reset must retain document country');
   assert(find('kind').value === '' && find('model').value === '', 'Reset must clear other facets');
   assert(find('results').children.length === 2, 'Both image kinds must return');
+});
+
+await test('double-click sends only one insertion while the SDK call is in flight', async () => {
+  const clean = new DOMParser().parseFromString(html, 'text/html').querySelector('main');
+  main.replaceWith(clean);
+  let sends = 0;
+  let closes = 0;
+  let finish;
+  mountPicker(clean, {
+    assets: [assets[0]],
+    actions: {
+      sendHTML: () => { sends += 1; return new Promise((resolve) => { finish = resolve; }); },
+      closeLibrary: () => { closes += 1; },
+    },
+  });
+  clean.querySelector('#asset-results button').click();
+  await tick();
+  const button = clean.querySelector('#asset-insert');
+  button.click();
+  button.click();
+  finish();
+  await tick();
+  assert(sends === 1 && closes === 1, 'Only one SDK insertion and close allowed');
+  clean.replaceWith(main);
 });
 
 window.Image = originalImage;

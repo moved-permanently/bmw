@@ -4,18 +4,35 @@ import {
   countryForContext, filterAssets, facetValues, cropRegion, scene7Url, assetLink,
 } from '../../tools/aida/asset-picker/model.js';
 
+const unsafeScript = ['javascript', 'alert(1)'].join(':');
+
 const marketing = {
-  id: 'i5-exterior', title: 'BMW i5 exterior', kind: 'marketing',
+  id: 'i5-exterior',
+  title: 'BMW i5 exterior',
+  kind: 'marketing',
   url: 'https://bmw.scene7.com/is/image/BMW/g60-exterior:3to2?fit=constrain,1',
-  brands: ['BMW'], families: ['5 Series'], models: ['i5'], countries: [],
+  brands: ['BMW'],
+  families: ['5 Series'],
+  models: ['i5'],
+  countries: [],
   crops: { '3to2': 'https://bmw.scene7.com/is/image/BMW/g60-exterior:3to2?fit=constrain,1', '1to1': 'https://bmw.scene7.com/is/image/BMW/g60-exterior:1to1' },
 };
-const german = { ...marketing, id: 'german', title: 'German charging', countries: ['de'] };
-const french = { ...marketing, id: 'french', title: 'French charging', countries: ['fr'] };
+const german = {
+  ...marketing, id: 'german', title: 'German charging', countries: ['de'],
+};
+const french = {
+  ...marketing, id: 'french', title: 'French charging', countries: ['fr'],
+};
 const cosy = {
-  id: 'm5-render', title: 'BMW M5 vehicle render', kind: 'cosy',
+  id: 'm5-render',
+  title: 'BMW M5 vehicle render',
+  kind: 'cosy',
   url: 'https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-a%25b',
-  brands: ['BMW M'], families: ['5 Series'], models: ['M5'], countries: [], crops: {},
+  brands: ['BMW M'],
+  families: ['5 Series'],
+  models: ['M5'],
+  countries: [],
+  crops: {},
 };
 const assets = [marketing, german, french, cosy];
 
@@ -27,8 +44,10 @@ test('country follows the explicit document country, not WDH market fallback or 
   assert.equal(countryForContext({ path: '/de-de/news' }), 'de');
   assert.equal(countryForContext({ path: '/en-gb/news' }), 'gb');
   assert.equal(countryForContext({ path: '/aida/en/i5' }), '');
+  assert.equal(countryForContext({ path: '/aida/de/i5' }), '');
+  assert.equal(countryForContext({ path: '/aida/fr/i5' }), '');
   assert.equal(countryForContext({ path: '/unknown', country: 'FR' }), 'fr');
-  assert.equal(countryForContext({ path: '/aida/de/de/i5', country: 'javascript:bad' }), 'de');
+  assert.equal(countryForContext({ path: '/aida/de/de/i5', country: unsafeScript }), 'de');
   assert.equal(countryForContext({}), '');
 });
 
@@ -39,7 +58,9 @@ test('country filtering includes unlocalized imagery but excludes other country 
 });
 
 test('kind, brand, family, model and multiword search combine without mutating the catalogue', () => {
-  assert.deepEqual(filterAssets(assets, { kind: 'cosy', brand: 'BMW M', family: '5 Series', model: 'M5', search: 'm5 render' }), [cosy]);
+  assert.deepEqual(filterAssets(assets, {
+    kind: 'cosy', brand: 'BMW M', family: '5 Series', model: 'M5', search: 'm5 render',
+  }), [cosy]);
   assert.deepEqual(filterAssets(assets, { kind: 'marketing', model: 'M5' }), []);
   assert.deepEqual(filterAssets(assets, { search: 'I5 EXTERIOR' }), [marketing]);
   assert.equal(assets.length, 4);
@@ -82,10 +103,34 @@ test('no Scene7 modifiers are added to COSY URLs', () => {
   assert.equal(scene7Url(cosy, { crop: '1to1', sharpen: true, width: 800 }), cosy.url);
 });
 
+test('Scene7 modifiers precede fragments and preserve literal template values', () => {
+  const asset = { ...marketing, url: 'https://bmw.scene7.com/is/image/BMW/template?$image=BMW/car#source' };
+  const result = scene7Url(asset, { sharpen: true, width: 960 });
+  const url = new URL(result);
+  assert.equal(url.hash, '#source');
+  assert.equal(url.searchParams.get('op_sharpen'), '1');
+  assert.equal(url.searchParams.get('wid'), '960');
+  assert.equal(url.searchParams.get('fmt'), 'webp');
+  assert.ok(result.includes('$image=BMW/car'));
+});
+
+test('Scene7 framing composes with existing crop bounds', () => {
+  const asset = { ...marketing, url: 'https://bmw.scene7.com/is/image/BMW/car?cropN=0.1,0.2,0.8,0.5' };
+  const result = scene7Url(asset, { region: [0.25, 0, 0.5, 1] });
+  assert.equal(new URL(result).searchParams.get('cropN'), '0.3,0.2,0.4,0.5');
+});
+
+test('Scene7 options reject invalid widths, crop types and sharpen values', () => {
+  assert.throws(() => scene7Url(marketing, { width: 'oops' }), /width/i);
+  assert.throws(() => scene7Url(marketing, { width: Infinity }), /width/i);
+  assert.throws(() => scene7Url(marketing, { region: 'oops' }), /crop region/i);
+  assert.throws(() => scene7Url(marketing, { sharpen: 'false' }), /sharpen/i);
+});
+
 test('asset insertion keeps remote URLs as escaped image-carrier links and requires alt text', () => {
   assert.equal(assetLink(marketing, `${marketing.url}&op_sharpen=1`, 'Car <front> & "side"'), `<p><a href="${marketing.url.replace('&', '&amp;')}&amp;op_sharpen=1">Car &lt;front&gt; &amp; &quot;side&quot;</a></p>`);
   assert.equal(assetLink(cosy, cosy.url, '', true), `<p><a href="${cosy.url}">Image without alt text</a></p>`);
   assert.throws(() => assetLink(marketing, marketing.url, ''), /alt/i);
-  assert.throws(() => assetLink(marketing, 'javascript:alert(1)', 'Car'), /URL/i);
+  assert.throws(() => assetLink(marketing, unsafeScript, 'Car'), /URL/i);
   assert.throws(() => assetLink(marketing, 'https://evil.example/image.jpg', 'Car'), /URL/i);
 });

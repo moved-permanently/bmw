@@ -98,3 +98,13 @@ test('missing captions retain a readable fallback label', () => {
   const [asset] = buildCatalogue([{ ...page, html: '<a href="https://bmw.scene7.com/is/image/BMW/g60_front"></a>' }]);
   assert.match(asset.title, /i5.*front/i);
 });
+
+test('shared uncaptained renders get a family label and no fabricated default alt text', () => {
+  const html = '<a href="https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-shared">Image without alt text</a>';
+  const first = { ...page, html, model: '5 Series Sedan' };
+  const second = { ...page, html, path: '/de/neufahrzeuge/m/m5-series/bmw-m5-limousine', model: 'M5', brand: 'BMW M' };
+  const [asset] = buildCatalogue([first, second]);
+  assert.equal(asset.title, '5 Series vehicle render');
+  assert.equal(asset.alt, '');
+  assert.equal(asset.sources.length, 2);
+});
