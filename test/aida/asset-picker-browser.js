@@ -122,6 +122,10 @@ await test('alt validation prevents empty meaningful images, then inserts throug
   assert(inserted[0].includes('cropN=') && !inserted[0].includes('<img'), 'Preserve an external delivery link');
 });
 
+await test('successful insertion resets the picker for reopening the retained iframe', () => {
+  assert(!find('browser').hidden && find('detail').hidden, 'Reopened picker must return to the image browser');
+});
+
 await test('COSY selection hides Scene7 controls and preserves its URL', async () => {
   find('back').click();
   change(find('kind'), 'cosy');
