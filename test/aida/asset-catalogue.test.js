@@ -75,3 +75,26 @@ test('marketing images precede vehicle renders in a stable browse order', () => 
   const assets = buildCatalogue([page]);
   assert.deepEqual(assets.map((asset) => asset.kind), ['marketing', 'marketing', 'cosy']);
 });
+
+test('default rendition keeps an observed crop and semantic query parameters, not a guessed original', () => {
+  const html = '<a href="https://bmw.scene7.com/is/image/BMW/only-cropped:3to2?wid=750&amp;fmt=webp&amp;cropN=0,0,0.5,1&amp;$image=BMW/car">Car</a>';
+  const [asset] = buildCatalogue([{ ...page, html }]);
+  assert.equal(new URL(asset.url).pathname, '/is/image/BMW/only-cropped:3to2');
+  assert.ok(asset.url.includes('cropN=0,0,0.5,1'));
+  assert.ok(asset.url.includes('$image=BMW/car'));
+  assert.ok(!asset.url.includes('wid='));
+});
+
+test('different template composites are distinct catalogue entries with preserved literal parameters', () => {
+  const html = '<a href="https://bmw.scene7.com/is/image/BMW/template?$image=BMW/carA&amp;wid=750">Car A</a>'
+    + '<a href="https://bmw.scene7.com/is/image/BMW/template?$image=BMW/carB&amp;wid=1600">Car B</a>';
+  const assets = buildCatalogue([{ ...page, html }]);
+  assert.equal(assets.length, 2);
+  assert.ok(assets.some((asset) => asset.url.includes('$image=BMW/carA')));
+  assert.ok(assets.some((asset) => asset.url.includes('$image=BMW/carB')));
+});
+
+test('missing captions retain a readable fallback label', () => {
+  const [asset] = buildCatalogue([{ ...page, html: '<a href="https://bmw.scene7.com/is/image/BMW/g60_front"></a>' }]);
+  assert.match(asset.title, /i5.*front/i);
+});
