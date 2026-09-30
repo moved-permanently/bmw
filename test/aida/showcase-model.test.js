@@ -9,7 +9,8 @@ const submit = (state, market = 'hq') => act(state, 'SUBMIT', {
   actor: market === 'hq' ? 'hq-author' : 'market-author', market,
 });
 const approve = (state, market = 'hq') => act(submit(state, market), 'APPROVE', {
-  actor: market === 'hq' ? 'hq-reviewer' : 'market-reviewer', market,
+  actor: market === 'hq' ? 'hq-reviewer' : 'market-reviewer',
+  market,
   revision: market === 'hq' ? state.hq.revision : state.markets[market].revision,
 });
 const rollout = () => act(act(approve(createDemo()), 'TRANSLATE', {
@@ -116,7 +117,10 @@ test('reject needs actionable field, feedback, simulated mention and review team
     assert.throws(() => act(state, 'REJECT', { actor: 'hq-reviewer', feedback }), /feedback|team/i);
   }
   const rejected = act(state, 'REJECT', {
-    actor: 'hq-reviewer', feedback: { field: 'legal', message: 'Clarify the WLTP statement.', mention: 'hq-author', team: 'Legal' },
+    actor: 'hq-reviewer',
+    feedback: {
+      field: 'legal', message: 'Clarify the WLTP statement.', mention: 'hq-author', team: 'Legal',
+    },
   });
   assert.equal(rejected.hq.review, 'rejected');
   assert.equal(rejected.inbox.at(-1).mention, 'hq-author');
@@ -194,14 +198,20 @@ test('rerollout retains local intro/CTA and locally moved stable teaser id while
 });
 
 test('rerollout creates property conflicts for local headline, asset, CTA and disclaimer', () => {
-  let state = localize(rollout(), { components: { update: [
-    { id: 'hero', fields: { headline: 'Local BMW i5', asset: '/media/local.jpg', cta: 'Local CTA' } },
-    { id: 'disclaimer', fields: { text: 'Local WLTP statement.' } },
-  ] } });
-  state = reroll(updated(state, { update: [
-    { id: 'hero', fields: { headline: 'Upstream BMW i5', asset: '/media/upstream.jpg', cta: 'Upstream CTA' } },
-    { id: 'disclaimer', fields: { text: 'Upstream WLTP statement.' } },
-  ] }));
+  let state = localize(rollout(), {
+    components: {
+      update: [
+        { id: 'hero', fields: { headline: 'Local BMW i5', asset: '/media/local.jpg', cta: 'Local CTA' } },
+        { id: 'disclaimer', fields: { text: 'Local WLTP statement.' } },
+      ],
+    },
+  });
+  state = reroll(updated(state, {
+    update: [
+      { id: 'hero', fields: { headline: 'Upstream BMW i5', asset: '/media/upstream.jpg', cta: 'Upstream CTA' } },
+      { id: 'disclaimer', fields: { text: 'Upstream WLTP statement.' } },
+    ],
+  }));
   assert.equal(state.markets.de.conflicts.length, 4);
   assert.ok(state.markets.de.conflicts.every((conflict) => conflict.id && conflict.path && conflict.upstream !== undefined));
   assert.notEqual(state.markets.de.acceptedSourceRevision, state.hq.revision);
@@ -213,11 +223,19 @@ test('resolutions reject invalid id/choice/manual values and accept upstream, lo
   let state = localize(rollout(), { components: { update: [{ id: 'hero', fields: { headline: 'Local BMW i5', asset: '/media/local.jpg', cta: 'Local CTA' } }] } });
   state = reroll(updated(state, { update: [{ id: 'hero', fields: { headline: 'Source BMW i5', asset: '/media/source.jpg', cta: 'Source CTA' } }] }));
   const [headline, asset, cta] = state.markets.de.conflicts;
-  assert.throws(() => act(state, 'RESOLVE', { actor: 'market-author', market: 'de', conflictId: 'missing', choice: 'local' }), /conflict/i);
-  assert.throws(() => act(state, 'RESOLVE', { actor: 'market-author', market: 'de', conflictId: headline.id, choice: 'both' }), /choice/i);
-  assert.throws(() => act(state, 'RESOLVE', { actor: 'market-author', market: 'de', conflictId: headline.id, choice: 'manual', value: '' }), /manual|text/i);
+  assert.throws(() => act(state, 'RESOLVE', {
+    actor: 'market-author', market: 'de', conflictId: 'missing', choice: 'local',
+  }), /conflict/i);
+  assert.throws(() => act(state, 'RESOLVE', {
+    actor: 'market-author', market: 'de', conflictId: headline.id, choice: 'both',
+  }), /choice/i);
+  assert.throws(() => act(state, 'RESOLVE', {
+    actor: 'market-author', market: 'de', conflictId: headline.id, choice: 'manual', value: '',
+  }), /manual|text/i);
   for (const [conflict, choice, value] of [[headline, 'manual', 'Manually reviewed BMW i5'], [asset, 'upstream'], [cta, 'local']]) {
-    state = act(state, 'RESOLVE', { actor: 'market-author', market: 'de', conflictId: conflict.id, choice, value });
+    state = act(state, 'RESOLVE', {
+      actor: 'market-author', market: 'de', conflictId: conflict.id, choice, value,
+    });
   }
   assert.equal(state.markets.de.conflicts.length, 0);
   assert.equal(state.markets.de.acceptedSourceRevision, state.hq.revision);
@@ -228,15 +246,18 @@ test('resolutions reject invalid id/choice/manual values and accept upstream, lo
 });
 
 test('component add/remove, feature and competing reorder changes expose resolvable conflicts', () => {
-  let state = localize(rollout(), { components: {
-    update: [{ id: 'features', fields: { text: 'Local Parking Assistant' } }, { id: 'story', fields: { text: 'Local story' } }],
-    move: [{ id: 'teaser', index: 0 }],
-    add: [{ id: 'local-offer', type: 'teaser', text: 'Local offer' }],
-    remove: ['disclaimer'],
-  } });
+  let state = localize(rollout(), {
+    components: {
+      update: [{ id: 'features', fields: { text: 'Local Parking Assistant' } }, { id: 'story', fields: { text: 'Local story' } }],
+      move: [{ id: 'teaser', index: 0 }],
+      add: [{ id: 'local-offer', type: 'teaser', text: 'Local offer' }],
+      remove: ['disclaimer'],
+    },
+  });
   state = reroll(updated(state, {
     update: [{ id: 'features', fields: { text: 'Upstream Parking Assistant' } }, { id: 'disclaimer', fields: { text: 'Updated WLTP disclaimer' } }],
-    remove: ['story'], move: [{ id: 'features', index: 0 }],
+    remove: ['story'],
+    move: [{ id: 'features', index: 0 }],
     add: [{ id: 'local-offer', type: 'teaser', text: 'Upstream offer' }],
   }));
   assert.ok(state.markets.de.conflicts.some((conflict) => conflict.path === 'order'));
@@ -245,7 +266,9 @@ test('component add/remove, feature and competing reorder changes expose resolva
   assert.ok(state.markets.de.conflicts.some((conflict) => conflict.path.includes('features')));
   assert.ok(state.markets.de.conflicts.some((conflict) => conflict.path.includes('local-offer')));
   for (const conflict of [...state.markets.de.conflicts]) {
-    state = act(state, 'RESOLVE', { actor: 'market-author', market: 'de', conflictId: conflict.id, choice: 'upstream' });
+    state = act(state, 'RESOLVE', {
+      actor: 'market-author', market: 'de', conflictId: conflict.id, choice: 'upstream',
+    });
   }
   assert.equal(state.markets.de.conflicts.length, 0);
   assert.equal(state.markets.de.components[0].id, 'features');
@@ -266,7 +289,7 @@ test('scheduling needs publisher, current approval, source freshness, checks and
 test('dry-run publish enforces simulated clock and frozen scheduled revision', () => {
   let state = approve(rollout(), 'de');
   state = act(state, 'SCHEDULE', { actor: 'publisher', market: 'de', at: state.embargo });
-  const revision = state.markets.de.revision;
+  const { revision } = state.markets.de;
   assert.equal(state.markets.de.schedule.revision, revision);
   assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market: 'de', dryRun: true }), /clock|time|embargo/i);
   state = act(state, 'ADVANCE_TIME', { minutes: 120 });
@@ -328,6 +351,35 @@ test('selected simulated actor and market defaults work, and source is the HQ co
   state = act(state, 'LOCALIZE', { fields: { localIntro: 'Belgian introduction' } });
   assert.equal(state.markets.be.fields.localIntro, 'Belgian introduction');
   assert.throws(() => act(state, 'ACTOR', { id: 'real-admin' }), /persona|actor/i);
+});
+
+test('saved HQ body and legal fields drive their preview components', () => {
+  const state = act(createDemo(), 'SAVE', {
+    actor: 'hq-author',
+    fields: { body: 'The BMW i5 with eDrive. Updated launch.', legal: 'Updated BMW i5 WLTP fixture.' },
+  });
+  assert.equal(state.hq.components.find((c) => c.id === 'story').text, state.hq.fields.body);
+  assert.equal(state.hq.components.find((c) => c.id === 'disclaimer').text, state.hq.fields.legal);
+});
+
+test('translation memory reuse follows unchanged source text, not unrelated title revisions', () => {
+  let state = act(approve(createDemo()), 'TRANSLATE', { actor: 'translator' });
+  const text = 'La BMW i5 avec eDrive. Texte corrigé, données WLTP.';
+  state = act(state, 'CORRECT_TRANSLATION', { actor: 'translator', language: 'fr', text });
+  state = updated(state, undefined, { title: 'Updated BMW i5 metadata.' });
+  state = act(state, 'TRANSLATE', { actor: 'translator' });
+  assert.equal(state.translations.fr.text, text);
+  assert.equal(state.translations.fr.sourceRevision, state.hq.revision);
+});
+
+test('rerollout needs a populated initial rollout', () => {
+  const state = act(approve(createDemo()), 'TRANSLATE', { actor: 'translator' });
+  assert.throws(() => act(state, 'REROLLOUT', { actor: 'hq-author', markets: ['de'] }), /roll.*first|initial.*roll/i);
+});
+
+test('market override assets must be fixture paths', () => {
+  const localized = localize(rollout(), { fields: { heroAsset: 'javascript:alert(1)' } });
+  assert.equal(checks(localized, 'de').find((c) => c.id === 'assets').pass, false);
 });
 
 test('RESET is a fresh deterministic initial state without retaining browser session changes', () => {
