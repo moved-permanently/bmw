@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { escape, links, tabs } from '../../tools/aida/showcase/view.js';
+import * as view from '../../tools/aida/showcase/view.js';
+
+const { escape, links, tabs } = view;
 
 const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
 
@@ -50,4 +52,11 @@ test('reviewers can preview the exact rehearsal revision without mistaking a sta
   assert.match(app, /simulated-preview/);
   assert.match(app, /doc\.fields\.title/);
   assert.match(app, /doc\.fields\.body/);
+});
+
+test('radar deep links select only a known market context and never imply authentication', () => {
+  assert.equal(typeof view.marketFromSearch, 'function');
+  assert.equal(view.marketFromSearch('?market=be'), 'be');
+  assert.equal(view.marketFromSearch('?market=unknown'), null);
+  assert.equal(view.marketFromSearch('?actor=publisher'), null);
 });
