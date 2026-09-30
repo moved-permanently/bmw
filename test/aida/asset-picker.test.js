@@ -4,6 +4,12 @@ import {
   countryForContext, filterAssets, facetValues, cropRegion, scene7Url, assetLink,
 } from '../../tools/aida/asset-picker/model.js';
 
+test('showcase document country is explicit and does not confuse its namespace with language', () => {
+  assert.equal(countryForContext({ path: '/aida/showcase/fr/be/i5' }), 'be');
+  assert.equal(countryForContext({ path: '/aida/showcase/de/at/home' }), 'at');
+  assert.equal(countryForContext({ path: '/aida/showcase/fr/i5' }), '');
+});
+
 const unsafeScript = ['javascript', 'alert(1)'].join(':');
 
 const marketing = {
