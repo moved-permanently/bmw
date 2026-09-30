@@ -1,8 +1,10 @@
+/* eslint-disable no-restricted-syntax */
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { test } from 'node:test';
 
-const module = await import('../../tools/aida/showcase/content.mjs').catch((error) => {
+// eslint-disable-next-line import/extensions
+const generator = await import('../../tools/aida/showcase/content.mjs').catch((error) => {
   if (error.code !== 'ERR_MODULE_NOT_FOUND') throw error;
   return {};
 });
@@ -10,8 +12,8 @@ const catalogue = JSON.parse(readFileSync(new URL('../../tools/aida/asset-picker
 const contexts = ['en', 'de/de', 'fr/fr', 'fr/be'];
 const slugs = ['home', 'i5', 'e-mobility', 'news/i5-launch', 'news/cannes', 'news/concept-m', 'news/interior', 'news/hydrogen', 'news/3-series'];
 const build = () => {
-  assert.equal(typeof module.buildContent, 'function', 'A deterministic showcase content generator is required');
-  return module.buildContent({ catalogue });
+  assert.equal(typeof generator.buildContent, 'function', 'A deterministic showcase content generator is required');
+  return generator.buildContent({ catalogue });
 };
 const section = (html, name) => html.match(new RegExp(`<section[^>]*data-component="${name}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1] || '';
 const factLinks = (html) => [...html.matchAll(/href="(\/aida\/showcase\/data\/wdh-(de|fr)\.json)#([A-Za-z0-9]+\.[A-Za-z0-9]+)">([^<]*)<\/a>/g)];
@@ -52,6 +54,7 @@ test('home follows PDF mandatory composition plus shared interior and Germany-on
     assert.match(section(html, 'teaser-list'), /BMW X/);
     assert.equal(order.includes('summer-offer'), context === 'de/de');
     assert.match(section(html, 'video-teaser-ix3'), /bmw\.scene7\.com\/is\/content\/BMW\/.*m3u8/);
+    assert.match(section(html, 'main-teaser-i5'), /bmw\.scene7\.com\/is\/content\/BMW\/P001_SL_G60.*m3u8/);
   }
 });
 
@@ -131,13 +134,13 @@ test('only observed catalogue images are authored and missing catalogue assets f
       assert.ok(alt.length > 2);
     }
   }
-  assert.throws(() => module.buildContent({ catalogue: [] }), /catalogue|asset/i);
+  assert.throws(() => generator.buildContent({ catalogue: [] }), /catalogue|asset/i);
 });
 
 test('an optional public WDH sheet overrides known values without dropping required briefing fixtures', () => {
   const wdh = { de: { values: { data: [{ key: '61HG.electricRange', value: '500–600', unit: 'km' }] } } };
   const before = JSON.stringify(wdh);
-  const result = module.buildContent({ catalogue, wdh });
+  const result = generator.buildContent({ catalogue, wdh });
   assert.match(result.pages['/aida/showcase/en/i5'], /500–600 km/);
   assert.match(result.pages['/aida/showcase/fr/fr/i5'], /518–627 km/);
   assert.equal(JSON.stringify(wdh), before);
@@ -148,7 +151,7 @@ test('generator accepts an external sheet without mutation and refresh is explic
   const wdh = { de: structuredClone(initial.data['/aida/showcase/data/wdh-de.json']), fr: structuredClone(initial.data['/aida/showcase/data/wdh-fr.json']) };
   wdh.de.values.data.find((row) => row.key === '61HG.electricRange').value = '500–600';
   const before = JSON.stringify(wdh);
-  const updated = module.buildContent({ catalogue, wdh });
+  const updated = generator.buildContent({ catalogue, wdh });
   assert.equal(JSON.stringify(wdh), before);
   assert.match(updated.pages['/aida/showcase/en/i5'], /500–600 km/);
   assert.ok(existsSync(new URL('../../blocks/aida-showcase/aida-showcase.js', import.meta.url)));
