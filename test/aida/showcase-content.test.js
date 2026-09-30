@@ -54,8 +54,8 @@ test('home follows PDF mandatory composition plus shared interior and Germany-on
     for (const slug of ['cannes', 'concept-m', 'interior', '3-series']) assert.match(section(html, 'teaser-list'), new RegExp(`/news/${slug}`));
     assert.match(section(html, 'teaser-list'), /BMW X/);
     assert.equal(order.includes('summer-offer'), context === 'de/de');
-    assert.match(section(html, 'video-teaser-ix3'), /bmw\.scene7\.com\/is\/content\/BMW\/.*m3u8/);
-    assert.match(section(html, 'main-teaser-i5'), /bmw\.scene7\.com\/is\/content\/BMW\/P001_SL_G60.*m3u8/);
+    assert.match(section(html, 'video-teaser-ix3'), /href="https:\/\/bmw\.scene7\.com\/is\/content\/BMW\/na5_stage_1920_1024_sl"/);
+    assert.match(section(html, 'main-teaser-i5'), /href="https:\/\/bmw\.scene7\.com\/is\/content\/BMW\/P001_SL_G60-8135_Ext_Dsk_v001"/);
   }
 });
 
@@ -171,9 +171,19 @@ test('video and stage containers have intrinsic sizing independent of the absolu
   assert.match(media, /min-height:\s*540px/);
   assert.match(media, /aspect-ratio:\s*16\s*\/\s*8/);
   assert.match(overlay, /position:\s*relative/);
-  const playButton = css.match(/\.aida-showcase \.bmw-video-playbutton \{([^}]+)\}/)?.[1] || '';
-  assert.match(playButton, /top:\s*16px/);
-  assert.match(playButton, /bottom:\s*auto/);
+  const block = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.js', import.meta.url), 'utf8');
+  assert.match(block, /controls:\s*true/);
+  assert.match(block, /playButton:\s*false/);
+});
+
+test('default videos use verified progressive content delivery and retain observed HLS alternate provenance', () => {
+  const data = JSON.parse(readFileSync(new URL('../../tools/aida/showcase/data/editorial.json', import.meta.url), 'utf8'));
+  assert.equal(data.video.url, 'https://bmw.scene7.com/is/content/BMW/na5_stage_1920_1024_sl');
+  assert.equal(data.i5Video.url, 'https://bmw.scene7.com/is/content/BMW/P001_SL_G60-8135_Ext_Dsk_v001');
+  for (const video of [data.video, data.i5Video]) {
+    assert.match(video.hlsUrl, /-AVS\.m3u8$/);
+    assert.match(video.observedDelivery, /video\/mp4/);
+  }
 });
 
 test('stage copy and headings explicitly stay white despite global BMW heading colors', () => {
