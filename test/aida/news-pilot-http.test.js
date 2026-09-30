@@ -14,7 +14,7 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
   let app;
   try {
     app = implementation.createPilotServer({ storePath, now: () => Date.parse('2026-09-30T10:00:00Z') });
-    await new Promise((resolve) => app.server.listen(0, '127.0.0.1', resolve));
+    await new Promise((resolve) => { app.server.listen(0, '127.0.0.1', resolve); });
     const base = `http://127.0.0.1:${app.server.address().port}`;
     const request = (path, options = {}) => fetch(`${base}${path}`, options);
     assert.equal((await request('/api/state')).status, 401);
@@ -24,19 +24,25 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
       const response = await request('/api/session', { method: 'POST', headers: { origin: base, 'content-type': 'application/json' }, body: JSON.stringify({ actorId }) });
       assert.equal(response.status, 200);
       const { csrf } = await response.json();
-      return { origin: base, 'content-type': 'application/json', cookie: response.headers.get('set-cookie').split(';')[0], 'x-pilot-csrf': csrf };
+      return {
+        origin: base, 'content-type': 'application/json', cookie: response.headers.get('set-cookie').split(';')[0], 'x-pilot-csrf': csrf,
+      };
     };
     const author = await signIn('hq-author');
     const action = async (headers, command, payload = {}) => request('/api/action', { method: 'POST', headers, body: JSON.stringify({ action: command, ...payload }) });
     assert.equal((await action({ ...author, 'x-pilot-csrf': '' }, 'create')).status, 403);
-    const created = await action(author, 'create', { fields: { slug: 'http-story', market: 'hq', title: '<img src=x onerror=alert(1)>', description: 'Summary', body: '<script>alert(1)</script>', legal: 'Legal', embargo: '2026-09-30T10:00:00Z' } });
+    const created = await action(author, 'create', {
+      fields: {
+        slug: 'http-story', market: 'hq', title: '<img src=x onerror=alert(1)>', description: 'Summary', body: '<script>alert(1)</script>', legal: 'Legal', embargo: '2026-09-30T10:00:00Z',
+      },
+    });
     assert.equal(created.status, 200);
     const { id } = await created.json();
-    for (const suffix of ['', '.md', '.plain.html', '.json']) {
+    await Promise.all(['', '.md', '.plain.html', '.json'].map(async (suffix) => {
       const response = await request(`/news/${id}${suffix}`);
       assert.equal(response.status, 404, `Draft leaked through ${suffix}`);
       assert.match(response.headers.get('cache-control'), /no-store/);
-    }
+    }));
     assert.deepEqual((await (await request('/news-index.json')).json()).data, []);
     await action(author, 'submit', { id });
     const reviewer = await signIn('hq-reviewer');
@@ -62,11 +68,11 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
       req.end();
     });
     assert.equal(wrongHost, 403);
-    await new Promise((resolve) => app.server.close(resolve));
+    await new Promise((resolve) => { app.server.close(resolve); });
     app = implementation.createPilotServer({ storePath, now: () => Date.parse('2026-09-30T10:00:00Z') });
     assert.equal(app.workflow.publicArticle(id).title, '<img src=x onerror=alert(1)>');
   } finally {
-    if (app?.server.listening) await new Promise((resolve) => app.server.close(resolve));
+    if (app?.server.listening) await new Promise((resolve) => { app.server.close(resolve); });
     rmSync(directory, { recursive: true });
   }
 });

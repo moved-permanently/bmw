@@ -1,6 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
+import {
+  mkdtempSync, writeFileSync, readFileSync, rmSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -17,7 +19,13 @@ test('all seeded news uses escaped WDH display strings, never data objects or do
   try {
     const run = spawnSync(process.execPath, ['--input-type=module', '-e',
       "globalThis.fetch = async () => ({ text: async () => '<div><h1>Test i5</h1></div><div></div>' }); await import('./tools/aida/content/seed.mjs');",
-      '--', '--no-translate'], { cwd: process.cwd(), env: { ...process.env, DA_TOKEN: '', WDH_SHEETS: dir, AIDA_OUTPUT_ROOT: dir }, encoding: 'utf8' });
+      '--', '--no-translate'], {
+      cwd: process.cwd(),
+      env: {
+        ...process.env, DA_TOKEN: '', WDH_SHEETS: dir, AIDA_OUTPUT_ROOT: dir,
+      },
+      encoding: 'utf8',
+    });
     assert.equal(run.status, 0, run.stderr);
     ['bmw-i5-edrive40', 'bmw-ix3-50-xdrive', 'bmw-530e-sedan'].forEach((slug) => {
       const html = readFileSync(join(dir, `tools/aida/content/out/aida/en/news/${slug}.html`), 'utf8');

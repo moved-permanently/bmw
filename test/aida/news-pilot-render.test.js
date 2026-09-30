@@ -15,7 +15,9 @@ test('pilot shell states its boundaries and provides connected editorial and nat
   assert.match(html, /da.live\/apps\/loc/);
 });
 test('exports remain document-native and never claim an unpublished draft has a publication date', () => {
-  const article = { id: 'fr--test', slug: 'test', market: 'fr', revision: 1, title: 'A <title>', description: 'A & summary', body: 'Paragraph one\n\nParagraph two', legal: 'Legal', localIntro: '', localCta: '' };
+  const article = {
+    id: 'fr--test', slug: 'test', market: 'fr', revision: 1, title: 'A <title>', description: 'A & summary', body: 'Paragraph one\n\nParagraph two', legal: 'Legal', localIntro: '', localCta: '',
+  };
   assert.equal(nativePath(article), '/aida/fr/fr/news/test');
   const html = daDocument(article);
   assert.match(html, /class="metadata"/);

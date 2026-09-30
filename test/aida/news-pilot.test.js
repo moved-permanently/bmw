@@ -15,8 +15,13 @@ function setup(embargo = now) {
   assert.equal(typeof implementation.createWorkflow, 'function', 'Missing connected news lifecycle implementation');
   const flow = implementation.createWorkflow(undefined, () => Date.parse(now));
   const article = flow.create(actors.author, {
-    slug: 'i5-launch', market: 'hq', title: 'BMW i5: launch news', description: 'A launch summary.',
-    body: 'The BMW i5 eDrive40 launch story.', legal: 'Demo legal statement.', embargo,
+    slug: 'i5-launch',
+    market: 'hq',
+    title: 'BMW i5: launch news',
+    description: 'A launch summary.',
+    body: 'The BMW i5 eDrive40 launch story.',
+    legal: 'Demo legal statement.',
+    embargo,
   });
   return { flow, id: article.id };
 }
@@ -62,7 +67,9 @@ test('embargo is checked by the release service, including direct publish calls'
 test('scheduled release waits for both release time and approved revision', () => {
   let clock = Date.parse(now);
   const flow = implementation.createWorkflow(undefined, () => clock);
-  const article = flow.create(actors.author, { slug: 'scheduled', market: 'hq', title: 'Scheduled', description: 'Summary', body: 'Body', legal: 'Legal', embargo: now });
+  const article = flow.create(actors.author, {
+    slug: 'scheduled', market: 'hq', title: 'Scheduled', description: 'Summary', body: 'Body', legal: 'Legal', embargo: now,
+  });
   approve(flow, article.id);
   flow.schedule(actors.publisher, article.id, '2026-09-30T11:00:00.000Z');
   clock += 3600000;
@@ -114,7 +121,9 @@ test('rollout blocks locked reviews and prevents partial multi-market updates', 
 });
 test('markets can originate news without an HQ source and use their own review', () => {
   const { flow } = setup();
-  const local = flow.create(actors.deAuthor, { slug: 'retailer-event', market: 'de', title: 'Local event', description: 'Local event news', body: 'German market authored news', legal: 'Event terms', embargo: now });
+  const local = flow.create(actors.deAuthor, {
+    slug: 'retailer-event', market: 'de', title: 'Local event', description: 'Local event news', body: 'German market authored news', legal: 'Event terms', embargo: now,
+  });
   assert.equal(local.sourceId, null);
   approve(flow, local.id, actors.deAuthor, actors.deReviewer);
   flow.publish(actors.publisher, local.id);
@@ -169,4 +178,17 @@ test('unknown fields, identities and malicious content remain untrusted data', (
   approve(flow, id);
   flow.publish(actors.publisher, id);
   assert.match(flow.publicArticle(id).body, /<script>/);
+});
+
+test('invalid calendar dates are rejected rather than silently normalized', () => {
+  const { flow, id } = setup();
+  assert.throws(() => flow.edit(actors.author, id, { embargo: '2026-02-30T10:00:00Z' }), /date/i);
+});
+test('a market cannot release a stale source after HQ changes its release conditions', () => {
+  const { flow, id } = setup();
+  approve(flow, id);
+  const [de] = flow.rollout(actors.author, id, ['de']);
+  approve(flow, de.id, actors.deAuthor, actors.deReviewer);
+  flow.edit(actors.author, id, { embargo: '2026-10-01T10:00:00Z' });
+  assert.throws(() => flow.publish(actors.publisher, de.id), /source/i);
 });
