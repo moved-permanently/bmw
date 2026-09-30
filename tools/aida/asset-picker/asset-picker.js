@@ -1,5 +1,6 @@
 import {
-  countryForContext, assetContextMessage, filterAssets, facetValues, cropRegion, scene7Url, assetLink,
+  countryForContext, assetContextMessage, filterAssets, facetValues,
+  cropRegion, scene7Url, assetLink,
 } from './model.js';
 import connect from '../da.js';
 
