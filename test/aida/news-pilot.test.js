@@ -202,3 +202,28 @@ test('market decisions and publication actively notify HQ in the local inbox', (
   flow.publish(actors.publisher, de.id);
   assert.ok(flow.notifications(actors.author).some((n) => n.type === 'market-published' && n.id === de.id));
 });
+
+test('overdue releases blocked by HQ drift get an explicit hold event and role-targeted notices', () => {
+  let clock = Date.parse(now);
+  const flow = implementation.createWorkflow(undefined, () => clock);
+  const source = flow.create(actors.author, { slug: 'held', market: 'hq', title: 'HQ', description: 'Summary', body: 'Story', legal: 'Legal', embargo: now });
+  approve(flow, source.id);
+  const [de] = flow.rollout(actors.author, source.id, ['de']);
+  approve(flow, de.id, actors.deAuthor, actors.deReviewer);
+  flow.schedule(actors.publisher, de.id, '2026-09-30T11:00:00Z');
+  flow.edit(actors.author, source.id, { body: 'Source changed' });
+  clock += 3600000;
+  assert.equal(flow.publishDue().length, 0);
+  assert.equal(flow.get(de.id).status, 'release-blocked');
+  assert.ok(flow.notifications(actors.deAuthor).some((n) => n.type === 'release-blocked'));
+  assert.ok(flow.notifications(actors.publisher).some((n) => n.type === 'release-blocked'));
+  assert.ok(flow.notifications(actors.publisher).every((n) => n.role === 'publisher'));
+});
+test('market metrics do not include other markets or HQ drafts', () => {
+  const { flow, id } = setup();
+  approve(flow, id);
+  flow.rollout(actors.author, id, ['de', 'fr']);
+  assert.equal(flow.metrics('de').articles, 1);
+  assert.equal(flow.metrics('de').rolloutTotal, 1);
+  assert.equal(flow.metrics().articles, 3);
+});

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { request as httpRequest } from 'node:http';
@@ -73,6 +73,38 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
     assert.equal(app.workflow.publicArticle(id).title, '<img src=x onerror=alert(1)>');
   } finally {
     if (app?.server.listening) await new Promise((resolve) => { app.server.close(resolve); });
+    rmSync(directory, { recursive: true });
+  }
+});
+
+
+test('failed persistence cannot create a draft, approve a guest revision, or release content', async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'aida-disk-failure-'));
+  const storePath = join(directory, 'state.json');
+  const app = implementation.createPilotServer({ storePath, now: () => Date.parse('2026-09-30T10:00:00Z') });
+  const author = { id: 'hq-author', role: 'author', market: 'hq' };
+  const reviewer = { id: 'hq-reviewer', role: 'reviewer', market: 'hq' };
+  const source = app.workflow.create(author, { slug: 'failure', market: 'hq', title: 'Story', description: 'Summary', body: 'Body', legal: 'Legal', embargo: '2026-09-30T10:00:00Z' });
+  app.workflow.submit(author, source.id);
+  const token = 'synthetic-review-capability-token';
+  app.workflow.grantReview(reviewer, source.id, token, '2026-09-30T11:00:00Z');
+  await new Promise((resolve) => { app.server.listen(0, '127.0.0.1', resolve); });
+  const base = `http://127.0.0.1:${app.server.address().port}`;
+  mkdirSync(storePath);
+  try {
+    const guest = await fetch(`${base}/api/review`, { method: 'POST', headers: { origin: base, 'content-type': 'application/json', 'x-review-token': token }, body: JSON.stringify({ decision: 'approve', field: 'body', comment: '' }) });
+    assert.equal(guest.status, 409);
+    assert.equal(app.workflow.get(source.id).status, 'in-review');
+    app.workflow.decide(reviewer, source.id, 'approve', '', 'body');
+    const login = await fetch(`${base}/api/session`, { method: 'POST', headers: { origin: base, 'content-type': 'application/json' }, body: JSON.stringify({ actorId: 'publisher' }) });
+    const { csrf } = await login.json();
+    const headers = { origin: base, 'content-type': 'application/json', cookie: login.headers.get('set-cookie').split(';')[0], 'x-pilot-csrf': csrf };
+    const release = await fetch(`${base}/api/action`, { method: 'POST', headers, body: JSON.stringify({ action: 'publish', id: source.id }) });
+    assert.equal(release.status, 409);
+    assert.equal(app.workflow.publicArticle(source.id), null);
+    assert.deepEqual((await (await fetch(`${base}/news-index.json`)).json()).data, []);
+  } finally {
+    await new Promise((resolve) => { app.server.close(resolve); });
     rmSync(directory, { recursive: true });
   }
 });
