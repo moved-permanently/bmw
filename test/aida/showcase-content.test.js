@@ -17,7 +17,31 @@ const build = () => {
   assert.equal(typeof generator.buildContent, 'function', 'A deterministic showcase content generator is required');
   return generator.buildContent({ catalogue });
 };
-const section = (html, name) => html.match(new RegExp(`<p><em>component:${name}</em></p>([\\s\\S]*?)</div></div></div></div>`))?.[1] || '';
+const composition = (html) => {
+  const content = build();
+  const path = Object.entries(content.pages).find(([, body]) => body === html)?.[0];
+  return content.data['/aida/showcase/data/compositions.json'].data.find((row) => row.path === path);
+};
+const components = (html) => composition(html).fixtureComponents.map((component) => component.id);
+const section = (html, name) => {
+  const index = composition(html).fixtureComponents
+    .find((component) => component.id === name)?.sectionIndex;
+  if (index === undefined) return '';
+  const source = html.match(/<main>([\s\S]*)<\/main>/)[1];
+  const sections = [];
+  let depth = 0;
+  let start;
+  for (const match of source.matchAll(/<div\b[^>]*>|<\/div>/g)) {
+    if (match[0] === '</div>') {
+      depth -= 1;
+      if (!depth) sections.push(source.slice(start, match.index + match[0].length));
+    } else {
+      if (!depth) start = match.index;
+      depth += 1;
+    }
+  }
+  return sections[index];
+};
 const factLinks = (html) => [...html.matchAll(/href="(\/aida\/showcase\/data\/wdh-(de|fr)\.json)#([A-Za-z0-9]+\.[A-Za-z0-9]+)">([^<]*)<\/a>/g)];
 
 test('generator is deterministic, non-mutating and builds all four complete contexts', () => {
@@ -30,7 +54,8 @@ test('generator is deterministic, non-mutating and builds all four complete cont
     assert.match(html, /^<body><header><\/header><main>/);
     assert.match(html, /class="metadata"/);
     assert.match(html, /Demo fixture|Demo-Datensatz|Données de démonstration/);
-    assert.doesNotMatch(html, /<script|\[object Object\]|undefined|autoplay/i);
+    assert.doesNotMatch(html, /<script|\[object Object\]|undefined/i);
+    assert.doesNotMatch(html, /(?:^|[ "'])autoplay(?:[ "'])/i, 'Native no-autoplay option disables background video autoplay');
   }
 });
 
@@ -41,7 +66,7 @@ test('Austria is a populated German context with explicit DE fallback and no Ger
     assert.ok(html, `Missing AT fixture ${slug}`);
     assert.match(html, /Österreich/);
     assert.match(html, /DE.*Fallback|Fallback.*DE/);
-    assert.doesNotMatch(html, /component:summer-offer/);
+    assert.ok(!components(html).includes('summer-offer'));
     assert.match(html, /wdh-de\.json#61HG\./);
   }
 });
@@ -50,7 +75,7 @@ test('home follows PDF mandatory composition plus shared interior and Germany-on
   const { pages } = build();
   for (const context of contexts) {
     const html = pages[`/aida/showcase/${context}/home`];
-    const order = [...html.matchAll(/<p><em>component:([^<]+)<\/em><\/p>/g)].map((m) => m[1]);
+    const order = components(html);
     assert.deepEqual(order.slice(0, 4), ['main-teaser-i5', 'video-teaser-ix3', 'small-teaser-emob', 'teaser-list']);
     for (const slug of ['cannes', 'concept-m', 'interior', '3-series']) assert.match(section(html, 'teaser-list'), new RegExp(`/news/${slug}`));
     assert.match(section(html, 'teaser-list'), /BMW X/);
@@ -64,8 +89,8 @@ test('car has mandatory KPI, shortened shared interior, attribute-derived M5/iX3
   const { pages, data } = build();
   for (const context of contexts) {
     const html = pages[`/aida/showcase/${context}/i5`];
-    assert.deepEqual([...html.matchAll(/<p><em>component:([^<]+)<\/em><\/p>/g)].map((m) => m[1]), ['main-teaser-i5', 'car-kpi', 'emob-section', 'news-teaser', 'electrified-models', 'assist-features', 'fact-refresh']);
-    assert.equal(factLinks(section(html, 'car-kpi').match(/<ul>([\s\S]*?)<\/ul>/)?.[1]).length, 3);
+    assert.deepEqual(components(html), ['main-teaser-i5', 'car-kpi', 'emob-section', 'news-teaser', 'electrified-models', 'assist-features']);
+    assert.equal(factLinks(section(html, 'car-kpi').split('<div class="car-kpis">')[1].split('<div class="disclaimer">')[0]).length, 3);
     assert.match(section(html, 'news-teaser'), /news\/interior/);
     assert.ok(section(pages[`/aida/showcase/${context}/home`], 'teaser-list').length > section(html, 'news-teaser').length);
     const models = section(html, 'electrified-models');
@@ -84,7 +109,7 @@ test('topic has range, i5+iX3 model range, charging and reusable hydrogen news',
   const { pages } = build();
   for (const context of contexts) {
     const html = pages[`/aida/showcase/${context}/e-mobility`];
-    assert.deepEqual([...html.matchAll(/<p><em>component:([^<]+)<\/em><\/p>/g)].map((m) => m[1]), ['stage-emob', 'topic-range', 'model-range', 'topic-charging', 'news-hydrogen']);
+    assert.deepEqual(components(html), ['stage-emob', 'topic-range', 'model-range', 'topic-charging', 'news-hydrogen']);
     const models = section(html, 'model-range');
     assert.match(models, /BMW i5/);
     assert.match(models, /BMW iX3/);
@@ -165,7 +190,7 @@ test('an optional public WDH sheet overrides known values without dropping requi
   assert.equal(JSON.stringify(wdh), before);
 });
 
-test('video and stage containers have intrinsic sizing independent of the absolute poster/player', () => {
+test('legacy published generic block: video and stage containers have intrinsic sizing independent of the absolute poster/player', () => {
   const css = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.css', import.meta.url), 'utf8');
   const video = css.match(/\.aida-showcase \.bmw-video \{([^}]+)\}/)?.[1] || '';
   const media = css.match(/\.aida-showcase\.stage \.aida-showcase-media \{([^}]+)\}/)?.[1] || '';
@@ -189,7 +214,7 @@ test('default videos use verified progressive content delivery and retain observ
   }
 });
 
-test('stage copy and headings explicitly stay white despite global BMW heading colors', () => {
+test('legacy published generic block: stage copy and headings explicitly stay white despite global BMW heading colors', () => {
   const css = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.css', import.meta.url), 'utf8');
   const overlay = css.match(/\.aida-showcase\.stage \.aida-showcase-copy \{([^}]+)\}/)?.[1] || '';
   assert.match(overlay, /color:\s*#fff/);
@@ -249,15 +274,18 @@ test('generator accepts an external sheet without mutation and refresh is explic
   assert.doesNotMatch(runtime, /setInterval|autoplay/);
 });
 
-test('generated source uses only DA-supported cell content and stable component markers', () => {
+test('generated source uses DA-supported cell content and fixture IDs outside the document', () => {
   const { pages, data } = build();
   for (const [path, html] of Object.entries(pages)) {
     assert.doesNotMatch(html, /<\/?(?:section|article|dl|dt|dd)\b/i, path);
     assert.doesNotMatch(html, /class="aida-showcase-(?:copy|media|grid|kpis|note)"/, path);
     assert.doesNotMatch(html, /<img\b/, 'Scene7 and COSY images must survive as carrier links');
-    const components = [...html.matchAll(/<p><em>component:([a-z0-9-]+)<\/em><\/p>/g)].map((m) => m[1]);
-    assert.ok(components.length > 0, path);
-    assert.equal(data['/aida/showcase/data/compositions.json'].data.find((row) => row.path === path).components, components.join(','));
+    assert.doesNotMatch(html, /component:|aida-showcase/);
+    const ids = components(html);
+    assert.ok(ids.length > 0, path);
+    const fixture = data['/aida/showcase/data/compositions.json'].data.find((row) => row.path === path);
+    assert.equal(fixture.fixtureOnly, true);
+    assert.equal(fixture.components, ids.join(','));
   }
 });
 
@@ -365,7 +393,7 @@ function decorateNormalized(variant, nodes) {
 const servedPicture = () => element('p', '', {}, [element('picture', '', {}, [element('img', '', { src: './media_108ff2a.webp', alt: 'BMW i5 exterior' })])]);
 const boundFact = () => element('span', '513–627 km', { 'data-wdh': '/aida/showcase/data/wdh-de.json#61HG.electricRange' });
 
-test('normalized MediaBus stage and feature rebuild media/copy without losing decorated WDH values', () => {
+test('legacy published generic block: normalized MediaBus stage and feature rebuild media/copy without losing decorated WDH values', () => {
   for (const variant of ['stage', 'feature video']) {
     const { block, media } = decorateNormalized(variant, [servedPicture(), element('p', '', {}, [element('a', 'BMW film', { href: 'https://bmw.scene7.com/is/content/BMW/film' })]), element('h1', 'The i5'), element('p', '', {}, [boundFact()])]);
     assert.equal(block.firstElementChild.tagName, 'SECTION');
@@ -378,7 +406,7 @@ test('normalized MediaBus stage and feature rebuild media/copy without losing de
   }
 });
 
-test('normalized grids group picture cards and heading-only assist features after the leading intro', () => {
+test('legacy published generic block: normalized grids group picture cards and heading-only assist features after the leading intro', () => {
   for (const withPictures of [true, false]) {
     const nodes = [element('h2', 'Intro')];
     ['BMW i5', 'BMW iX3'].forEach((title) => nodes.push(...(withPictures ? [servedPicture()] : []), element('h3', title), element('p', '', {}, [boundFact()])));
@@ -392,7 +420,7 @@ test('normalized grids group picture cards and heading-only assist features afte
   }
 });
 
-test('normalized KPI lists become styled definitions while preserving formatted facts and legal text', () => {
+test('legacy published generic block: normalized KPI lists become styled definitions while preserving formatted facts and legal text', () => {
   const { block } = decorateNormalized('kpi', [element('h2', 'Key figures'), element('ul', '', {}, [element('li', '', {}, [element('p', 'Range'), element('p', '', {}, [element('strong', '', {}, [boundFact()])])])]), element('p', 'WLTP statement')]);
   assert.equal(block.querySelector('.aida-showcase-kpis')?.tagName, 'DL');
   assert.equal(block.querySelector('dt').textContent, 'Range');
@@ -400,7 +428,7 @@ test('normalized KPI lists become styled definitions while preserving formatted 
   assert.ok(block.textContent.includes('WLTP statement'));
 });
 
-test('preserved DA component marker becomes runtime dataset and is absent from reader copy', () => {
+test('legacy published generic block: preserved DA component marker becomes runtime dataset and is absent from reader copy', () => {
   const { block } = decorateNormalized('stage', [element('p', '', {}, [element('em', 'component:main-teaser-i5')]), servedPicture(), element('h1', 'The i5')]);
   assert.equal(block.firstElementChild.dataset.component, 'main-teaser-i5');
   assert.ok(!block.textContent.includes('component:'));
@@ -429,14 +457,14 @@ test('normalized refresh creates an explicit live status when DA strips the auth
   }
 });
 
-test('stage secondary CTA retains readable contrast on the dark video poster', () => {
+test('legacy published generic block: stage secondary CTA retains readable contrast on the dark video poster', () => {
   const css = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.css', import.meta.url), 'utf8');
   const secondary = css.match(/\.aida-showcase\.stage a\.button\.secondary\s*\{([^}]+)\}/)?.[1] || '';
   assert.match(secondary, /color:\s*#fff/);
   assert.match(secondary, /border-color:\s*#fff/);
 });
 
-test('stage media can shrink below its minimum-height aspect-ratio width on mobile', () => {
+test('legacy published generic block: stage media can shrink below its minimum-height aspect-ratio width on mobile', () => {
   const css = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.css', import.meta.url), 'utf8');
   const media = css.match(/\.aida-showcase\.stage \.aida-showcase-media \{([^}]+)\}/)?.[1] || '';
   assert.match(media, /min-width:\s*0/);

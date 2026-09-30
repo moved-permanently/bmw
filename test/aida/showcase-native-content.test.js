@@ -64,8 +64,14 @@ test('RfP IDs remain explicit fixture data, separately mapped to native sections
   for (const row of content.data['/aida/showcase/data/compositions.json'].data) {
     assert.equal(row.fixtureOnly, true);
     assert.equal(row.components, row.fixtureComponents.map((component) => component.id).join(','));
-    assert.equal(new Set(row.fixtureComponents.map((component) => component.id)).size, row.fixtureComponents.length);
-    assert.deepEqual(row.fixtureComponents.map((component) => component.sectionIndex), row.fixtureComponents.map((_, index) => index));
+    assert.equal(
+      new Set(row.fixtureComponents.map((component) => component.id)).size,
+      row.fixtureComponents.length,
+    );
+    assert.deepEqual(
+      row.fixtureComponents.map((component) => component.sectionIndex),
+      row.fixtureComponents.map((_, index) => index),
+    );
     for (const component of row.fixtureComponents) composed(content, row.path, component.id);
   }
 });
