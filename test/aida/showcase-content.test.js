@@ -273,12 +273,21 @@ test('local WDH documents mirror verified EDS multi-sheet reserved root metadata
   }
 });
 
-// Minimal element trees reproduce the cell order observed in served .plain.html, not an HTML parser.
+// Minimal element trees reproduce observed served cells; this is not an HTML parser.
 function element(tag, text = '', attributes = {}, children = []) {
+  let contentText = text;
   const node = {
-    tagName: tag.toUpperCase(), attributes: { ...attributes }, children: [], dataset: {}, parentElement: null,
-    get textContent() { return text + this.children.map((child) => child.textContent).join(''); },
-    set textContent(value) { text = value; this.replaceChildren(); },
+    tagName: tag.toUpperCase(),
+    attributes: { ...attributes },
+    children: [],
+    dataset: Object.fromEntries(Object.entries(attributes).filter(([name]) => name.startsWith('data-')).map(([name, value]) => [name.slice(5), value])),
+    parentElement: null,
+    get childNodes() { return [...(contentText ? [element('text', contentText)] : []), ...this.children]; },
+    get nextElementSibling() {
+      return this.parentElement?.children[this.parentElement.children.indexOf(this) + 1] || null;
+    },
+    get textContent() { return contentText + this.children.map((child) => child.textContent).join(''); },
+    set textContent(value) { contentText = value; this.replaceChildren(); },
     get className() { return this.attributes.class || ''; },
     set className(value) { this.attributes.class = value; },
     get firstElementChild() { return this.children[0] || null; },
@@ -287,6 +296,8 @@ function element(tag, text = '', attributes = {}, children = []) {
     matches(selector) {
       return selector.split(',').some((part) => {
         const value = part.trim();
+        const qualified = value.match(/^([a-z]+)(\[.*\])$/i);
+        if (qualified) return this.matches(qualified[1]) && this.matches(qualified[2]);
         if (value.startsWith('.')) return this.className.split(' ').includes(value.slice(1));
         if (value.startsWith('[')) {
           const [, name, operation, expected] = value.match(/^\[([^=*\]$]+)(?:([*$]?=)"?([^"\]]*)"?)?\]$/) || [];
@@ -300,17 +311,34 @@ function element(tag, text = '', attributes = {}, children = []) {
       });
     },
     querySelectorAll(selector) {
-      return this.children.flatMap((child) => [...(child.matches(selector) ? [child] : []), ...child.querySelectorAll(selector)]);
+      return this.children.flatMap((child) => [
+        ...(child.matches(selector) ? [child] : []), ...child.querySelectorAll(selector),
+      ]);
     },
     querySelector(selector) { return this.querySelectorAll(selector)[0] || null; },
-    append(...nodes) { nodes.forEach((child) => { child.remove(); child.parentElement = this; this.children.push(child); }); },
-    replaceChildren(...nodes) { this.children.forEach((child) => { child.parentElement = null; }); this.children = []; this.append(...nodes); },
-    remove() { if (this.parentElement) this.parentElement.children = this.parentElement.children.filter((child) => child !== this); this.parentElement = null; },
+    append(...nodes) {
+      nodes.forEach((child) => {
+        child.remove(); child.parentElement = this; this.children.push(child);
+      });
+    },
+    replaceChildren(...nodes) {
+      this.children.forEach((child) => { child.parentElement = null; });
+      this.children = []; this.append(...nodes);
+    },
+    remove() {
+      if (this.parentElement) {
+        this.parentElement.children = this.parentElement.children.filter((child) => child !== this);
+      }
+      this.parentElement = null;
+    },
     replaceWith(...nodes) {
       const parent = this.parentElement;
       const index = parent.children.indexOf(this);
       this.remove();
-      nodes.forEach((child, offset) => { child.remove(); child.parentElement = parent; parent.children.splice(index + offset, 0, child); });
+      nodes.forEach((child, offset) => {
+        child.remove(); child.parentElement = parent;
+        parent.children.splice(index + offset, 0, child);
+      });
     },
   };
   node.classList = { contains: (name) => node.className.split(' ').includes(name), add: (...names) => { node.className = [...new Set([...node.className.split(' ').filter(Boolean), ...names])].join(' '); } };
@@ -384,7 +412,11 @@ test('normalized refresh creates an explicit live status when DA strips the auth
   const originalFetch = globalThis.fetch;
   const block = element('div', '', { class: 'aida-showcase refresh' }, [element('h2', 'Check facts'), element('p', '', {}, [element('a', 'Refresh facts once', { href: '/aida/showcase/data/wdh-de.json' })]), element('p', '0 fact requests · initial authored values')]);
   let requests = 0;
-  globalThis.document = { createElement: (tag) => { const node = element(tag); node.addEventListener = () => {}; return node; } };
+  globalThis.document = {
+    createElement: (tag) => {
+      const node = element(tag); node.addEventListener = () => {}; return node;
+    },
+  };
   globalThis.fetch = () => { requests += 1; };
   try {
     install(block);
@@ -395,4 +427,11 @@ test('normalized refresh creates an explicit live status when DA strips the auth
     globalThis.document = originalDocument;
     globalThis.fetch = originalFetch;
   }
+});
+
+test('stage secondary CTA retains readable contrast on the dark video poster', () => {
+  const css = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.css', import.meta.url), 'utf8');
+  const secondary = css.match(/\.aida-showcase\.stage a\.button\.secondary\s*\{([^}]+)\}/)?.[1] || '';
+  assert.match(secondary, /color:\s*#fff/);
+  assert.match(secondary, /border-color:\s*#fff/);
 });
