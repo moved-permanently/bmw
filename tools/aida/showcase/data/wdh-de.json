@@ -470,15 +470,16 @@
     ],
     ":type": "sheet"
   },
-  "demo": true,
-  "notes": [
-    "Supplied WDH extract values win over illustrative DOCX values.",
-    "FR iX3 filename contains a BMW 220 (31GH); rejected. iX3 uses labelled DE fallback.",
-    "Lease offers and assistance speeds are illustrative briefing fixtures, not live offers."
-  ],
   ":names": [
     "values",
     "models"
   ],
-  ":type": "multi-sheet"
+  ":type": "multi-sheet",
+  ":demo": true,
+  ":notes": [
+    "Supplied WDH extract values win over illustrative DOCX values.",
+    "FR iX3 filename contains a BMW 220 (31GH); rejected. iX3 uses labelled DE fallback.",
+    "Lease offers and assistance speeds are illustrative briefing fixtures, not live offers."
+  ],
+  ":version": 3
 }

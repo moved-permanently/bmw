@@ -1,8 +1,17 @@
 export default function installFactRefresh(block) {
   const link = block.querySelector('a[href$=".json"]');
-  const status = block.querySelector('[role="status"]');
   const path = link?.getAttribute('href');
-  if (!status || !/^\/aida\/showcase\/data\/wdh-(de|fr)\.json$/.test(path || '')) return;
+  if (!/^\/aida\/showcase\/data\/wdh-(de|fr)\.json$/.test(path || '')) return;
+  let status = block.querySelector('[role="status"]');
+  if (!status) {
+    status = link.parentElement?.nextElementSibling;
+    if (!status?.matches('p')) {
+      status = document.createElement('p');
+      block.append(status);
+    }
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+  }
   const button = document.createElement('button');
   button.type = 'button';
   button.textContent = link.textContent;

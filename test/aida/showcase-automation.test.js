@@ -5,7 +5,9 @@ import { createDemo, transition } from '../../tools/aida/showcase/model.js';
 test('approved HQ content can trigger atomic simulated language-to-market automation', () => {
   let state = createDemo();
   state = transition(state, { type: 'SUBMIT', actor: 'hq-author', market: 'hq' });
-  state = transition(state, { type: 'APPROVE', actor: 'hq-reviewer', market: 'hq', revision: state.hq.revision });
+  state = transition(state, {
+    type: 'APPROVE', actor: 'hq-reviewer', market: 'hq', revision: state.hq.revision,
+  });
   const before = structuredClone(state);
   const automated = transition(state, { type: 'AUTO_TRANSLATE_ROLLOUT', actor: 'hq-author', market: 'hq' });
   assert.deepEqual(state, before);

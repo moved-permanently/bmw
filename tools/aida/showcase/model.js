@@ -354,6 +354,15 @@ function merge(doc, incoming) {
 export function transition(state, action) {
   ensure(action && typeof action.type === 'string', 'Action type required.');
   if (action.type === 'RESET') return createDemo();
+  if (action.type === 'AUTO_TRANSLATE_ROLLOUT') {
+    ensure((action.actor || state.actor) === 'hq-author', 'HQ author role must trigger simulated automation.');
+    const translated = transition(state, {
+      type: 'TRANSLATE', actor: 'translator', market: 'hq', languages: ['de', 'fr'],
+    });
+    return transition(translated, {
+      type: 'ROLLOUT', actor: 'hq-author', market: 'hq', markets: ['de', 'at', 'fr', 'be'],
+    });
+  }
   const next = clone(state);
   next.source = next.hq;
   const market = action.market || next.market || 'hq';

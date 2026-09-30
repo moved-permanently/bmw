@@ -70,6 +70,8 @@
 
 .aida-showcase.stage .aida-showcase-media {
   grid-area: 1 / 1;
+  min-width: 0;
+  width: 100%;
   min-height: 540px;
   aspect-ratio: 16 / 8;
 }
@@ -116,6 +118,12 @@
 
 .aida-showcase.stage .aida-showcase-copy a {
   pointer-events: auto;
+}
+
+.aida-showcase.stage a.button.secondary {
+  color: #fff;
+  border-color: #fff;
+  background-color: transparent;
 }
 
 .aida-showcase.stage .aida-showcase-note {
