@@ -158,6 +158,13 @@ test('video and stage containers have intrinsic sizing independent of the absolu
   assert.match(overlay, /position:\s*relative/);
 });
 
+test('stage copy and headings explicitly stay white despite global BMW heading colors', () => {
+  const css = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.css', import.meta.url), 'utf8');
+  const overlay = css.match(/\.aida-showcase\.stage \.aida-showcase-copy \{([^}]+)\}/)?.[1] || '';
+  assert.match(overlay, /color:\s*#fff/);
+  assert.match(css, /\.aida-showcase\.stage \.aida-showcase-copy h1,\s*\.aida-showcase\.stage \.aida-showcase-copy h2\s*\{\s*color:\s*inherit/);
+});
+
 test('explicit refresh makes zero initial requests, updates text safely and never retries on repeated clicks', async () => {
   const { default: install } = await import('../../scripts/aida-showcase.js');
   const originalDocument = globalThis.document;
