@@ -208,6 +208,12 @@ export default function mountPicker(main, { assets, context = {}, actions = null
     try {
       await actions.sendHTML(assetLink(selected, deliveryUrl, find('alt').value, find('decorative').checked));
       actions.closeLibrary();
+      selected = null;
+      inserting = false;
+      previewRequest += 1;
+      find('detail').hidden = true;
+      find('browser').hidden = false;
+      insertion();
     } catch {
       inserting = false;
       insertion();
