@@ -21,12 +21,24 @@ test('generator is deterministic, non-mutating and builds all four complete cont
   const first = build();
   assert.deepEqual(first, build());
   assert.equal(JSON.stringify(catalogue), before);
-  assert.deepEqual(Object.keys(first.pages).sort(), contexts.flatMap((context) => slugs.map((slug) => `/aida/showcase/${context}/${slug}`)).sort());
+  assert.deepEqual(Object.keys(first.pages).sort(), [...contexts.flatMap((context) => slugs.map((slug) => `/aida/showcase/${context}/${slug}`)), ...['home', 'i5', 'e-mobility', 'news/i5-launch'].map((slug) => `/aida/showcase/de/at/${slug}`)].sort());
   for (const html of Object.values(first.pages)) {
     assert.match(html, /^<body><header><\/header><main>/);
     assert.match(html, /class="metadata"/);
     assert.match(html, /Demo fixture|Demo-Datensatz|Données de démonstration/);
     assert.doesNotMatch(html, /<script|\[object Object\]|undefined|autoplay/i);
+  }
+});
+
+test('Austria is a populated German context with explicit DE fallback and no German summer offer', () => {
+  const { pages } = build();
+  for (const slug of ['home', 'i5', 'e-mobility', 'news/i5-launch']) {
+    const html = pages[`/aida/showcase/de/at/${slug}`];
+    assert.ok(html, `Missing AT fixture ${slug}`);
+    assert.match(html, /Österreich/);
+    assert.match(html, /DE.*Fallback|Fallback.*DE/);
+    assert.doesNotMatch(html, /data-component="summer-offer"/);
+    assert.match(html, /wdh-de\.json#61HG\./);
   }
 });
 
