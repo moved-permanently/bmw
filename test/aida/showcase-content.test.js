@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { test } from 'node:test';
+import { runInNewContext } from 'node:vm';
 
 // eslint-disable-next-line import/extensions
 const generator = await import('../../tools/aida/showcase/content.mjs').catch((error) => {
@@ -16,7 +17,7 @@ const build = () => {
   assert.equal(typeof generator.buildContent, 'function', 'A deterministic showcase content generator is required');
   return generator.buildContent({ catalogue });
 };
-const section = (html, name) => html.match(new RegExp(`<section[^>]*data-component="${name}"[^>]*>([\\s\\S]*?)<\\/section>`))?.[1] || '';
+const section = (html, name) => html.match(new RegExp(`<p><em>component:${name}</em></p>([\\s\\S]*?)</div></div></div></div>`))?.[1] || '';
 const factLinks = (html) => [...html.matchAll(/href="(\/aida\/showcase\/data\/wdh-(de|fr)\.json)#([A-Za-z0-9]+\.[A-Za-z0-9]+)">([^<]*)<\/a>/g)];
 
 test('generator is deterministic, non-mutating and builds all four complete contexts', () => {
@@ -40,7 +41,7 @@ test('Austria is a populated German context with explicit DE fallback and no Ger
     assert.ok(html, `Missing AT fixture ${slug}`);
     assert.match(html, /Österreich/);
     assert.match(html, /DE.*Fallback|Fallback.*DE/);
-    assert.doesNotMatch(html, /data-component="summer-offer"/);
+    assert.doesNotMatch(html, /component:summer-offer/);
     assert.match(html, /wdh-de\.json#61HG\./);
   }
 });
@@ -49,7 +50,7 @@ test('home follows PDF mandatory composition plus shared interior and Germany-on
   const { pages } = build();
   for (const context of contexts) {
     const html = pages[`/aida/showcase/${context}/home`];
-    const order = [...html.matchAll(/data-component="([^"]+)"/g)].map((m) => m[1]);
+    const order = [...html.matchAll(/<p><em>component:([^<]+)<\/em><\/p>/g)].map((m) => m[1]);
     assert.deepEqual(order.slice(0, 4), ['main-teaser-i5', 'video-teaser-ix3', 'small-teaser-emob', 'teaser-list']);
     for (const slug of ['cannes', 'concept-m', 'interior', '3-series']) assert.match(section(html, 'teaser-list'), new RegExp(`/news/${slug}`));
     assert.match(section(html, 'teaser-list'), /BMW X/);
@@ -63,8 +64,8 @@ test('car has mandatory KPI, shortened shared interior, attribute-derived M5/iX3
   const { pages, data } = build();
   for (const context of contexts) {
     const html = pages[`/aida/showcase/${context}/i5`];
-    assert.deepEqual([...html.matchAll(/data-component="([^"]+)"/g)].map((m) => m[1]), ['main-teaser-i5', 'car-kpi', 'emob-section', 'news-teaser', 'electrified-models', 'assist-features', 'fact-refresh']);
-    assert.equal(factLinks(section(html, 'car-kpi').match(/<dl[^>]*>([\s\S]*?)<\/dl>/)?.[1]).length, 3);
+    assert.deepEqual([...html.matchAll(/<p><em>component:([^<]+)<\/em><\/p>/g)].map((m) => m[1]), ['main-teaser-i5', 'car-kpi', 'emob-section', 'news-teaser', 'electrified-models', 'assist-features', 'fact-refresh']);
+    assert.equal(factLinks(section(html, 'car-kpi').match(/<ul>([\s\S]*?)<\/ul>/)?.[1]).length, 3);
     assert.match(section(html, 'news-teaser'), /news\/interior/);
     assert.ok(section(pages[`/aida/showcase/${context}/home`], 'teaser-list').length > section(html, 'news-teaser').length);
     const models = section(html, 'electrified-models');
@@ -83,7 +84,7 @@ test('topic has range, i5+iX3 model range, charging and reusable hydrogen news',
   const { pages } = build();
   for (const context of contexts) {
     const html = pages[`/aida/showcase/${context}/e-mobility`];
-    assert.deepEqual([...html.matchAll(/data-component="([^"]+)"/g)].map((m) => m[1]), ['stage-emob', 'topic-range', 'model-range', 'topic-charging', 'news-hydrogen']);
+    assert.deepEqual([...html.matchAll(/<p><em>component:([^<]+)<\/em><\/p>/g)].map((m) => m[1]), ['stage-emob', 'topic-range', 'model-range', 'topic-charging', 'news-hydrogen']);
     const models = section(html, 'model-range');
     assert.match(models, /BMW i5/);
     assert.match(models, /BMW iX3/);
@@ -145,8 +146,8 @@ test('only observed catalogue images are authored and missing catalogue assets f
   const { pages } = build();
   const urls = new Set(catalogue.map((asset) => asset.url));
   for (const html of Object.values(pages)) {
-    const images = [...html.matchAll(/<img[^>]+src="([^"]+)"[^>]+alt="([^"]+)"/g)];
-    assert.ok(images.length > 0);
+    const images = [...html.matchAll(/<a href="(https:\/\/(?:bmw\.scene7\.com\/is\/image\/|prod\.cosy\.bmw\.cloud\/)[^"]+)">([^<]+)<\/a>/g)];
+    assert.ok(images.length > 0, 'Catalogue images use preserved DA carrier links');
     for (const [, url, alt] of images) {
       assert.ok(urls.has(url.replaceAll('&amp;', '&')), url);
       assert.ok(alt.length > 2);
@@ -246,4 +247,152 @@ test('generator accepts an external sheet without mutation and refresh is explic
   assert.match(runtime, /click/);
   assert.match(runtime, /disabled/);
   assert.doesNotMatch(runtime, /setInterval|autoplay/);
+});
+
+test('generated source uses only DA-supported cell content and stable component markers', () => {
+  const { pages, data } = build();
+  for (const [path, html] of Object.entries(pages)) {
+    assert.doesNotMatch(html, /<\/?(?:section|article|dl|dt|dd)\b/i, path);
+    assert.doesNotMatch(html, /class="aida-showcase-(?:copy|media|grid|kpis|note)"/, path);
+    assert.doesNotMatch(html, /<img\b/, 'Scene7 and COSY images must survive as carrier links');
+    const components = [...html.matchAll(/<p><em>component:([a-z0-9-]+)<\/em><\/p>/g)].map((m) => m[1]);
+    assert.ok(components.length > 0, path);
+    assert.equal(data['/aida/showcase/data/compositions.json'].data.find((row) => row.path === path).components, components.join(','));
+  }
+});
+
+test('local WDH documents mirror verified EDS multi-sheet reserved root metadata', () => {
+  const { data } = build();
+  for (const market of ['de', 'fr']) {
+    const connector = data[`/aida/showcase/data/wdh-${market}.json`];
+    assert.equal(connector[':version'], 3);
+    assert.equal(typeof connector[':version'], 'number');
+    assert.equal(connector[':demo'], true);
+    assert.ok(Array.isArray(connector[':notes']));
+    assert.deepEqual(Object.keys(connector).filter((key) => !key.startsWith(':')).sort(), ['models', 'values']);
+  }
+});
+
+// Minimal element trees reproduce the cell order observed in served .plain.html, not an HTML parser.
+function element(tag, text = '', attributes = {}, children = []) {
+  const node = {
+    tagName: tag.toUpperCase(), attributes: { ...attributes }, children: [], dataset: {}, parentElement: null,
+    get textContent() { return text + this.children.map((child) => child.textContent).join(''); },
+    set textContent(value) { text = value; this.replaceChildren(); },
+    get className() { return this.attributes.class || ''; },
+    set className(value) { this.attributes.class = value; },
+    get firstElementChild() { return this.children[0] || null; },
+    getAttribute(name) { return this.attributes[name] || null; },
+    setAttribute(name, value) { this.attributes[name] = value; },
+    matches(selector) {
+      return selector.split(',').some((part) => {
+        const value = part.trim();
+        if (value.startsWith('.')) return this.className.split(' ').includes(value.slice(1));
+        if (value.startsWith('[')) {
+          const [, name, operation, expected] = value.match(/^\[([^=*\]$]+)(?:([*$]?=)"?([^"\]]*)"?)?\]$/) || [];
+          const actual = this.getAttribute(name);
+          if (!operation) return actual !== null;
+          if (operation === '*=') return actual?.includes(expected);
+          if (operation === '$=') return actual?.endsWith(expected);
+          return actual === expected;
+        }
+        return value.toUpperCase() === this.tagName;
+      });
+    },
+    querySelectorAll(selector) {
+      return this.children.flatMap((child) => [...(child.matches(selector) ? [child] : []), ...child.querySelectorAll(selector)]);
+    },
+    querySelector(selector) { return this.querySelectorAll(selector)[0] || null; },
+    append(...nodes) { nodes.forEach((child) => { child.remove(); child.parentElement = this; this.children.push(child); }); },
+    replaceChildren(...nodes) { this.children.forEach((child) => { child.parentElement = null; }); this.children = []; this.append(...nodes); },
+    remove() { if (this.parentElement) this.parentElement.children = this.parentElement.children.filter((child) => child !== this); this.parentElement = null; },
+    replaceWith(...nodes) {
+      const parent = this.parentElement;
+      const index = parent.children.indexOf(this);
+      this.remove();
+      nodes.forEach((child, offset) => { child.remove(); child.parentElement = parent; parent.children.splice(index + offset, 0, child); });
+    },
+  };
+  node.classList = { contains: (name) => node.className.split(' ').includes(name), add: (...names) => { node.className = [...new Set([...node.className.split(' ').filter(Boolean), ...names])].join(' '); } };
+  node.append(...children);
+  return node;
+}
+
+function decorateNormalized(variant, nodes) {
+  const media = [];
+  const block = element('div', '', { class: `aida-showcase ${variant}` }, [element('div', '', {}, [element('div', '', {}, nodes)])]);
+  const source = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.js', import.meta.url), 'utf8')
+    .replace(/^import .*;\n/gm, '').replace('export default function decorate', 'function decorate');
+  runInNewContext(`${source}\ndecorate(block);`, {
+    block,
+    document: { createElement: (tag) => element(tag) },
+    buildBmwMedia: (cell, options) => { media.push({ cell, options }); return { element: element('div', '', { class: 'bmw-media' }, [...cell.children]) }; },
+    installFactRefresh: () => {},
+    isVideoUrl: (url) => /\/is\/content\/|\.mp4$/.test(url || ''),
+    getImageRefs: (cell) => cell.querySelectorAll('img').map((img) => ({ el: img })),
+    getVideoRefs: (cell) => cell.querySelectorAll('a').filter((a) => /\/is\/content\//.test(a.getAttribute('href'))),
+  });
+  return { block, media };
+}
+const servedPicture = () => element('p', '', {}, [element('picture', '', {}, [element('img', '', { src: './media_108ff2a.webp', alt: 'BMW i5 exterior' })])]);
+const boundFact = () => element('span', '513–627 km', { 'data-wdh': '/aida/showcase/data/wdh-de.json#61HG.electricRange' });
+
+test('normalized MediaBus stage and feature rebuild media/copy without losing decorated WDH values', () => {
+  for (const variant of ['stage', 'feature video']) {
+    const { block, media } = decorateNormalized(variant, [servedPicture(), element('p', '', {}, [element('a', 'BMW film', { href: 'https://bmw.scene7.com/is/content/BMW/film' })]), element('h1', 'The i5'), element('p', '', {}, [boundFact()])]);
+    assert.equal(block.firstElementChild.tagName, 'SECTION');
+    assert.equal(media.length, 1);
+    assert.ok(block.querySelector('.aida-showcase-media').querySelector('picture'));
+    assert.ok(block.querySelector('.aida-showcase-media').querySelector('a'));
+    assert.equal(block.querySelector('.aida-showcase-copy').querySelector('h1').textContent, 'The i5');
+    assert.equal(block.querySelector('[data-wdh]').textContent, '513–627 km');
+    assert.equal(media[0].options.video.playButton, false);
+  }
+});
+
+test('normalized grids group picture cards and heading-only assist features after the leading intro', () => {
+  for (const withPictures of [true, false]) {
+    const nodes = [element('h2', 'Intro')];
+    ['BMW i5', 'BMW iX3'].forEach((title) => nodes.push(...(withPictures ? [servedPicture()] : []), element('h3', title), element('p', '', {}, [boundFact()])));
+    const { block } = decorateNormalized('grid', nodes);
+    const cards = block.querySelector('.aida-showcase-grid')?.querySelectorAll('article') || [];
+    assert.equal(cards.length, 2);
+    assert.equal(block.querySelector('h2').textContent, 'Intro');
+    assert.equal(cards[0].querySelector('h3').textContent, 'BMW i5');
+    assert.equal(cards[1].querySelector('h3').textContent, 'BMW iX3');
+    assert.equal(block.querySelectorAll('[data-wdh]').length, 2);
+  }
+});
+
+test('normalized KPI lists become styled definitions while preserving formatted facts and legal text', () => {
+  const { block } = decorateNormalized('kpi', [element('h2', 'Key figures'), element('ul', '', {}, [element('li', '', {}, [element('p', 'Range'), element('p', '', {}, [element('strong', '', {}, [boundFact()])])])]), element('p', 'WLTP statement')]);
+  assert.equal(block.querySelector('.aida-showcase-kpis')?.tagName, 'DL');
+  assert.equal(block.querySelector('dt').textContent, 'Range');
+  assert.equal(block.querySelector('dd').querySelector('strong').textContent, '513–627 km');
+  assert.ok(block.textContent.includes('WLTP statement'));
+});
+
+test('preserved DA component marker becomes runtime dataset and is absent from reader copy', () => {
+  const { block } = decorateNormalized('stage', [element('p', '', {}, [element('em', 'component:main-teaser-i5')]), servedPicture(), element('h1', 'The i5')]);
+  assert.equal(block.firstElementChild.dataset.component, 'main-teaser-i5');
+  assert.ok(!block.textContent.includes('component:'));
+});
+
+test('normalized refresh creates an explicit live status when DA strips the authored role', async () => {
+  const { default: install } = await import('../../scripts/aida-showcase.js');
+  const originalDocument = globalThis.document;
+  const originalFetch = globalThis.fetch;
+  const block = element('div', '', { class: 'aida-showcase refresh' }, [element('h2', 'Check facts'), element('p', '', {}, [element('a', 'Refresh facts once', { href: '/aida/showcase/data/wdh-de.json' })]), element('p', '0 fact requests · initial authored values')]);
+  let requests = 0;
+  globalThis.document = { createElement: (tag) => { const node = element(tag); node.addEventListener = () => {}; return node; } };
+  globalThis.fetch = () => { requests += 1; };
+  try {
+    install(block);
+    assert.equal(requests, 0);
+    assert.ok(block.querySelector('button'), 'A JSON link identifies the refresh action even without status markup');
+    assert.ok(block.querySelector('[role="status"]'), 'Status must be explicitly restored');
+  } finally {
+    globalThis.document = originalDocument;
+    globalThis.fetch = originalFetch;
+  }
 });
