@@ -1,9 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+// eslint-disable-next-line import/extensions
 import { buildCatalogue } from '../../tools/aida/content/asset-catalogue.mjs';
 
 const page = {
-  path: '/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick', model: 'i5', family: '5 Series', brand: 'BMW',
+  path: '/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick',
+  model: 'i5',
+  family: '5 Series',
+  brand: 'BMW',
   html: '<h1>BMW i5</h1><p><a href="https://bmw.scene7.com/is/image/BMW/g60_exterior:3to2?wid=1600&amp;fmt=webp">Exterior</a></p>'
     + '<p><a href="https://bmw.scene7.com/is/image/BMW/g60_exterior:1to1?wid=750">Exterior</a></p>'
     + '<p><a href="https://bmw.scene7.com/is/image/BMW/g60_exterior:3to2?wid=750">Exterior</a></p>'
@@ -55,4 +59,19 @@ test('shared assets merge model associations and keep deterministic IDs without 
 test('catalogue rejects lookalike hosts, unsafe URLs and empty markup', () => {
   assert.deepEqual(buildCatalogue([{ ...page, html: '<a href="https://bmw.scene7.com.evil.example/is/image/BMW/car">Car</a><img src="javascript:alert(1)">' }]), []);
   assert.deepEqual(buildCatalogue([{ ...page, html: '' }]), []);
+});
+
+test('placeholder captions become useful model-based labels rather than default alt text', () => {
+  const html = '<a href="https://bmw.scene7.com/is/image/BMW/g60_front">blueprint</a>'
+    + '<a href="https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-car">Image without alt text</a>';
+  const assets = buildCatalogue([{ ...page, html }]);
+  assets.forEach((asset) => {
+    assert.match(asset.title, /i5/i);
+    assert.doesNotMatch(asset.title, /blueprint|without alt text/i);
+  });
+});
+
+test('marketing images precede vehicle renders in a stable browse order', () => {
+  const assets = buildCatalogue([page]);
+  assert.deepEqual(assets.map((asset) => asset.kind), ['marketing', 'marketing', 'cosy']);
 });
