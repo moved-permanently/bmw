@@ -120,6 +120,8 @@ test('authored WLTP statements and connector Vehicle metadata support existing p
       assert.match(pages[`/aida/showcase/${context}/${slug}`], new RegExp(`/data/wdh-${market}\\.json#61HG\\.wltp`));
     }
     const connector = data[`/aida/showcase/data/wdh-${market}.json`];
+    assert.equal(connector[':type'], 'multi-sheet');
+    assert.deepEqual(connector[':names'], ['values', 'models']);
     assert.ok(connector.values.data.find((row) => row.key === '61HG.wltp'));
     assert.equal(JSON.parse(connector.models.data.find((row) => row.code === '61HG').jsonld)['@type'], 'Vehicle');
   }
