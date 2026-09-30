@@ -1,7 +1,7 @@
 import connect from '../da.js';
 import { runChecks } from './checks.js';
 import { marketForPath, valuesFromSheet, syncBindings } from '../../../scripts/aida-wdh.js';
-import { getMetadata, setMetadata } from '../../../scripts/aida-doc.js';
+import { getMetadata, withVehicleJsonLd } from '../../../scripts/aida-doc.js';
 
 const ICONS = { pass: '✓', warn: '!', fail: '✕' };
 
@@ -68,7 +68,7 @@ function render(main, state, onSync) {
         button.textContent = 'Updating…';
         const { html } = syncBindings(state.html, state.market, state.values);
         const model = state.models.find((m) => m.code === getMetadata(html, 'wdh-model'));
-        await da.write(path, model?.jsonld ? setMetadata(html, 'json-ld', model.jsonld) : html);
+        await da.write(path, model?.jsonld ? withVehicleJsonLd(html, model.jsonld) : html);
         await refresh();
         const done = document.createElement('p');
         done.className = 'aida-note';

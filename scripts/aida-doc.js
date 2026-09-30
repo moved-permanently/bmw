@@ -68,3 +68,19 @@ export function setMetadata(html, name, value) {
   const at = block.end - '</div>'.length;
   return `${html.slice(0, at)}<div><div>${escape(name)}</div><div>${escape(value)}</div></div>${html.slice(at)}`;
 }
+
+export function withVehicleJsonLd(html, vehicleJson) {
+  const vehicle = JSON.parse(vehicleJson);
+  const currentJson = getMetadata(html, 'json-ld');
+  const current = currentJson ? JSON.parse(currentJson) : null;
+  const types = [].concat(current?.['@type'] || []);
+  if (!types.includes('NewsArticle')) return setMetadata(html, 'json-ld', vehicleJson);
+  const about = { ...vehicle };
+  delete about['@context'];
+  return setMetadata(html, 'json-ld', JSON.stringify({
+    ...current,
+    headline: getMetadata(html, 'title') || current.headline,
+    description: getMetadata(html, 'description') || current.description,
+    about,
+  }));
+}

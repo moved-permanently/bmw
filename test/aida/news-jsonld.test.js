@@ -9,7 +9,9 @@ const reconcile = (html, car) => {
 const html = (ld) => `<body><main><div><h1>News</h1></div><div><div class="metadata"><div><div>Title</div><div>French headline</div></div><div><div>Description</div><div>French description</div></div><div><div>json-ld</div><div>${JSON.stringify(ld)}</div></div></div></div></main></body>`;
 
 test('WDH sync preserves NewsArticle and updates localized headline and vehicle about', () => {
-  const updated = reconcile(html({ '@context': 'https://schema.org', '@type': 'NewsArticle', headline: 'English headline', datePublished: '2026-09-15', about: { name: 'DE vehicle' } }), JSON.stringify({ '@context': 'https://schema.org', '@type': 'Car', name: 'FR vehicle' }));
+  const updated = reconcile(html({
+    '@context': 'https://schema.org', '@type': 'NewsArticle', headline: 'English headline', datePublished: '2026-09-15', about: { name: 'DE vehicle' },
+  }), JSON.stringify({ '@context': 'https://schema.org', '@type': 'Car', name: 'FR vehicle' }));
   const ld = JSON.parse(documents.getMetadata(updated, 'json-ld'));
   assert.equal(ld['@type'], 'NewsArticle');
   assert.equal(ld.headline, 'French headline');

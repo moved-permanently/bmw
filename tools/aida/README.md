@@ -53,6 +53,23 @@ clicked. Content lives under `/aida/`; the migrated site is unchanged.
 
 Translate and the radar are also listed under *Apps* for the site.
 
+## Briefing I expansion (`newsdemo`)
+
+The three English news samples have been repaired in DA and on preview: formatted WDH display
+strings replace the former data-object text, and units are no longer appended twice. The seeder
+regression exercises all three articles without a model or network access.
+
+A native snapshot named `news-pilot-20260930` captures those public samples on **main**. Its
+request-review / reject-and-unlock / request-review sequence has been rehearsed; it is left **Ready**,
+not approved or published. Open [Snapshots](https://da.live/apps/snapshots#/moved-permanently/bmw).
+This is a public-content workflow demonstration, not a protected embargo environment.
+
+The optional [connected news rehearsal](https://github.com/moved-permanently/bmw/tree/newsdemo/tools/aida/pilot)
+runs at <http://127.0.0.1:3001> (`npm run aida:news`). It adds revision-bound decisions, embargo/release
+checks, local scheduling, market-originated stories, explicit HQ/local-field ownership, re-rollout,
+notification inboxes and rehearsal KPIs. It is loopback-only with simulated personas and manual DA/EDS
+handoffs—not a new production CMS workflow or platform security control. See its README for boundaries.
+
 ## RfP coverage
 
 | RfP ask | Step |
@@ -64,7 +81,7 @@ Translate and the radar are also listed under *Apps* for the site.
 | Content creators #10; VB III governance | 4 |
 | VB III: work status within one country and across countries | 5 |
 | VB I news pilot (proposed first production step) | 1 |
-| Content creators #4–6: release calendar, review without accounts, publish with CDN purge | product features (snapshots, review link, Akamai purge on publish); not prepared in this demo |
+| Content creators #4–6: release calendar, review without accounts, publish with CDN purge | native public-sample snapshot request/rejection prepared; local release rehearsal added; protected review, native scheduling and BMW Akamai purge remain unconfigured |
 
 Not covered, and said openly: no field- or block-level locking (#11), no native glossary or
 translation memory (#8), no workflow engine (#9); "chat with your analytics" (#7) would be a build.

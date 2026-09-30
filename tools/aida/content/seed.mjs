@@ -28,6 +28,8 @@ import { translateHtml } from '../agent/lib.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../../..');
 const HERE = dirname(fileURLToPath(import.meta.url));
+const OUTPUT = process.env.AIDA_OUTPUT_ROOT || ROOT;
+const OUT = join(OUTPUT, 'tools/aida/content/out');
 const I5 = '/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick';
 const PREVIEW = 'https://main--bmw--moved-permanently.aem.page';
 const DA_SOURCE = 'https://admin.da.live/source/moved-permanently/bmw';
@@ -43,8 +45,8 @@ const wdh = (market) => readJson(join(SHEETS, `wdh-${market}.json`));
 const terms = readJson(join(HERE, 'data/brand-terms.json')).data.map((r) => r.term);
 
 function write(path, plain) {
-  const draft = join(ROOT, 'drafts', `${path}.plain.html`);
-  const doc = join(HERE, 'out', `${path}.html`);
+  const draft = join(OUTPUT, 'drafts', `${path}.plain.html`);
+  const doc = join(OUT, `${path}.html`);
   [draft, doc].forEach((f) => mkdirSync(dirname(f), { recursive: true }));
   writeFileSync(draft, plain);
   writeFileSync(doc, `<body><header></header><main>${plain}</main><footer></footer></body>\n`);
@@ -66,15 +68,16 @@ const deSheet = wdh('de');
 const deValues = valuesFromSheet(deSheet);
 const deModels = deSheet.models.data;
 const ldOf = (code) => deModels.find((m) => m.code === code)?.jsonld;
+const escape = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const v = (key) => (deValues.has(key)
-  ? `<a href="${bindingHref('de', key)}">${deValues.get(key)}</a>` : null);
+  ? `<a href="${bindingHref('de', key)}">${escape(deValues.get(key).display)}</a>` : null);
 
 function article({
   code, title, description, date, facts, image,
 }) {
-  const lines = facts.map(([label, key, unit]) => {
+  const lines = facts.map(([label, key]) => {
     const value = v(`${code}.${key}`);
-    return value ? `<li>${label}: ${value}${unit ? ` ${unit}` : ''}</li>` : null;
+    return value ? `<li>${escape(label)}: ${value}</li>` : null;
   }).filter(Boolean);
   const wltp = v(`${code}.wltp`);
   const car = ldOf(code) ? JSON.parse(ldOf(code)) : undefined;
@@ -175,13 +178,13 @@ const index = news.map((n) => ({
 const sheet = (rows) => ({
   total: rows.length, offset: 0, limit: rows.length, data: rows, ':type': 'sheet',
 });
-mkdirSync(join(ROOT, 'aida/data'), { recursive: true });
-writeFileSync(join(ROOT, 'aida/news-index.json'), JSON.stringify(sheet(index), null, 2));
-writeFileSync(join(HERE, 'out/aida/news-index.json'), JSON.stringify(sheet(index), null, 2));
-['brand-terms.json', 'market-features.json'].forEach((f) => copyFileSync(join(HERE, 'data', f), join(ROOT, 'aida/data', f)));
+mkdirSync(join(OUTPUT, 'aida/data'), { recursive: true });
+writeFileSync(join(OUTPUT, 'aida/news-index.json'), JSON.stringify(sheet(index), null, 2));
+writeFileSync(join(OUT, 'aida/news-index.json'), JSON.stringify(sheet(index), null, 2));
+['brand-terms.json', 'market-features.json'].forEach((f) => copyFileSync(join(HERE, 'data', f), join(OUTPUT, 'aida/data', f)));
 ['de', 'fr'].forEach((m) => {
   const src = join(SHEETS, `wdh-${m}.json`);
-  const dest = join(ROOT, `aida/data/wdh-${m}.json`);
+  const dest = join(OUTPUT, `aida/data/wdh-${m}.json`);
   if (src !== dest && existsSync(src)) copyFileSync(src, dest);
 });
 

@@ -20,6 +20,7 @@
  */
 /* eslint-disable no-console */
 import { readFileSync } from 'node:fs';
+import { withVehicleJsonLd } from '../../../scripts/aida-doc.js';
 import {
   autoBind, syncBindings, valuesFromSheet, marketForPath, textOf,
 } from '../../../scripts/aida-wdh.js';
@@ -89,7 +90,7 @@ async function brandTerms() {
 function applyWdh(html, { market, values, models }) {
   const result = syncBindings(html, market, values);
   const model = models.find((m) => m.code === getMetadata(result.html, 'wdh-model'));
-  const withLd = model?.jsonld ? setMetadata(result.html, 'json-ld', model.jsonld) : result.html;
+  const withLd = model?.jsonld ? withVehicleJsonLd(result.html, model.jsonld) : result.html;
   return { ...result, html: withLd };
 }
 

@@ -1,7 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { daDocument, publicDocument, nativePath, markdown } from '../../tools/aida/pilot/render.js';
+import {
+  daDocument, publicDocument, nativePath, markdown,
+} from '../../tools/aida/pilot/render.js';
 
 test('pilot shell states its boundaries and provides connected editorial and native handoff controls', () => {
   const html = readFileSync('tools/aida/pilot/ui/index.html', 'utf8');
@@ -29,8 +31,12 @@ test('exports remain document-native and never claim an unpublished draft has a 
 
 test('public HTML declares the target language and Markdown escapes executable markup', () => {
   ['hq', 'de', 'at', 'fr', 'be'].forEach((market) => {
-    const article = { id: `${market}--x`, slug: 'x', market, revision: 1, title: '<img src=x onerror=alert(1)>', description: 'Summary', body: '<script>alert(1)</script>', legal: 'Legal', localIntro: '', localCta: '', publishedAt: '2026-09-30T10:00:00Z' };
+    const article = {
+      id: `${market}--x`, slug: 'x', market, revision: 1, title: '<img src=x onerror=alert(1)>', description: 'Summary', body: '<script>alert(1)</script>', legal: 'Legal', localIntro: '', localCta: '', publishedAt: '2026-09-30T10:00:00Z',
+    };
     assert.doesNotMatch(markdown(article), /<script>|<img/);
-    assert.match(publicDocument(article), new RegExp(`<html lang="${{ hq: 'en', de: 'de', at: 'de', fr: 'fr', be: 'fr' }[market]}"`));
+    assert.match(publicDocument(article), new RegExp(`<html lang="${{
+      hq: 'en', de: 'de', at: 'de', fr: 'fr', be: 'fr',
+    }[market]}"`));
   });
 });

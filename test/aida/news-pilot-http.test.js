@@ -47,7 +47,11 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
     }));
     assert.deepEqual((await (await request('/news-index.json')).json()).data, []);
     const de = await signIn('de-author');
-    await action(de, 'create', { fields: { slug: 'de-story', market: 'de', title: 'DE draft', description: 'Summary', body: 'Local story', legal: 'Legal', embargo: '2026-09-30T10:00:00Z' } });
+    await action(de, 'create', {
+      fields: {
+        slug: 'de-story', market: 'de', title: 'DE draft', description: 'Summary', body: 'Local story', legal: 'Legal', embargo: '2026-09-30T10:00:00Z',
+      },
+    });
     const scoped = await (await request('/api/state', { headers: de })).json();
     assert.equal(scoped.metrics.articles, 1);
     const links = await (await request('/api/native-links', { headers: de })).json();
@@ -85,7 +89,6 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
   }
 });
 
-
 test('failed persistence cannot create a draft, approve a guest revision, or release content', async () => {
   const directory = mkdtempSync(join(tmpdir(), 'aida-disk-failure-'));
   const storePath = join(directory, 'state.json');
@@ -93,7 +96,9 @@ test('failed persistence cannot create a draft, approve a guest revision, or rel
   const app = implementation.createPilotServer({ storePath, now: () => clock });
   const author = { id: 'hq-author', role: 'author', market: 'hq' };
   const reviewer = { id: 'hq-reviewer', role: 'reviewer', market: 'hq' };
-  const source = app.workflow.create(author, { slug: 'failure', market: 'hq', title: 'Story', description: 'Summary', body: 'Body', legal: 'Legal', embargo: '2026-09-30T10:00:00Z' });
+  const source = app.workflow.create(author, {
+    slug: 'failure', market: 'hq', title: 'Story', description: 'Summary', body: 'Body', legal: 'Legal', embargo: '2026-09-30T10:00:00Z',
+  });
   app.workflow.submit(author, source.id);
   const token = 'synthetic-review-capability-token';
   app.workflow.grantReview(reviewer, source.id, token, '2026-09-30T11:00:00Z');
@@ -101,13 +106,31 @@ test('failed persistence cannot create a draft, approve a guest revision, or rel
   const base = `http://127.0.0.1:${app.server.address().port}`;
   mkdirSync(storePath);
   try {
+    const authorLogin = await fetch(`${base}/api/session`, { method: 'POST', headers: { origin: base, 'content-type': 'application/json' }, body: JSON.stringify({ actorId: 'hq-author' }) });
+    const authorSession = await authorLogin.json();
+    const failedCreate = await fetch(`${base}/api/action`, {
+      method: 'POST',
+      headers: {
+        origin: base, 'content-type': 'application/json', cookie: authorLogin.headers.get('set-cookie').split(';')[0], 'x-pilot-csrf': authorSession.csrf,
+      },
+      body: JSON.stringify({
+        action: 'create',
+        fields: {
+          slug: 'failed-create', market: 'hq', title: 'Draft', description: 'Summary', body: 'Story', legal: 'Legal', embargo: '2026-09-30T10:00:00Z',
+        },
+      }),
+    });
+    assert.equal(failedCreate.status, 409);
+    assert.equal(app.workflow.list().length, 1);
     const guest = await fetch(`${base}/api/review`, { method: 'POST', headers: { origin: base, 'content-type': 'application/json', 'x-review-token': token }, body: JSON.stringify({ decision: 'approve', field: 'body', comment: '' }) });
     assert.equal(guest.status, 409);
     assert.equal(app.workflow.get(source.id).status, 'in-review');
     app.workflow.decide(reviewer, source.id, 'approve', '', 'body');
     const login = await fetch(`${base}/api/session`, { method: 'POST', headers: { origin: base, 'content-type': 'application/json' }, body: JSON.stringify({ actorId: 'publisher' }) });
     const { csrf } = await login.json();
-    const headers = { origin: base, 'content-type': 'application/json', cookie: login.headers.get('set-cookie').split(';')[0], 'x-pilot-csrf': csrf };
+    const headers = {
+      origin: base, 'content-type': 'application/json', cookie: login.headers.get('set-cookie').split(';')[0], 'x-pilot-csrf': csrf,
+    };
     const release = await fetch(`${base}/api/action`, { method: 'POST', headers, body: JSON.stringify({ action: 'publish', id: source.id }) });
     assert.equal(release.status, 409);
     assert.equal(app.workflow.publicArticle(source.id), null);
