@@ -112,6 +112,19 @@ test('initial HTML contains exact market WDH display values, provenance, prices 
   for (const slug of ['home', 'i5', 'e-mobility', 'news/i5-launch']) assert.match(pages[`/aida/showcase/en/${slug}`], boundRange);
 });
 
+test('authored WLTP statements and connector Vehicle metadata support existing preflight and stored HTML sync', () => {
+  const { pages, data } = build();
+  for (const context of [...contexts, 'de/at']) {
+    const market = context.startsWith('fr') ? 'fr' : 'de';
+    for (const slug of ['home', 'i5', 'e-mobility', 'news/i5-launch']) {
+      assert.match(pages[`/aida/showcase/${context}/${slug}`], new RegExp(`/data/wdh-${market}\\.json#61HG\\.wltp`));
+    }
+    const connector = data[`/aida/showcase/data/wdh-${market}.json`];
+    assert.ok(connector.values.data.find((row) => row.key === '61HG.wltp'));
+    assert.equal(JSON.parse(connector.models.data.find((row) => row.code === '61HG').jsonld)['@type'], 'Vehicle');
+  }
+});
+
 test('news, models and metadata share stable entities and supplied WDH takes priority over illustrative DOCX numbers', () => {
   const { pages, data } = build();
   assert.match(pages['/aida/showcase/en/i5'], /Vehicle/);
