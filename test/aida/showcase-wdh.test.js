@@ -27,3 +27,9 @@ test('preflight and WDH picker use the matching connector data root for the curr
     assert.match(source, /dataRootForPath/);
   });
 });
+
+test('showcase delivery does not add the legacy automatic preview WDH fetch', () => {
+  const runtime = readFileSync(new URL('../../scripts/scripts.js', import.meta.url), 'utf8');
+  assert.match(runtime, /const showcasePage =/);
+  assert.match(runtime, /wdhBindings\.length && !showcasePage/);
+});
