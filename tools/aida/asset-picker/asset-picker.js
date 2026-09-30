@@ -1,5 +1,5 @@
 import {
-  countryForContext, filterAssets, facetValues, cropRegion, scene7Url, assetLink,
+  countryForContext, assetContextMessage, filterAssets, facetValues, cropRegion, scene7Url, assetLink,
 } from './model.js';
 import connect from '../da.js';
 
@@ -32,9 +32,7 @@ export default function mountPicker(main, { assets, context = {}, actions = null
   countries.sort((a, b) => countryName(a).localeCompare(countryName(b)))
     .forEach((code) => find('country').append(new Option(countryName(code), code)));
   find('country').value = initialCountry;
-  find('context').textContent = initialCountry
-    ? `${countryName(initialCountry)} preselected from this document. Unlocalized images are included.`
-    : 'No document country detected. Choose a country; unlocalized images are included.';
+  find('context').textContent = assetContextMessage(context);
   if (!actions) find('context').textContent += ' Standalone preview: open through DA to insert.';
 
   function insertion() {

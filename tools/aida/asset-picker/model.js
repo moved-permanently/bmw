@@ -17,6 +17,22 @@ export function countryForContext(context = {}) {
   return COUNTRY_CODES.includes(parts[0]) ? parts[0] : '';
 }
 
+export function assetContextMessage(context = {}) {
+  const country = countryForContext(context);
+  if (country) {
+    const name = new Intl.DisplayNames(['en'], { type: 'region' }).of(country.toUpperCase());
+    return `${name} preselected from this document. Unlocalized images are included.`;
+  }
+  let path;
+  try { path = new URL(context.path || '', 'https://example.invalid').pathname; } catch { path = ''; }
+  const language = path.match(/^\/aida\/(?:showcase\/)?(en|de|fr)(?:\/|$)/)?.[1];
+  if (language) {
+    const name = new Intl.DisplayNames(['en'], { type: 'language' }).of(language);
+    return `${name} source document. Choose the target country; unlocalized images are included.`;
+  }
+  return 'Choose a country for this document; unlocalized images are included.';
+}
+
 export function filterAssets(assets, filters = {}) {
   const words = String(filters.search || '').toLowerCase().trim().split(/\s+/)
     .filter(Boolean);
