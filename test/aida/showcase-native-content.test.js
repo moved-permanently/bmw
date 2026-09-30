@@ -7,6 +7,7 @@ import { buildContent } from '../../tools/aida/showcase/content.mjs';
 
 const catalogue = JSON.parse(readFileSync(new URL('../../tools/aida/asset-picker/catalogue.json', import.meta.url)));
 const contexts = ['en', 'de/de', 'de/at', 'fr/fr', 'fr/be'];
+const copy = JSON.parse(readFileSync(new URL('../../tools/aida/showcase/data/copy.json', import.meta.url)));
 
 // Only div nesting is relevant to EDS block rows/cells; retain the original cell HTML.
 function divs(html) {
@@ -141,4 +142,41 @@ test('NewsArticle body is default content, independent from article metadata and
     assert.match(html, /NewsArticle/);
     assert.match(html, /class="metadata"/);
   }
+});
+
+test('charging CTAs use observed BMW destinations, not nonexistent charging-folder routes', () => {
+  const content = buildContent({ catalogue });
+  for (const context of contexts) {
+    const charging = composed(content, `/aida/showcase/${context}/e-mobility`, 'topic-charging');
+    assert.ok(charging.html.includes('href="https://www.bmw.de/de/elektroauto/home-charging.html"'));
+    assert.ok(charging.html.includes('href="https://www.bmw.de/de/elektroauto/public-charging.html"'));
+    assert.doesNotMatch(charging.html, /\/laden\/(?:zuhause|unterwegs)-laden/);
+  }
+});
+
+test('German summer fixture links to the observed ConnectedDrive store category', () => {
+  const content = buildContent({ catalogue });
+  const offer = composed(content, '/aida/showcase/de/de/home', 'summer-offer');
+  assert.ok(offer.html.includes('href="https://www.bmw.de/de/shop/ls/cp/connected-drive"'));
+  assert.doesNotMatch(offer.html, /\/dp\/ConnectedDrive/);
+});
+
+test('Car article CTA uses localized editorial copy, never promises an offer request', () => {
+  const content = buildContent({ catalogue });
+  for (const context of contexts) {
+    const lang = context.split('/')[0];
+    const stage = blocks(composed(content, `/aida/showcase/${context}/i5`, 'main-teaser-i5'))[0];
+    assert.ok(stage.children[1].html.includes(
+      `<a href="/aida/showcase/${context}/news/i5-launch">${copy[lang].learn}</a>`,
+    ));
+    assert.ok(!stage.children[1].html.includes(copy[lang].offer));
+  }
+});
+
+test('README distinguishes bounded legacy refresh from repeatable Delivery requests without timeout', () => {
+  const readme = readFileSync(new URL('../../tools/aida/showcase/README.md', import.meta.url), 'utf8');
+  assert.match(readme, /Legacy installer:[^\n]*one-request[^\n]*timeout/);
+  assert.match(readme, /Delivery tab:[^\n]*repeated[^\n]*no timeout/);
+  assert.match(readme, /no fact refresh CTA/);
+  assert.doesNotMatch(readme, /Its one-request, timeout, safe-text and initial-value-retention behavior/);
 });
