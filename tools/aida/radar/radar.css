@@ -1,41 +1,46 @@
-.aida-plugin h1 {
-  font-size: 20px;
-  margin: 0 0 4px;
+/* stylelint-disable selector-class-pattern -- official Spectrum component names */
+.radar-app h1 {
+  font-size: var(--spectrum-font-size-500);
 }
 
-.radar th.is-language {
-  background: #f4f4f4;
+.radar-app .radar-disclaimer {
+  max-width: 90ch;
 }
 
-.radar tbody th {
-  font-weight: 400;
-  font-family: monospace;
+.radar-app .radar-table-scroll {
+  overflow-x: auto;
 }
 
-.radar-chip {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 12px;
-  text-decoration: none;
-  color: #222;
-  background: #e1e1e1;
+.radar caption {
+  margin: 0 0 12px;
+  text-align: left;
+  color: var(--spectrum-neutral-subdued-content-color-default);
 }
 
-.radar-chip.is-current {
-  background: #c9ecd9;
+.radar .spectrum-Table-cell,
+.radar .spectrum-Table-headCell {
+  min-width: 200px;
 }
 
-.radar-chip.is-behind {
-  background: #ffe2b8;
+.radar .radar-path {
+  display: block;
+  font-family: var(--spectrum-code-font-family-stack);
+  overflow-wrap: anywhere;
 }
 
-.radar-drift {
-  display: inline-block;
-  margin-left: 6px;
-  padding: 2px 6px;
-  border-radius: 10px;
-  font-size: 12px;
-  color: #fff;
-  background: #d31510;
+.radar .radar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 10px 0;
+}
+
+.radar .radar-evidence {
+  display: block;
+  font-weight: var(--spectrum-regular-font-weight);
+  color: var(--spectrum-neutral-subdued-content-color-default);
+}
+
+.radar .radar-drift {
+  margin-top: 8px;
 }

@@ -15,3 +15,5 @@ tools/aida/agent/*
 tools/aida/consumer/*
 tools/aida/content/*
 tools/aida/README.md
+tools/aida/showcase/content.mjs
+tools/aida/showcase/data/*

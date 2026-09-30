@@ -32,12 +32,16 @@ export function parseBinding(href) {
   };
 }
 
-export function bindingHref(market, key) {
-  return `/aida/data/wdh-${market}.json#${key}`;
+export function dataRootForPath(path) {
+  return (path || '').startsWith('/aida/showcase/') ? '/aida/showcase/data' : '/aida/data';
+}
+
+export function bindingHref(market, key, root = '/aida/data') {
+  return `${root}/wdh-${market}.json#${key}`;
 }
 
 export function marketForPath(path) {
-  const m = (path || '').match(/^(?:\/aida)?\/([a-z]{2})(?:\/([a-z]{2}))?(?=\/|$)/);
+  const m = (path || '').replace(/^\/aida\/showcase(?=\/)/, '/aida').match(/^(?:\/aida)?\/([a-z]{2})(?:\/([a-z]{2}))?(?=\/|$)/);
   if (!m || !LANGUAGES[m[1]]) return null;
   const [, lang, second] = m;
   const locale = LANGUAGES[lang].locales.includes(second) ? second : null;
@@ -102,7 +106,7 @@ export function syncBindings(html, market, values) {
     changes.push({
       key: binding.key, from: text, to: current.display, fromMarket: binding.market,
     });
-    return `<a${before}href="${bindingHref(market, binding.key)}"${after}>${escape(current.display)}</a>`;
+    return `<a${before}href="${bindingHref(market, binding.key, href.includes('/aida/showcase/data/') ? '/aida/showcase/data' : '/aida/data')}"${after}>${escape(current.display)}</a>`;
   });
   return { html: out, changes, unknown };
 }

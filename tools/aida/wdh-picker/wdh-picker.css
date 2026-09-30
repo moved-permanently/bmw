@@ -1,0 +1,24 @@
+/* stylelint-disable selector-class-pattern -- official Spectrum component names */
+.wdh-picker {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.wdh-picker .wdh-table-scroll {
+  overflow-x: auto;
+}
+
+.wdh-picker caption {
+  text-align: left;
+  margin-bottom: 12px;
+  color: var(--spectrum-neutral-subdued-content-color-default);
+}
+
+.wdh-picker .spectrum-Table-cell:first-child {
+  min-width: 140px;
+}
+
+.wdh-picker .spectrum-Table-cell:nth-child(2) {
+  min-width: 180px;
+  overflow-wrap: anywhere;
+}

@@ -3,14 +3,22 @@
   <head>
     <title>Rollout radar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../spectrum.css">
     <link rel="stylesheet" href="../aida-plugin.css">
     <link rel="stylesheet" href="./radar.css">
     <script src="./radar.js" type="module"></script>
   </head>
-  <body>
-    <main class="aida-plugin">
+  <body class="spectrum spectrum--medium spectrum--light">
+    <main class="aida-plugin radar-app">
+      <nav class="aida-tool-nav" aria-label="Authoring tools">
+        <a class="spectrum-Link" href="/tools/aida/showcase/index.html">Integrated showcase</a>
+        <a class="spectrum-Link" href="https://da.live/apps/loc#/moved-permanently/bmw" target="_blank" rel="noopener noreferrer">DA Translate</a>
+        <a class="spectrum-Link" href="/governance">Governance</a>
+        <a class="spectrum-Link" href="/tools/aida/showcase/index.html#workflow">Workflow simulation</a>
+      </nav>
       <h1>Rollout radar</h1>
-      <p class="aida-muted">Loading the translation setup…</p>
+      <p class="aida-muted radar-disclaimer">Edit timestamps describe recency, not translation quality, approval or release. Native DA timestamps cannot identify accepted source revisions. No approval/release evidence is available here; use the integrated showcase for the explicitly simulated accepted-revision workflow.</p>
+      <p id="radar-status" class="aida-muted" role="status" aria-live="polite">Loading the translation setup…</p>
     </main>
   </body>
 </html>

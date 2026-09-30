@@ -1,12 +1,10 @@
 import connect from '../da.js';
-import { topology, buildGrid } from './grid.js';
+import {
+  topology, buildGrid, TIMESTAMP_LABELS, pageActions,
+} from './grid.js';
 import {
   findBindings, staleBindings, valuesFromSheet, marketForPath,
 } from '../../../scripts/aida-wdh.js';
-
-const LABELS = {
-  missing: 'not started', behind: 'source changed', current: 'up to date',
-};
 
 async function walk(da, location) {
   const pages = [];
@@ -38,59 +36,116 @@ async function checkDrift(da, cells) {
     const stale = staleBindings(findBindings(html), market, current);
     if (stale.length) {
       const badge = document.createElement('span');
-      badge.className = 'radar-drift';
-      badge.textContent = `${stale.length} WDH`;
+      badge.className = 'radar-drift spectrum-Badge spectrum-Badge--sizeS spectrum-Badge--negative';
+      const label = document.createElement('span');
+      label.className = 'spectrum-Badge-label';
+      label.textContent = `${stale.length} WDH values differ`;
+      badge.append(label);
       badge.title = stale.map((s) => `${s.key}: ${s.text} → ${s.expected ?? '–'}`).join('\n');
       el.append(badge);
     }
   }
 }
 
+function appendActions(el, routes, missing = false) {
+  const actions = document.createElement('div');
+  actions.className = 'radar-actions';
+  const entries = missing ? [['translate', 'Create in DA Translate'], ['workflow', 'Workflow simulation']]
+    : [['edit', 'Edit'], ['preview', 'Preview'], ['preflight', 'Preflight'], ['workflow', 'Workflow simulation']];
+  entries.forEach(([key, label]) => {
+    const link = document.createElement('a');
+    link.className = 'spectrum-Link';
+    link.href = routes[key];
+    link.textContent = label;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    actions.append(link);
+  });
+  const evidence = document.createElement('small');
+  evidence.className = 'radar-evidence';
+  evidence.textContent = 'No approval/release evidence available';
+  el.append(actions, evidence);
+}
+
 (async function init() {
   const main = document.querySelector('main');
-  const status = main.querySelector('p');
+  const status = document.querySelector('#radar-status');
+  if (window.parent === window) {
+    status.textContent = 'Native DA source timestamps require the radar app inside DA. Open the integrated showcase for the interactive rollout and accepted-revision simulation, or DA Translate for real source and target pages.';
+    return;
+  }
   try {
     const da = await connect();
+    const ref = da.context.ref || 'main';
     const config = JSON.parse(await da.read('/.da/translate.json'));
     const { source, targets } = topology(config);
     status.textContent = `Reading ${source.location} and ${targets.length} language and market folders…`;
     const sources = (await walk(da, source.location))
       .filter((p) => !targets.some((t) => p.path.startsWith(`${t.location}/`)))
       .map((p) => ({ rel: p.path.slice(source.location.length), lastModified: p.lastModified }));
-    const locations = targets.filter((t) => t.kind === 'language').map((t) => t.location);
+    const locations = targets.map((t) => t.location)
+      .filter((location, index, all) => !all.some((other, i) => i !== index && location.startsWith(`${other}/`)));
     const copies = (await Promise.all(locations.map((l) => walk(da, l)))).flat();
     const grid = buildGrid(sources, targets, new Map(copies.map((p) => [p.path, p.lastModified])));
 
     const table = document.createElement('table');
-    table.className = 'radar';
-    table.innerHTML = `<thead><tr><th>${source.name} source (${source.location})</th>${targets.map((t) => `<th class="is-${t.kind}">${t.name}</th>`).join('')}</tr></thead><tbody></tbody>`;
+    table.className = 'radar spectrum-Table spectrum-Table--sizeM';
+    const caption = table.createCaption();
+    caption.textContent = 'Source and target edit recency — not approval or release status';
+    const head = table.createTHead();
+    head.className = 'spectrum-Table-head';
+    const header = head.insertRow();
+    header.className = 'spectrum-Table-row';
+    [{ name: `${source.name} source (${source.location})`, kind: 'source' }, ...targets].forEach((target) => {
+      const th = document.createElement('th');
+      th.className = `spectrum-Table-headCell is-${target.kind}`;
+      th.scope = 'col';
+      th.textContent = target.name;
+      header.append(th);
+    });
+    const body = table.createTBody();
+    body.className = 'spectrum-Table-body';
     const drift = [];
     grid.forEach((row) => {
-      const tr = document.createElement('tr');
+      const tr = body.insertRow();
+      tr.className = 'spectrum-Table-row';
       const th = document.createElement('th');
-      th.textContent = row.rel;
+      th.className = 'spectrum-Table-cell';
+      th.scope = 'row';
+      const title = document.createElement('span');
+      title.className = 'radar-path';
+      title.textContent = row.rel;
+      th.append(title);
+      appendActions(th, pageActions({ ...da, path: `${source.location}${row.rel}`, ref }));
       tr.append(th);
       row.cells.forEach((cell) => {
-        const td = document.createElement('td');
-        const chip = document.createElement(cell.status === 'missing' ? 'span' : 'a');
-        chip.className = `radar-chip is-${cell.status}`;
-        chip.textContent = LABELS[cell.status];
-        if (cell.status !== 'missing') {
-          chip.href = `https://da.live/edit#/${da.org}/${da.site}${cell.path}`;
-          chip.target = '_blank';
-          drift.push({ cell, el: td });
-        }
+        const td = tr.insertCell();
+        td.className = 'spectrum-Table-cell';
+        const chip = document.createElement('span');
+        const variant = cell.status === 'behind' ? 'notice' : 'neutral';
+        chip.className = `radar-chip spectrum-Badge spectrum-Badge--sizeS spectrum-Badge--${variant}`;
+        const label = document.createElement('span');
+        label.className = 'spectrum-Badge-label';
+        label.textContent = TIMESTAMP_LABELS[cell.status];
+        chip.append(label);
         td.append(chip);
-        tr.append(td);
+        appendActions(td, pageActions({ ...da, path: cell.path, ref }), cell.status === 'missing');
+        if (cell.status !== 'missing') drift.push({ cell, el: td });
       });
-      table.querySelector('tbody').append(tr);
     });
     const total = grid.length * targets.length;
-    const done = grid.flatMap((r) => r.cells).filter((c) => c.status === 'current').length;
-    status.textContent = `${grid.length} source pages × ${targets.length} languages and markets: ${done} of ${total} up to date. Checking WDH values…`;
-    main.append(table);
+    const recent = grid.flatMap((r) => r.cells).filter((c) => c.status === 'current').length;
+    const summary = `${grid.length} source pages × ${targets.length} languages and markets: ${recent} of ${total} edited since source.`;
+    status.textContent = `${summary} Checking WDH values…`;
+    const scroll = document.createElement('div');
+    scroll.className = 'radar-table-scroll';
+    scroll.tabIndex = 0;
+    scroll.setAttribute('role', 'region');
+    scroll.setAttribute('aria-label', 'Rollout edit timestamps and page actions');
+    scroll.append(table);
+    main.append(scroll);
     await checkDrift(da, drift);
-    status.textContent = `${grid.length} source pages × ${targets.length} languages and markets: ${done} of ${total} up to date. Red badges: tech values that differ from WDH.`;
+    status.textContent = `${summary} WDH badges identify tech values that differ from the current WDH export.`;
   } catch (e) {
     status.className = 'aida-error';
     status.textContent = `The radar could not load: ${e.message}`;

@@ -1,117 +1,48 @@
-:root {
-  color-scheme: light;
-  font-family: adobe-clean, "Source Sans Pro", -apple-system, system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.45;
-  color: #222;
-}
-
-body {
+/* stylelint-disable selector-class-pattern -- official Spectrum component names */
+.spectrum {
   margin: 0;
 }
 
 .aida-plugin {
-  padding: 16px;
+  padding: 20px;
 }
 
-.aida-muted {
-  color: #6e6e6e;
+.aida-plugin [hidden],
+.asset-picker [hidden] {
+  display: none !important;
+}
+
+.aida-plugin h1 {
   margin: 0 0 12px;
 }
 
+.aida-muted,
+.aida-tool-note {
+  color: var(--spectrum-neutral-subdued-content-color-default);
+  margin: 0 0 12px;
+}
+
+.aida-tool-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-bottom: 20px;
+}
+
 .aida-note {
-  padding: 8px 12px;
-  background: #e5f4ea;
-  border-radius: 4px;
+  padding: 12px;
+  background: var(--spectrum-positive-subdued-background-color-default);
+  border-radius: var(--spectrum-corner-radius-100);
 }
 
 .aida-error {
-  color: #d31510;
+  color: var(--spectrum-negative-content-color-default);
 }
 
-.aida-check {
-  border: 1px solid #e1e1e1;
-  border-left-width: 4px;
-  border-radius: 4px;
-  padding: 10px 12px;
-  margin-bottom: 10px;
-}
-
-.aida-check.is-pass {
-  border-left-color: #2d9d78;
-}
-
-.aida-check.is-warn {
-  border-left-color: #e68619;
-}
-
-.aida-check.is-fail {
-  border-left-color: #d31510;
-}
-
-.aida-check h2 {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin: 0;
-  font-size: 15px;
-}
-
-.aida-icon {
-  display: inline-grid;
-  place-items: center;
-  inline-size: 20px;
-  block-size: 20px;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 12px;
-  background: #2d9d78;
-}
-
-.is-warn .aida-icon {
-  background: #e68619;
-}
-
-.is-fail .aida-icon {
-  background: #d31510;
-}
-
-.aida-summary {
-  margin: 4px 0 0;
-}
-
-.aida-check ul {
-  margin: 6px 0 0;
-  padding-left: 20px;
-  color: #444;
-}
-
-.aida-plugin button {
-  margin-top: 10px;
-  padding: 6px 14px;
-  border: 0;
-  border-radius: 16px;
-  background: #3b63fb;
-  color: #fff;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.aida-plugin button:disabled {
-  background: #b1b1b1;
-  cursor: default;
-}
-
-.aida-plugin table {
-  border-collapse: collapse;
+.aida-plugin .spectrum-Table {
   width: 100%;
 }
 
-.aida-plugin th,
-.aida-plugin td {
-  border-bottom: 1px solid #e1e1e1;
-  padding: 6px 8px;
-  text-align: left;
+.aida-plugin .spectrum-Table-cell {
   vertical-align: top;
 }

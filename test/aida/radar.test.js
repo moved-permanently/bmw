@@ -63,7 +63,9 @@ test('timestamp labels never claim approval or publishing evidence', () => {
 
 test('source and target pages expose edit, preview, preflight and simulated workflow routes', () => {
   assert.equal(typeof radar.pageActions, 'function');
-  const actions = radar.pageActions({ org: 'moved-permanently', site: 'bmw', path: '/aida/fr/be/i5', ref: 'demo' });
+  const actions = radar.pageActions({
+    org: 'moved-permanently', site: 'bmw', path: '/aida/fr/be/i5', ref: 'demo',
+  });
   assert.deepEqual(actions, {
     edit: 'https://da.live/edit#/moved-permanently/bmw/aida/fr/be/i5',
     preview: 'https://demo--bmw--moved-permanently.aem.page/aida/fr/be/i5',

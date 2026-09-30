@@ -1,0 +1,207 @@
+.aida-showcase {
+  color: #262626;
+  padding: 32px 0;
+}
+
+.aida-showcase h1,
+.aida-showcase h2,
+.aida-showcase h3 {
+  font-weight: 300;
+  line-height: 1.15;
+  margin: 0 0 24px;
+}
+
+.aida-showcase h1 {
+  font-size: clamp(40px, 6vw, 88px);
+}
+
+.aida-showcase h2 {
+  font-size: clamp(28px, 3vw, 44px);
+}
+
+.aida-showcase h3 {
+  font-size: 24px;
+}
+
+.aida-showcase p {
+  margin: 0 0 20px;
+}
+
+.aida-showcase .aida-showcase-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.aida-showcase .aida-showcase-copy {
+  padding: 24px 0;
+}
+
+.aida-showcase .bmw-video {
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
+
+.aida-showcase .aida-showcase-note {
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 20px;
+}
+
+.aida-showcase .aida-showcase-grid img {
+  aspect-ratio: 3 / 2;
+}
+
+.aida-showcase .aida-showcase-kpis a {
+  color: inherit;
+}
+
+.aida-showcase.stage {
+  padding: 0;
+}
+
+.aida-showcase.stage section {
+  display: grid;
+  position: relative;
+  background: #101820;
+  color: #fff;
+}
+
+.aida-showcase.stage .aida-showcase-media {
+  grid-area: 1 / 1;
+  min-height: 540px;
+  aspect-ratio: 16 / 8;
+}
+
+.aida-showcase.stage .bmw-media,
+.aida-showcase.stage .bmw-video {
+  height: 100%;
+  min-height: 540px;
+  aspect-ratio: auto;
+}
+
+.aida-showcase.stage .aida-showcase-media img {
+  min-height: 540px;
+  max-height: 760px;
+  aspect-ratio: 16 / 8;
+}
+
+.aida-showcase.stage .aida-showcase-copy {
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(24px, 4vw, 64px);
+  background: linear-gradient(90deg, rgb(0 0 0 / 80%), rgb(0 0 0 / 5%));
+  pointer-events: none;
+}
+
+.aida-showcase.stage .aida-showcase-copy h1,
+.aida-showcase.stage .aida-showcase-copy h2 {
+  color: inherit;
+}
+
+.aida-showcase.stage .aida-showcase-copy > p {
+  max-width: 600px;
+}
+
+.aida-showcase.stage a:not(.button) {
+  color: inherit;
+}
+
+.aida-showcase.stage .aida-showcase-copy a {
+  pointer-events: auto;
+}
+
+.aida-showcase.stage .aida-showcase-note {
+  max-width: 640px;
+}
+
+.aida-showcase .aida-showcase-grid {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+
+.aida-showcase .aida-showcase-grid article {
+  min-width: 0;
+  border-bottom: 1px solid #d6d6d6;
+  padding-bottom: 24px;
+}
+
+.aida-showcase .aida-showcase-grid .aida-showcase-media {
+  margin-bottom: 24px;
+}
+
+.aida-showcase .aida-showcase-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 24px;
+  padding: 24px 0;
+  margin: 0;
+}
+
+.aida-showcase .aida-showcase-kpis dt {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.aida-showcase .aida-showcase-kpis dd {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 40px);
+  line-height: 1.2;
+}
+
+.aida-showcase.refresh button {
+  background: #1c69d4;
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  padding: 16px 24px;
+  font: inherit;
+}
+
+.aida-showcase.refresh button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.aida-showcase.refresh [role="status"] {
+  min-height: 2em;
+}
+
+@media (width >= 900px) {
+  .aida-showcase.feature section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .aida-showcase.feature .aida-showcase-copy {
+    padding: 32px 0;
+  }
+}
+
+@media (width < 600px) {
+  .aida-showcase.stage .aida-showcase-media {
+    min-height: 660px;
+    aspect-ratio: 3 / 4;
+  }
+
+  .aida-showcase.stage .bmw-media,
+  .aida-showcase.stage .bmw-video {
+    min-height: 660px;
+  }
+
+  .aida-showcase.stage .aida-showcase-media img {
+    min-height: 660px;
+    aspect-ratio: 3 / 4;
+  }
+}

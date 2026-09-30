@@ -1,0 +1,75 @@
+/* stylelint-disable selector-class-pattern -- Adobe Spectrum uses its official component class names. */
+@import url('./vendor/spectrum/vars.css');
+@import url('./vendor/spectrum/typography.css');
+@import url('./vendor/spectrum/button.css');
+@import url('./vendor/spectrum/textfield.css');
+@import url('./vendor/spectrum/picker.css');
+@import url('./vendor/spectrum/checkbox.css');
+@import url('./vendor/spectrum/table.css');
+@import url('./vendor/spectrum/badge.css');
+@import url('./vendor/spectrum/fieldlabel.css');
+@import url('./vendor/spectrum/card.css');
+@import url('./vendor/spectrum/link.css');
+
+.spectrum {
+  color: var(--spectrum-neutral-content-color-default, #292929);
+  background: var(--spectrum-gray-50, #fff);
+  font-family: adobe-clean, 'Source Sans 3', 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.spectrum * {
+  box-sizing: border-box;
+  }
+
+.spectrum a {
+  color: var(--spectrum-blue-900, #0265dc);
+  }
+
+.spectrum button, .spectrum input, .spectrum select, .spectrum textarea {
+  font: inherit;
+  }
+
+.spectrum .spectrum-Button {
+  cursor: pointer;
+  text-decoration: none;
+  }
+
+.spectrum .spectrum-Button:disabled {
+  cursor: not-allowed;
+  }
+
+.spectrum .spectrum-Button-label {
+  white-space: nowrap;
+  }
+
+.spectrum .spectrum-Picker {
+  min-width: 140px;
+  padding: 7px 30px 7px 12px;
+  appearance: auto;
+  }
+
+.spectrum .spectrum-Textfield {
+  width: 100%;
+  }
+
+.spectrum .spectrum-Textfield-input {
+  width: 100%;
+  }
+
+.spectrum textarea.spectrum-Textfield-input {
+  min-height: 100px;
+  resize: vertical;
+  }
+
+.spectrum :focus-visible {
+  outline: 2px solid var(--spectrum-blue-900, #0265dc);
+  outline-offset: 3px;
+  }
+
+.spectrum .spectrum-FieldLabel {
+  display: block;
+  padding-bottom: 6px;
+  }

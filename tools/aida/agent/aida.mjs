@@ -20,8 +20,9 @@
  */
 /* eslint-disable no-console */
 import { readFileSync } from 'node:fs';
+import { withVehicleJsonLd } from '../../../scripts/aida-doc.js';
 import {
-  autoBind, syncBindings, valuesFromSheet, marketForPath, textOf,
+  autoBind, syncBindings, valuesFromSheet, marketForPath, textOf, dataRootForPath,
 } from '../../../scripts/aida-wdh.js';
 import {
   translateHtml, getMetadata, setMetadata, parseJsonArray,
@@ -74,7 +75,7 @@ async function marketValues(path) {
   const page = marketForPath(path);
   if (!page) throw new Error(`${path} is not in a language or market folder`);
   if (page.fallback) console.log(`note: no WDH export for ${page.locale}, using ${page.market}`);
-  const data = await sheet(`/aida/data/wdh-${page.market}.json`);
+  const data = await sheet(`${dataRootForPath(path)}/wdh-${page.market}.json`);
   return { market: page.market, values: valuesFromSheet(data), models: data.models?.data || [] };
 }
 
@@ -89,7 +90,7 @@ async function brandTerms() {
 function applyWdh(html, { market, values, models }) {
   const result = syncBindings(html, market, values);
   const model = models.find((m) => m.code === getMetadata(result.html, 'wdh-model'));
-  const withLd = model?.jsonld ? setMetadata(result.html, 'json-ld', model.jsonld) : result.html;
+  const withLd = model?.jsonld ? withVehicleJsonLd(result.html, model.jsonld) : result.html;
   return { ...result, html: withLd };
 }
 

@@ -565,8 +565,10 @@ test('scripted source update copy has meaningful DE/FR dictionary translations w
     ['title', 'headline', 'disclaimer'].forEach((field) => {
       assert.equal(doc.fields[field], expected[language][field]);
     });
-    assert.equal(doc.components.find((c) => c.id === 'hero').headline,
-      expected[language].headline);
+    assert.equal(
+      doc.components.find((c) => c.id === 'hero').headline,
+      expected[language].headline,
+    );
     assert.equal(doc.components.find((c) => c.id === 'hero').cta, '/aida/showcase/en/i5');
     ['teaser', 'features', 'charging'].forEach((id) => {
       assert.equal(doc.components.find((c) => c.id === id).text, expected[language][id]);

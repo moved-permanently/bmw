@@ -3,10 +3,12 @@
   <head>
     <title>BMW assets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../spectrum.css">
+    <link rel="stylesheet" href="../aida-plugin.css">
     <link rel="stylesheet" href="./asset-picker.css">
     <script src="./asset-picker.js" type="module"></script>
   </head>
-  <body>
+  <body class="spectrum spectrum--medium spectrum--light">
     <main class="asset-picker">
       <header>
         <h1>BMW assets</h1>
@@ -15,22 +17,22 @@
       </header>
       <section id="asset-browser" aria-label="Find an image">
         <form id="asset-filters" role="search">
-          <label class="asset-search">Search<input id="asset-search" type="search" placeholder="Model, subject or asset name" autocomplete="off"></label>
+          <label class="asset-search">Search<span class="spectrum-Textfield spectrum-Textfield--sizeM"><input id="asset-search" type="search" placeholder="Model, subject or asset name" autocomplete="off" class="spectrum-Textfield-input"></span></label>
           <div class="asset-facets">
-            <label>Asset kind<select id="asset-kind"><option value="">All images</option><option value="marketing">Marketing</option><option value="cosy">Vehicle renders (COSY)</option></select></label>
-            <label>Country<select id="asset-country"><option value="">All countries</option></select></label>
-            <label>Brand<select id="asset-brand"><option value="">All brands</option></select></label>
-            <label>Family<select id="asset-family"><option value="">All families</option></select></label>
-            <label>Model<select id="asset-model"><option value="">All models</option></select></label>
+            <label>Asset kind<select id="asset-kind" class="spectrum-Picker spectrum-Picker--sizeM"><option value="">All images</option><option value="marketing">Marketing</option><option value="cosy">Vehicle renders (COSY)</option></select></label>
+            <label>Country<select id="asset-country" class="spectrum-Picker spectrum-Picker--sizeM"><option value="">All countries</option></select></label>
+            <label>Brand<select id="asset-brand" class="spectrum-Picker spectrum-Picker--sizeM"><option value="">All brands</option></select></label>
+            <label>Family<select id="asset-family" class="spectrum-Picker spectrum-Picker--sizeM"><option value="">All families</option></select></label>
+            <label>Model<select id="asset-model" class="spectrum-Picker spectrum-Picker--sizeM"><option value="">All models</option></select></label>
           </div>
         </form>
-        <div class="asset-results-heading"><p id="asset-count" role="status" aria-live="polite">Loading catalogue…</p><button id="asset-reset" type="button" class="asset-secondary">Reset filters</button></div>
+        <div class="asset-results-heading"><p id="asset-count" role="status" aria-live="polite">Loading catalogue…</p><button id="asset-reset" type="button" class="spectrum-Button spectrum-Button--sizeM spectrum-Button--secondary spectrum-Button--outline"><span class="spectrum-Button-label">Reset filters</span></button></div>
         <ul id="asset-results" class="asset-grid" aria-label="Images"></ul>
         <p id="asset-empty" hidden>No matching images. Try another model or reset the filters.</p>
-        <button id="asset-more" type="button" class="asset-secondary" hidden>Show more</button>
+        <button id="asset-more" type="button" hidden class="spectrum-Button spectrum-Button--sizeM spectrum-Button--secondary spectrum-Button--outline"><span class="spectrum-Button-label">Show more</span></button>
       </section>
       <section id="asset-detail" aria-label="Selected image" hidden>
-        <button id="asset-back" type="button" class="asset-secondary">← Back to images</button>
+        <button id="asset-back" type="button" class="spectrum-Button spectrum-Button--sizeM spectrum-Button--secondary spectrum-Button--outline"><span class="spectrum-Button-label">← Back to images</span></button>
         <h2 id="asset-title"></h2>
         <p id="asset-tags" class="asset-note"></p>
         <figure id="asset-preview" class="asset-preview"></figure>
@@ -38,18 +40,18 @@
         <fieldset id="asset-scene7">
           <legend>Scene7 options</legend>
           <div class="asset-options">
-            <label>Smart crop<select id="asset-crop"><option value="">As authored</option></select></label>
-            <label>Framing<select id="asset-framing"><option value="">As selected</option><option value="1:1">Square · 1:1</option><option value="16:9">Landscape · 16:9</option><option value="3:2">Landscape · 3:2</option><option value="4:5">Portrait · 4:5</option></select></label>
-            <label>Keep subject near<select id="asset-anchor" disabled><option value="center">Center</option><option value="left">Left</option><option value="right">Right</option><option value="top">Top</option><option value="bottom">Bottom</option></select></label>
+            <label>Smart crop<select id="asset-crop" class="spectrum-Picker spectrum-Picker--sizeM"><option value="">As authored</option></select></label>
+            <label>Framing<select id="asset-framing" class="spectrum-Picker spectrum-Picker--sizeM"><option value="">As selected</option><option value="1:1">Square · 1:1</option><option value="16:9">Landscape · 16:9</option><option value="3:2">Landscape · 3:2</option><option value="4:5">Portrait · 4:5</option></select></label>
+            <label>Keep subject near<select id="asset-anchor" disabled class="spectrum-Picker spectrum-Picker--sizeM"><option value="center">Center</option><option value="left">Left</option><option value="right">Right</option><option value="top">Top</option><option value="bottom">Bottom</option></select></label>
           </div>
-          <label class="asset-check"><input id="asset-sharpen" type="checkbox">Sharpen after resizing</label>
+          <label class="asset-check spectrum-Checkbox spectrum-Checkbox--sizeM"><input id="asset-sharpen" type="checkbox" class="spectrum-Checkbox-input"><span class="spectrum-Checkbox-box"><svg class="spectrum-Checkbox-checkmark" viewBox="0 0 10 10" aria-hidden="true"><path d="M3.5 8.5 0 5l1.5-1.5 2 2 5-5L10 2z"/></svg></span><span class="spectrum-Checkbox-label">Sharpen after resizing</span></label>
           <p class="asset-note">Smart crops come from observed variants. Framing crops the selected rendition; responsive size and format stay automatic.</p>
         </fieldset>
-        <label>Alt text<textarea id="asset-alt" rows="2" maxlength="500"></textarea></label>
-        <label class="asset-check"><input id="asset-decorative" type="checkbox">Decorative image (empty alt text)</label>
+        <label>Alt text<span class="spectrum-Textfield spectrum-Textfield--multiline spectrum-Textfield--sizeM"><textarea id="asset-alt" rows="2" maxlength="500" class="spectrum-Textfield-input"></textarea></span></label>
+        <label class="asset-check spectrum-Checkbox spectrum-Checkbox--sizeM"><input id="asset-decorative" type="checkbox" class="spectrum-Checkbox-input"><span class="spectrum-Checkbox-box"><svg class="spectrum-Checkbox-checkmark" viewBox="0 0 10 10" aria-hidden="true"><path d="M3.5 8.5 0 5l1.5-1.5 2 2 5-5L10 2z"/></svg></span><span class="spectrum-Checkbox-label">Decorative image (empty alt text)</span></label>
         <details><summary>Source pages</summary><ul id="asset-sources"></ul></details>
-        <details><summary>Delivery URL and insertion markup</summary><label>Delivery URL<textarea id="asset-url" rows="2" readonly></textarea></label><label>Insertion markup<textarea id="asset-markup" rows="3" readonly></textarea></label></details>
-        <div class="asset-actions"><button id="asset-insert" type="button" disabled>Insert image</button><button id="asset-copy" type="button" class="asset-secondary" disabled>Copy markup</button></div>
+        <details><summary>Delivery URL and insertion markup</summary><label>Delivery URL<span class="spectrum-Textfield spectrum-Textfield--multiline spectrum-Textfield--sizeM"><textarea id="asset-url" rows="2" readonly class="spectrum-Textfield-input"></textarea></span></label><label>Insertion markup<span class="spectrum-Textfield spectrum-Textfield--multiline spectrum-Textfield--sizeM"><textarea id="asset-markup" rows="3" readonly class="spectrum-Textfield-input"></textarea></span></label></details>
+        <div class="asset-actions"><button id="asset-insert" type="button" disabled class="spectrum-Button spectrum-Button--sizeM spectrum-Button--accent spectrum-Button--fill"><span class="spectrum-Button-label">Insert image</span></button><button id="asset-copy" type="button" disabled class="spectrum-Button spectrum-Button--sizeM spectrum-Button--secondary spectrum-Button--outline"><span class="spectrum-Button-label">Copy markup</span></button></div>
         <p id="asset-message" role="status" aria-live="polite"></p>
       </section>
       <p id="asset-error" class="asset-error" role="alert" hidden></p>

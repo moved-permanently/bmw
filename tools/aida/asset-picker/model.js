@@ -9,6 +9,7 @@ export function countryForContext(context = {}) {
   const parts = path.toLowerCase().split('/').filter(Boolean);
   const isAida = parts[0] === 'aida';
   if (isAida) parts.shift();
+  if (isAida && parts[0] === 'showcase') parts.shift();
   const locale = parts[0]?.match(/^[a-z]{2}[-_]([a-z]{2})$/);
   if (locale && COUNTRY_CODES.includes(locale[1])) return locale[1];
   if (COUNTRY_CODES.includes(parts[1])) return parts[1];

@@ -63,7 +63,7 @@ test('radar deep links select only a known market context and never imply authen
 });
 
 test('architecture preserves all named independent organizations and separates environments from them', () => {
-  const architecture = createDemo().architecture;
+  const { architecture } = createDemo();
   assert.ok(architecture);
   const names = architecture.organizations.map((org) => org.name);
   ['BMW', 'MINI', 'Motorrad', 'M', 'Alpina', 'Rolls-Royce', 'Alphabet', 'BMW Group / Jobs', 'BMW Welt', 'BMW BKK', 'BMW Golfsport'].forEach((name) => assert.ok(names.includes(name)));

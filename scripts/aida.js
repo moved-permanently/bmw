@@ -1,5 +1,5 @@
 import {
-  parseBinding, marketForPath, valuesFromSheet, staleBindings,
+  parseBinding, marketForPath, valuesFromSheet, staleBindings, dataRootForPath,
 } from './aida-wdh.js';
 import { fetchSheet } from './bmw-utils.js';
 import { loadCSS } from './aem.js';
@@ -24,7 +24,7 @@ export async function checkWdhValues(found) {
   const market = marketForPath(window.location.pathname)?.market || bindings[0].market;
   let values = new Map();
   try {
-    values = valuesFromSheet(await fetchSheet(`/aida/data/wdh-${market}.json`));
+    values = valuesFromSheet(await fetchSheet(`${dataRootForPath(window.location.pathname)}/wdh-${market}.json`));
   } catch (e) {
     // no sheet for this market: every value is reported as unknown
   }

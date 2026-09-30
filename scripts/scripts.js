@@ -516,7 +516,8 @@ async function loadLazy(doc) {
 
   import('./bmw-consent.js').then((m) => m.default());
   import('./bmw-sidebar.js').then((m) => m.default());
-  if (wdhBindings.length && /(\.aem\.page|\.preview\.da\.live|^localhost)$/.test(window.location.hostname)) {
+  const showcasePage = /^\/(?:drafts\/)?aida\/showcase\//.test(window.location.pathname);
+  if (wdhBindings.length && !showcasePage && /(\.aem\.page|\.preview\.da\.live|^localhost)$/.test(window.location.hostname)) {
     import('./aida.js').then((m) => m.checkWdhValues(wdhBindings));
   }
 }

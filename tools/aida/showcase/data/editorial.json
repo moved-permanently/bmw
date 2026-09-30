@@ -1,0 +1,227 @@
+{
+  "demo": true,
+  "source": "BMW_AIDA_VendorBriefing 3_Data Sources.docx",
+  "compositionSource": "BMW-BMW-AIDAOS-VendorBriefingIII-ContentArchitectureWorkflow.pdf",
+  "notes": [
+    "The PDF controls mandatory compositions; the DOCX supplies illustrative copy and offers, not live product claims.",
+    "Cannes and Concept M are required by the PDF but have no article copy in the DOCX. They are explicitly synthetic editorial fixtures.",
+    "Illustrative catalogue photography is not represented as an event photograph, concept rendering or hydrogen production vehicle.",
+    "French translations are demo editorial adaptations, not approved BMW translations. Belgium is a separate demo context using the French sheet."
+  ],
+  "assets": {
+    "i5": {
+      "id": "bmw-3b718b4a55235829",
+      "alt": "BMW i5 exterior"
+    },
+    "ix3": {
+      "id": "bmw-9d46fa0fd0784cc3",
+      "alt": "BMW iX3 exterior"
+    },
+    "m5": {
+      "id": "bmw-4076ac6e8609a875",
+      "alt": "BMW M5 exterior"
+    },
+    "charging": {
+      "id": "bmw-8f2a62d0b0b5d00e",
+      "alt": "BMW i5 charging at home"
+    },
+    "range": {
+      "id": "bmw-ee84339502fe9f38",
+      "alt": "BMW i5 electric driving"
+    },
+    "interior": {
+      "id": "bmw-6f27614d4c03503a",
+      "alt": "Illustrative BMW ALPINA interior, not the BMW Group odor laboratory"
+    },
+    "3-series": {
+      "id": "bmw-85888fed3ee23e46",
+      "alt": "BMW 3 Series exterior"
+    }
+  },
+  "video": {
+    "url": "https://bmw.scene7.com/is/content/BMW/na5_stage_1920_1024_sl",
+    "posterAsset": "ix3",
+    "source": "https://www.bmw.de/de/neufahrzeuge/x/ix3/bmw-ix3.html",
+    "observedDelivery": "HTTP HEAD verified 200, Content-Type video/mp4, Content-Length 9259784, Access-Control-Allow-Origin *. Progressive URL observed and verified during source audit; original HLS manifest retained as alternate.",
+    "autoplay": false,
+    "hlsUrl": "https://bmw.scene7.com/is/content/BMW/na5_stage_1920_1024_sl-AVS.m3u8"
+  },
+  "i5Video": {
+    "url": "https://bmw.scene7.com/is/content/BMW/P001_SL_G60-8135_Ext_Dsk_v001",
+    "posterAsset": "i5",
+    "source": "https://main--bmw--moved-permanently.aem.page/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick.plain.html",
+    "observedDelivery": "HTTP HEAD verified 200, Content-Type video/mp4, Content-Length 6500512, Access-Control-Allow-Origin *. Progressive URL observed and verified during source audit; original HLS manifest retained as alternate.",
+    "autoplay": false,
+    "hlsUrl": "https://bmw.scene7.com/is/content/BMW/P001_SL_G60-8135_Ext_Dsk_v001-AVS.m3u8"
+  },
+  "models": [
+    {
+      "code": "61HG",
+      "name": "BMW i5 eDrive40",
+      "asset": "i5",
+      "drivetrain": "BEVE",
+      "discovery": true,
+      "tags": [
+        "electric",
+        "latest-range"
+      ]
+    },
+    {
+      "code": "31HR",
+      "name": "BMW iX3 50 xDrive",
+      "asset": "ix3",
+      "drivetrain": "BEVE",
+      "discovery": true,
+      "tags": [
+        "electric",
+        "latest-range",
+        "X"
+      ]
+    },
+    {
+      "code": "81FK",
+      "name": "BMW M5",
+      "asset": "m5",
+      "drivetrain": "PHEV",
+      "discovery": true,
+      "tags": [
+        "electrified",
+        "M",
+        "latest-range"
+      ]
+    },
+    {
+      "code": "71FJ",
+      "name": "BMW 530e",
+      "asset": "i5",
+      "drivetrain": "PHEV",
+      "discovery": false,
+      "tags": [
+        "electrified"
+      ]
+    }
+  ],
+  "news": [
+    {
+      "id": "i5-launch",
+      "asset": "i5",
+      "code": "61HG",
+      "sourceKind": "supplied-wdh",
+      "en": {
+        "title": "The BMW i5. 100% electric.",
+        "teaserShort": "Discover the BMW i5 eDrive40 through the supplied vehicle-data extract.",
+        "teaserLong": "Discover the BMW i5 eDrive40 through the supplied vehicle-data extract. The same range, charging and consumption figures are reused on the home, model and topic pages."
+      },
+      "de": {
+        "title": "Der BMW i5. 100% elektrisch.",
+        "teaserShort": "Entdecken Sie den BMW i5 eDrive40 anhand des bereitgestellten Fahrzeugdatensatzes.",
+        "teaserLong": "Entdecken Sie den BMW i5 eDrive40 anhand des bereitgestellten Fahrzeugdatensatzes. Reichweite, Laden und Verbrauch werden auf Startseite, Modellseite und Themenseite wiederverwendet."
+      },
+      "fr": {
+        "title": "La BMW i5. 100 % électrique.",
+        "teaserShort": "Découvrez la BMW i5 eDrive40 à travers les données du véhicule fournies.",
+        "teaserLong": "Découvrez la BMW i5 eDrive40 à travers les données du véhicule fournies. Les mêmes valeurs d’autonomie, de recharge et de consommation sont réutilisées sur les pages d’accueil, modèle et thématique."
+      }
+    },
+    {
+      "id": "cannes",
+      "asset": "ix3",
+      "sourceKind": "synthetic-editorial-fixture",
+      "en": {
+        "title": "BMW in Cannes",
+        "teaserShort": "A shared Cannes editorial story for the BMW briefing demo.",
+        "teaserLong": "A shared Cannes editorial story for the BMW briefing demo. This synthetic fixture demonstrates mandatory home-page news reuse; the vehicle photograph is illustrative and does not document an event."
+      },
+      "de": {
+        "title": "BMW in Cannes",
+        "teaserShort": "Eine gemeinsame Cannes-Geschichte für die BMW-Briefing-Demo.",
+        "teaserLong": "Eine gemeinsame Cannes-Geschichte für die BMW-Briefing-Demo. Dieser redaktionelle Demo-Datensatz zeigt die Wiederverwendung auf der Startseite. Das Fahrzeugbild ist eine Illustration und keine Eventaufnahme."
+      },
+      "fr": {
+        "title": "BMW à Cannes",
+        "teaserShort": "Une actualité Cannes partagée pour la démonstration BMW.",
+        "teaserLong": "Une actualité Cannes partagée pour la démonstration BMW. Ce contenu éditorial fictif illustre la réutilisation sur la page d’accueil. La photo du véhicule est illustrative et ne documente pas un événement."
+      }
+    },
+    {
+      "id": "concept-m",
+      "asset": "m5",
+      "sourceKind": "synthetic-editorial-fixture",
+      "en": {
+        "title": "BMW Concept M",
+        "teaserShort": "An editorial concept story, shared across the demo contexts.",
+        "teaserLong": "An editorial concept story, shared across the demo contexts. This synthetic fixture demonstrates the mandatory Concept M teaser. The photograph shows a BMW M5, not an asserted concept vehicle."
+      },
+      "de": {
+        "title": "BMW Concept M",
+        "teaserShort": "Eine redaktionelle Konzeptgeschichte für alle Demo-Kontexte.",
+        "teaserLong": "Eine redaktionelle Konzeptgeschichte für alle Demo-Kontexte. Dieser Demo-Datensatz zeigt den verpflichtenden Concept-M-Teaser. Das Foto zeigt einen BMW M5, kein behauptetes Konzeptfahrzeug."
+      },
+      "fr": {
+        "title": "BMW Concept M",
+        "teaserShort": "Un récit éditorial de concept partagé entre les contextes de démonstration.",
+        "teaserLong": "Un récit éditorial de concept partagé entre les contextes de démonstration. Ce contenu fictif illustre le teaser Concept M obligatoire. La photographie représente une BMW M5 et non un véhicule concept revendiqué."
+      }
+    },
+    {
+      "id": "interior",
+      "asset": "interior",
+      "sourceKind": "brief-fixture",
+      "en": {
+        "title": "How the BMW Group Extends Sustainability All the Way to the Vehicle Interior.",
+        "teaserShort": "Smell is just one part of what defines a vehicle interior. Material selection and interior emissions also shape how healthy and pleasant the atmosphere inside the car feels.",
+        "teaserLong": "Smell is just one part of what defines a vehicle interior. Material selection and interior emissions also shape how healthy and pleasant the atmosphere inside the car feels. A behind-the-scenes look reveals why well-being is now part of product sustainability – and what role the BMW Group’s odor lab plays in it."
+      },
+      "de": {
+        "title": "Wie die BMW Group Nachhaltigkeit bis in den Fahrzeuginnenraum denkt.",
+        "teaserShort": "Geruch ist nur ein Teil dessen, was einen Fahrzeuginnenraum ausmacht. Auch Materialauswahl und Innenraumemissionen prägen, wie gesund und angenehm die Atmosphäre im Auto ist.",
+        "teaserLong": "Geruch ist nur ein Teil dessen, was einen Fahrzeuginnenraum ausmacht. Auch Materialauswahl und Innenraumemissionen prägen, wie gesund und angenehm die Atmosphäre im Auto ist. Warum Wohlbefinden heute Teil der Produktnachhaltigkeit ist – und welche Rolle das BMW Group Geruchslabor dabei spielt – zeigt ein Blick hinter die Kulissen."
+      },
+      "fr": {
+        "title": "Comment BMW Group pense la durabilité jusque dans l’habitacle.",
+        "teaserShort": "L’odeur n’est qu’une partie de ce qui définit un habitacle. Le choix des matériaux et les émissions intérieures influencent également le bien-être à bord.",
+        "teaserLong": "L’odeur n’est qu’une partie de ce qui définit un habitacle. Le choix des matériaux et les émissions intérieures influencent également le bien-être à bord. Un regard dans les coulisses montre pourquoi le bien-être fait partie de la durabilité du produit et quel rôle joue le laboratoire olfactif de BMW Group."
+      }
+    },
+    {
+      "id": "hydrogen",
+      "asset": "ix3",
+      "sourceKind": "brief-fixture",
+      "en": {
+        "title": "BMW iX5 Hydrogen",
+        "teaserShort": "Explore the hydrogen story supplied for the briefing.",
+        "teaserLong": "The briefing describes a fuel-cell system co-developed with Toyota for the BMW iX5 Hydrogen. This is exemplary briefing copy, not a verified production announcement. The photograph shows an electric BMW iX3 as an illustration, not the iX5 Hydrogen."
+      },
+      "de": {
+        "title": "BMW iX5 Hydrogen",
+        "teaserShort": "Entdecken Sie die Wasserstoffgeschichte aus dem Briefing.",
+        "teaserLong": "Das Briefing beschreibt ein mit Toyota weiterentwickeltes Brennstoffzellensystem für den BMW iX5 Hydrogen. Dies ist beispielhafter Briefing-Inhalt, keine bestätigte Serienankündigung. Das Foto zeigt einen elektrischen BMW iX3 als Illustration, nicht den iX5 Hydrogen."
+      },
+      "fr": {
+        "title": "BMW iX5 Hydrogen",
+        "teaserShort": "Découvrez le récit hydrogène fourni pour le briefing.",
+        "teaserLong": "Le briefing décrit un système de pile à combustible développé avec Toyota pour la BMW iX5 Hydrogen. Il s’agit d’un exemple éditorial, non d’une annonce de production vérifiée. La photographie illustre une BMW iX3 électrique, pas une iX5 Hydrogen."
+      }
+    },
+    {
+      "id": "3-series",
+      "asset": "3-series",
+      "sourceKind": "brief-fixture",
+      "en": {
+        "title": "50 Years of the BMW 3 Series – Seven Generations of Driving Pleasure.",
+        "teaserShort": "50 years, seven generations, one promise: pure driving pleasure.",
+        "teaserLong": "50 years, seven generations, one promise: pure driving pleasure. Since its debut in 1975, the BMW 3 Series has continued to evolve – a BMW that perfectly combines everyday practicality and adrenaline. Design, engines, and innovations spark anew time and again. A journey through half a century of automotive history. Generation by generation."
+      },
+      "de": {
+        "title": "50 Jahre BMW 3er – sieben Generationen Fahrfreude.",
+        "teaserShort": "50 Jahre, sieben Generationen, ein Versprechen: Fahrfreude pur.",
+        "teaserLong": "50 Jahre, sieben Generationen, ein Versprechen: Fahrfreude pur. Seit seinem Debüt 1975 treibt der BMW 3er seine Evolution voran – ein BMW der Alltag und Adrenalin perfekt verbindet. Design, Motoren und Innovationen zünden immer wieder neu. Eine Zeitreise durch ein halbes Jahrhundert Automobilgeschichte. Baureihe für Baureihe."
+      },
+      "fr": {
+        "title": "50 ans de BMW Série 3 – sept générations de plaisir de conduire.",
+        "teaserShort": "50 ans, sept générations, une promesse : le plaisir de conduire.",
+        "teaserLong": "50 ans, sept générations, une promesse : le plaisir de conduire. Depuis ses débuts en 1975, la BMW Série 3 évolue en associant le quotidien et la passion. Une traversée d’un demi-siècle d’histoire automobile, génération après génération."
+      }
+    }
+  ]
+}

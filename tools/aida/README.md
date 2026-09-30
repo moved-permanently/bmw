@@ -1,5 +1,12 @@
 # AIDA demo: composable without headless
 
+## Current connected RfP I + III showcase
+
+[Start the connected playground on main](https://main--bmw--moved-permanently.aem.page/tools/aida/showcase/index.html).
+The [showcase README](https://github.com/moved-permanently/bmw/blob/main/tools/aida/showcase/README.md) describes the current compositions, Spectrum tooling, simulation boundaries and reproducible fixtures. It supersedes the rehearsal/reset instructions below for the connected showcase. Existing migrated and `/aida/` demonstration content is preserved.
+
+The public playground needs no extra access. Real DA editing still uses the author's existing identity; simulated personas, embargo, approvals, translation provider and releases are explicitly browser-local substitutes, not security controls.
+
 A demo layer on the migrated bmw.de that answers the RfP's content-creator and Vendor Briefing I/III
 scenarios, told as the BMW i5 launch. It is built, live on preview, and everything below can be
 clicked. Content lives under `/aida/`; the migrated site is unchanged.
