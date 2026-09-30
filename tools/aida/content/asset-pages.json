@@ -1,0 +1,25 @@
+{
+  "pages": [
+    { "path": "/de/home", "brand": "BMW" },
+    { "path": "/de/neufahrzeuge/1er/bmw-1er/bmw-1er", "brand": "BMW", "family": "1 Series", "model": "1 Series" },
+    { "path": "/de/neufahrzeuge/3er/bmw-3-er-limousine/bmw-3er-limousine", "brand": "BMW", "family": "3 Series", "model": "3 Series Sedan" },
+    { "path": "/de/neufahrzeuge/5er/limousine/bmw-5er-limousine-ueberblick", "brand": "BMW", "family": "5 Series", "model": "5 Series Sedan" },
+    { "path": "/de/neufahrzeuge/7er/limousine/bmw-7er-limousine", "brand": "BMW", "family": "7 Series", "model": "7 Series Sedan" },
+    { "path": "/de/neufahrzeuge/bmw-i/i4/bmw-i4-gran-coupe", "brand": "BMW", "family": "4 Series", "model": "i4" },
+    { "path": "/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick", "brand": "BMW", "family": "5 Series", "model": "i5" },
+    { "path": "/de/neufahrzeuge/7er/limousine/bmw-i7-limousine", "brand": "BMW", "family": "7 Series", "model": "i7" },
+    { "path": "/de/neufahrzeuge/bmw-i/ix/bmw-ix", "brand": "BMW", "family": "X", "model": "iX" },
+    { "path": "/de/neufahrzeuge/bmw-i/ix1/bmw-ix1", "brand": "BMW", "family": "X1", "model": "iX1" },
+    { "path": "/de/neufahrzeuge/bmw-i/ix2/bmw-ix2-ueberblick", "brand": "BMW", "family": "X2", "model": "iX2" },
+    { "path": "/de/neufahrzeuge/x/ix3/bmw-ix3", "brand": "BMW", "family": "X3", "model": "iX3" },
+    { "path": "/de/neufahrzeuge/x/x3/bmw-x3", "brand": "BMW", "family": "X3", "model": "X3" },
+    { "path": "/de/neufahrzeuge/x/suv/bmw-x5", "brand": "BMW", "family": "X5", "model": "X5" },
+    { "path": "/de/neufahrzeuge/x/x7/bmw-x7", "brand": "BMW", "family": "X7", "model": "X7" },
+    { "path": "/de/neufahrzeuge/m/bmw-2er-m-modelle/bmw-m2-coupe", "brand": "BMW M", "family": "2 Series", "model": "M2" },
+    { "path": "/de/neufahrzeuge/m/bmw-3er-m-modelle/bmw-m3-limousine", "brand": "BMW M", "family": "3 Series", "model": "M3" },
+    { "path": "/de/neufahrzeuge/m/bmw-4er-m-modelle/bmw-m4-coupe", "brand": "BMW M", "family": "4 Series", "model": "M4" },
+    { "path": "/de/neufahrzeuge/m/m5-series/bmw-m5-limousine", "brand": "BMW M", "family": "5 Series", "model": "M5" },
+    { "path": "/de/neufahrzeuge/m/xm/bmw-xm", "brand": "BMW M", "family": "XM", "model": "XM" },
+    { "path": "/de/bmw-alpina", "brand": "BMW ALPINA", "family": "ALPINA", "model": "BMW ALPINA" }
+  ]
+}
