@@ -32,7 +32,7 @@ const freeze = (object) => {
   return Object.freeze(object);
 };
 
-test('complete self-contained fixtures have independent contexts and explicit simulation boundaries', () => {
+test('self-contained fixtures expose independent contexts and simulation boundaries', () => {
   const state = createDemo();
   assert.equal(state.hq.path, '/aida/showcase/en/news/i5-launch');
   assert.equal(state.markets.de.path, '/aida/showcase/de/de/news/i5-launch');
@@ -90,11 +90,11 @@ test('save permits only HQ editable fields and invalidates approval and release 
 });
 
 test('submit gates metadata, BMW glossary and WLTP legal text', () => {
-  for (const fields of [{ title: '' }, { legal: '' }, { body: 'The bmw I5 launch.' }]) {
+  [{ title: '' }, { legal: '' }, { body: 'The bmw I5 launch.' }].forEach((fields) => {
     const state = act(createDemo(), 'SAVE', { actor: 'hq-author', fields });
     assert.ok(checks(state).some((check) => !check.pass));
     assert.throws(() => submit(state), /check|governance/i);
-  }
+  });
 });
 
 test('review requires submission, proper role, different persona and current revision', () => {
@@ -113,9 +113,9 @@ test('review requires submission, proper role, different persona and current rev
 
 test('reject needs actionable field, feedback, simulated mention and review team', () => {
   const state = submit(createDemo());
-  for (const feedback of [undefined, {}, { field: 'legal', message: 'Fix', mention: 'hq-author' }]) {
+  [undefined, {}, { field: 'legal', message: 'Fix', mention: 'hq-author' }].forEach((feedback) => {
     assert.throws(() => act(state, 'REJECT', { actor: 'hq-reviewer', feedback }), /feedback|team/i);
-  }
+  });
   const rejected = act(state, 'REJECT', {
     actor: 'hq-reviewer',
     feedback: {
@@ -132,14 +132,14 @@ test('reject needs actionable field, feedback, simulated mention and review team
 test('translation is an approved-source batch with glossary, style and TM provenance', () => {
   assert.throws(() => act(createDemo(), 'TRANSLATE', { actor: 'translator' }), /approv/i);
   const state = act(approve(createDemo()), 'TRANSLATE', { actor: 'translator', languages: ['de', 'fr'] });
-  for (const language of ['de', 'fr']) {
+  ['de', 'fr'].forEach((language) => {
     const translation = state.translations[language];
     assert.equal(translation.sourceRevision, state.hq.revision);
     assert.match(translation.text, /BMW.*eDrive.*WLTP/s);
     assert.deepEqual(translation.glossary, ['BMW', 'eDrive', 'WLTP']);
     assert.ok(translation.style);
     assert.ok(translation.provenance);
-  }
+  });
   assert.throws(() => act(state, 'TRANSLATE', { actor: 'translator', languages: ['xx'] }), /language/i);
 });
 
@@ -157,12 +157,12 @@ test('manual translation correction persists and is reused for the same source r
 test('rollout needs current approved source and current fixture translations', () => {
   assert.throws(() => act(approve(createDemo()), 'ROLLOUT', { actor: 'hq-author' }), /translation/i);
   const state = rollout();
-  for (const market of Object.values(state.markets)) {
+  Object.values(state.markets).forEach((market) => {
     assert.equal(market.acceptedSourceRevision, state.hq.revision);
     assert.equal(market.sourceRevision, state.hq.revision);
     assert.equal(market.rolledOut, true);
     assert.equal(market.review, 'draft');
-  }
+  });
   const changed = act(state, 'UPDATE_SOURCE', { actor: 'hq-author', fields: { title: 'BMW i5 source revision two.' } });
   assert.equal(changed.hq.approvedRevision, null);
   assert.throws(() => act(changed, 'ROLLOUT', { actor: 'hq-author' }), /approv/i);
@@ -182,7 +182,7 @@ test('market localization permits local overrides but never source metadata or l
   assert.throws(() => submit(bad, 'de'), /check|governance/i);
 });
 
-test('rerollout retains local intro/CTA and locally moved stable teaser id while upstream text updates', () => {
+test('rerollout preserves local intro/CTA and moved teaser id while upstream text updates', () => {
   let state = localize(rollout(), {
     fields: { localIntro: 'Local introduction', localCta: 'Local offer' },
     components: { move: [{ id: 'teaser', index: 0 }] },
@@ -190,7 +190,8 @@ test('rerollout retains local intro/CTA and locally moved stable teaser id while
   state = reroll(updated(state, { update: [{ id: 'teaser', fields: { text: 'Updated upstream BMW i5 teaser.' } }] }));
   const market = state.markets.de;
   assert.equal(market.components[0].id, 'teaser');
-  assert.equal(market.components[0].text, 'Updated upstream BMW i5 teaser.');
+  assert.equal(market.components[0].text,
+    state.translations.de.document.components.find((c) => c.id === 'teaser').text);
   assert.equal(market.fields.localIntro, 'Local introduction');
   assert.equal(market.fields.localCta, 'Local offer');
   assert.equal(market.conflicts.length, 0);
@@ -232,11 +233,11 @@ test('resolutions reject invalid id/choice/manual values and accept upstream, lo
   assert.throws(() => act(state, 'RESOLVE', {
     actor: 'market-author', market: 'de', conflictId: headline.id, choice: 'manual', value: '',
   }), /manual|text/i);
-  for (const [conflict, choice, value] of [[headline, 'manual', 'Manually reviewed BMW i5'], [asset, 'upstream'], [cta, 'local']]) {
+  [[headline, 'manual', 'Manually reviewed BMW i5'], [asset, 'upstream'], [cta, 'local']].forEach(([conflict, choice, value]) => {
     state = act(state, 'RESOLVE', {
       actor: 'market-author', market: 'de', conflictId: conflict.id, choice, value,
     });
-  }
+  });
   assert.equal(state.markets.de.conflicts.length, 0);
   assert.equal(state.markets.de.acceptedSourceRevision, state.hq.revision);
   const hero = state.markets.de.components.find((component) => component.id === 'hero');
@@ -265,11 +266,11 @@ test('component add/remove, feature and competing reorder changes expose resolva
   assert.ok(state.markets.de.conflicts.some((conflict) => conflict.path.includes('disclaimer')));
   assert.ok(state.markets.de.conflicts.some((conflict) => conflict.path.includes('features')));
   assert.ok(state.markets.de.conflicts.some((conflict) => conflict.path.includes('local-offer')));
-  for (const conflict of [...state.markets.de.conflicts]) {
+  [...state.markets.de.conflicts].forEach((conflict) => {
     state = act(state, 'RESOLVE', {
       actor: 'market-author', market: 'de', conflictId: conflict.id, choice: 'upstream',
     });
-  }
+  });
   assert.equal(state.markets.de.conflicts.length, 0);
   assert.equal(state.markets.de.components[0].id, 'features');
   assert.ok(!state.markets.de.components.some((component) => component.id === 'story'));
@@ -305,9 +306,9 @@ test('dry-run publish enforces simulated clock and frozen scheduled revision', (
 
 test('demo clock is bounded and counters are validated, local and explicitly simulated', () => {
   const state = createDemo();
-  for (const minutes of [-1, Infinity, 100000, '120']) {
+  [-1, Infinity, 100000, '120'].forEach((minutes) => {
     assert.throws(() => act(state, 'ADVANCE_TIME', { minutes }), /clock|minutes|bound/i);
-  }
+  });
   assert.throws(() => act(state, 'METRIC', { visits: 1, conversions: 2 }), /conversion|metric/i);
   assert.throws(() => act(state, 'METRIC', { visits: -1, conversions: 0 }), /metric|counter/i);
   const next = act(state, 'METRIC', { market: 'be', visits: 120, conversions: 8 });
@@ -329,12 +330,12 @@ test('radar offers traceable rows, context, independent revisions, blockers and 
   const rows = radarRows(state);
   assert.equal(rows.length, 5);
   const row = rows.find((item) => item.market === 'be');
-  for (const key of ['path', 'context', 'revision', 'sourceRevision', 'translation', 'review', 'release', 'blockers', 'actions']) {
+  ['path', 'context', 'revision', 'sourceRevision', 'translation', 'review', 'release', 'blockers', 'actions'].forEach((key) => {
     assert.ok(Object.hasOwn(row, key), key);
-  }
+  });
   assert.equal(row.context.language, 'fr');
   assert.equal(row.acceptedSourceRevision, state.hq.revision);
-  assert.ok(row.actions.every((action) => action.href.startsWith('/aida/showcase/')));
+  assert.ok(row.actions.every((action) => action.href.startsWith('/tools/aida/showcase/index.html')));
   assert.ok(checks(state).every((check) => typeof check.id === 'string'
     && typeof check.label === 'string' && typeof check.pass === 'boolean' && typeof check.message === 'string'));
 });
@@ -378,8 +379,112 @@ test('rerollout needs a populated initial rollout', () => {
 });
 
 test('market override assets must be fixture paths', () => {
-  const localized = localize(rollout(), { fields: { heroAsset: 'javascript:alert(1)' } });
+  const localized = localize(rollout(), { fields: { heroAsset: 'external.jpg' } });
   assert.equal(checks(localized, 'de').find((c) => c.id === 'assets').pass, false);
+});
+
+test('full-page fixture translation localizes copy without appending original English', () => {
+  const source = approve(createDemo());
+  const state = act(source, 'TRANSLATE', { actor: 'translator' });
+  ['de', 'fr'].forEach((language) => {
+    const translation = state.translations[language];
+    assert.ok(translation.document);
+    ['title', 'description', 'body', 'headline', 'legal'].forEach((field) => {
+      assert.notEqual(translation.document.fields[field], source.hq.fields[field], field);
+      assert.ok(!translation.document.fields[field].includes(source.hq.fields[field]), field);
+    });
+    assert.equal(translation.text, translation.document.fields.body);
+    assert.equal(translation.title, translation.document.fields.title);
+    ['hero', 'story', 'teaser', 'disclaimer'].forEach((id) => {
+      const original = source.hq.components.find((c) => c.id === id);
+      const localized = translation.document.components.find((c) => c.id === id);
+      ['headline', 'text', 'cta'].filter((field) => original[field]).forEach((field) => {
+        assert.notEqual(localized[field], original[field], `${id}.${field}`);
+      });
+      assert.equal(localized.id, original.id);
+      assert.equal(localized.type, original.type);
+      assert.equal(localized.asset, original.asset);
+    });
+    assert.equal(translation.document.fields.heroAsset, source.hq.fields.heroAsset);
+  });
+  const rolled = act(state, 'ROLLOUT', { actor: 'hq-author' });
+  ['de', 'fr', 'be', 'at'].forEach((market) => {
+    assert.deepEqual(rolled.markets[market].fields,
+      state.translations[rolled.contexts[market].language].document.fields);
+    assert.deepEqual(rolled.markets[market].components,
+      state.translations[rolled.contexts[market].language].document.components);
+  });
+});
+
+test('translated snapshots inherit technical values and distinguish upstream text updates', () => {
+  let state = updated(rollout(), {
+    add: [{ id: 'technical', type: 'data', modelId: '61HG', range: '513–627 km', power: '250 kW' }],
+    update: [{ id: 'teaser', fields: { text: 'Updated upstream BMW i5 teaser.' } }],
+  });
+  state = act(state, 'TRANSLATE', { actor: 'translator' });
+  const doc = state.translations.de.document;
+  assert.deepEqual(doc.components.find((c) => c.id === 'technical'),
+    state.hq.components.find((c) => c.id === 'technical'));
+  assert.notEqual(doc.components.find((c) => c.id === 'teaser').text,
+    state.hq.components.find((c) => c.id === 'teaser').text);
+  const initial = act(approve(createDemo()), 'TRANSLATE', { actor: 'translator' });
+  assert.notEqual(doc.components.find((c) => c.id === 'teaser').text,
+    initial.translations.de.document.components.find((c) => c.id === 'teaser').text);
+});
+
+test('manual correction changes the authoritative translated document and rollout body', () => {
+  let state = act(approve(createDemo()), 'TRANSLATE', { actor: 'translator' });
+  const body = 'La BMW i5 avec eDrive : texte corrigé. Données WLTP.';
+  state = act(state, 'CORRECT_TRANSLATION', { actor: 'translator', language: 'fr', text: body });
+  assert.equal(state.translations.fr.document.fields.body, body);
+  assert.equal(state.translations.fr.document.components.find((c) => c.id === 'story').text, body);
+  state = act(state, 'ROLLOUT', { actor: 'hq-author', markets: ['fr', 'be'] });
+  assert.equal(state.markets.fr.fields.body, body);
+  assert.equal(state.markets.be.components.find((c) => c.id === 'story').text, body);
+});
+
+test('initial fixture makes no unsupported numeric WDH legal claims and assets are synthetic', () => {
+  const state = createDemo();
+  assert.doesNotMatch(state.hq.fields.legal, /\d+[.,]\d+|\d+[–-]\d+/);
+  assert.match(state.hq.fields.legal, /no numeric model claims/i);
+  assert.equal(state.hq.fields.heroAsset, '/aida/showcase/data/mock-i5-asset');
+  assert.equal(state.hq.components.find((c) => c.id === 'hero').asset, state.hq.fields.heroAsset);
+  assert.equal(state.rightsPolicy.syntheticAsset, state.hq.fields.heroAsset);
+  assert.match(state.rightsPolicy.assets, /synthetic|not.*image/i);
+});
+
+test('radar workflow and rollout action links carry the exact document context', () => {
+  radarRows(createDemo()).forEach((row) => {
+    assert.deepEqual(row.actions.map((action) => new URL(action.href, 'https://demo.invalid').hash),
+      ['#workflow', '#rollout']);
+    row.actions.forEach((action) => {
+      const url = new URL(action.href, 'https://demo.invalid');
+      assert.equal(url.pathname, '/tools/aida/showcase/index.html');
+      assert.equal(url.searchParams.get('path'), row.path);
+      Object.entries(row.context).filter(([, value]) => value !== null).forEach(([key, value]) => {
+        assert.equal(url.searchParams.get(key), value);
+      });
+    });
+  });
+});
+
+test('HQ changes invalidate source and market publication checks and frozen source revisions', () => {
+  let state = approve(rollout(), 'de');
+  state = act(state, 'SCHEDULE', { actor: 'publisher', market: 'de', at: state.embargo });
+  assert.equal(state.markets.de.schedule.sourceRevision, state.source.revision);
+  assert.equal(checks(state, 'de').find((c) => c.id === 'approval').pass, true);
+  state = act(state, 'SAVE', { actor: 'hq-author', fields: { title: 'New BMW i5 source.' } });
+  assert.equal(checks(state).find((c) => c.id === 'approval').pass, false);
+  assert.equal(checks(state, 'de').find((c) => c.id === 'approval').pass, false);
+  assert.equal(checks(state, 'de').find((c) => c.id === 'source').pass, false);
+  state = act(state, 'ADVANCE_TIME', { minutes: 120 });
+  ['hq', 'de'].forEach((market) => {
+    assert.throws(() => act(state, 'SCHEDULE', { actor: 'publisher', market, at: state.embargo }),
+      /approval|approv|source|check/i);
+    assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market, dryRun: true }),
+      /approval|approv|schedule|source|check/i);
+  });
+  assert.equal(state.markets.de.publishedRevision, null);
 });
 
 test('RESET is a fresh deterministic initial state without retaining browser session changes', () => {
