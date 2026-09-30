@@ -71,6 +71,8 @@ test('car has mandatory KPI, shortened shared interior, attribute-derived M5/iX3
     assert.match(models, /BMW M5/);
     assert.match(models, /BMW iX3/);
     assert.doesNotMatch(models, /BMW 530e/);
+    assert.doesNotMatch(models, /news\/i5-launch/);
+    assert.match(models, /https:\/\/www\.bmw\.de\/de\/neufahrzeuge\//);
     assert.match(section(html, 'assist-features'), /Driving Assistant Professional/);
     assert.equal(/Highway Assistant|Autobahnassistent|Assistant autoroutier/.test(html), !context.startsWith('fr'));
   }
@@ -156,6 +158,9 @@ test('video and stage containers have intrinsic sizing independent of the absolu
   assert.match(media, /min-height:\s*540px/);
   assert.match(media, /aspect-ratio:\s*16\s*\/\s*8/);
   assert.match(overlay, /position:\s*relative/);
+  const playButton = css.match(/\.aida-showcase \.bmw-video-playbutton \{([^}]+)\}/)?.[1] || '';
+  assert.match(playButton, /top:\s*16px/);
+  assert.match(playButton, /bottom:\s*auto/);
 });
 
 test('stage copy and headings explicitly stay white despite global BMW heading colors', () => {
