@@ -29,7 +29,7 @@ test('showcase ships real vendored Spectrum styles and a labelled rehearsal boun
   assert.match(page, /spectrum--light/);
   assert.match(page, /Synthetic rehearsal/);
   const css = read('tools/aida/spectrum.css');
-  ['vars', 'button', 'textfield', 'picker', 'checkbox', 'table', 'badge', 'fieldlabel', 'typography'].forEach((component) => {
+  ['vars', 'button', 'textfield', 'picker', 'checkbox', 'table', 'badge', 'fieldlabel', 'typography', 'card', 'link'].forEach((component) => {
     assert.match(css, new RegExp(`vendor/spectrum/${component}\\.css`));
     assert.ok(read(`tools/aida/vendor/spectrum/${component}.css`).length > 1000);
   });
