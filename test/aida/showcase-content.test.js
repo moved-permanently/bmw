@@ -435,3 +435,10 @@ test('stage secondary CTA retains readable contrast on the dark video poster', (
   assert.match(secondary, /color:\s*#fff/);
   assert.match(secondary, /border-color:\s*#fff/);
 });
+
+test('stage media can shrink below its minimum-height aspect-ratio width on mobile', () => {
+  const css = readFileSync(new URL('../../blocks/aida-showcase/aida-showcase.css', import.meta.url), 'utf8');
+  const media = css.match(/\.aida-showcase\.stage \.aida-showcase-media \{([^}]+)\}/)?.[1] || '';
+  assert.match(media, /min-width:\s*0/);
+  assert.match(media, /width:\s*100%/);
+});
