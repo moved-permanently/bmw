@@ -28,6 +28,8 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
         origin: base, 'content-type': 'application/json', cookie: response.headers.get('set-cookie').split(';')[0], 'x-pilot-csrf': csrf,
       };
     };
+    const unknown = await request('/api/session', { method: 'POST', headers: { origin: base, 'content-type': 'application/json' }, body: JSON.stringify({ actorId: 'unknown-persona' }) });
+    assert.equal(unknown.status, 403);
     const author = await signIn('hq-author');
     const action = async (headers, command, payload = {}) => request('/api/action', { method: 'POST', headers, body: JSON.stringify({ action: command, ...payload }) });
     assert.equal((await action({ ...author, 'x-pilot-csrf': '' }, 'create')).status, 403);
@@ -44,6 +46,12 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
       assert.match(response.headers.get('cache-control'), /no-store/);
     }));
     assert.deepEqual((await (await request('/news-index.json')).json()).data, []);
+    const de = await signIn('de-author');
+    await action(de, 'create', { fields: { slug: 'de-story', market: 'de', title: 'DE draft', description: 'Summary', body: 'Local story', legal: 'Legal', embargo: '2026-09-30T10:00:00Z' } });
+    const scoped = await (await request('/api/state', { headers: de })).json();
+    assert.equal(scoped.metrics.articles, 1);
+    const links = await (await request('/api/native-links', { headers: de })).json();
+    assert.ok(links.articles.every((a) => a.id.startsWith('de--')));
     await action(author, 'submit', { id });
     const reviewer = await signIn('hq-reviewer');
     const grant = await action(reviewer, 'review-link', { id });
@@ -81,7 +89,8 @@ test('HTTP pilot enforces sessions, CSRF, public isolation, safe rendering and d
 test('failed persistence cannot create a draft, approve a guest revision, or release content', async () => {
   const directory = mkdtempSync(join(tmpdir(), 'aida-disk-failure-'));
   const storePath = join(directory, 'state.json');
-  const app = implementation.createPilotServer({ storePath, now: () => Date.parse('2026-09-30T10:00:00Z') });
+  let clock = Date.parse('2026-09-30T10:00:00Z');
+  const app = implementation.createPilotServer({ storePath, now: () => clock });
   const author = { id: 'hq-author', role: 'author', market: 'hq' };
   const reviewer = { id: 'hq-reviewer', role: 'reviewer', market: 'hq' };
   const source = app.workflow.create(author, { slug: 'failure', market: 'hq', title: 'Story', description: 'Summary', body: 'Body', legal: 'Legal', embargo: '2026-09-30T10:00:00Z' });
@@ -103,6 +112,11 @@ test('failed persistence cannot create a draft, approve a guest revision, or rel
     assert.equal(release.status, 409);
     assert.equal(app.workflow.publicArticle(source.id), null);
     assert.deepEqual((await (await fetch(`${base}/news-index.json`)).json()).data, []);
+    app.workflow.schedule({ id: 'publisher', role: 'publisher', market: '*' }, source.id, '2026-09-30T11:00:00Z');
+    clock += 3600000;
+    await new Promise((resolve) => { setTimeout(resolve, 1100); });
+    assert.equal(app.workflow.publicArticle(source.id), null);
+    assert.equal(app.workflow.get(source.id).status, 'scheduled');
   } finally {
     await new Promise((resolve) => { app.server.close(resolve); });
     rmSync(directory, { recursive: true });

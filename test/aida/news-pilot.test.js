@@ -89,7 +89,7 @@ test('an edit cancels scheduling and approval but retains the previous public re
   flow.edit(actors.author, id, { body: 'Changed again' });
   assert.equal(flow.get(id).scheduledAt, null);
 });
-test('rollout preserves local fields and moved content while invalidating market approvals', () => {
+test('rollout preserves separately owned local fields while invalidating market approvals', () => {
   const { flow, id } = setup();
   approve(flow, id);
   const [de] = flow.rollout(actors.author, id, ['de', 'fr']);
@@ -170,7 +170,7 @@ test('operational KPIs are calculated from actual audit events, not seeded marke
   assert.equal(flow.metrics().source, 'local-pilot');
   assert.ok(flow.snapshot().events.every((e) => e.at && e.actor && e.revision));
 });
-test('unknown fields, identities and malicious content remain untrusted data', () => {
+test('protected fields and malicious markup remain untrusted data', () => {
   const { flow, id } = setup();
   assert.throws(() => flow.edit(actors.author, id, { status: 'approved' }), /field/i);
   assert.throws(() => flow.create({ id: 'fake', role: 'publisher', market: '*' }, { slug: 'x', market: 'hq' }), /permission/i);
