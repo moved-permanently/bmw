@@ -66,15 +66,26 @@ test('all-models: off-screen model card images are not requested before they nea
 
 // no fetchpriority hints on card / teaser images: Lighthouse's simulated LCP (Lantern) leaves
 // low-priority images out of its estimate, so a high-priority hint raised the lab LCP by 0.2–0.45 s
-['/de/neufahrzeuge', '/de/elektroauto'].forEach((path) => {
-  test(`all-models guard: model card images stay lazy without high priority (${path})`, async () => {
-    const { page, close } = await open(path);
-    const imgs = await page.evaluate(() => [...document.querySelectorAll('.all-models-card .all-models-image img')]
-      .map((img) => ({ loading: img.loading, priority: img.getAttribute('fetchpriority') })));
-    await close();
-    assert.ok(imgs.length > 0);
-    assert.ok(imgs.every((i) => i.loading === 'lazy' && i.priority !== 'high'));
-  });
+const cardImages = (page) => page.evaluate(() => [...document.querySelectorAll('.all-models-card:not([hidden]) .all-models-image img')]
+  .map((img) => ({ loading: img.loading, priority: img.getAttribute('fetchpriority') })));
+
+test('all-models: as the leading block, the first-viewport cards (6) load eagerly without a priority hint, the rest lazily', async () => {
+  // lazy first-viewport cards are only requested after the section is shown and are then boosted
+  // to high priority, which put their download into the lab LCP (4.6–5.1 s on /de/neufahrzeuge)
+  const { page, close } = await open('/de/neufahrzeuge');
+  const imgs = await cardImages(page);
+  await close();
+  assert.ok(imgs.length > 50);
+  assert.deepEqual(imgs.slice(0, 6), Array(6).fill({ loading: 'eager', priority: null }));
+  assert.ok(imgs.slice(6).every((i) => i.loading === 'lazy' && i.priority !== 'high'), 'cards after the first 6 must stay lazy');
+});
+
+test('all-models guard: below a leading hero all model card images stay lazy without high priority', async () => {
+  const { page, close } = await open('/de/elektroauto');
+  const imgs = await cardImages(page);
+  await close();
+  assert.ok(imgs.length > 0);
+  assert.ok(imgs.every((i) => i.loading === 'lazy' && i.priority !== 'high'));
 });
 
 test('guard: hero teasers below the first block stay lazy; the hero-stage poster stays eager/high', async () => {
