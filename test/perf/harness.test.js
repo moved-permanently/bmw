@@ -14,13 +14,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const LINK = path.join(ROOT, 'scripts', '.perf-harness-escape-test.js');
 const SECRET = 'perf-harness-secret-outside-root';
 
 let upstream;
 let upstreamHits = [];
 let server;
+// fixtures unique to this run (safe for parallel runs); only these are removed afterwards
 let tmpDir;
+let linkDir;
+let linkPath;
 
 /** GET with the request target sent verbatim (no client-side normalization). */
 function get(origin, target) {
@@ -47,12 +49,14 @@ before(async () => {
   server = await startServer();
   tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'perf-harness-'));
   fs.writeFileSync(path.join(tmpDir, 'secret.txt'), SECRET);
-  fs.rmSync(LINK, { force: true });
-  fs.symlinkSync(path.join(tmpDir, 'secret.txt'), LINK);
+  linkDir = fs.mkdtempSync(path.join(ROOT, 'scripts', '.perf-harness-'));
+  linkPath = path.join(linkDir, 'escape.js');
+  fs.symlinkSync(path.join(tmpDir, 'secret.txt'), linkPath);
 });
 
 after(async () => {
-  fs.rmSync(LINK, { force: true });
+  // removes the link itself (not its target) and the directories created above
+  if (linkDir) fs.rmSync(linkDir, { recursive: true, force: true });
   if (tmpDir) fs.rmSync(tmpDir, { recursive: true, force: true });
   if (server) await server.close();
   if (upstream) await new Promise((resolve) => { upstream.close(resolve); });
@@ -96,7 +100,7 @@ test('rejects a traversal that leaves the repository through a prefix-matching s
 });
 
 test('rejects a symlink inside a code directory that resolves outside it', async () => {
-  const r = await get(server.origin, `/scripts/${path.basename(LINK)}`);
+  const r = await get(server.origin, `/scripts/${path.basename(linkDir)}/escape.js`);
   assert.ok(!r.body.includes(SECRET), 'the symlink target outside the repository was served');
   assert.ok(r.status >= 400 && r.status < 500, `expected a 4xx rejection, got ${r.status}`);
   assert.deepEqual(upstreamHits, []);
