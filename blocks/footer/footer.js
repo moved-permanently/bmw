@@ -20,13 +20,16 @@ const ACCORDION_QUERY = '(width < 768px)';
 const HEADINGS = 'h2, h3, h4, h5, h6';
 
 /**
- * Fetches the footer fragment. Fixed, metadata-independent paths:
- * /content/footer.plain.html (local preview) first, then /footer.plain.html (DA/EDS).
+ * Fetches the footer fragment. Fixed, metadata-independent paths: /footer.plain.html (DA/EDS)
+ * first, on pages of the local content preview (/content/…) /content/footer.plain.html first;
+ * the other location is the fallback.
  * @returns {Promise<{root: HTMLElement, base: URL}|null>}
  */
 async function fetchFooterFragment() {
-  let resp = await fetch('/content/footer.plain.html');
-  if (!resp.ok) resp = await fetch('/footer.plain.html');
+  const paths = ['/footer.plain.html', '/content/footer.plain.html'];
+  if (window.location.pathname.startsWith('/content/')) paths.reverse();
+  let resp = await fetch(paths[0]);
+  if (!resp.ok) resp = await fetch(paths[1]);
   if (!resp.ok) return null;
   // parse inertly: innerHTML on a live-document element would already request the
   // fragment-relative images (images/x.png) against the page URL -> 404s

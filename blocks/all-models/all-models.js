@@ -108,6 +108,22 @@ function parseBlock(block) {
   };
 }
 
+/**
+ * Lazily loading copy of an authored image. cloneNode() copies src before loading, so the
+ * clone starts its request right away (all cards at once, before the section is shown);
+ * here loading is set first.
+ * @param {HTMLImageElement} source
+ * @returns {HTMLImageElement}
+ */
+function lazyCopy(source) {
+  const img = document.createElement('img');
+  img.loading = 'lazy';
+  [...source.attributes].forEach(({ name, value }) => {
+    if (name !== 'loading') img.setAttribute(name, value);
+  });
+  return img;
+}
+
 function buildCard(data) {
   const card = document.createElement('li');
   card.className = 'all-models-card';
@@ -186,8 +202,7 @@ function buildCard(data) {
   const fuelCode = (data.tags.fuelType || [])[0];
   if (ICONS.fuelType[fuelCode]) media.append(icon(ICONS.fuelType[fuelCode], 'all-models-fuel-icon'));
   if (imgs[0]) {
-    const img = imgs[0].cloneNode();
-    img.loading = 'lazy';
+    const img = lazyCopy(imgs[0]);
     img.alt = imgs[0].alt || '';
     media.append(img);
   }
@@ -199,9 +214,8 @@ function buildCard(data) {
   fuel.textContent = parts.fuel;
   foot.append(fuel);
   if (parts.mLogo) {
-    const m = parts.mLogo.cloneNode();
+    const m = lazyCopy(parts.mLogo);
     m.className = 'all-models-mlogo';
-    m.loading = 'lazy';
     foot.append(m);
   }
 
@@ -528,4 +542,12 @@ export default function decorate(block) {
   if (!aside) block.classList.add('no-sidebar');
   decorateFontIcons(block);
   apply();
+  // leading block: the first shown card image is the LCP candidate
+  if (document.querySelector('main .block') === block) {
+    const first = results.querySelector('.all-models-group:not([hidden]) .all-models-card:not([hidden]) .all-models-image img');
+    if (first) {
+      first.fetchPriority = 'high';
+      first.loading = 'eager';
+    }
+  }
 }

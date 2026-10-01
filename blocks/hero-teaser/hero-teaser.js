@@ -40,6 +40,8 @@ export default function decorate(block) {
   mediaBox.className = 'hero-teaser-media';
   if (mediaRow) {
     const { element } = buildBmwMedia(mediaRow, {
+      // leading block: its image / video poster is the LCP candidate
+      eager: document.querySelector('main .block') === block,
       video: {
         autoplay: !block.classList.contains('no-autoplay'),
         loop: block.classList.contains('loop'),
