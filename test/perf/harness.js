@@ -114,6 +114,8 @@ export async function launchBrowser() {
   return chromium.launch({
     headless: true,
     executablePath: process.env.CHROME_PATH || undefined,
+    // real sandbox: playwright-core adds --no-sandbox unless this is true
+    chromiumSandbox: true,
     args: ['--disable-dev-shm-usage'],
   });
 }
