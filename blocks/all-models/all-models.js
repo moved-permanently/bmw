@@ -542,12 +542,4 @@ export default function decorate(block) {
   if (!aside) block.classList.add('no-sidebar');
   decorateFontIcons(block);
   apply();
-  // leading block: the first shown card image is the LCP candidate
-  if (document.querySelector('main .block') === block) {
-    const first = results.querySelector('.all-models-group:not([hidden]) .all-models-card:not([hidden]) .all-models-image img');
-    if (first) {
-      first.fetchPriority = 'high';
-      first.loading = 'eager';
-    }
-  }
 }
