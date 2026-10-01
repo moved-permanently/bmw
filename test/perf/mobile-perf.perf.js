@@ -41,6 +41,7 @@ async function open(path, { onRequest, settle = 3000 } = {}) {
 test('all-models: off-screen model card images are not requested before they near the viewport', async () => {
   // initiator "script" = requested by the block code itself (not by the browser's lazy loading)
   const requested = new Map();
+  const status = new Map();
   const ctx = await mobileContext(browser);
   const page = await ctx.newPage();
   const cdp = await ctx.newCDPSession(page);
@@ -48,20 +49,45 @@ test('all-models: off-screen model card images are not requested before they nea
   cdp.on('Network.requestWillBeSent', (e) => {
     if (CARD_IMAGE_HOST.test(e.request.url)) requested.set(e.request.url, e.initiator.type);
   });
+  cdp.on('Network.responseReceived', (e) => {
+    if (CARD_IMAGE_HOST.test(e.response.url)) status.set(e.response.url, e.response.status);
+  });
   await page.goto(`${server.origin}/de/neufahrzeuge?consent=disabled`, { waitUntil: 'load', timeout: 60000 });
   await page.waitForTimeout(3000);
   const cards = await page.evaluate(() => [...document.querySelectorAll('.all-models-card .all-models-image img')]
-    .map((img) => ({ src: img.src, top: img.getBoundingClientRect().top + window.scrollY })));
+    .map((img) => ({
+      src: img.src,
+      top: img.getBoundingClientRect().top + window.scrollY,
+      loaded: img.complete && img.naturalWidth > 0,
+    })));
   const vh = await page.evaluate(() => window.innerHeight);
-  await ctx.close();
   assert.ok(cards.length > 50, `expected the full model grid, got ${cards.length} cards`);
+  // the first (visible) card image really loads
+  assert.equal(cards[0].loaded, true, 'the first visible card image did not load');
+  assert.equal(status.get(cards[0].src), 200, `first card image answered ${status.get(cards[0].src)}`);
   const near = new Set(cards.filter((c) => c.top < vh + LAZY_MARGIN).map((c) => c.src));
   const farOnly = [...new Set(cards.filter((c) => !near.has(c.src)).map((c) => c.src))];
+  assert.ok(farOnly.length >= 10, `expected at least 10 far-off card images, got ${farOnly.length}`);
   const scripted = farOnly.filter((src) => requested.get(src) === 'script');
   assert.equal(scripted.length, 0, `${scripted.length} of ${farOnly.length} far-off card images were requested by script without scrolling`);
   // the grid grows while images load: a card just past the margin may be lazy-loaded legitimately
   const early = farOnly.filter((src) => requested.has(src));
   assert.ok(early.length <= 2, `${early.length} of ${farOnly.length} far-off card images were requested without scrolling`);
+  // lazy, not missing: the farthest card image loads once it is scrolled into view
+  const target = farOnly[farOnly.length - 1];
+  await page.evaluate((src) => {
+    const img = [...document.querySelectorAll('.all-models-card .all-models-image img')]
+      .find((i) => i.src === src);
+    img.scrollIntoView({ block: 'center' });
+  }, target);
+  await page.waitForFunction((src) => {
+    const img = [...document.querySelectorAll('.all-models-card .all-models-image img')]
+      .find((i) => i.src === src);
+    return img.complete && img.naturalWidth > 0;
+  }, target, { timeout: 20000 });
+  await ctx.close();
+  assert.ok(requested.has(target), 'the far-off card image was never requested after scrolling');
+  assert.equal(status.get(target), 200, `far-off card image answered ${status.get(target)} after scrolling`);
 });
 
 // no fetchpriority hints on card / teaser images: Lighthouse's simulated LCP (Lantern) leaves
