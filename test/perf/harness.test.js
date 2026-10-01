@@ -112,6 +112,23 @@ test('rejects malformed percent-encoding without an upstream fetch', async () =>
   assert.deepEqual(upstreamHits, []);
 });
 
+test('launchBrowser asks for the real Chromium sandbox (chromiumSandbox: true, no --no-sandbox)', async () => {
+  // playwright-core adds --no-sandbox itself unless chromiumSandbox === true (default false)
+  const { launchBrowser } = await import('./harness.js');
+  const { chromium } = await import('playwright-core');
+  const original = chromium.launch;
+  let options;
+  chromium.launch = async (o) => { options = o; return { mocked: true }; };
+  try {
+    await launchBrowser();
+  } finally {
+    chromium.launch = original;
+  }
+  assert.equal(chromium.launch, original, 'chromium.launch mock was not restored');
+  assert.equal(options.chromiumSandbox, true);
+  assert.ok(!(options.args || []).includes('--no-sandbox'), `args: ${JSON.stringify(options.args)}`);
+});
+
 test('still proxies non-code paths and missing code files to the preview', async () => {
   const page = await get(server.origin, '/de/home');
   const missing = await get(server.origin, '/scripts/perf-harness-does-not-exist.js');
