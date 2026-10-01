@@ -33,6 +33,8 @@ const ICONS = {
 // URL / preselect aliases -> tag keys
 const KEY_ALIASES = { fuelTypes: 'fuelType', categories: 'category', specialCategories: 'specialCategory' };
 const IGNORED_PARAMS = ['maxPrice', 'minPrice', 'price'];
+// cards in the first viewport (2 rows of 3 on desktop, more than a phone screen)
+const EAGER_CARDS = 6;
 const MOBILE_MQ = window.matchMedia('(max-width: 767px)');
 let seq = 0;
 
@@ -542,4 +544,9 @@ export default function decorate(block) {
   if (!aside) block.classList.add('no-sidebar');
   decorateFontIcons(block);
   apply();
+  // leading block: the first-viewport cards load right away (no priority hint), the rest lazily
+  if (document.querySelector('main .block') === block) {
+    results.querySelectorAll('.all-models-group:not([hidden]) .all-models-card:not([hidden]) .all-models-image img')
+      .forEach((img, i) => { if (i < EAGER_CARDS) img.loading = 'eager'; });
+  }
 }
