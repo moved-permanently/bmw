@@ -39,19 +39,29 @@ async function open(path, { onRequest, settle = 3000 } = {}) {
 }
 
 test('all-models: off-screen model card images are not requested before they near the viewport', async () => {
-  const requested = new Set();
-  const { page, close } = await open('/de/neufahrzeuge', {
-    onRequest: (r) => { if (CARD_IMAGE_HOST.test(r.url())) requested.add(r.url()); },
+  // initiator "script" = requested by the block code itself (not by the browser's lazy loading)
+  const requested = new Map();
+  const ctx = await mobileContext(browser);
+  const page = await ctx.newPage();
+  const cdp = await ctx.newCDPSession(page);
+  await cdp.send('Network.enable');
+  cdp.on('Network.requestWillBeSent', (e) => {
+    if (CARD_IMAGE_HOST.test(e.request.url)) requested.set(e.request.url, e.initiator.type);
   });
+  await page.goto(`${server.origin}/de/neufahrzeuge?consent=disabled`, { waitUntil: 'load', timeout: 60000 });
+  await page.waitForTimeout(3000);
   const cards = await page.evaluate(() => [...document.querySelectorAll('.all-models-card .all-models-image img')]
     .map((img) => ({ src: img.src, top: img.getBoundingClientRect().top + window.scrollY })));
   const vh = await page.evaluate(() => window.innerHeight);
-  await close();
+  await ctx.close();
   assert.ok(cards.length > 50, `expected the full model grid, got ${cards.length} cards`);
   const near = new Set(cards.filter((c) => c.top < vh + LAZY_MARGIN).map((c) => c.src));
-  const farOnly = new Set(cards.filter((c) => !near.has(c.src)).map((c) => c.src));
-  const fetchedEarly = [...farOnly].filter((src) => requested.has(src));
-  assert.equal(fetchedEarly.length, 0, `${fetchedEarly.length} of ${farOnly.size} far-off card images were requested without scrolling`);
+  const farOnly = [...new Set(cards.filter((c) => !near.has(c.src)).map((c) => c.src))];
+  const scripted = farOnly.filter((src) => requested.get(src) === 'script');
+  assert.equal(scripted.length, 0, `${scripted.length} of ${farOnly.length} far-off card images were requested by script without scrolling`);
+  // the grid grows while images load: a card just past the margin may be lazy-loaded legitimately
+  const early = farOnly.filter((src) => requested.has(src));
+  assert.ok(early.length <= 2, `${early.length} of ${farOnly.length} far-off card images were requested without scrolling`);
 });
 
 test('all-models: the first model card image (LCP) loads eagerly with high priority, later cards stay lazy', async () => {
