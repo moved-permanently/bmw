@@ -14,7 +14,8 @@ import { chromium } from 'playwright-core';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export const PREVIEW = process.env.PERF_PREVIEW || 'https://main--bmw--moved-permanently.aem.page';
-const CODE_PATH = /^\/(scripts|blocks|styles|fonts|icons)\//;
+// the only directories served from the working tree; everything else comes from the preview
+const CODE_DIRS = ['scripts', 'blocks', 'styles', 'fonts', 'icons'];
 const TYPES = {
   '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.json': 'application/json',
 };
@@ -31,15 +32,46 @@ function localHead() {
   };
 }
 
+const within = (dir, file) => file.startsWith(`${dir}${path.sep}`);
+
+/**
+ * Where a request is answered from: { status } = rejected, { file } = local code file,
+ * {} = proxied to the preview. Decoded once; dot segments (only possible percent-encoded, the
+ * URL parser resolves plain ones), NUL and backslashes are rejected for every path. A local file
+ * must stay inside its code directory both as joined path and as realpath (symlinks).
+ * @param {string} pathname URL pathname (still percent-encoded)
+ */
+export function resolveRequest(pathname) {
+  let decoded;
+  try {
+    decoded = decodeURIComponent(pathname);
+  } catch {
+    return { status: 400 };
+  }
+  const segments = decoded.split('/').slice(1);
+  if (/[\0\\]/.test(decoded) || segments.some((s) => s === '.' || s === '..')) return { status: 400 };
+  if (!CODE_DIRS.includes(segments[0]) || segments.length < 2) return {};
+  const dir = path.join(ROOT, segments[0]);
+  const file = path.join(dir, ...segments.slice(1));
+  if (!within(dir, file)) return { status: 403 };
+  if (!fs.existsSync(file)) return {}; // not in the working tree: the preview's copy
+  const real = fs.realpathSync(file);
+  if (!within(fs.realpathSync(dir), real)) return { status: 403 };
+  return fs.statSync(real).isFile() ? { file: real } : {};
+}
+
 async function handle(req, res) {
   const url = new URL(req.url, 'http://localhost');
-  if (CODE_PATH.test(url.pathname)) {
-    const file = path.join(ROOT, decodeURIComponent(url.pathname));
-    if (file.startsWith(ROOT) && fs.existsSync(file) && fs.statSync(file).isFile()) {
-      res.writeHead(200, { 'content-type': TYPES[path.extname(file)] || 'application/octet-stream', 'cache-control': 'no-store' });
-      fs.createReadStream(file).pipe(res);
-      return;
-    }
+  const target = resolveRequest(url.pathname);
+  if (target.status) {
+    res.writeHead(target.status, { 'content-type': 'text/plain' });
+    res.end('rejected');
+    return;
+  }
+  if (target.file) {
+    res.writeHead(200, { 'content-type': TYPES[path.extname(target.file)] || 'application/octet-stream', 'cache-control': 'no-store' });
+    fs.createReadStream(target.file).pipe(res);
+    return;
   }
   const upstream = await fetch(`${PREVIEW}${url.pathname}${url.search}`, {
     redirect: 'manual',
@@ -82,7 +114,7 @@ export async function launchBrowser() {
   return chromium.launch({
     headless: true,
     executablePath: process.env.CHROME_PATH || undefined,
-    args: ['--no-sandbox', '--disable-dev-shm-usage'],
+    args: ['--disable-dev-shm-usage'],
   });
 }
 
