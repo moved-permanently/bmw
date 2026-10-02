@@ -222,10 +222,11 @@ devDependency.
   - A `304` drops `content-security-policy`.
   - `cache-control`, `vary`, `last-modified`, the CSP nonce header and `x-robots-tag: noindex` (aem.page)
     are kept.
-- **Caching:** `fetch(…, { cf: { cacheEverything: true } })`, so Cloudflare caches the upstream response for
-  the origin's `Cache-Control` (aem.page: `max-age=60, must-revalidate`). The decoration runs on every
-  request. The Cache API and `cf` options have no effect on `*.workers.dev`; they apply on a zone route or
-  custom domain.
+- **Caching:** subrequests use `fetch(…, { cf: { cacheEverything: true } })` and pass through the origin's
+  `Cache-Control`. When fetching another Cloudflare zone, `fetch` reads through that zone's cache, as
+  described in [Cloudflare's caching documentation](https://developers.cloudflare.com/workers/reference/how-the-cache-works/#fetch).
+  This is distinct from the Cache API (`caches.default`), which this worker does not use. Decoration runs
+  on every request; the demo does not configure cache purging or push invalidation.
 - **Kept on purpose, unlike the prod worker:**
   - `/drafts/` stays reachable (the aida showcase uses `/drafts/aida/showcase/`);
   - there is no port redirect (`wrangler dev` uses port 8787);
