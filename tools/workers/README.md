@@ -8,6 +8,7 @@ Deployment steps: [DEPLOY-PROMPT.md](DEPLOY-PROMPT.md).
 |---|---|
 | `bmw-proxy/` | Cloudflare Worker: allowlisted, path-preserving reverse proxy to www.bmw.de and a few other BMW upstreams, with CORS for the EDS hosts |
 | `redirects/` | `redirects.csv` / `redirects.json` (EDS `redirects` sheet) + generator script |
+| `wdh-proxy/` | Cloudflare Worker (demo): reverse proxy to one BMW EDS origin that turns WDH value links into `wdh-value` spans server-side (see [wdh-proxy](#wdh-proxy)) |
 
 ## bmw-proxy
 
@@ -160,3 +161,91 @@ Why the `.html` rows are needed:
 The legacy sitemap redirect results (migration-plan.md mentions 199 legacy sitemap URLs) are not on disk,
 and www.bmw.de is not reachable from the migration container (Akamai 403). The file is therefore built
 from `crawl.json` only. Add more legacy URLs to the crawl and rerun the generator.
+
+## wdh-proxy
+
+Demo worker: a reverse proxy to ONE BMW EDS origin, `ORIGIN_HOSTNAME`, which defaults to
+`main--bmw--moved-permanently.aem.page`. For HTML responses it applies the WDH value-link decoration of
+`decorateWdhValues()` (`scripts/scripts.js`) on the server. It is an ES module worker. Source:
+`wdh-proxy/src/index.js`. Tests: `wdh-proxy/test/`, which run in workerd through Miniflare, the only
+devDependency.
+
+**What it does:**
+- **Decoration:** every `a[href*="/data/wdh-"][href*="#"]` becomes
+  `<span class="wdh-value" data-wdh="{href attribute}">{the link's text}</span>`. This is the same output as
+  the browser decorator: inner markup and comments are dropped, and so are all other attributes.
+  - Full pages: only inside `<main>`, like `decorateMain(main)`.
+  - `.plain.html` served as `text/html`: the whole fragment, like `blocks/fragment` → `decorateMain`. This
+    also applies to fragments that the browser does not run through `decorateMain`, such as nav, footer,
+    the WLTP fragment and the help sidebar. None of them contain WDH links today.
+- **What it does not do:** it only cleans up the authored links. It does not fetch, resolve or ingest any
+  WDH values.
+- **Browser JS is unchanged and stays the fallback:**
+  - Direct `.aem.page` / `.aem.live` pages are still decorated in the browser.
+  - On worker-served HTML the browser decorator finds no matching links and does nothing. As a result,
+    `wdhBindings` stays empty there.
+  - The preview-only `aida.js` drift check only runs on `*.aem.page`, `*.preview.da.live` and `localhost`.
+    The rendered `.wdh-value` spans themselves are the same.
+- **Behaviour depends on the format:**
+  - Only `text/html` bodies are rewritten (this includes HTML error pages, which keep their status).
+  - JSON, JS, CSS, Markdown (`.md` is `text/markdown`, with `[text](/…/wdh-…#…)` link syntax), media and any
+    other bodies pass through byte-for-byte, with their `etag` and `content-length`.
+  - Markdown links are NOT transformed.
+
+### Upstream and safety
+
+- **Fixed upstream host:**
+  - Only `<ref>--bmw--moved-permanently.aem.page` or `.aem.live` is accepted. Any other `ORIGIN_HOSTNAME`
+    returns `500 Invalid ORIGIN_HOSTNAME` without calling any upstream.
+  - The request path is kept as is. Paths that look like URLs, including `//host/x`, query parameters and
+    the `Host` header never change the upstream host.
+- **Methods:** only GET and HEAD are allowed. Anything else returns `405` with `Allow: GET, HEAD`, and the
+  origin is not called. RUM beacons go to `ot.aem.live` directly, not through this worker.
+- **Query (as in `adobe/aem-cloudflare-prod-worker`):**
+  - media `/media_…` keeps `format`, `height`, `optimize` and `width`;
+  - `.json` keeps `limit`, `offset` and `sheet`;
+  - everything else is stripped before the upstream call, and the kept parameters are sorted.
+  - Client-side JS still sees the visitor's full URL.
+  - A `301` without a query gets the visitor's query re-appended. The origin does the same, for example
+    `/?utm_source=x` → `/de/home?utm_source=x`.
+- **Redirects:**
+  - Redirects are not followed. Status and `Location` pass through.
+  - A `Location` that points at the origin host is made relative, so visitors stay on the proxy host.
+  - Relative links in the HTML are left alone, so they resolve against the proxy host.
+- **Headers:**
+  - The visitor's `Cookie` and `Authorization` headers are not forwarded. There is no origin
+    authentication: the preview origin is public, so no token or secret is involved.
+  - The worker sets `X-Forwarded-Host` to the proxy host, replacing any value the client sent, and
+    `X-BYO-CDN-Type: cloudflare`. Push invalidation is not enabled.
+  - On rewritten HTML (and HEAD on HTML), `content-length`, `etag` and `content-md5` are removed, because
+    they describe the upstream bytes. `age` is always removed.
+  - A `304` drops `content-security-policy`.
+  - `cache-control`, `vary`, `last-modified`, the CSP nonce header and `x-robots-tag: noindex` (aem.page)
+    are kept.
+- **Caching:** `fetch(…, { cf: { cacheEverything: true } })`, so Cloudflare caches the upstream response for
+  the origin's `Cache-Control` (aem.page: `max-age=60, must-revalidate`). The decoration runs on every
+  request. The Cache API and `cf` options have no effect on `*.workers.dev`; they apply on a zone route or
+  custom domain.
+- **Kept on purpose, unlike the prod worker:**
+  - `/drafts/` stays reachable (the aida showcase uses `/drafts/aida/showcase/`);
+  - there is no port redirect (`wrangler dev` uses port 8787);
+  - `x-robots-tag` is kept, so the demo stays unindexed.
+
+### Test and deploy
+
+```bash
+cd tools/workers/wdh-proxy
+npm ci && npm test            # 13 tests, workerd via Miniflare, stub origin (no network)
+npx -y wrangler@4 dev         # http://localhost:8787/aida/de/de/i5 (WDH links already spans in the HTML)
+npx -y wrangler@4 login       # with your own Cloudflare account
+npx -y wrangler@4 deploy      # deploys to https://wdh-proxy.<your-subdomain>.workers.dev
+# optional, another ref of this site:
+npx -y wrangler@4 deploy --var ORIGIN_HOSTNAME:aida--bmw--moved-permanently.aem.page
+```
+
+No secrets, KV or routes are needed. `wrangler.toml` defines no routes or custom domains; add them yourself
+if wanted. Quick checks after the deploy:
+- `curl -s https://<worker>/aida/de/de/i5 | grep -c 'class="wdh-value"'` should print 20, and
+  `curl -s https://<worker>/aida/de/de/i5 | grep -c 'href="/aida/data/wdh-'` should print 0.
+- `curl -sI https://<worker>/` should show `301` with `location: /de/home`.
+- `/aida/de/de/i5.md` and `/aida/data/wdh-de.json` should be identical to the origin.
