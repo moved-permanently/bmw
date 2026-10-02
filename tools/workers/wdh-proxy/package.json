@@ -1,0 +1,16 @@
+{
+  "name": "wdh-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reverse proxy to the BMW EDS origin that turns WDH value links into spans server-side (Cloudflare Worker)",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test",
+    "dev": "npx -y wrangler@4 dev",
+    "deploy": "npx -y wrangler@4 deploy"
+  },
+  "devDependencies": {
+    "miniflare": "4.20260730.0"
+  }
+}

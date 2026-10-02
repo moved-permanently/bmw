@@ -1,0 +1,15 @@
+# Cloudflare Worker: wdh-proxy (see ../README.md)
+# Reverse proxy to one BMW EDS origin; WDH value links are turned into spans server-side.
+name = "wdh-proxy"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+workers_dev = true
+# No routes / custom domains are configured here; add them at deploy time if wanted.
+# routes = [{ pattern = "wdh-demo.example.com", custom_domain = true }]
+
+[vars]
+# Fixed upstream host. Only <ref>--bmw--moved-permanently.aem.page / .aem.live is accepted.
+ORIGIN_HOSTNAME = "main--bmw--moved-permanently.aem.page"
+
+[observability]
+enabled = true
