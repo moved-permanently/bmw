@@ -53,24 +53,32 @@ function upstreamUrl(requestUrl, origin) {
   return url;
 }
 
-/** The decorateWdhValues() equivalent; `scope` limits it to <main> for full pages. */
-function decorateWdhLinks(response, scope) {
-  const selector = scope ? `${scope} ${WDH_LINK}` : WDH_LINK;
+/** WDH links to decorate: inside <main> for pages, the whole fragment for .plain.html. */
+export const wdhSelector = (pathname) => (pathname.endsWith('.plain.html') ? WDH_LINK : `main ${WDH_LINK}`);
+
+/** The link itself: <span class="wdh-value" data-wdh="{href attribute}">, nothing else. */
+export const wdhLinkHandler = {
+  element(el) {
+    const href = el.getAttribute('href');
+    [...el.attributes].forEach(([name]) => el.removeAttribute(name));
+    el.tagName = 'span';
+    el.setAttribute('class', 'wdh-value');
+    el.setAttribute('data-wdh', href);
+  },
+  comments(comment) { comment.remove(); },
+};
+
+/** Elements inside the link: unwrapped, so only their text remains (a.textContent). */
+export const wdhInnerHandler = {
+  element(el) { el.removeAndKeepContent(); },
+};
+
+/** The decorateWdhValues() equivalent for one HTML response. */
+function decorateWdhLinks(response, pathname) {
+  const selector = wdhSelector(pathname);
   return new HTMLRewriter()
-    .on(selector, {
-      element(el) {
-        const href = el.getAttribute('href');
-        [...el.attributes].forEach(([name]) => el.removeAttribute(name));
-        el.tagName = 'span';
-        el.setAttribute('class', 'wdh-value');
-        el.setAttribute('data-wdh', href);
-      },
-      comments(comment) { comment.remove(); },
-    })
-    // a.textContent: keep only the text of nested elements
-    .on(`${selector} *`, {
-      element(el) { el.removeAndKeepContent(); },
-    })
+    .on(selector, wdhLinkHandler)
+    .on(`${selector} *`, wdhInnerHandler)
     .transform(response);
 }
 
@@ -123,7 +131,7 @@ async function handleRequest(request, env) {
   if (!type.startsWith('text/html') || response.status === 204) return response;
   BODY_HEADERS.forEach((h) => response.headers.delete(h));
   if (request.method === 'HEAD' || !response.body) return response;
-  return decorateWdhLinks(response, url.pathname.endsWith('.plain.html') ? '' : 'main');
+  return decorateWdhLinks(response, url.pathname);
 }
 
 export default {
