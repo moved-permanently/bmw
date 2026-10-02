@@ -201,9 +201,12 @@ test('query allowlists: JSON keeps limit/offset/sheet, media keeps width/height/
 test('no open proxy: URL-like paths, host-like parameters and a spoofed Host never change the upstream host', async () => {
   await (await get('/https://evil.example/x?host=evil.example&upstream=https://evil.example')).text();
   await (await get('/de/home', { headers: { host: 'evil.example', 'x-forwarded-host': 'evil.example' } })).text();
-  assert.equal(calls.length, 2);
+  await (await get('//evil.example/x')).text(); // protocol-relative path
+  assert.equal(calls.length, 3);
   calls.forEach((c) => assert.equal(new URL(c.url).hostname, ORIGIN));
   assert.equal(calls[0].url, `https://${ORIGIN}/https://evil.example/x`);
+  assert.equal(calls[1].headers['x-forwarded-host'], 'wdh-demo.example.com');
+  assert.equal(calls[2].url, `https://${ORIGIN}//evil.example/x`);
 });
 
 test('only GET and HEAD reach the origin', async () => {
