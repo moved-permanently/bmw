@@ -235,7 +235,7 @@ devDependency.
 
 ```bash
 cd tools/workers/wdh-proxy
-npm ci && npm test            # 13 tests, workerd via Miniflare, stub origin (no network)
+npm ci && npm test            # 22 tests: 5 handler units + 17 in workerd (Miniflare), stub origin, no network
 npx -y wrangler@4 dev         # http://localhost:8787/aida/de/de/i5 (WDH links already spans in the HTML)
 npx -y wrangler@4 login       # with your own Cloudflare account
 npx -y wrangler@4 deploy      # deploys to https://wdh-proxy.<your-subdomain>.workers.dev
