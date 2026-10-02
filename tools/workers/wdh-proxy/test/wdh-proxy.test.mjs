@@ -46,6 +46,51 @@ const FRAGMENT_DECORATED = '<div><p>Reichweite '
   + 'und <a href="/de/home">home</a></p></div>';
 
 const WDH_LINK = '<a href="/aida/data/wdh-de.json#61HG.power">250 kW</a>';
+
+// nested inline markup: textContent = "ab c2 <d>" (void elements and comments contribute nothing)
+const NESTED = '<html><body><main><p><a href="/aida/data/wdh-de.json#n1"><em>a<strong>b</strong></em> c<br>'
+  + '<img src="/x.png" alt="x"><sub>2</sub><!-- c --> &lt;d&gt;</a></p></main></body></html>';
+const NESTED_DECORATED = '<html><body><main><p>'
+  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#n1">ab c2 &lt;d&gt;</span></p></main></body></html>';
+
+// streamed in tiny chunks: splits inside the start tag, the attribute value, the entity and the
+// multi-byte characters (₂, –)
+const CHUNKED = '<html><body><main><p>CO₂: <a href="/aida/data/wdh-de.json#61HG.x&amp;y" title="t">0 g/km '
+  + '– <strong>A</strong></a> und <a href="/de/home">home</a></p></main></body></html>';
+const CHUNKED_DECORATED = '<html><body><main><p>CO₂: '
+  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#61HG.x&amp;y">0 g/km – A</span> '
+  + 'und <a href="/de/home">home</a></p></main></body></html>';
+
+// > 64 KB of link text: many text chunks inside one decorated link
+const LONG_TEXT = 'x'.repeat(70000);
+const LONG = `<html><body><main><a href="/aida/data/wdh-de.json#long">${LONG_TEXT}<b>B</b>${LONG_TEXT}</a></main></body></html>`;
+const LONG_DECORATED = '<html><body><main><span class="wdh-value" data-wdh="/aida/data/wdh-de.json#long">'
+  + `${LONG_TEXT}B${LONG_TEXT}</span></main></body></html>`;
+
+// HTML is case-insensitive and allows unquoted / single-quoted values; the browser matches them all
+const CASING = '<html><body><MAIN><p><A HREF="/aida/data/wdh-de.json#u" TITLE="t">upper</A> '
+  + '<a href=/aida/data/wdh-de.json#unq>unquoted</a> <a href=\'/aida/data/wdh-de.json#sq\'>single</a></p></MAIN></body></html>';
+const CASING_DECORATED = '<html><body><MAIN><p>'
+  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#u">upper</span> '
+  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#unq">unquoted</span> '
+  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#sq">single</span></p></MAIN></body></html>';
+
+/** Body that arrives in 1–7 byte chunks with a pause between them. */
+function trickle(text) {
+  const bytes = new TextEncoder().encode(text);
+  let pos = 0;
+  let n = 0;
+  return new ReadableStream({
+    async pull(controller) {
+      if (pos >= bytes.length) { controller.close(); return; }
+      await new Promise((resolve) => { setTimeout(resolve, 1); });
+      const size = (n % 7) + 1;
+      n += 1;
+      controller.enqueue(bytes.slice(pos, pos + size));
+      pos += size;
+    },
+  });
+}
 // PNG signature, then bytes that are not valid UTF-8 / contain "<a "
 const PNG = new Uint8Array([
   0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x3c, 0x61, 0x20, 0xff,
@@ -83,6 +128,10 @@ function defaultUpstream(req) {
     case '/absolute': return new Response(null, { status: 301, headers: { location: `https://${ORIGIN}/de/home` } });
     case '/external': return new Response(null, { status: 301, headers: { location: 'https://www.bmw.de/de/home.html' } });
     case '/missing': return html(`<html><body><main>${WDH_LINK}</main></body></html>`, 404);
+    case '/nested': return html(NESTED);
+    case '/long': return html(LONG);
+    case '/casing': return html(CASING);
+    case '/chunked': return new Response(trickle(CHUNKED), { headers: { 'content-type': 'text/html; charset=utf-8' } });
     default: return new Response('upstream default', { status: 404, headers: { 'content-type': 'text/plain' } });
   }
 }
@@ -123,6 +172,26 @@ test('.plain.html served as HTML is decorated too (fragments have no <main>)', a
   const res = await get('/aida/de/de/i5.plain.html');
   assert.equal(res.status, 200);
   assert.equal(await res.text(), FRAGMENT_DECORATED);
+});
+
+test('runtime: nested inline markup collapses to the link text (textContent)', async () => {
+  assert.equal(await (await get('/nested')).text(), NESTED_DECORATED);
+});
+
+test('runtime: a body streamed in tiny chunks (split in tags, attributes, entities, UTF-8) decorates identically', async () => {
+  const res = await get('/chunked');
+  assert.equal(res.status, 200);
+  assert.equal(await res.text(), CHUNKED_DECORATED);
+});
+
+test('runtime: very long link text (many text chunks) is kept in full', async () => {
+  const text = await (await get('/long')).text();
+  assert.equal(text.length, LONG_DECORATED.length);
+  assert.equal(text, LONG_DECORATED);
+});
+
+test('runtime: uppercase, unquoted and single-quoted markup is matched like the browser does', async () => {
+  assert.equal(await (await get('/casing')).text(), CASING_DECORATED);
 });
 
 test('decorated HTML drops body-dependent headers and keeps the others', async () => {
