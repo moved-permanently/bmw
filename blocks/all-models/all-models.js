@@ -33,6 +33,8 @@ const ICONS = {
 // URL / preselect aliases -> tag keys
 const KEY_ALIASES = { fuelTypes: 'fuelType', categories: 'category', specialCategories: 'specialCategory' };
 const IGNORED_PARAMS = ['maxPrice', 'minPrice', 'price'];
+// cards in the first viewport (2 rows of 3 on desktop, more than a phone screen)
+const EAGER_CARDS = 6;
 const MOBILE_MQ = window.matchMedia('(max-width: 767px)');
 let seq = 0;
 
@@ -106,6 +108,22 @@ function parseBlock(block) {
   return {
     filters, sort, preselect, groups: groups.filter((g) => g.cards.length),
   };
+}
+
+/**
+ * Lazily loading copy of an authored image. cloneNode() copies src before loading, so the
+ * clone starts its request right away (all cards at once, before the section is shown);
+ * here loading is set first.
+ * @param {HTMLImageElement} source
+ * @returns {HTMLImageElement}
+ */
+function lazyCopy(source) {
+  const img = document.createElement('img');
+  img.loading = 'lazy';
+  [...source.attributes].forEach(({ name, value }) => {
+    if (name !== 'loading') img.setAttribute(name, value);
+  });
+  return img;
 }
 
 function buildCard(data) {
@@ -186,8 +204,7 @@ function buildCard(data) {
   const fuelCode = (data.tags.fuelType || [])[0];
   if (ICONS.fuelType[fuelCode]) media.append(icon(ICONS.fuelType[fuelCode], 'all-models-fuel-icon'));
   if (imgs[0]) {
-    const img = imgs[0].cloneNode();
-    img.loading = 'lazy';
+    const img = lazyCopy(imgs[0]);
     img.alt = imgs[0].alt || '';
     media.append(img);
   }
@@ -199,9 +216,8 @@ function buildCard(data) {
   fuel.textContent = parts.fuel;
   foot.append(fuel);
   if (parts.mLogo) {
-    const m = parts.mLogo.cloneNode();
+    const m = lazyCopy(parts.mLogo);
     m.className = 'all-models-mlogo';
-    m.loading = 'lazy';
     foot.append(m);
   }
 
@@ -528,4 +544,9 @@ export default function decorate(block) {
   if (!aside) block.classList.add('no-sidebar');
   decorateFontIcons(block);
   apply();
+  // leading block: the first-viewport cards load right away (no priority hint), the rest lazily
+  if (document.querySelector('main .block') === block) {
+    results.querySelectorAll('.all-models-group:not([hidden]) .all-models-card:not([hidden]) .all-models-image img')
+      .forEach((img, i) => { if (i < EAGER_CARDS) img.loading = 'eager'; });
+  }
 }

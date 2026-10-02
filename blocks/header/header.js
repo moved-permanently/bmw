@@ -68,10 +68,15 @@ function decorateIconTokens(root) {
   });
 }
 
-/** Fetches the nav fragment: /content (local preview) first, then the site root (DA/EDS). */
+/**
+ * Fetches the nav fragment: from the site root (DA/EDS), on pages of the local content preview
+ * (/content/…) from /content first; the other location is the fallback.
+ */
 async function fetchNavFragment() {
-  let resp = await fetch('/content/nav.plain.html');
-  if (!resp.ok) resp = await fetch('/nav.plain.html');
+  const paths = ['/nav.plain.html', '/content/nav.plain.html'];
+  if (window.location.pathname.startsWith('/content/')) paths.reverse();
+  let resp = await fetch(paths[0]);
+  if (!resp.ok) resp = await fetch(paths[1]);
   if (!resp.ok) return null;
   // parse inertly so fragment-relative images are not requested against the page URL
   const doc = new DOMParser().parseFromString(await resp.text(), 'text/html');
