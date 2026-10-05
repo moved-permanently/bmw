@@ -18,7 +18,19 @@
   min-width: 140px;
 }
 
+.wdh-picker th[scope="row"] {
+  text-align: left;
+}
+
 .wdh-picker .spectrum-Table-cell:nth-child(2) {
   min-width: 180px;
   overflow-wrap: anywhere;
+}
+
+.wdh-picker .wdh-display {
+  display: block;
+}
+
+.wdh-picker .wdh-source {
+  margin-top: 8px;
 }

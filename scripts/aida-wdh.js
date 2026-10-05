@@ -16,6 +16,33 @@ const LANGUAGES = {
 
 const BINDING_RE = /\/data\/wdh-([a-z]{2})\.json#([A-Za-z0-9]+)\.([A-Za-z0-9]+)$/;
 
+// BMW RfP III wording where supplied; concise UI descriptions for the remaining fields.
+const VALUE_LABELS = {
+  name: ['Model', 'Modell', 'Modèle'],
+  electricRange: ['Max. range (WLTP)', 'Max. Reichweite (WLTP)', 'Autonomie maximale (WLTP)'],
+  electricConsumption: ['Combined electric power consumption (WLTP)', 'Energieverbrauch elektrisch, kombiniert (WLTP)', 'Consommation électrique combinée (WLTP)'],
+  co2: ['Combined CO₂ emissions (WLTP)', 'CO₂-Emissionen kombiniert (WLTP)', 'Émissions de CO₂ combinées (WLTP)'],
+  co2Class: ['CO₂ class', 'CO₂-Klasse', 'Classe de CO₂'],
+  acceleration: ['Acceleration, 0–100 km/h', 'Beschleunigung, 0–100 km/h', 'Accélération, 0–100 km/h'],
+  additionalRangeDC: ['Range (WLTP) after 10 minutes of DC charging', 'Reichweite (WLTP) nach 10 Minuten DC-Laden', 'Autonomie (WLTP) après 10 minutes de recharge CC'],
+  power: ['Power', 'Leistung', 'Puissance'],
+  fromPrice: ['Starting price', 'Preis ab', 'Prix à partir de'],
+  leasePrice: ['Monthly lease price', 'Monatliche Leasingrate', 'Loyer mensuel'],
+  drivingAssistantSpeed: ['Driving Assistant Professional — speed limit', 'Driving Assistant Professional — Geschwindigkeitsgrenze', 'Driving Assistant Professional — limite de vitesse'],
+  highwayAssistantSpeed: ['BMW Highway Assistant — speed limit', 'BMW Autobahnassistent — Geschwindigkeitsgrenze', 'BMW Highway Assistant — limite de vitesse'],
+  topSpeed: ['Top speed', 'Höchstgeschwindigkeit', 'Vitesse maximale'],
+  batteryCapacity: ['Battery capacity', 'Batteriekapazität', 'Capacité de la batterie'],
+  dcCharge10to80: ['DC charging, 10–80 %', 'DC-Laden, 10–80 %', 'Recharge CC, 10–80 %'],
+  wltp: ['Full WLTP statement', 'Vollständige WLTP-Angabe', 'Mention WLTP complète'],
+};
+const SOURCE_LABELS = {
+  'supplied-wdh': ['WDH export', 'WDH-Export', 'Export WDH'],
+  'external-wdh': ['WDH export', 'WDH-Export', 'Export WDH'],
+  'brief-fixture': ['Demo fixture', 'Demo-Datensatz', 'Données de démonstration'],
+  'derived-demo-wltp-statement': ['Derived WLTP statement', 'Abgeleitete WLTP-Angabe', 'Mention WLTP dérivée'],
+};
+const UNKNOWN_SOURCE = ['Source not specified', 'Quelle nicht angegeben', 'Source non précisée'];
+
 export function parseBinding(href) {
   if (!href) return null;
   let path = href;
@@ -54,12 +81,24 @@ export function marketForPath(path) {
   };
 }
 
-export function valuesFromSheet(sheet) {
+export function valuesFromSheet(sheet, lang = 'en') {
   const rows = Array.isArray(sheet?.values) ? sheet.values : sheet?.values?.data || [];
-  return new Map(rows.map((r) => [r.key, {
-    ...r,
-    display: r.unit ? `${r.value} ${r.unit}` : r.value,
-  }]));
+  const language = Math.max(0, ['en', 'de', 'fr'].indexOf(lang));
+  return new Map(rows.map((r) => {
+    const field = (typeof r.field === 'string' && r.field.trim()) || r.key?.split('.')[1] || '';
+    const labels = Object.hasOwn(VALUE_LABELS, field) ? VALUE_LABELS[field] : null;
+    const supplied = typeof r.label === 'string' ? r.label.trim() : '';
+    const readable = field.replace(/([a-z\d])([A-Z])/g, (all, before, after) => `${before} ${after.toLowerCase()}`)
+      .replace(/[_-]+/g, ' ').trim();
+    const source = Object.hasOwn(SOURCE_LABELS, r.sourceKind)
+      ? SOURCE_LABELS[r.sourceKind] : UNKNOWN_SOURCE;
+    return [r.key, {
+      ...r,
+      label: labels?.[language] || supplied || readable.replace(/^./, (c) => c.toUpperCase()) || r.key?.trim() || 'Unknown property',
+      sourceLabel: source[language],
+      display: r.unit ? `${r.value} ${r.unit}` : r.value,
+    }];
+  }));
 }
 
 const ENTITIES = {
