@@ -113,3 +113,8 @@ test('localized property names, source badges and insert buttons declare their l
   assert.match(source, /de: 'Einfügen'/);
   assert.match(source, /fr: 'Insérer'/);
 });
+
+test('property row headers align with the left-aligned column heading', () => {
+  const css = read('tools/aida/wdh-picker/wdh-picker.css');
+  assert.match(css, /\.wdh-picker th\[scope="row"\]\s*\{[^}]*text-align:\s*left;/);
+});
