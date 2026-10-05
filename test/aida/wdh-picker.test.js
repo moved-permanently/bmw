@@ -63,11 +63,17 @@ test('unknown properties use a supplied label, readable field name or technical 
     { key: '61HG.custom', field: 'DC_charge_limit', value: 'x' },
     { key: 'opaque-key', field: '', value: 'x' },
     { key: '61HG.constructor', value: 'x' },
+    { key: '61HG.separator', field: '---', value: 'x' },
+    { key: '61HG.underscore', field: '___', value: 'x' },
+    { key: '  opaque  ', field: '---', value: 'x' },
+    { key: ' ', field: '---', value: 'x' },
   ];
   const values = valuesFromSheet({ values: rows });
   assert.deepEqual([...values.values()].map((row) => row.label), [
     'BMW custom property', 'New charging rate', 'DC charge limit', 'opaque-key', 'Constructor',
+    '61HG.separator', '61HG.underscore', 'opaque', 'Unknown property',
   ]);
+  assert.ok([...values.values()].every((row) => row.label.trim()));
 });
 
 test('source labels distinguish supplied data, demo fixtures and derived statements', () => {
@@ -96,5 +102,14 @@ test('picker requests document-language labels and shows property and source con
   assert.match(source, /sourceLabel/);
   assert.match(source, /spectrum-Badge/);
   assert.match(source, /link\.textContent = v\.display;/, 'Insertion must remain the value, not its label');
-  assert.match(source, /setAttribute\('aria-label', `Insert \$\{v\.label\}`\)/);
+  assert.match(source, /setAttribute\('aria-label', `\$\{insertLabel\} \$\{v\.label\}`\)/);
+});
+
+test('localized property names, source badges and insert buttons declare their language', () => {
+  const source = read('tools/aida/wdh-picker/wdh-picker.js');
+  assert.match(source, /tr\.children\[0\]\.lang = lang;/);
+  assert.match(source, /querySelector\('\.wdh-source'\)\.lang = lang;/);
+  assert.match(source, /button\.lang = lang;/);
+  assert.match(source, /de: 'Einfügen'/);
+  assert.match(source, /fr: 'Insérer'/);
 });
