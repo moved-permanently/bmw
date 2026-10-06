@@ -56,3 +56,12 @@ test('prompts for the config prompts sheet (title, prompt) point to the skills',
     assert.ok(p.prompt.includes(SKILLS[i].id), p.title);
   });
 });
+
+test('deployed Skills Editor storage: flat .da/skills/<id>.md files and skills sheet rows with an explicit status', async () => {
+  const { flatSkillFiles, skillsSheetRows } = await import('../../tools/ew-native/skills.mjs');
+  const folder = skillFiles();
+  const flat = flatSkillFiles();
+  assert.deepEqual(Object.keys(flat), SKILLS.map((s) => `/.da/skills/${s.id}.md`));
+  SKILLS.forEach((s) => assert.equal(flat[`/.da/skills/${s.id}.md`], folder[`/.da/skills/${s.id}/skill.md`], 'same content in both layouts'));
+  assert.deepEqual(skillsSheetRows(), SKILLS.map((s) => ({ key: s.id, content: flat[`/.da/skills/${s.id}.md`], status: 'approved' })));
+});

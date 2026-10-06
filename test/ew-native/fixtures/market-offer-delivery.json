@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "schemaName": "market-offer",
+    "title": "BMW i5 launch offer (FR)"
+  },
+  "data": {
+    "headline": "La nouvelle BMW i5. Chez votre partenaire BMW.",
+    "claim": "100 % électrique. Réservez votre essai.",
+    "market": "fr",
+    "modelCode": "61HG",
+    "wdhFields": [
+      "electricRange",
+      "electricConsumption",
+      "fromPrice"
+    ],
+    "image": "https://bmw.scene7.com/is/image/BMW/P001_SL_G60-8135_Ext_Dsk_v001",
+    "imageAlt": "BMW i5 extérieur",
+    "validFrom": "2026-10-01",
+    "validUntil": "2026-12-31",
+    "ctaLabel": "Découvrir BMW France",
+    "ctaUrl": "https://www.bmw.fr/",
+    "source": "Demo record: public BMW information and BMW RfP briefing copy, not a live offer."
+  }
+}
