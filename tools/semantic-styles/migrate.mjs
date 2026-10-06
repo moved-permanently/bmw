@@ -12,6 +12,8 @@
  *
  *   node tools/semantic-styles/migrate.mjs <export-dir> <out-dir> [--exclude exclusions.json]
  *   node tools/semantic-styles/migrate.mjs --check <export-dir>     (exit 1 if legacy names remain)
+ *   node tools/semantic-styles/migrate.mjs --verify <export-dir> <out-dir>
+ *     (same implementation classes / text / links / media, idempotent, no legacy names)
  *
  * <export-dir>/source/<path>.html = DA sources (as exported); <out-dir>/source is again an export.
  */
@@ -22,7 +24,11 @@ import {
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  toSemanticSectionStyles, toSemanticBlockOptions, findDeprecated,
+  toSemanticSectionStyles,
+  toSemanticBlockOptions,
+  findDeprecated,
+  expandSectionStyles,
+  expandBlockOptions,
 } from '../../scripts/bmw-style-names.js';
 
 const sha256 = (text) => createHash('sha256').update(text).digest('hex');
@@ -223,8 +229,69 @@ export function checkExport(exportDir) {
   });
 }
 
+/**
+ * Implementation classes the runtime derives for every section and block (sorted per element):
+ * equal signatures mean equal classes in the DOM, hence equal computed styles.
+ * @param {string} html
+ */
+export function implementationSignature(html) {
+  const element = (block) => {
+    const [name, ...options] = block.classValue.split(/\s+/).filter(Boolean);
+    if (name !== 'section-metadata') return [name, ...expandBlockOptions(name, options).sort()].join(' ');
+    const cell = styleCell(html, block);
+    const tokens = cell && cell.text !== undefined ? cell.text.split(',').map(toClassName).filter(Boolean) : [];
+    return `style: ${expandSectionStyles(tokens).sort().join(' ')}`;
+  };
+  return divTree(html).children.map((section) => section.children.filter((b) => b.classValue).map(element));
+}
+
+/**
+ * Verifies a migrated export (<after>/source) against the original export (<before>/source).
+ * @param {string} beforeDir
+ * @param {string} afterDir
+ * @returns {{ok: boolean, verified: number, excluded: string[], failures: object[]}}
+ */
+export function verifyExport(beforeDir, afterDir) {
+  const before = join(beforeDir, 'source');
+  const after = join(afterDir, 'source');
+  const migrated = new Set(listHtml(after).map((f) => relative(after, f)));
+  const legacy = new Set(checkExport(afterDir).map((h) => h.path));
+  const failures = [];
+  const excluded = [];
+  let verified = 0;
+  listHtml(before).forEach((file) => {
+    const rel = relative(before, file);
+    const path = `/${rel.replace(/\.html$/, '')}`;
+    if (!migrated.has(rel)) {
+      excluded.push(path);
+      return;
+    }
+    verified += 1;
+    const a = readFileSync(file, 'utf8');
+    const b = readFileSync(join(after, rel), 'utf8');
+    if (JSON.stringify(implementationSignature(a)) !== JSON.stringify(implementationSignature(b))) {
+      failures.push({ path, kind: 'classes' });
+    }
+    if (JSON.stringify(contentFingerprint(a)) !== JSON.stringify(contentFingerprint(b))) {
+      failures.push({ path, kind: 'content' });
+    }
+    if (legacy.has(path)) failures.push({ path, kind: 'legacy' });
+    else if (migrateDocument(b).changed) failures.push({ path, kind: 'idempotence' });
+  });
+  return {
+    ok: failures.length === 0, verified, excluded, failures,
+  };
+}
+
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
+  if (args[0] === '--verify') {
+    const report = verifyExport(args[1], args[2]);
+    report.failures.forEach((f) => console.log(`${f.path}\t${f.kind}`));
+    const { ok, verified, excluded } = report;
+    console.log(JSON.stringify({ ok, verified, excluded }));
+    process.exit(report.ok ? 0 : 1);
+  }
   if (args[0] === '--check') {
     const hits = checkExport(args[1]);
     hits.forEach((h) => console.log(`${h.path}\t${h.where}\t${h.token}`));
