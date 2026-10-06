@@ -57,3 +57,15 @@ test('teaser demo page: a normal BMW page with offer-teaser rows for both market
   assert.equal(result.changed, false);
   assert.deepEqual(result.exceptions, []);
 });
+
+test('each teaser card keeps its disclosure: WDH WLTP statement, legal note and the record source note', async () => {
+  const { offerNotes } = await import('../../scripts/structured-content.js');
+  const facts = { wltp: { display: 'BMW i5 eDrive40: 17,9 kWh/100 km (WLTP)' } };
+  assert.deepEqual(offerNotes({ source: 'Demo record: not a live offer.', legalNote: 'Editorial note.' }, facts), ['BMW i5 eDrive40: 17,9 kWh/100 km (WLTP)', 'Editorial note.', 'Demo record: not a live offer.']);
+  assert.deepEqual(offerNotes({ source: 'Demo record: not a live offer.' }, { wltp: null }), ['Demo record: not a live offer.']);
+  assert.deepEqual(offerNotes({}, {}), []);
+  const src = readFileSync(new URL('blocks/offer-teaser/offer-teaser.js', ROOT), 'utf8');
+  assert.match(src, /offerNotes\(r, facts\)/, 'the card renders the notes');
+  assert.match(src, /li\.lang = lang/, 'each card announces its own language (de / fr)');
+  assert.doesNotMatch(src, /innerHTML/, 'record text is rendered as text only');
+});
