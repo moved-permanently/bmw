@@ -113,8 +113,8 @@ test('verify is bound to the complete before inventory and explicit exclusions',
 }, ({ exp, out }) => {
   migrateExport(exp, out, { exclude: { '/de/c': 'reviewed: owner decision pending' } });
   assert.equal(verifyExport(exp, out, { exclude: { '/de/c': 'reviewed: owner decision pending' } }).ok, true);
-  // absent output is not an exclusion
-  assert.deepEqual(kinds(verifyExport(exp, out, { exclude: {} })), ['missing']);
+  // absent output is not an exclusion (and the exclusions differ from the migration's)
+  assert.deepEqual(kinds(verifyExport(exp, out, { exclude: {} })), ['manifest', 'missing']);
   unlinkSync(join(out, 'source', 'de', 'b.html'));
   assert.ok(kinds(verifyExport(exp, out, { exclude: { '/de/c': 'x' } })).includes('missing'));
   // extra output documents
@@ -148,6 +148,82 @@ test('the inventory accepts an empty errors list and rejects an export that repo
   writeFileSync(file, JSON.stringify({ ...manifest, errors: [{ path: '/de/b.html', status: 500 }] }));
   assert.throws(() => migrateExport(exp, join(root, 'bad'), { exclude: {} }), /export reported 1 errors/);
   assert.ok(kinds(verifyExport(exp, join(root, 'ok'), { exclude: {} })).includes('inventory'));
+}));
+
+/* ------------------------------------------- 3b. the migration manifest is bound to the inventory */
+
+const readJson = (file) => JSON.parse(readFileSync(file, 'utf8'));
+const writeJson = (file, value) => writeFileSync(file, JSON.stringify(value));
+const manifestFailures = (report) => report.failures.filter((f) => f.kind === 'manifest');
+
+test('verify rejects a pruned before inventory even when it is self-consistent', () => withExport({ '/de/a': RICH, '/de/b': RICH }, ({ exp, out }) => {
+  migrateExport(exp, out, { exclude: {} });
+  assert.deepEqual(verifyExport(exp, out, { exclude: {} }), {
+    ok: true, verified: 2, excluded: [], failures: [],
+  });
+  // drop /de/b from the before inventory, the before source and the output; migration manifest untouched
+  const file = join(exp, 'manifest.json');
+  const inventory = readJson(file);
+  writeJson(file, { ...inventory, exported: inventory.exported.filter((e) => e.path !== '/de/b.html') });
+  unlinkSync(join(exp, 'source', 'de', 'b.html'));
+  unlinkSync(join(out, 'source', 'de', 'b.html'));
+  const report = verifyExport(exp, out, { exclude: {} });
+  assert.equal(report.ok, false);
+  assert.ok(manifestFailures(report).some((f) => /inventory digest/.test(f.detail)), JSON.stringify(report.failures));
+  assert.ok(manifestFailures(report).some((f) => f.path === '/de/b' && /not in the inventory/.test(f.detail)), JSON.stringify(report.failures));
+}));
+
+test('verify rejects a replaced before inventory (same paths, other checksums)', () => withExport({ '/de/a': RICH }, ({ exp, out }) => {
+  migrateExport(exp, out, { exclude: {} });
+  const other = RICH.replace('Bild', 'Foto');
+  writeFileSync(join(exp, 'source', 'de', 'a.html'), other);
+  writeJson(join(exp, 'manifest.json'), {
+    exported: [{
+      path: '/de/a.html', ext: 'html', status: 200, sha256: sha(other),
+    }],
+  });
+  const report = verifyExport(exp, out, { exclude: {} });
+  assert.equal(report.ok, false);
+  assert.ok(manifestFailures(report).some((f) => /inventory digest/.test(f.detail)), JSON.stringify(report.failures));
+}));
+
+test('verify rejects missing, extra and duplicate migration-manifest records', () => withExport({ '/de/a': RICH, '/de/b': RICH }, ({ exp, out }) => {
+  migrateExport(exp, out, { exclude: { '/de/b': 'reviewed' } });
+  const file = join(out, 'manifest.json');
+  const manifest = readJson(file);
+  const check = (documents, pattern, path) => {
+    writeJson(file, { ...manifest, documents });
+    const report = verifyExport(exp, out, { exclude: { '/de/b': 'reviewed' } });
+    assert.equal(report.ok, false, pattern.source);
+    assert.ok(manifestFailures(report).some((f) => f.path === path && pattern.test(f.detail)), `${pattern.source}: ${JSON.stringify(report.failures)}`);
+  };
+  const [a, b] = manifest.documents;
+  check([a], /no record/, '/de/b'); // excluded record dropped
+  check([b], /no record/, '/de/a');
+  check([a, b, { ...a, path: '/de/zzz' }], /not in the inventory/, '/de/zzz');
+  check([a, a, b], /duplicate/, '/de/a');
+  writeJson(file, manifest);
+  assert.equal(verifyExport(exp, out, { exclude: { '/de/b': 'reviewed' } }).ok, true, 'restored manifest verifies');
+}));
+
+test('verify rejects exclusions that differ from the migration (paths, reasons, excluded checksums)', () => withExport({ '/de/a': RICH, '/de/b': RICH, '/de/c': RICH }, ({ exp, out }) => {
+  const exclude = { '/de/b': 'reviewed: stale preview' };
+  migrateExport(exp, out, { exclude });
+  assert.equal(verifyExport(exp, out, { exclude }).ok, true);
+  const reasons = verifyExport(exp, out, { exclude: { '/de/b': 'something else' } });
+  assert.ok(manifestFailures(reasons).some((f) => /exclusions differ/.test(f.detail)), JSON.stringify(reasons.failures));
+  // an extra exclusion at verify time (with its output removed) is not what was migrated
+  unlinkSync(join(out, 'source', 'de', 'c.html'));
+  const added = verifyExport(exp, out, { exclude: { ...exclude, '/de/c': 'later' } });
+  assert.equal(added.ok, false);
+  assert.ok(manifestFailures(added).some((f) => f.path === '/de/c' && /excluded/.test(f.detail)), JSON.stringify(added.failures));
+  writeFileSync(join(out, 'source', 'de', 'c.html'), migrateDocument(RICH).html);
+  // excluded record with another checksum than the inventory
+  const file = join(out, 'manifest.json');
+  const manifest = readJson(file);
+  writeJson(file, { ...manifest, documents: manifest.documents.map((d) => (d.excluded ? { ...d, before: sha('other') } : d)) });
+  const checksum = verifyExport(exp, out, { exclude });
+  assert.ok(manifestFailures(checksum).some((f) => f.path === '/de/b' && /checksum/.test(f.detail)), JSON.stringify(checksum.failures));
 }));
 
 /* ---------------------------------------------------------------- 4. serialized section classes */
