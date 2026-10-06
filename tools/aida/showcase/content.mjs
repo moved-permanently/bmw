@@ -174,7 +174,7 @@ export function buildContent({ catalogue, wdh } = {}) {
         [`${heading(title, 1)}${paragraph(subtitle)}${extra}`],
       ]) + (name === 'main-teaser-i5' ? disclaimer() : ''), 'space-below-tight-m');
     const feature = (name, asset, content, video = false) => section(name,
-      block(`columns cols-7-5 middle inset-2-start${video ? ' video-controls' : ''}`, [[image(asset, video), content]]));
+      block(`columns layout-wide-narrow middle inset-second-start${video ? ' video-controls' : ''}`, [[image(asset, video), content]]));
     const story = (storyId) => editorial.news.find((entry) => entry.id === storyId);
     const teaser = (entry, short = false) => [image(entry.asset),
       `${heading(entry[lang].title, 3)}${paragraph(entry[lang][short ? 'teaserShort' : 'teaserLong'])}${cta(local(`news/${entry.id}`), t.learn, false)}`];
@@ -182,7 +182,7 @@ export function buildContent({ catalogue, wdh } = {}) {
       `${heading(model.name, 3)}${paragraph(model.drivetrain === 'BEVE' ? t.electric : 'Plug-in hybrid')}${price(model.code)}${stats(model.code, model.drivetrain === 'BEVE' ? [[t.rangeLabel, 'electricRange'], [t.acceleration, 'acceleration']] : [[t.power, 'power'], [t.acceleration, 'acceleration']])}${cta(model.code === '61HG' ? local('i5') : `https://www.bmw.de${assets[model.asset].sources[0]}.html`, t.discover, false)}`];
     const related = editorial.models.filter((model) => model.discovery && ['BEVE', 'PHEV'].includes(model.drivetrain) && model.code !== '61HG');
     const electricModels = editorial.models.filter((model) => model.discovery && model.drivetrain === 'BEVE');
-    const emob = () => section('emob-section', heading(t.allElectric) + block('carousel slides-1-2-3-3', [
+    const emob = () => section('emob-section', heading(t.allElectric) + block('carousel slides-triples', [
       [image('charging'), `${heading(t.charging, 3)}${paragraph(t.chargingCopy)}<p>${esc(t.chargeSentence)}: ${fact('61HG.additionalRangeDC')}.</p>${cta(local('e-mobility'), t.learn, false)}`],
       [image('range'), `${heading(t.range, 3)}${paragraph(t.rangeShort)}${cta(local('e-mobility'), t.learn, false)}`],
       [image('i5'), `${heading(t.electric, 3)}${paragraph(t.electricCopy)}${cta(local('e-mobility'), t.learn, false)}`],
@@ -192,7 +192,7 @@ export function buildContent({ catalogue, wdh } = {}) {
       stage('main-teaser-i5', t.home, t.subtitle, 'i5', `${cta(configure(), t.configure)}${cta(local('i5'), t.discover, false)}`),
       feature('video-teaser-ix3', 'ix3', `${heading(t.ix3)}<p>${esc(t.rangeLabel)}: ${fact('31HR.electricRange')}.</p>${cta(local('e-mobility'), t.discover)}${fallback()}`, true),
       feature('small-teaser-emob', 'charging', `${heading(t.charging)}${paragraph(t.chargingCopy)}${cta(local('e-mobility'), t.learn)}`),
-      section('teaser-list', heading(t.newsList) + block('carousel slides-1-2-3-3', [
+      section('teaser-list', heading(t.newsList) + block('carousel slides-triples', [
         ...['cannes', 'concept-m'].map((key) => teaser(story(key))),
         [image('ix3'), `${heading(t.xTitle, 3)}${paragraph(t.xCopy)}${cta(local('e-mobility'), t.learn, false)}`],
         ...['interior', '3-series'].map((key) => teaser(story(key))),
@@ -204,8 +204,8 @@ export function buildContent({ catalogue, wdh } = {}) {
       stage('main-teaser-i5', t.car, t.subtitle, 'i5', `${price('61HG')}${cta(configure(), t.configure)}${cta(local('news/i5-launch'), t.learn, false)}`),
       section('car-kpi', heading(t.keyFigures) + block('car-kpis', i5Fields.map(([label, field]) => [fact(`61HG.${field}`), esc(label)])) + disclaimer()),
       emob(),
-      section('news-teaser', block('columns cols-7-5 middle inset-2-start', [teaser(story('interior'), true)])),
-      section('electrified-models', heading(t.related) + block('carousel cards slides-1-2-2-2', related.map(modelCard)) + fallback()),
+      section('news-teaser', block('columns layout-wide-narrow middle inset-second-start', [teaser(story('interior'), true)])),
+      section('electrified-models', heading(t.related) + block('carousel cards slides-pairs', related.map(modelCard)) + fallback()),
       section('assist-features', block('card-list', [
         [heading(t.features)],
         ['Driving Assistant Professional', `<p>${esc(t.drivingCopy)}: ${fact('61HG.drivingAssistantSpeed')}.</p>`],
@@ -217,9 +217,9 @@ export function buildContent({ catalogue, wdh } = {}) {
     document('e-mobility', t.topic, t.topicSubtitle, 'WebPage', [
       stage('stage-emob', t.topic, t.topicSubtitle, 'range', '', 'hero-stage'),
       feature('topic-range', 'range', `${heading(t.topicRange)}${paragraph(t.topicRangeCopy)}${cta(local('i5'), t.learn)}`),
-      section('model-range', heading(t.lineup) + block('carousel cards slides-1-2-2-2', electricModels.map(modelCard)) + disclaimer() + fallback()),
+      section('model-range', heading(t.lineup) + block('carousel cards slides-pairs', electricModels.map(modelCard)) + disclaimer() + fallback()),
       feature('topic-charging', 'charging', `${heading(t.topicCharging)}${paragraph(t.topicChargingCopy)}${cta('https://www.bmw.de/de/elektroauto/home-charging.html', t.homeCharging)}${cta('https://www.bmw.de/de/elektroauto/public-charging.html', t.publicCharging, false)}`),
-      section('news-hydrogen', block('columns cols-7-5 middle inset-2-start', [teaser(story('hydrogen'))])),
+      section('news-hydrogen', block('columns layout-wide-narrow middle inset-second-start', [teaser(story('hydrogen'))])),
     ]);
 
     editorial.news.filter((entry) => !context.sparse || entry.id === 'i5-launch').forEach((entry) => {

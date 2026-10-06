@@ -11,7 +11,7 @@
  */
 import { readBlockConfig, toClassName, toCamelCase } from './aem.js';
 import { decorateResponsiveImages } from './bmw-utils.js';
-import { expandSectionStyles, expandBlockOptions } from './bmw-style-names.js';
+import { expandSectionStyles, applyStyleNames } from './bmw-style-names.js';
 
 const LAYER_OPEN_CLASS = 'bmw-layer-open';
 const ANIMATION_MS = 300;
@@ -54,29 +54,6 @@ function applyContentWidth(section) {
 }
 
 /**
- * Replaces an element's semantic style names by the implementation classes they stand for
- * (scripts/bmw-style-names.js); legacy and other classes stay as they are.
- * @param {Element} el
- * @param {function(string[]): string[]} expand
- */
-function replaceClasses(el, expand) {
-  const classes = [...el.classList];
-  const expanded = expand(classes);
-  if (expanded.join(' ') !== classes.join(' ')) el.className = expanded.join(' ');
-}
-
-/**
- * Semantic block options (space-above-regular, width-half, text-width-five-twelfths, …) →
- * implementation options, before the blocks are loaded and decorated.
- * @param {Element} main
- */
-function applyBlockStyleNames(main) {
-  main.querySelectorAll('.block[data-block-name]').forEach((block) => {
-    replaceClasses(block, (classes) => expandBlockOptions(block.dataset.blockName, classes));
-  });
-}
-
-/**
  * Applies section metadata tables (whether or not decorateBlocks already ran) and removes them.
  * @param {Element} main
  */
@@ -109,12 +86,12 @@ function applySectionMetadata(main) {
  * aem.page renders section metadata server-side: the styles arrive as classes on the section div,
  * `id` as the id attribute and other keys as data-* attributes (no section-metadata table left).
  * Normalises those sections to what applySectionMetadata produces for authored markup: content
- * widths (content-N…), data-id (layers, tab panels) and no id attribute on layer sections.
+ * widths (content-N…), data-id (layers, tab panels) and no id attribute on layer sections (the
+ * semantic style names on them were already expanded by applyStyleNames).
  * @param {Element} main
  */
 function applyRenderedSectionMetadata(main) {
   main.querySelectorAll(':scope > .section').forEach((section) => {
-    replaceClasses(section, expandSectionStyles);
     if (section.id && !section.dataset.id) section.dataset.id = section.id;
     if (section.classList.contains('layer') && section.id) section.removeAttribute('id');
     if (!section.classList.contains('content-grid')) applyContentWidth(section);
@@ -408,7 +385,7 @@ export function decorateBmwSections(main) {
   fixScene7Crops(main);
   // default-content images: desktop/mobile/tablet crops → one responsive picture (+ EU AI label)
   decorateResponsiveImages(main);
-  applyBlockStyleNames(main);
+  applyStyleNames(main);
   applySectionMetadata(main);
   applyRenderedSectionMetadata(main);
   hidePageTitle(main);

@@ -7,13 +7,15 @@ every breakpoint.
 
 | Kind of name | Origin |
 |---|---|
-| `background-secondary`, `background-dark` | **BMW** (`style-container--secondary` with `--surface-background-secondary`, `style-container--background-dark`) |
+| `background-secondary`, `background-dark` | project-defined aliases derived from BMW styles and tokens: the secondary surface (`style-container--secondary`, `--surface-background-secondary`, #f6f6f6) and the dark container (`style-container--background-dark`); see [Other section styles](#other-section-styles) for what the importer derives them from |
 | `small` / `medium` / `large` in width names | **BMW** grid breakpoints (`aem-GridColumn--small/medium/large--N`) |
 | `center`, `body-2`, `h1-headline-2/3`, `h1-subsection-1/2` | **BMW** (`style-container--center`, `style-text--body-2`, `style-title--headline-N`, `--subsection-N`) |
 | Spacing families (`tight`, `related`, `regular`, `separated`, `feature`) and their sizes | **project-defined** (BMW numbers its spacing steps, `style-common--cmp-spacing-*-N`, and has no names for them) |
 | Width fractions (`half`, `two-thirds`, …) | **project-defined** (fractions of BMW's 12-column grid) |
+| Layout names (`layout-wide-narrow`, `slides-triples`, `items-small-…`, `widths-equal`, …) | **project-defined** (BMW's grid spans and slides per view, see [Layout options](#layout-options)) |
 
-The numeric utilities (`spacing-top-16`, `content-8-center`, `cols-5`, `width-lg-8`, …) are
+The numeric utilities (`spacing-top-16`, `content-8-center`, `cols-5`, `width-lg-8`, `cols-7-5`,
+`slides-1-2-3-3`, …) are
 **deprecated** for authoring. They still render (existing content keeps working) and are converted
 by the DA migration (`tools/semantic-styles/migrate.mjs`); `npm test` fails if docs, block metadata
 or the content generators reintroduce them.
@@ -86,6 +88,13 @@ Examples: `content-two-thirds-centered, center` (was `content-8-center, center`)
 `tab-panel`, `layer`, `contained`, `highlight`, `body-2`, `h1-headline-2`, `h1-headline-3`,
 `h1-subsection-1`, `h1-subsection-2`.
 
+The two background names are project-defined aliases, derived from (not named by) BMW: the
+importer (`tools/importer/transformers/bmw-sections.js`) writes `background-dark` for source
+containers with `style-container--dark` or `style-common--dark-background`, or a
+`style-container--background…` class in `ctx-mode--dark`, and `background-secondary` for any other
+container with a generic `style-container--background…` class (rendered as the secondary surface,
+`--bmw-surface-grey` = #f6f6f6).
+
 ## Block options
 
 | Block | Name | Was |
@@ -97,16 +106,73 @@ Examples: `content-two-thirds-centered, center` (was `content-8-center, center`)
 | Hero Teaser | `cta-above-<size>`, `cta-below-<size>` (button row) | `cta-top-N`, `cta-bottom-N` |
 | Hero Teaser | `subline-above-<size>` (first paragraph after the headline) | `sub-top-N` |
 | Columns | `video-space-above-<size>` (embedded video) | `video-spacing-top-N` |
+| Columns, Carousel, Icon Teaser, Model Offer, Text Media Teaser | layout names, see [Layout options](#layout-options) | `cols-A-B…`, `md-A-B…`, `img-D-M-S`, `inset-N-…`, `slides-…`, `offsets-…`, `span-md-N`, `col-A-B` |
 
 **Kept as they are** (not utilities): typography roles (`body-1/2`, `title-headline-1`,
 `sub-headline-2/3`, `h2`); aspect ratios (`ratio-W-H`, `mobile-ratio-W-H`, `video-ratio-W-H`,
-Model Card `ratio-3x2`); layout distributions (Columns `cols-7-5`, `md-6-6`, `img-…`, `inset-…`,
-Carousel `slides-a-b-c-d`, Icon Teaser `cols-m-t-d`, `offsets-…`); data parameters (Content Table
-`highlight-N`, `center-N`, `end-N`, Accordion `expand-N`, Embed `height-N`).
+Model Card `ratio-3x2`); data parameters (Content Table `highlight-N`, `center-N`, `end-N`,
+Accordion `expand-N`, Embed `height-N`). After the migration these are the only numbers left in
+style names (`npm test` checks this over the DA snapshot).
+
+Accordion and Content Table use the **first** width option of a breakpoint; the migration keeps
+the authored order and treats two widths for one breakpoint as a conflict (left unchanged, reported).
+
+## Layout options
+
+Breakpoints: small below 768 px, medium 768–1023 px, large 1024–1279 px, xlarge from 1280 px.
+Fractions as above; counts `one` … `nine`; cells `first` … `twelfth`. Every name expands to exactly
+one numeric option and back; a value without a name stays as it is and is reported.
+
+**Columns**
+
+| Name | Applies | Was |
+|---|---|---|
+| `layout-halves`, `layout-thirds`, `layout-quarters` | cell widths from 768 px (cells stack below) | `cols-6-6`, `cols-4-4-4`, `cols-3-3-3-3` |
+| `layout-wide-narrow`, `layout-narrow-wide` | 〃 | `cols-7-5`, `cols-5-7` |
+| `layout-<fraction>-<fraction>[-…]` (other distributions) | 〃 | e.g. `layout-half-five-twelfths` = `cols-6-5`, `layout-third-third` = `cols-4-4`, `layout-quarter-quarter-five-twelfths` = `cols-3-3-5` |
+| `layout-medium-<distribution>` | 768–1023 px | e.g. `layout-medium-halves` = `md-6-6`, `layout-medium-full-half` = `md-12-6`, `layout-medium-seven-twelfths-seven-twelfths-five-twelfths` = `md-7-7-5` |
+| `image-<D>-medium-<M>-small-<S>` | leading image width in text cells: D from 1024 px, M medium, S small | e.g. `image-quarter-medium-sixth-small-quarter` = `img-3-2-3` |
+| `inset-<cell>-start` / `-end` / `-both` | from 1024 px | e.g. `inset-second-start` = `inset-2-start` |
+
+**Carousel** (slides per view small / medium / large / xlarge)
+
+| Name | Per view | Was |
+|---|---|---|
+| `slides-single` | 1 / 1 / 1 / 1 | `slides-1-1-1-1` |
+| `slides-pairs` | 1 / 2 / 2 / 2 | `slides-1-2-2-2` |
+| `slides-triples` | 1 / 2 / 3 / 3 | `slides-1-2-3-3` |
+| `slides-quads` | 1 / 2 / 3 / 4 | `slides-1-2-3-4` |
+| `slides-pairs-from-large` | 1 / 1 / 2 / 2 | `slides-1-1-2-2` |
+| `slides-triples-from-large` | 1 / 1 / 3 / 3 | `slides-1-1-3-3` |
+| `slides-quads-from-large` | 1 / 1 / 4 / 4 | `slides-1-1-4-4` |
+| `slides-small-<count>-medium-<count>-large-<count>-xlarge-<count>` | other combinations | e.g. `slides-small-one-medium-three-large-four-xlarge-five` = `slides-1-3-4-5` |
+
+**Icon Teaser**
+
+| Name | Applies | Was |
+|---|---|---|
+| `items-small-<count>-medium-<count>-large-<count>` | items per row: below 768 / 768–1023 / from 1024 px | e.g. `items-small-one-medium-three-large-three` = `cols-1-3-3` |
+| `offsets-<fraction or none>[-…]` | offset of each item from 1024 px (with `offsets-md` from 768 px) | e.g. `offsets-twelfth-sixth` = `offsets-1-2`, `offsets-none-third` = `offsets-0-4` |
+| `span-medium-<fraction>` | item width 768–1023 px | e.g. `span-medium-two-thirds` = `span-md-8` |
+
+**Model Offer**: `slides-three` (three cards per view from 1280 px; default two) = `slides-3`.
+
+**Text Media Teaser** (media / text widths where they sit side by side, and from 1920 px):
+
+| Name | Media / text | From 1920 px | Was |
+|---|---|---|---|
+| `widths-equal` | five-twelfths / five-twelfths | third / third | `col-5-5` |
+| `media-wider` | half / third | five-twelfths / quarter | `col-6-4` |
+| `text-wider` | third / half | quarter / five-twelfths | `col-4-6` |
 
 ## Checks
 
 - `npm test` — vocabulary round-trips every style combination of the DA snapshot, guards docs,
   block metadata, the showcase generator and the importer.
-- `node tools/semantic-styles/migrate.mjs --check <da-export>` — lists remaining deprecated names in
-  a DA source export (exit code 1 if any).
+- `node tools/semantic-styles/migrate.mjs --check <da-export>` — lists remaining deprecated names,
+  conflicts and unsupported markup (e.g. a style cell with formatting) in a DA source export (exit
+  code 1 if any).
+- `node tools/semantic-styles/migrate.mjs --verify <da-export> <migrated> --exclude <file>` — the
+  migrated export covers the complete inventory except the reviewed exclusions, every byte outside
+  the style spans is unchanged and every element gets the same implementation classes (see
+  `tools/semantic-styles/README.md`).

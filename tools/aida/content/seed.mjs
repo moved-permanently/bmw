@@ -25,6 +25,8 @@ import { fileURLToPath } from 'node:url';
 import { autoBind, bindingHref, valuesFromSheet } from '../../../scripts/aida-wdh.js';
 import { setMetadata } from '../../../scripts/aida-doc.js';
 import { translateHtml } from '../agent/lib.js';
+// eslint-disable-next-line import/extensions
+import { migrateDocument } from '../../semantic-styles/migrate.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../../..');
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -42,7 +44,10 @@ const SHEETS = process.env.WDH_SHEETS || join(ROOT, 'aida/data');
 const wdh = (market) => readJson(join(SHEETS, `wdh-${market}.json`));
 const terms = readJson(join(HERE, 'data/brand-terms.json')).data.map((r) => r.term);
 
-function write(path, plain) {
+/** Writes a page in the semantic style vocabulary (copied bmw.de content may still be numeric). */
+function write(path, source) {
+  const { html: plain, exceptions } = migrateDocument(source);
+  if (exceptions.length) throw new Error(`${path}: ${exceptions.join('; ')}`);
   const draft = join(ROOT, 'drafts', `${path}.plain.html`);
   const doc = join(HERE, 'out', `${path}.html`);
   [draft, doc].forEach((f) => mkdirSync(dirname(f), { recursive: true }));

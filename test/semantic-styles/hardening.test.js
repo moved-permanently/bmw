@@ -139,6 +139,17 @@ test('verify rejects an empty output, drift of the before export and drift of ou
   assert.ok(kinds(verifyExport(exp, out, { exclude: {} })).includes('drift'), 'output differs from the migration manifest');
 }));
 
+test('the inventory accepts an empty errors list and rejects an export that reported errors', () => withExport({ '/de/a': RICH }, ({ root, exp }) => {
+  const file = join(exp, 'manifest.json');
+  const manifest = JSON.parse(readFileSync(file, 'utf8'));
+  writeFileSync(file, JSON.stringify({ ...manifest, errors: [] }));
+  migrateExport(exp, join(root, 'ok'), { exclude: {} });
+  assert.equal(verifyExport(exp, join(root, 'ok'), { exclude: {} }).ok, true);
+  writeFileSync(file, JSON.stringify({ ...manifest, errors: [{ path: '/de/b.html', status: 500 }] }));
+  assert.throws(() => migrateExport(exp, join(root, 'bad'), { exclude: {} }), /export reported 1 errors/);
+  assert.ok(kinds(verifyExport(exp, join(root, 'ok'), { exclude: {} })).includes('inventory'));
+}));
+
 /* ---------------------------------------------------------------- 4. serialized section classes */
 
 test('serialized styles on section class attributes (.plain.html / rendered shape) are migrated and checked', () => {

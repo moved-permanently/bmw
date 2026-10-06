@@ -2,10 +2,10 @@
   "variantName": "model-offer",
   "baseBlock": "model-offer",
   "canonicalModel": "standalone",
-  "visualCharacteristics": "Slider of grey leasing offer cards (dark slanted flag, model name with info-i, subtitle, car image, monthly rate bold, total price, check-mark facts) with WLTP small print under each card; 2 per view (option slides-3), 1 on mobile, arrows + dots",
-  "contentPattern": "One row per offer: car image (link to offer form) | flag paragraph, h3 model name, subtitle | price entries 'label<br>value' (value bold for the monthly rate), list of leasing facts | disclaimer | info-i texts as list items '<strong>label</strong> text'. Option: slides-3. Option wide: one stand-alone offer card (shop-online offer pages, parser model-offer-card) spanning 10/12 columns, name | image | pricing side by side from 1024px.",
+  "visualCharacteristics": "Slider of grey leasing offer cards (dark slanted flag, model name with info-i, subtitle, car image, monthly rate bold, total price, check-mark facts) with WLTP small print under each card; 2 per view on desktop (option slides-three: 3 from 1280px), 1 on mobile, arrows + dots",
+  "contentPattern": "One row per offer: car image (link to offer form) | flag paragraph, h3 model name, subtitle | price entries 'label<br>value' (value bold for the monthly rate), list of leasing facts | disclaimer | info-i texts as list items '<strong>label</strong> text'. Option: slides-three (three cards per view from 1280px). Option wide: one stand-alone offer card (shop-online offer pages, parser model-offer-card) spanning 10/12 columns, name | image | pricing side by side from 1024px.",
   "options": [
-    "slides-3",
+    "slides-three",
     "wide"
   ],
   "memberVariantIds": [

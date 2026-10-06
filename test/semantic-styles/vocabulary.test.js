@@ -163,6 +163,7 @@ test('findDeprecated names legacy author-facing utilities only', () => {
   );
   assert.deepEqual(findDeprecated(['cols-5', 'cta-top-10', 'sub-headline-3', 'ratio-16-9'], 'hero-teaser'), ['cols-5', 'cta-top-10']);
   assert.deepEqual(findDeprecated(['width-lg-8', 'expand-9'], 'accordion'), ['width-lg-8']);
-  assert.deepEqual(findDeprecated(['cols-7-5', 'video-spacing-top-16', 'slides-1-2-3-4'], 'columns'), ['video-spacing-top-16']);
+  // layout distributions have semantic names too (review finding 8); carousel slides are not a Columns option
+  assert.deepEqual(findDeprecated(['cols-7-5', 'video-spacing-top-16', 'slides-1-2-3-4'], 'columns'), ['cols-7-5', 'video-spacing-top-16']);
   assert.deepEqual(findDeprecated(['highlight-3', 'height-500', 'ratio-3x2'], 'content-table'), []);
 });

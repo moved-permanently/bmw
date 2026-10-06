@@ -6,11 +6,11 @@
  * (source style-common--cmp-spacing-{top,bottom}-N, here spacing-{top,bottom}-N with
  * --bmw-spacing-N) and the 12-column grid spans (source aem-GridColumn--{small,medium,large}--N,
  * here content-[sm|md|lg-]N…, width-[md|lg-]N, cols-N). Legacy names stay accepted.
- * No DOM access: also used by the DA migration (tools/semantic-styles) and the importer.
+ * No DOM globals: also used by the DA migration (tools/semantic-styles) and the importer.
  *
- * Spacing families and grid fractions are project-defined (not BMW terminology);
- * background-secondary / background-dark follow BMW's style-container--secondary /
- * --background-dark, small / medium / large the BMW grid breakpoint names.
+ * Spacing families, grid fractions, layout names and background-secondary / background-dark are
+ * project-defined (background names derived from BMW's style-container--secondary /
+ * --background-dark); small / medium / large are the BMW grid breakpoint names.
  */
 
 /** Spacing sizes (project-defined families) -> internal BMW spacing step. */
@@ -50,78 +50,247 @@ export const WIDTH_FRACTIONS = {
 
 /** BMW grid breakpoint names -> internal breakpoint prefix. */
 const BREAKPOINTS = { small: 'sm', medium: 'md', large: 'lg' };
-/** Section aliases (BMW style-container--secondary / --background-dark) -> implementation class. */
+/**
+ * Section aliases -> implementation class: project-defined names derived from BMW's
+ * style-container--secondary (--surface-background-secondary) / style-container--background-dark.
+ */
 const SECTION_ALIASES = { 'background-secondary': 'grey', 'background-dark': 'dark' };
 
+/** Own (not inherited) property of a lookup table, else undefined. */
+const own = (table, key) => (Object.hasOwn(table, key) ? table[key] : undefined);
 const invert = (obj) => Object.fromEntries(Object.entries(obj).map(([k, v]) => [v, k]));
 const SIZE_OF = invert(SPACING_SIZES);
 const FRACTION_OF = invert(WIDTH_FRACTIONS);
 const BP_NAME = invert(BREAKPOINTS);
 const LEGACY_ALIAS = invert(SECTION_ALIASES);
-const SIZES = Object.keys(SPACING_SIZES).join('|');
-const FRACTIONS = Object.keys(WIDTH_FRACTIONS).join('|');
+/** Longest first: names contain hyphens ("five-twelfths" before "twelfth"). */
+const alternation = (obj) => Object.keys(obj).sort((a, b) => b.length - a.length).join('|');
+const SIZES = alternation(SPACING_SIZES);
+const FRACTIONS = alternation(WIDTH_FRACTIONS);
 const SIDE = { above: 'top', below: 'bottom' };
 const SIDE_NAME = invert(SIDE);
+/** Counts (slides / items per view) and ordinals (cell positions). */
+const COUNTS = {
+  one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9,
+};
+const ORDINALS = {
+  first: 1,
+  second: 2,
+  third: 3,
+  fourth: 4,
+  fifth: 5,
+  sixth: 6,
+  seventh: 7,
+  eighth: 8,
+  ninth: 9,
+  tenth: 10,
+  eleventh: 11,
+  twelfth: 12,
+};
+const OFFSETS = { none: 0, ...WIDTH_FRACTIONS };
+const COUNT = alternation(COUNTS);
+const ORDINAL = alternation(ORDINALS);
 
 const SPACE_RE = new RegExp(`^space-(?:(above|below)-)?(${SIZES})$`);
 const LEGACY_SPACING_RE = /^spacing-(top|bottom)-(\d+)$/;
 const CONTENT_RE = new RegExp(`^content-(?:(small|medium|large)-)?(${FRACTIONS})(?:-(centered)|-offset-(${FRACTIONS}))?$`);
 const LEGACY_CONTENT_RE = /^content-(?:(lg|md|sm)-)?(\d+)(?:-(center)|-offset-(\d+))?$/;
 
+/** "half-five-twelfths" -> [6, 5] (words of `table` joined by "-"), or null. */
+function parseList(text, table) {
+  const word = new RegExp(`(${alternation(table)})(?:-|$)`, 'y');
+  const values = [];
+  let m = word.exec(text);
+  while (m) {
+    values.push(table[m[1]]);
+    if (word.lastIndex === text.length) return text.endsWith('-') ? null : values;
+    m = word.exec(text);
+  }
+  return null;
+}
+
+/** [6, 5] -> "half-five-twelfths", or null when a value has no name. */
+function nameList(values, table) {
+  const names = invert(table);
+  const words = values.map((v) => own(names, v));
+  return words.every(Boolean) ? words.join('-') : null;
+}
+
 /**
- * Block options with their own semantic names, per block. Each rule: semantic / legacy RegExp,
- * conversions between the two, and the option "slot" a token fills (to detect conflicts).
+ * Block options with their own semantic names, per block. Each rule:
+ *   expand(semantic token) -> implementation option, or null (not a name of this rule);
+ *   legacy: RegExp of the implementation option; name(legacy token) -> semantic name, or null when
+ *   the value has none (left unchanged with an exception); slot(legacy token): the property the
+ *   option sets (two options for one slot conflict).
  */
-const sized = (prefix, legacy) => ({
-  semantic: new RegExp(`^${prefix}-(above|below)-(${SIZES})$`),
-  toLegacy: (m) => `${legacy}-${SIDE[m[1]]}-${SPACING_SIZES[m[2]]}`,
-  semanticSlot: (m) => `${prefix}-${SIDE[m[1]]}`,
-  legacy: new RegExp(`^${legacy}-(top|bottom)-(\\d+)$`),
-  toSemantic: (m) => SIZE_OF[m[2]] && `${prefix}-${SIDE_NAME[m[1]]}-${SIZE_OF[m[2]]}`,
-  legacySlot: (m) => `${prefix}-${m[1]}`,
-});
-const widths = {
-  semantic: new RegExp(`^width-(?:(medium|large)-)?(${FRACTIONS})$`),
-  toLegacy: (m) => `width-${m[1] ? `${BREAKPOINTS[m[1]]}-` : ''}${WIDTH_FRACTIONS[m[2]]}`,
-  semanticSlot: (m) => `width-${m[1] ? BREAKPOINTS[m[1]] : 'xl'}`,
-  legacy: /^width-(?:(lg|md)-)?(\d+)$/,
-  toSemantic: (m) => FRACTION_OF[m[2]] && `width-${m[1] ? `${BP_NAME[m[1]]}-` : ''}${FRACTION_OF[m[2]]}`,
-  legacySlot: (m) => `width-${m[1] || 'xl'}`,
+function rule(legacy, expand, name, slot) {
+  return {
+    legacy, expand, name, slot: typeof slot === 'string' ? () => slot : slot,
+  };
+}
+const match = (re, fn) => (t) => {
+  const m = t.match(re);
+  return m ? fn(m) : null;
 };
-const single = (semantic, toLegacy, legacy, toSemantic, slot) => ({
-  semantic, toLegacy, semanticSlot: () => slot, legacy, toSemantic, legacySlot: () => slot,
-});
+const sized = (prefix, legacy) => rule(
+  new RegExp(`^${legacy}-(top|bottom)-(\\d+)$`),
+  match(new RegExp(`^${prefix}-(above|below)-(${SIZES})$`), (m) => `${legacy}-${SIDE[m[1]]}-${SPACING_SIZES[m[2]]}`),
+  match(new RegExp(`^${legacy}-(top|bottom)-(\\d+)$`), (m) => own(SIZE_OF, m[2]) && `${prefix}-${SIDE_NAME[m[1]]}-${SIZE_OF[m[2]]}`),
+  (t) => `${prefix}-${t.match(/-(top|bottom)-/)[1]}`,
+);
+const widths = rule(
+  /^width-(?:(lg|md)-)?(\d+)$/,
+  match(new RegExp(`^width-(?:(medium|large)-)?(${FRACTIONS})$`), (m) => `width-${m[1] ? `${BREAKPOINTS[m[1]]}-` : ''}${WIDTH_FRACTIONS[m[2]]}`),
+  match(/^width-(?:(lg|md)-)?(\d+)$/, (m) => own(FRACTION_OF, m[2]) && `width-${m[1] ? `${BP_NAME[m[1]]}-` : ''}${FRACTION_OF[m[2]]}`),
+  (t) => `width-${t.match(/^width-(?:(lg|md)-)?/)[1] || 'xl'}`,
+);
+/** Named values of one option (presets): semantic name <-> implementation option. */
+function presets(legacy, table, slot) {
+  const names = invert(table);
+  return rule(legacy, (t) => own(table, t) || null, (t) => own(names, t) || null, slot);
+}
+
+/** Column distributions with a name of their own (otherwise the fractions are listed). */
+const DISTRIBUTIONS = {
+  halves: '6-6', thirds: '4-4-4', quarters: '3-3-3-3', 'wide-narrow': '7-5', 'narrow-wide': '5-7',
+};
+const DISTRIBUTION_OF = invert(DISTRIBUTIONS);
+/** layout[-medium]-<distribution | fraction-fraction[-…]> <-> <legacy>-A-B[-…] (2+ cells). */
+function distribution(prefix, legacy, slot) {
+  const legacyRe = new RegExp(`^${legacy}-(\\d+(?:-\\d+)+)$`);
+  const expand = (t) => {
+    if (!t.startsWith(`${prefix}-`)) return null;
+    const rest = t.slice(prefix.length + 1);
+    const preset = own(DISTRIBUTIONS, rest);
+    if (preset) return `${legacy}-${preset}`;
+    const spans = parseList(rest, WIDTH_FRACTIONS);
+    if (!spans || spans.length < 2 || own(DISTRIBUTION_OF, spans.join('-'))) return null;
+    return `${legacy}-${spans.join('-')}`;
+  };
+  const name = match(legacyRe, (m) => {
+    const preset = own(DISTRIBUTION_OF, m[1]);
+    const list = preset || nameList(m[1].split('-').map(Number), WIDTH_FRACTIONS);
+    return list && `${prefix}-${list}`;
+  });
+  return rule(legacyRe, expand, name, slot);
+}
+
+/** Carousel slides per view: small (< 768) / medium (768-1023) / large (1024-1279) / xlarge. */
+const SLIDE_PRESETS = {
+  'slides-single': '1-1-1-1',
+  'slides-pairs': '1-2-2-2',
+  'slides-triples': '1-2-3-3',
+  'slides-quads': '1-2-3-4',
+  'slides-pairs-from-large': '1-1-2-2',
+  'slides-triples-from-large': '1-1-3-3',
+  'slides-quads-from-large': '1-1-4-4',
+};
+const SLIDE_PRESET_OF = invert(SLIDE_PRESETS);
+const SLIDES_RE = new RegExp(`^slides-small-(${COUNT})-medium-(${COUNT})-large-(${COUNT})-xlarge-(${COUNT})$`);
+const carouselSlides = rule(
+  /^slides-(\d)-(\d)-(\d)-(\d)$/,
+  (t) => {
+    const preset = own(SLIDE_PRESETS, t);
+    if (preset) return `slides-${preset}`;
+    const m = t.match(SLIDES_RE);
+    const counts = m && m.slice(1, 5).map((c) => COUNTS[c]).join('-');
+    return m && !own(SLIDE_PRESET_OF, counts) ? `slides-${counts}` : null;
+  },
+  match(/^slides-(\d-\d-\d-\d)$/, (m) => {
+    const preset = own(SLIDE_PRESET_OF, m[1]);
+    if (preset) return preset;
+    const [s, md, lg, xl] = m[1].split('-').map((c) => own(invert(COUNTS), c));
+    return s && md && lg && xl && `slides-small-${s}-medium-${md}-large-${lg}-xlarge-${xl}`;
+  }),
+  'slides',
+);
+
 const BLOCK_OPTIONS = {
   accordion: [widths],
   'content-table': [widths],
   'hero-teaser': [
-    single(
-      new RegExp(`^text-width-(${FRACTIONS})$`),
-      (m) => `cols-${WIDTH_FRACTIONS[m[1]]}`,
+    rule(
       /^cols-(\d+)$/,
-      (m) => FRACTION_OF[m[1]] && `text-width-${FRACTION_OF[m[1]]}`,
+      match(new RegExp(`^text-width-(${FRACTIONS})$`), (m) => `cols-${WIDTH_FRACTIONS[m[1]]}`),
+      match(/^cols-(\d+)$/, (m) => own(FRACTION_OF, m[1]) && `text-width-${FRACTION_OF[m[1]]}`),
       'text-width',
     ),
     sized('text', 'text'),
     sized('cta', 'cta'),
-    single(
-      new RegExp(`^subline-above-(${SIZES})$`),
-      (m) => `sub-top-${SPACING_SIZES[m[1]]}`,
+    rule(
       /^sub-top-(\d+)$/,
-      (m) => SIZE_OF[m[1]] && `subline-above-${SIZE_OF[m[1]]}`,
+      match(new RegExp(`^subline-above-(${SIZES})$`), (m) => `sub-top-${SPACING_SIZES[m[1]]}`),
+      match(/^sub-top-(\d+)$/, (m) => own(SIZE_OF, m[1]) && `subline-above-${SIZE_OF[m[1]]}`),
       'subline-above',
     ),
   ],
-  columns: [sized('video-space', 'video-spacing')],
+  columns: [
+    sized('video-space', 'video-spacing'),
+    distribution('layout', 'cols', 'layout'),
+    distribution('layout-medium', 'md', 'layout-medium'),
+    rule(
+      /^img-(\d+)-(\d+)-(\d+)$/,
+      match(new RegExp(`^image-(${FRACTIONS})-medium-(${FRACTIONS})-small-(${FRACTIONS})$`), (m) => `img-${m.slice(1, 4).map((f) => WIDTH_FRACTIONS[f]).join('-')}`),
+      match(/^img-(\d+)-(\d+)-(\d+)$/, (m) => {
+        const [d, md, sm] = m.slice(1, 4).map((n) => own(FRACTION_OF, n));
+        return d && md && sm && `image-${d}-medium-${md}-small-${sm}`;
+      }),
+      'image',
+    ),
+    rule(
+      /^inset-(\d+)-(start|end|both)$/,
+      match(new RegExp(`^inset-(${ORDINAL})-(start|end|both)$`), (m) => `inset-${ORDINALS[m[1]]}-${m[2]}`),
+      match(/^inset-(\d+)-(start|end|both)$/, (m) => own(invert(ORDINALS), m[1]) && `inset-${invert(ORDINALS)[m[1]]}-${m[2]}`),
+      (t) => `inset-${Number(t.split('-')[1])}`,
+    ),
+  ],
+  carousel: [carouselSlides],
+  'icon-teaser': [
+    rule(
+      /^cols-(\d)-(\d)-(\d)$/,
+      match(new RegExp(`^items-small-(${COUNT})-medium-(${COUNT})-large-(${COUNT})$`), (m) => `cols-${m.slice(1, 4).map((c) => COUNTS[c]).join('-')}`),
+      match(/^cols-(\d)-(\d)-(\d)$/, (m) => {
+        const [s, md, lg] = m.slice(1, 4).map((c) => own(invert(COUNTS), c));
+        return s && md && lg && `items-small-${s}-medium-${md}-large-${lg}`;
+      }),
+      'items',
+    ),
+    rule(
+      /^offsets-(\d+(?:-\d+)*)$/,
+      (t) => {
+        const values = t.startsWith('offsets-') && parseList(t.slice(8), OFFSETS);
+        return values ? `offsets-${values.join('-')}` : null;
+      },
+      match(/^offsets-(\d+(?:-\d+)*)$/, (m) => {
+        const list = nameList(m[1].split('-').map(Number), OFFSETS);
+        return list && `offsets-${list}`;
+      }),
+      'offsets',
+    ),
+    rule(
+      /^span-md-(\d+)$/,
+      match(new RegExp(`^span-medium-(${FRACTIONS})$`), (m) => `span-md-${WIDTH_FRACTIONS[m[1]]}`),
+      match(/^span-md-(\d+)$/, (m) => own(FRACTION_OF, m[1]) && `span-medium-${FRACTION_OF[m[1]]}`),
+      'span-medium',
+    ),
+  ],
+  'model-offer': [presets(/^slides-\d+$/, { 'slides-three': 'slides-3' }, 'slides')],
+  'text-media-teaser': [presets(/^col-\d+-\d+$/, {
+    'widths-equal': 'col-5-5', 'media-wider': 'col-6-4', 'text-wider': 'col-4-6',
+  }, 'widths')],
 };
+
+const rulesOf = (block) => (block ? own(BLOCK_OPTIONS, block) || [] : []);
 
 /** Slot of a block-specific option (semantic or legacy form), or null. */
 function optionSlot(rules, token) {
-  const rule = rules.find((r) => r.semantic.test(token) || r.legacy.test(token));
-  if (!rule) return null;
-  return rule.semantic.test(token)
-    ? rule.semanticSlot(token.match(rule.semantic))
-    : rule.legacySlot(token.match(rule.legacy));
+  let legacy = token;
+  let found = rules.find((r) => r.legacy.test(token));
+  if (!found) {
+    found = rules.find((r) => r.expand(token));
+    legacy = found && found.expand(token);
+  }
+  return found ? found.slot(legacy) : null;
 }
 
 /* ---------------------------------------------------------------- expansion (runtime) */
@@ -150,7 +319,7 @@ function expandContent(token) {
  */
 export function expandSectionStyles(tokens) {
   return tokens.flatMap((t) => expandSpace(t) || expandContent(t)
-    || (SECTION_ALIASES[t] ? [SECTION_ALIASES[t]] : [t]));
+    || [own(SECTION_ALIASES, t) || t]);
 }
 
 /**
@@ -160,12 +329,12 @@ export function expandSectionStyles(tokens) {
  * @returns {string[]}
  */
 export function expandBlockOptions(block, tokens) {
-  const own = BLOCK_OPTIONS[block] || [];
+  const rules = rulesOf(block);
   return tokens.flatMap((t) => {
     const space = expandSpace(t);
     if (space) return space;
-    const rule = own.find((r) => r.semantic.test(t));
-    return rule ? [rule.toLegacy(t.match(rule.semantic))] : [t];
+    const expanded = rules.map((r) => r.expand(t)).find(Boolean);
+    return [expanded || t];
   });
 }
 
@@ -191,7 +360,7 @@ function convertSpacing(tokens, exceptions, label) {
     exceptions.push(`${label}: conflicting space-${SIDE_NAME[conflict[0]]} (${conflict[1].map(({ i }) => tokens[i]).join(', ')})`);
     return null;
   }
-  const missing = [...sides.top, ...sides.bottom].find((s) => s.legacy && !SIZE_OF[s.step]);
+  const missing = [...sides.top, ...sides.bottom].find((s) => s.legacy && !own(SIZE_OF, s.step));
   if (missing) {
     exceptions.push(`${label}: no semantic size for spacing step ${missing.step} (${tokens[missing.i]})`);
     return null;
@@ -212,7 +381,7 @@ function convertSpacing(tokens, exceptions, label) {
 
 function legacyContentToSemantic(token) {
   const m = token.match(LEGACY_CONTENT_RE);
-  if (!m || !FRACTION_OF[m[2]] || (m[4] && !FRACTION_OF[m[4]])) return null;
+  if (!m || !own(FRACTION_OF, m[2]) || (m[4] && !own(FRACTION_OF, m[4]))) return null;
   const bp = m[1] ? `${BP_NAME[m[1]]}-` : '';
   let suffix = '';
   if (m[3]) suffix = '-centered';
@@ -229,10 +398,10 @@ function contentSlot(token) {
 }
 
 function conflictingSlot(tokens, slotOf) {
-  const seen = {};
-  return tokens.map((t) => [slotOf(t), t]).filter(([s]) => s).find(([s, t]) => {
-    if (seen[s]) return true;
-    seen[s] = t;
+  const seen = new Set();
+  return tokens.map((t) => [slotOf(t), t]).filter(([s]) => s).find(([s]) => {
+    if (seen.has(s)) return true;
+    seen.add(s);
     return false;
   });
 }
@@ -248,7 +417,7 @@ export function toSemanticSectionStyles(tokens) {
   const clash = conflictingSlot(tokens, contentSlot);
   if (clash) exceptions.push(`section: conflicting ${clash[0]} (${tokens.filter((t) => contentSlot(t) === clash[0]).join(', ')})`);
   if (!spaced || clash) return { styles: [...tokens], exceptions };
-  const styles = spaced.map((t) => legacyContentToSemantic(t) || LEGACY_ALIAS[t] || t);
+  const styles = spaced.map((t) => legacyContentToSemantic(t) || own(LEGACY_ALIAS, t) || t);
   return { styles, exceptions };
 }
 
@@ -260,14 +429,16 @@ export function toSemanticSectionStyles(tokens) {
  */
 export function toSemanticBlockOptions(block, tokens) {
   const exceptions = [];
-  const own = BLOCK_OPTIONS[block] || [];
+  const rules = rulesOf(block);
   const spaced = convertSpacing(tokens, exceptions, block);
-  const clash = conflictingSlot(tokens, (t) => optionSlot(own, t));
-  if (clash) exceptions.push(`${block}: conflicting ${clash[0]}`);
-  if (!spaced || clash) return { options: [...tokens], exceptions };
+  const clash = conflictingSlot(tokens, (t) => optionSlot(rules, t));
+  if (clash) exceptions.push(`${block}: conflicting ${clash[0]} (${tokens.filter((t) => optionSlot(rules, t) === clash[0]).join(', ')})`);
+  const nameless = tokens.filter((t) => rules.some((r) => r.legacy.test(t) && !r.name(t)));
+  if (nameless.length) exceptions.push(`${block}: no semantic name for ${nameless.join(', ')}`);
+  if (!spaced || clash || nameless.length) return { options: [...tokens], exceptions };
   const options = spaced.map((t) => {
-    const rule = own.find((r) => r.legacy.test(t));
-    return (rule && rule.toSemantic(t.match(rule.legacy))) || t;
+    const found = rules.find((r) => r.legacy.test(t));
+    return found ? found.name(t) : t;
   });
   return { options, exceptions };
 }
@@ -280,8 +451,25 @@ export function toSemanticBlockOptions(block, tokens) {
  * @returns {string[]}
  */
 export function findDeprecated(tokens, block) {
-  const own = block ? (BLOCK_OPTIONS[block] || []) : [];
+  const rules = rulesOf(block);
   return tokens.filter((t) => LEGACY_SPACING_RE.test(t)
-    || (!block && (LEGACY_CONTENT_RE.test(t) || Boolean(LEGACY_ALIAS[t])))
-    || own.some((r) => r.legacy.test(t)));
+    || (!block && (LEGACY_CONTENT_RE.test(t) || Boolean(own(LEGACY_ALIAS, t))))
+    || rules.some((r) => r.legacy.test(t)));
+}
+
+/**
+ * Runtime: replaces the semantic names on sections (rendered section metadata arrives as classes)
+ * and blocks by the implementation classes, before section metadata and blocks are decorated.
+ * @param {Element} main
+ */
+export function applyStyleNames(main) {
+  const replace = (el, expand) => {
+    const classes = [...el.classList];
+    const expanded = expand(classes);
+    if (expanded.join(' ') !== classes.join(' ')) el.className = expanded.join(' ');
+  };
+  main.querySelectorAll(':scope > .section').forEach((section) => replace(section, expandSectionStyles));
+  main.querySelectorAll('.block[data-block-name]').forEach((block) => {
+    replace(block, (classes) => expandBlockOptions(block.dataset.blockName, classes));
+  });
 }

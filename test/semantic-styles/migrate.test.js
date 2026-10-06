@@ -1,8 +1,8 @@
-/* eslint-disable max-len */
+/* eslint-disable max-len, import/extensions */
 /*
  * DA migration to the semantic style vocabulary (tools/semantic-styles/migrate.mjs): only section
- * metadata style cells and block class attributes change; every other byte, the text, the links and
- * the media stay identical; the migration is idempotent; collisions become explicit exceptions; the
+ * metadata style cells and section / block class attributes change; every other byte stays
+ * identical; the migration is idempotent; collisions become explicit exceptions; the
  * manifest carries per-document checksums and rollback snapshots.
  */
 import { test } from 'node:test';
@@ -13,8 +13,9 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
-// eslint-disable-next-line import/extensions
-import { migrateDocument, migrateExport, contentFingerprint } from '../../tools/semantic-styles/migrate.mjs';
+import {
+  migrateDocument, migrateExport, checkExport, styleSkeleton,
+} from '../../tools/semantic-styles/migrate.mjs';
 
 const DOC = '<body>\n  <header></header>\n  <main><div><h1>Willkommen</h1>'
   + '<div class="hero-teaser bottom cols-10 cta-top-10 sub-top-5 gradient-oblique"><div><div><p><a href="https://bmw.scene7.com/is/image/BMW/x">BMW iX3</a></p></div></div></div>'
@@ -44,8 +45,9 @@ test('only style cells and block classes change, byte for byte', () => {
   assert.equal(result.changes.length, 5);
 });
 
-test('text, links and media are unchanged', () => {
-  assert.deepEqual(contentFingerprint(migrateDocument(DOC).html), contentFingerprint(DOC));
+test('every byte outside the style spans (text, links, media, metadata) is unchanged', () => {
+  assert.equal(styleSkeleton(migrateDocument(DOC).html), styleSkeleton(DOC));
+  assert.notEqual(styleSkeleton(DOC.replace('Willkommen', 'Hallo')), styleSkeleton(DOC));
 });
 
 test('the migration is idempotent', () => {
@@ -78,10 +80,16 @@ test('export migration writes migrated sources, rollback snapshots, checksums an
     mkdirSync(join(exp, 'source', 'de'), { recursive: true });
     writeFileSync(join(exp, 'source', 'de', 'home.html'), DOC);
     writeFileSync(join(exp, 'source', 'de', 'skip.html'), DOC);
-    writeFileSync(join(exp, 'source', 'nav.html'), '<body><main><div><p>nav</p></div></main></body>');
+    const nav = '<body><main><div><p>nav</p></div></main></body>';
+    writeFileSync(join(exp, 'source', 'nav.html'), nav);
+    const sha = (s) => createHash('sha256').update(s).digest('hex');
+    const exported = [['/de/home.html', DOC], ['/de/skip.html', DOC], ['/nav.html', nav]]
+      .map(([path, html]) => ({
+        path, ext: 'html', status: 200, sha256: sha(html),
+      }));
+    writeFileSync(join(exp, 'manifest.json'), JSON.stringify({ exported }));
     const out = join(root, 'out');
     const manifest = migrateExport(exp, out, { exclude: { '/de/skip': 'not previewed' } });
-    const sha = (s) => createHash('sha256').update(s).digest('hex');
     const home = manifest.documents.find((d) => d.path === '/de/home');
     assert.equal(home.changed, true);
     assert.equal(home.before, sha(DOC));
@@ -93,8 +101,10 @@ test('export migration writes migrated sources, rollback snapshots, checksums an
     assert.equal(manifest.documents.find((d) => d.path === '/nav').changed, false);
     assert.equal(manifest.summary.changed, 1);
     assert.equal(manifest.summary.excluded, 1);
-    const second = migrateExport(out, join(root, 'out2'), { exclude: {} });
-    assert.equal(second.summary.changed, 0, 'running on migrated sources changes nothing');
+    ['de/home.html', 'nav.html'].forEach((f) => assert.equal(migrateDocument(readFileSync(join(out, 'source', f), 'utf8')).changed, false, 'running on migrated sources changes nothing'));
+    assert.deepEqual(checkExport(out), []);
+    assert.throws(() => migrateExport(exp, join(root, 'out2')), /explicit exclusions/);
+    assert.throws(() => migrateExport(exp, join(root, 'out2'), { exclude: { '/de/nope': 'x' } }), /unknown-exclusion/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
