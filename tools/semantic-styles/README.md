@@ -32,6 +32,9 @@ without a semantic name, style cells with markup (`<strong>` …) and unbalanced
 - every inventory document is either explicitly excluded or present in the output (`missing`),
   nothing else is there (`extra`), exclusions name inventory documents (`unknown-exclusion`) and at
   least one document is verified (`empty`);
+- the migration manifest was made from this inventory and these exclusions (`manifest`: recorded
+  digest of `<export>/manifest.json`, exactly one record per inventory document — excluded ones
+  included — with the inventory checksum, same exclusion paths and reasons);
 - each output matches the migration manifest (`drift`: before = inventory sha256, after = file);
 - the bytes outside the rewritten style spans are identical (`bytes`) and each span expands to the
   same implementation classes in the same order (`classes`; only `spacing-*` classes, which no

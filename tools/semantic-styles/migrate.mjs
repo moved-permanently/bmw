@@ -462,6 +462,45 @@ export function checkExport(exportDir) {
 }
 
 /**
+ * The migration manifest must describe exactly the inventory it was made from (recorded digest of
+ * <before>/manifest.json, one record per inventory document with its checksum) and the same
+ * exclusions (paths and reasons): [[path, detail]].
+ */
+function manifestFailures(manifest, beforeDir, docs, exclude) {
+  const out = [];
+  const file = join(beforeDir, 'manifest.json');
+  const digest = existsSync(file) ? sha256(readFileSync(file, 'utf8')) : null;
+  if (!manifest.inventory || manifest.inventory !== digest) {
+    out.push(['/', 'inventory digest differs from the inventory the migration was made from']);
+  }
+  const recorded = manifest.exclude && typeof manifest.exclude === 'object' ? manifest.exclude : null;
+  const same = recorded && Object.keys(recorded).length === Object.keys(exclude).length
+    && Object.entries(exclude)
+      .every(([path, reason]) => own(recorded, path) && recorded[path] === reason);
+  if (!same) out.push(['/', 'exclusions differ from the migration\'s']);
+  if (!Array.isArray(manifest.documents)) out.push(['/', 'no documents[] in the migration manifest']);
+  const seen = new Set();
+  (Array.isArray(manifest.documents) ? manifest.documents : []).forEach((d) => {
+    const path = d && d.path;
+    if (seen.has(path)) {
+      out.push([path, 'duplicate record']);
+      return;
+    }
+    seen.add(path);
+    if (!docs.has(path)) {
+      out.push([path, 'record not in the inventory']);
+      return;
+    }
+    if (Boolean(d.excluded) !== own(exclude, path)) {
+      out.push([path, d.excluded ? 'record excluded, not excluded now' : 'excluded now, migrated by the record']);
+    }
+    if (d.before !== docs.get(path)) out.push([path, 'record checksum differs from the inventory']);
+  });
+  docs.forEach((hash, path) => { if (!seen.has(path)) out.push([path, 'no record']); });
+  return out;
+}
+
+/**
  * Verifies a migrated export (<after>/source + manifest.json) against the original export and its
  * complete inventory (<before>/manifest.json) with explicit exclusions.
  * @param {string} beforeDir
@@ -480,7 +519,11 @@ export function verifyExport(beforeDir, afterDir, { exclude } = {}) {
   const entries = new Map();
   if (existsSync(manifestFile)) {
     const manifest = JSON.parse(readFileSync(manifestFile, 'utf8'));
-    (manifest.documents || []).forEach((d) => entries.set(d.path, d));
+    manifestFailures(manifest, beforeDir, inventory.docs, exclude)
+      .forEach(([path, detail]) => fail(path, 'manifest', detail));
+    (manifest.documents || []).forEach((d) => {
+      if (d && !entries.has(d.path)) entries.set(d.path, d);
+    });
   } else fail('/', 'manifest', 'no migration manifest.json in the output');
   outputs.forEach((path) => {
     if (!inventory.docs.has(path) || own(exclude, path)) fail(path, 'extra');
