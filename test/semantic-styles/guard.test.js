@@ -69,7 +69,7 @@ test('importer: generated block names and section styles are converted to semant
   );
   assert.equal(semanticBlockName('Disclaimer (info, spacing-top-5, spacing-bottom-5)'), 'Disclaimer (info, space-tight-l)');
   assert.equal(semanticBlockName('Accordion (width-6, width-lg-8, width-md-12)'), 'Accordion (width-half, width-large-two-thirds, width-medium-full)');
-  assert.equal(semanticBlockName('Columns (cols-7-5, middle, inset-2-start)'), 'Columns (cols-7-5, middle, inset-2-start)');
+  assert.equal(semanticBlockName('Columns (cols-7-5, middle, inset-2-start)'), 'Columns (layout-wide-narrow, middle, inset-second-start)');
   assert.equal(semanticBlockName('Cards'), 'Cards');
   assert.equal(semanticSectionStyle('spacing-top-16, spacing-bottom-16, content-8-center, center'), 'space-regular, content-two-thirds-centered, center');
   assert.equal(semanticSectionStyle('grey'), 'background-secondary');
