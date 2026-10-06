@@ -65,3 +65,12 @@ test('deployed Skills Editor storage: flat .da/skills/<id>.md files and skills s
   SKILLS.forEach((s) => assert.equal(flat[`/.da/skills/${s.id}.md`], folder[`/.da/skills/${s.id}/skill.md`], 'same content in both layouts'));
   assert.deepEqual(skillsSheetRows(), SKILLS.map((s) => ({ key: s.id, content: flat[`/.da/skills/${s.id}.md`], status: 'approved' })));
 });
+
+test('find-campaign-media reads the native Media Library index and inserts Scene7 originals, not media-bus copies', () => {
+  const md = skillFiles()['/.da/skills/bmw-find-campaign-media/skill.md'];
+  assert.match(md, /\nversion: 2\n/);
+  assert.match(md, /\.da\/media-insights\/index-meta\.json/);
+  assert.match(md, /index-\*\.json|index-000\.json/);
+  assert.match(md, /originalPath/);
+  assert.match(md, /never insert[^\n]*media_/i);
+});

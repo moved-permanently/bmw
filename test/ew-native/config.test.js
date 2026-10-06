@@ -89,3 +89,14 @@ test('planConfig applies several sheets and reports every addition and conflict'
   assert.deepEqual(plan.conflicts, { library: [], apps: ['Translate'] });
   assert.deepEqual(plan.config.apps.data[0], SITE.apps.data[0]);
 });
+
+test('replaceOwnedRows updates only the task-owned rows in place and never touches other rows or sheets', async () => {
+  const { replaceOwnedRows } = await import('../../tools/ew-native/config.mjs');
+  const base = appendRows(SITE, 'skills', 'key', [{ key: 'a', content: 'v1', status: 'approved' }, { key: 'b', content: 'x', status: 'approved' }]).config;
+  const { config, replaced, missing } = replaceOwnedRows(base, 'skills', 'key', [{ key: 'a', content: 'v2', status: 'approved' }, { key: 'zz', content: 'n' }]);
+  assert.deepEqual(replaced, ['a']);
+  assert.deepEqual(missing, ['zz']);
+  assert.deepEqual(config.skills.data, [{ key: 'a', content: 'v2', status: 'approved' }, { key: 'b', content: 'x', status: 'approved' }]);
+  ['data', 'library', 'prepare', 'apps', ':names'].forEach((k) => assert.deepEqual(config[k], base[k], k));
+  assert.deepEqual(replaceOwnedRows(config, 'skills', 'key', [{ key: 'a', content: 'v2', status: 'approved' }]).replaced, [], 'identical rows are a no-op');
+});
