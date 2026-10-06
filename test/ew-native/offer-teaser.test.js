@@ -13,13 +13,22 @@ import { migrateDocument } from '../../tools/semantic-styles/migrate.mjs';
 
 const ROOT = new URL('../../', import.meta.url);
 
-test('delivery URL follows the host tier (preview / review / live) and the site', () => {
+test('delivery URL follows the host tier (preview / live) and the site', () => {
   const at = (href) => new URL(href);
   assert.equal(deliveryUrl(at('https://main--bmw--moved-permanently.aem.page/aida/structured/teasers'), '/aida/structured/offers/bmw-i5-launch-fr'), 'https://da-sc.adobeaem.workers.dev/preview/moved-permanently/bmw/aida/structured/offers/bmw-i5-launch-fr');
   assert.equal(deliveryUrl(at('https://main--bmw--moved-permanently.aem.live/x'), '/aida/structured/offers/a'), 'https://da-sc.adobeaem.workers.dev/live/moved-permanently/bmw/aida/structured/offers/a');
-  assert.equal(deliveryUrl(at('https://snap--main--bmw--moved-permanently.aem.reviews/x'), '/a'), 'https://da-sc.adobeaem.workers.dev/review/moved-permanently/bmw/a');
   assert.equal(deliveryUrl(at('http://localhost:3000/x'), '/a'), 'https://da-sc.adobeaem.workers.dev/preview/moved-permanently/bmw/a');
   assert.throws(() => deliveryUrl(at('https://main--bmw--moved-permanently.aem.page/x'), 'https://evil.example/a'), /path/);
+});
+
+test('snapshot reviews: no JSON delivery (da-sc review tier reads main--site--org.aem.reviews, not the named snapshot)', () => {
+  const at = (href) => new URL(href);
+  ['https://launch--main--bmw--moved-permanently.aem.reviews/aida/structured/teasers', 'https://main--bmw--moved-permanently.aem.reviews/x'].forEach((href) => {
+    assert.throws(() => deliveryUrl(at(href), '/aida/structured/offers/bmw-i5-launch-de'), /snapshot review/);
+  });
+  const src = readFileSync(new URL('blocks/offer-teaser/offer-teaser.js', ROOT), 'utf8');
+  assert.match(src, /isSnapshotReview\(window\.location\)/, 'the block checks review mode before any fetch');
+  assert.ok(src.indexOf('isSnapshotReview(window.location)') < src.indexOf('fetch('), 'guard comes before the JSON fetch');
 });
 
 test('a delivered record (SDK JSON) becomes the same record the record page renders', () => {
