@@ -7,6 +7,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+// eslint-disable-next-line import/extensions
 import { buildLibrary } from './library.mjs';
 
 const [wdhFile, outDir] = process.argv.slice(2);

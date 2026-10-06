@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /*
  * Curated BMW library for Document Authoring / Experience Workspace: block documents (one per
  * block family; each variant followed by library-metadata), page templates and the blocks /

@@ -1,0 +1,33 @@
+.news .news-article {
+  display: grid;
+  gap: var(--bmw-spacing-10);
+}
+
+.news .news-media picture,
+.news .news-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.news .news-body {
+  max-width: 50rem;
+}
+
+.news .news-meta,
+.news .news-source {
+  font-size: var(--bmw-body-2-font-size);
+  line-height: var(--bmw-body-2-line-height);
+  color: var(--bmw-grey-500);
+  text-transform: capitalize;
+}
+
+.news .news-source {
+  text-transform: none;
+}
+
+.news .news-teaser {
+  font-size: var(--bmw-body-1-font-size);
+  line-height: var(--bmw-body-1-line-height);
+  font-weight: 700;
+}

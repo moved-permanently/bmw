@@ -1,0 +1,48 @@
+.market-offer .market-offer-card {
+  display: grid;
+  gap: var(--bmw-spacing-8);
+  background: var(--bmw-color-white);
+}
+
+@media (width >= 1024px) {
+  .market-offer .market-offer-card {
+    grid-template-columns: 7fr 5fr;
+    align-items: center;
+  }
+}
+
+.market-offer .market-offer-media picture,
+.market-offer .market-offer-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.market-offer .market-offer-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--bmw-spacing-3) var(--bmw-spacing-8);
+  margin: var(--bmw-spacing-8) 0;
+}
+
+.market-offer .market-offer-facts dt {
+  color: var(--bmw-grey-500);
+}
+
+.market-offer .market-offer-facts dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.market-offer .market-offer-missing,
+.market-offer .market-offer-notice {
+  color: var(--bmw-grey-500);
+  font-weight: 400;
+}
+
+.market-offer .market-offer-legal,
+.market-offer .market-offer-validity {
+  font-size: var(--bmw-body-2-font-size);
+  line-height: var(--bmw-body-2-line-height);
+  color: var(--bmw-grey-500);
+}
