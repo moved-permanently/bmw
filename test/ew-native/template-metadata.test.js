@@ -18,3 +18,8 @@ test('template-metadata has block code that hides the table', async () => {
   assert.equal(block['aria-hidden'], 'true');
   assert.match(readFileSync(new URL('template-metadata.css', root), 'utf8'), /\.template-metadata\s*\{\s*display:\s*none;?\s*\}/);
 });
+
+test('authoring-only library / template metadata is hidden from first paint (eager styles.css, no JS needed)', () => {
+  const css = readFileSync(new URL('../../styles/styles.css', import.meta.url), 'utf8');
+  assert.match(css, /main\s+\.library-metadata,\s*main\s+\.template-metadata\s*\{\s*display:\s*none;?\s*\}/);
+});
