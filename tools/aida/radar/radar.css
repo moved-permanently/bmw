@@ -44,3 +44,9 @@
 .radar .radar-drift {
   margin-top: 8px;
 }
+
+.radar-dependencies {
+  margin: 0 0 var(--spectrum-global-dimension-size-200, 16px);
+  padding-inline-start: var(--spectrum-global-dimension-size-300, 24px);
+  font-size: var(--spectrum-global-dimension-font-size-75, 12px);
+}

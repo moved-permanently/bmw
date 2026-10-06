@@ -13,8 +13,12 @@ const config = {
   languages: {
     data: [
       { name: 'English', code: 'en', location: '/aida/en' },
-      { name: 'German', code: 'de', location: '/aida/de', locales: '/aida/de/de, /aida/de/at' },
-      { name: 'French', code: 'fr', location: '/aida/fr', locales: '/aida/fr/fr, /aida/fr/be' },
+      {
+        name: 'German', code: 'de', location: '/aida/de', locales: '/aida/de/de, /aida/de/at',
+      },
+      {
+        name: 'French', code: 'fr', location: '/aida/fr', locales: '/aida/fr/fr, /aida/fr/be',
+      },
     ],
   },
 };

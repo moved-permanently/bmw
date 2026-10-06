@@ -1,6 +1,6 @@
 import connect from '../da.js';
 import {
-  topology, buildGrid, TIMESTAMP_LABELS, pageActions,
+  topology, dependencies, buildGrid, TIMESTAMP_LABELS, pageActions,
 } from './grid.js';
 import {
   findBindings, staleBindings, valuesFromSheet, marketForPath,
@@ -67,6 +67,20 @@ function appendActions(el, routes, missing = false) {
   el.append(actions, evidence);
 }
 
+/** Compact language -> market view (structure from the translation config only). */
+function renderDependencies(main, { source, languages }) {
+  const list = document.createElement('ul');
+  list.className = 'radar-dependencies';
+  list.setAttribute('aria-label', 'Language and market rollout structure');
+  languages.forEach((language) => {
+    const li = document.createElement('li');
+    const markets = language.markets.map((m) => m.name.toUpperCase()).join(', ') || 'no market folders';
+    li.textContent = `${source.name} → ${language.name} (${language.location}) → ${markets}`;
+    list.append(li);
+  });
+  main.append(list);
+}
+
 (async function init() {
   const main = document.querySelector('main');
   const status = document.querySelector('#radar-status');
@@ -79,6 +93,7 @@ function appendActions(el, routes, missing = false) {
     const ref = da.context.ref || 'main';
     const config = JSON.parse(await da.read('/.da/translate.json'));
     const { source, targets } = topology(config);
+    renderDependencies(main, dependencies(config));
     status.textContent = `Reading ${source.location} and ${targets.length} language and market folders…`;
     const sources = (await walk(da, source.location))
       .filter((p) => !targets.some((t) => p.path.startsWith(`${t.location}/`)))

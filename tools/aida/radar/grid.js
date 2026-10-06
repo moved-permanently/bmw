@@ -20,6 +20,22 @@ export function topology(config) {
   return { source: { name: source.name, location: source.location }, targets };
 }
 
+/**
+ * Language -> market structure of the rollout (translation config only; no status): the source
+ * language, each target language and the market folders that are rolled out from it.
+ */
+export function dependencies(config) {
+  const { source } = topology(config);
+  const languages = rowsOf(config.languages)
+    .filter((l) => l.name !== source.name)
+    .map((l) => ({
+      name: l.name,
+      location: l.location,
+      markets: split(l.locales).map((location) => ({ name: location.split('/').pop(), location })),
+    }));
+  return { source, languages };
+}
+
 export function cellStatus(sourceModified, targetModified) {
   if (targetModified === undefined) return 'missing';
   const time = (value) => {
