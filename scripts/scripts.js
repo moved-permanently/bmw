@@ -13,7 +13,7 @@ import {
   getMetadata,
 } from './aem.js';
 import { decorateBmwSections } from './bmw-sections.js';
-import { createWdhSession } from './aida-wdh.js';
+import { createWdhSession } from './wdh-session.js';
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
   const innerTT = window.trustedTypes.createPolicy('tt-inner', {
