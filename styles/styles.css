@@ -1319,3 +1319,9 @@ main > .section > div:has(> .block.spacing-bottom-24) { margin-bottom: var(--bmw
 main > .section > div:has(> .block.spacing-bottom-32) { margin-bottom: var(--bmw-spacing-32); }
 main > .section > div:has(> .block.spacing-bottom-40) { margin-bottom: var(--bmw-spacing-40); }
 main > .section > div:has(> .block.spacing-bottom-60) { margin-bottom: var(--bmw-spacing-60); }
+
+/* authoring-only DA library / template metadata: never visitor-facing (hidden before block code loads) */
+main .library-metadata,
+main .template-metadata {
+  display: none;
+}
