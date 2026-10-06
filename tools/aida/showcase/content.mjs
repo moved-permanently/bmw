@@ -26,7 +26,7 @@ const sheet = (data) => ({
 });
 const rows = (value) => (Array.isArray(value) ? value : value?.data || []);
 const block = (classes, cells) => `<div class="${classes}">${cells.map((row) => `<div>${row.map((cell) => `<div>${cell}</div>`).join('')}</div>`).join('')}</div>`;
-const section = (id, content, style = 'spacing-top-16, spacing-bottom-16') => ({
+const section = (id, content, style = 'space-regular') => ({
   id,
   blocks: [...content.matchAll(/<div class="([^"]+)"/g)].map((match) => match[1].split(' ')[0]),
   html: `<div>${content}${block('section-metadata', [['Style', esc(style)]])}</div>`,
@@ -169,10 +169,10 @@ export function buildContent({ catalogue, wdh } = {}) {
     };
     const disclaimer = () => block('disclaimer', [[legal()]]);
     const stage = (name, title, subtitle, asset, extra = '', kind = 'hero-teaser') => section(name,
-      block(kind === 'hero-teaser' ? 'hero-teaser no-autoplay middle cols-5 gradient-left ratio-16-7 mobile-ratio-3-4' : `${kind} small`, [
+      block(kind === 'hero-teaser' ? 'hero-teaser no-autoplay middle text-width-five-twelfths gradient-left ratio-16-7 mobile-ratio-3-4' : `${kind} small`, [
         [image(asset, name === 'main-teaser-i5')],
         [`${heading(title, 1)}${paragraph(subtitle)}${extra}`],
-      ]) + (name === 'main-teaser-i5' ? disclaimer() : ''), 'spacing-bottom-4');
+      ]) + (name === 'main-teaser-i5' ? disclaimer() : ''), 'space-below-tight-m');
     const feature = (name, asset, content, video = false) => section(name,
       block(`columns cols-7-5 middle inset-2-start${video ? ' video-controls' : ''}`, [[image(asset, video), content]]));
     const story = (storyId) => editorial.news.find((entry) => entry.id === storyId);
@@ -226,7 +226,7 @@ export function buildContent({ catalogue, wdh } = {}) {
       const news = entry[lang];
       document(`news/${entry.id}`, news.title, news.teaserShort, 'NewsArticle', [
         stage('news-stage', news.title, news.teaserShort, entry.asset, '', 'hero-stage'),
-        section('news-body', `${paragraph(news.teaserLong)}${entry.code ? `${stats(entry.code, i5Fields)}${legal()}${cta(local('i5'), t.discover)}` : ''}${paragraph(`${entry.sourceKind} · ${editorial.source}`)}`, 'content-8-center, spacing-top-12, spacing-bottom-16'),
+        section('news-body', `${paragraph(news.teaserLong)}${entry.code ? `${stats(entry.code, i5Fields)}${legal()}${cta(local('i5'), t.discover)}` : ''}${paragraph(`${entry.sourceKind} · ${editorial.source}`)}`, 'content-two-thirds-centered, space-above-related-l, space-below-regular'),
       ], entry.code);
       newsIndex.push({
         path: local(`news/${entry.id}`), id: entry.id, context: id, title: news.title, description: news.teaserShort, image: assets[entry.asset].url, demo: true,

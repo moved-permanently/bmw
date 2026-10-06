@@ -1,6 +1,7 @@
 /**
  * BMW section runtime:
  *  - section metadata (style → classes, other keys → data-*), incl. spacing/center/dark/grey,
+ *    semantic style names expanded to implementation classes (scripts/bmw-style-names.js),
  *    body-2, h1-<style> and content-N[-center|-offset-O] grid widths (CSS variables)
  *  - visually hidden page title (home: the H1 only exists for screen readers on the source)
  *  - default-content text links with chevron + button groups
@@ -10,6 +11,7 @@
  */
 import { readBlockConfig, toClassName, toCamelCase } from './aem.js';
 import { decorateResponsiveImages } from './bmw-utils.js';
+import { expandSectionStyles, expandBlockOptions } from './bmw-style-names.js';
 
 const LAYER_OPEN_CLASS = 'bmw-layer-open';
 const ANIMATION_MS = 300;
@@ -52,6 +54,29 @@ function applyContentWidth(section) {
 }
 
 /**
+ * Replaces an element's semantic style names by the implementation classes they stand for
+ * (scripts/bmw-style-names.js); legacy and other classes stay as they are.
+ * @param {Element} el
+ * @param {function(string[]): string[]} expand
+ */
+function replaceClasses(el, expand) {
+  const classes = [...el.classList];
+  const expanded = expand(classes);
+  if (expanded.join(' ') !== classes.join(' ')) el.className = expanded.join(' ');
+}
+
+/**
+ * Semantic block options (space-above-regular, width-half, text-width-five-twelfths, …) →
+ * implementation options, before the blocks are loaded and decorated.
+ * @param {Element} main
+ */
+function applyBlockStyleNames(main) {
+  main.querySelectorAll('.block[data-block-name]').forEach((block) => {
+    replaceClasses(block, (classes) => expandBlockOptions(block.dataset.blockName, classes));
+  });
+}
+
+/**
  * Applies section metadata tables (whether or not decorateBlocks already ran) and removes them.
  * @param {Element} main
  */
@@ -62,9 +87,7 @@ function applySectionMetadata(main) {
     Object.entries(config).forEach(([key, value]) => {
       const val = Array.isArray(value) ? value.join(',') : String(value || '');
       if (key === 'style') {
-        val.split(',')
-          .map((s) => toClassName(s.trim()))
-          .filter(Boolean)
+        expandSectionStyles(val.split(',').map((s) => toClassName(s.trim())).filter(Boolean))
           .forEach((cls) => section.classList.add(cls));
       } else if (val) {
         section.dataset[toCamelCase(key)] = val.trim();
@@ -91,6 +114,7 @@ function applySectionMetadata(main) {
  */
 function applyRenderedSectionMetadata(main) {
   main.querySelectorAll(':scope > .section').forEach((section) => {
+    replaceClasses(section, expandSectionStyles);
     if (section.id && !section.dataset.id) section.dataset.id = section.id;
     if (section.classList.contains('layer') && section.id) section.removeAttribute('id');
     if (!section.classList.contains('content-grid')) applyContentWidth(section);
@@ -384,6 +408,7 @@ export function decorateBmwSections(main) {
   fixScene7Crops(main);
   // default-content images: desktop/mobile/tablet crops → one responsive picture (+ EU AI label)
   decorateResponsiveImages(main);
+  applyBlockStyleNames(main);
   applySectionMetadata(main);
   applyRenderedSectionMetadata(main);
   hidePageTitle(main);

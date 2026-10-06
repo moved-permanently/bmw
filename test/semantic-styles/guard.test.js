@@ -15,7 +15,7 @@ import {
 } from '../../scripts/bmw-style-names.js';
 // eslint-disable-next-line import/extensions
 import { buildContent } from '../../tools/aida/showcase/content.mjs';
-import { semanticBlockName, semanticSectionStyle } from '../../tools/importer/transformers/semantic-names.js';
+import { semanticBlockName, semanticSectionStyle } from '../../tools/importer/semantic-names.js';
 
 const ROOT = new URL('../../', import.meta.url).pathname;
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
@@ -73,7 +73,10 @@ test('importer: generated block names and section styles are converted to semant
   assert.equal(semanticBlockName('Cards'), 'Cards');
   assert.equal(semanticSectionStyle('spacing-top-16, spacing-bottom-16, content-8-center, center'), 'space-regular, content-two-thirds-centered, center');
   assert.equal(semanticSectionStyle('grey'), 'background-secondary');
-  assert.ok(read('tools/importer/import-bmw-content-page.bundle.js').includes('semanticBlockName'), 'the import bundle was rebuilt with the semantic transformer');
+  // the import script runs the semantic step last (the bundle is a local, git-ignored build output)
+  const importer = read('tools/importer/import-bmw-content-page.js');
+  assert.match(importer, /import semanticNamesTransformer from '\.\/semantic-names\.js';/);
+  assert.match(importer, /const AFTER = \[[^\]]*, semanticNamesTransformer\];/);
 });
 
 test('semantic names have no CSS or JS of their own (styling only via the implementation classes)', () => {

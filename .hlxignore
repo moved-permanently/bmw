@@ -17,3 +17,5 @@ tools/aida/content/*
 tools/aida/README.md
 tools/aida/showcase/content.mjs
 tools/aida/showcase/data/*
+tools/semantic-styles/*
+docs/*

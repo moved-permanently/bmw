@@ -48,6 +48,7 @@ import sectionsTransformer from './transformers/bmw-sections.js';
 import metadataTransformer from './transformers/bmw-metadata.js';
 import dmImagesTransformer from './transformers/bmw-dm-images.js';
 import externalImagesTransformer from './transformers/bmw-external-images.js';
+import semanticNamesTransformer from './semantic-names.js';
 
 const PARSERS = [
   { name: 'hero-stage', parse: heroStageParser, selectors: heroStageParserSelectors },
@@ -96,9 +97,10 @@ const PAGE_TEMPLATE = {
   blocks: PARSERS.map((p) => ({ name: p.name, instances: p.selectors })),
 };
 
-// before: cleanup. after: sections (default content + section breaks), metadata, DM links, cleanup.
+// before: cleanup. after: sections (default content + section breaks), metadata, DM links, cleanup,
+// semantic style names (authoring vocabulary).
 const BEFORE = [cleanupTransformer];
-const AFTER = [sectionsTransformer, metadataTransformer, dmImagesTransformer, externalImagesTransformer, cleanupTransformer];
+const AFTER = [sectionsTransformer, metadataTransformer, dmImagesTransformer, externalImagesTransformer, cleanupTransformer, semanticNamesTransformer];
 
 function executeTransformers(list, hookName, element, payload) {
   const enhancedPayload = { ...payload, template: PAGE_TEMPLATE };
