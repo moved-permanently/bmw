@@ -12,23 +12,29 @@ const CATALOGUE = 'https://main--bmw--moved-permanently.aem.page/tools/aida/asse
 export const SKILLS = [
   {
     id: 'bmw-find-campaign-media',
-    description: 'Finds existing public BMW Scene7 images and films for a campaign, model or topic and returns them in the site link convention with crops and alt text.',
+    version: 2,
+    description: 'Finds existing public BMW Scene7 images and films for a campaign, model or topic from the native Media Library index and the BMW assets catalogue, and returns them in the site link convention with crops and alt text.',
     body: `# Find campaign media (BMW)
 
 Use when an author asks for images or films for a campaign, a model or a topic (for example "media for the BMW i5 launch").
 
-## Sources (read only)
-- The BMW assets catalogue: ${CATALOGUE} (fields: url, title, alt, kind, models, families, sources = pages that use the asset, crops).
-- Pages of this site that already use an asset (content_list / content_read on the page paths in \`sources\`).
+## Sources (read only, current org/site only)
+1. **Native Media Library index** of this site: read \`.da/media-insights/index-meta.json\` (lastFetchTime, entriesCount, chunkCount), then every \`.da/media-insights/index-*.json\` chunk (index-000.json, …; sheet \`media\`: url, originalPath, doc, type, operation, displayName). If the index is missing, say so and point to https://da.live/apps/media-library#/moved-permanently/bmw; if lastFetchTime is older than a day, mention that it may be stale.
+2. **BMW assets catalogue**: ${CATALOGUE} (url, title, alt, kind, models, families, sources = pages that use the asset, crops).
+
+## How BMW media appear in the index
+- Scene7 films (\`https://bmw.scene7.com/is/content/BMW/…\`) and bmw.de files are rows whose \`doc\` is the page that uses them.
+- Scene7 images appear as preview copies: \`url\` = \`…/media_<hash>.webp\`, \`originalPath\` = \`/BMW/<name>\`, usually with an empty \`doc\` (the Media Library then shows no references). The original is \`https://bmw.scene7.com/is/image/BMW/<name>\`; take its page usage and alt text from the catalogue (\`sources\`, \`alt\`).
 
 ## Steps
-1. Ask for the model (e.g. "BMW i5", WDH code 61HG) or topic if it is not given.
-2. Filter the catalogue by model, family, title and alt text. Prefer assets already used on several pages (reuse) and stage images ("stage", "dsk", "mob").
-3. Return at most 8 candidates as a table: preview link, alt text, where it is used, available crops.
-4. Insert only on request, as a link in the site convention: \`[alt text](https://bmw.scene7.com/is/image/BMW/<name>)\`, keeping a smart-crop suffix such as \`:16to7\` or \`:3to2\` when the block needs a ratio. Films are \`https://bmw.scene7.com/is/content/BMW/<name>\` links after the poster image.
+1. Ask for the model (e.g. "BMW i5", WDH code 61HG; search names such as "G60") or topic if it is not given.
+2. Match \`displayName\` / \`originalPath\` in the index and title / alt / models in the catalogue. Prefer assets used on several pages and stage images ("stage", "Dsk", "Mob").
+3. Return at most 10 candidates as a table: original Scene7 link, alt text (catalogue), pages that use it (index \`doc\` or catalogue \`sources\`, as https://main--bmw--moved-permanently.aem.page<path>), available crops, and the source of each fact (index / catalogue).
+4. Insert only on request, as a link in the site convention: \`[alt text](https://bmw.scene7.com/is/image/BMW/<name>)\`, keeping a smart-crop suffix such as \`:16to7\` or \`:3to2\` when the block needs a ratio. Films are \`https://bmw.scene7.com/is/content/BMW/<name>\` links after the poster image. The BMW assets picker does the same with alt and crop checks.
 
 ## Rules
 - Only existing public BMW Scene7 references; never generate, upload or edit imagery.
+- Never insert the index's media_ preview URLs; always the Scene7 original.
 - Do not change tech values in captions; WDH values are inserted with the WDH values panel.
 - Never preview or publish; the author decides.`,
   },
@@ -89,7 +95,7 @@ export const PROMPTS = [
 export function skillFiles() {
   return Object.fromEntries(SKILLS.map((s) => [
     `/.da/skills/${s.id}/skill.md`,
-    `---\nname: ${s.id}\ndescription: ${s.description}\nversion: 1\nstatus: approved\n---\n${s.body}\n`,
+    `---\nname: ${s.id}\ndescription: ${s.description}\nversion: ${s.version || 1}\nstatus: approved\n---\n${s.body}\n`,
   ]));
 }
 

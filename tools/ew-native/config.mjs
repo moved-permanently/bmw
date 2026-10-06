@@ -58,3 +58,28 @@ export function planConfig(config, steps) {
   }, config);
   return { config: result, added, conflicts };
 }
+
+/**
+ * Updates rows this task owns (same key) in place; other rows and sheets stay as they are.
+ * Identical rows are a no-op; keys not found are reported, never appended.
+ * @returns {{config: object, replaced: string[], missing: string[]}}
+ */
+export function replaceOwnedRows(config, sheet, key, rows) {
+  const out = clone(config);
+  const replaced = [];
+  const missing = [];
+  const data = out[sheet]?.data || [];
+  rows.forEach((row) => {
+    const i = data.findIndex((r) => r[key] === row[key]);
+    if (i < 0) {
+      missing.push(row[key]);
+      return;
+    }
+    const next = { ...data[i], ...row };
+    if (JSON.stringify(next) !== JSON.stringify(data[i])) {
+      data[i] = next;
+      replaced.push(row[key]);
+    }
+  });
+  return { config: replaced.length ? out : clone(config), replaced, missing };
+}
