@@ -242,7 +242,8 @@ export function implementationSignature(html) {
     const tokens = cell && cell.text !== undefined ? cell.text.split(',').map(toClassName).filter(Boolean) : [];
     return `style: ${expandSectionStyles(tokens).sort().join(' ')}`;
   };
-  return divTree(html).children.map((section) => section.children.filter((b) => b.classValue).map(element));
+  return divTree(html).children
+    .map((section) => section.children.filter((b) => b.classValue).map(element));
 }
 
 /**
