@@ -43,3 +43,9 @@
 .offer-teaser .offer-teaser-unavailable {
   color: var(--bmw-grey-500);
 }
+
+.offer-teaser .offer-teaser-notes {
+  font-size: var(--bmw-body-2-font-size);
+  line-height: var(--bmw-body-2-line-height);
+  color: var(--bmw-grey-500);
+}

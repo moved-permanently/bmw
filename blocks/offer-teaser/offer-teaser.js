@@ -1,5 +1,5 @@
 import {
-  deliveryUrl, recordFromDelivery, offerFacts, isSnapshotReview,
+  deliveryUrl, recordFromDelivery, offerFacts, offerNotes, isSnapshotReview,
 } from '../../scripts/structured-content.js';
 import { valuesFromSheet, dataRootForPath } from '../../scripts/aida-wdh.js';
 import { buildResponsivePicture, fetchSheet } from '../../scripts/bmw-utils.js';
@@ -37,6 +37,7 @@ async function teaser(path, text) {
     const r = recordFromDelivery(await resp.json(), 'market-offer');
     const market = r.market || 'de';
     const lang = LANG[market] || 'en';
+    li.lang = lang;
     if (r.image) {
       const sources = [{ url: r.image, widths: [750] }];
       li.append(buildResponsivePicture(sources, { alt: r.imageAlt || '' }));
@@ -53,6 +54,9 @@ async function teaser(path, text) {
       dl.append(el('dt', '', f.label), dd);
     });
     li.append(dl);
+    const notes = el('div', 'offer-teaser-notes');
+    offerNotes(r, facts).forEach((t) => notes.append(el('p', '', t)));
+    if (notes.children.length) li.append(notes);
     const p = el('p', 'button-wrapper');
     const a = el('a', 'button secondary', DETAILS[lang]);
     a.href = path;

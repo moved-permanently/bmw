@@ -37,3 +37,29 @@ e-mail). The BMW skill `bmw-find-campaign-media` (v2) reads the index the same w
 maps preview copies back to their Scene7 originals.
 Structured content is not AEM Content Fragments: no references, workflow or ownership governance.
 WDH stays the only source of technical data (records reference a model and field names only).
+
+## Verification (2026-10-06)
+
+Native, signed-in QA by the project owner:
+- Library: all 10 library documents and the 4 records previewed (main); the Templates palette lists
+  News story, Vehicle launch and E-mobility topic. Inserting News story in Content view on the
+  DA-only QA page `/aida/en/ew-native-template-check` saved the original Scene7 carrier links and
+  all 4 WDH bindings, converted template-metadata to page metadata, kept noindex / nofollow and
+  survived a full Canvas reload.
+- Structured content: native form edit / save / reload of the DE offer (source note restored
+  afterwards); real FR delivery JSON (metadata / data, market fr, model 61HG, WDH field names,
+  public Scene7 image, demo source note).
+- `/aida/structured/teasers` previewed; unmocked browser: two cards from the real delivery JSON,
+  no unavailable cards, DE 513–627 km / 17,9 kWh/100 km / 70.900 €, FR 518–627 km /
+  14,7–17,8 kWh/100 km / 76 250 €, correct image alts and record links.
+- Media Library discovery run (index as described above); Scheduler registered once in the native
+  app (schedule list empty, nothing scheduled).
+
+Automated / in-repo: `npm test` (block, schema, record, config, skill and library checks); deployed
+skill consumers (assistant slash list, Skills Editor row parser) executed against the live config;
+metadata blocks never painted (frame sampling, main + branch); snapshot-review guard (no delivery
+request on `*.aem.reviews`, emulated host). Each teaser card shows the WDH WLTP statement and the
+record's demo / not-live note and carries `lang` of its market.
+
+Not verified: slash-menu visibility in a signed-in assistant session; AO-connected Skills Editor
+listing; named-snapshot rendering.

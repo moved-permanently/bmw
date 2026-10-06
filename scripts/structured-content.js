@@ -89,3 +89,15 @@ export function recordFromDelivery(json, schemaName) {
   if (json.metadata?.schemaName !== schemaName) throw new Error(`unexpected schema ${json.metadata?.schemaName}`);
   return { ...json.data };
 }
+
+/**
+ * Disclosure lines of an offer, in display order: the WDH WLTP statement of the model, the
+ * editorial legal note and the record's source / demo note (empty ones omitted).
+ * @param {{legalNote?: string, source?: string}} record
+ * @param {{wltp?: {display: string}|null}} facts offerFacts(...)
+ * @returns {string[]}
+ */
+export function offerNotes(record, facts) {
+  return [facts?.wltp?.display, record?.legalNote, record?.source]
+    .map((t) => (t || '').trim()).filter(Boolean);
+}
