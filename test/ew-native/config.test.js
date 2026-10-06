@@ -12,18 +12,38 @@ const SITE = {
   ':type': 'multi-sheet',
   ':names': ['data', 'library', 'prepare', 'apps'],
   ':version': 3,
-  data: { total: 1, limit: 1, offset: 0, data: [{ key: 'aem.assets.image.type', value: 'link' }] },
+  data: {
+    total: 1, limit: 1, offset: 0, data: [{ key: 'aem.assets.image.type', value: 'link' }],
+  },
   library: {
     total: 2,
     limit: 2,
     offset: 0,
     data: [
-      { title: 'WDH values', path: 'https://main--bmw--moved-permanently.aem.page/tools/aida/wdh-picker/wdh-picker.html', format: '', ref: '', icon: '', experience: '' },
-      { title: 'BMW assets', path: 'https://main--bmw--moved-permanently.aem.page/tools/aida/asset-picker/asset-picker.html', format: '', ref: '', icon: '', experience: '' },
+      {
+        title: 'WDH values', path: 'https://main--bmw--moved-permanently.aem.page/tools/aida/wdh-picker/wdh-picker.html', format: '', ref: '', icon: '', experience: '',
+      },
+      {
+        title: 'BMW assets', path: 'https://main--bmw--moved-permanently.aem.page/tools/aida/asset-picker/asset-picker.html', format: '', ref: '', icon: '', experience: '',
+      },
     ],
   },
-  prepare: { total: 1, limit: 1, offset: 0, data: [{ title: 'Preflight', path: 'x', icon: '', ref: '', experience: '' }] },
-  apps: { total: 1, limit: 1, offset: 0, data: [{ title: 'Translate', description: 'd', path: 'p', image: '', ref: '' }] },
+  prepare: {
+    total: 1,
+    limit: 1,
+    offset: 0,
+    data: [{
+      title: 'Preflight', path: 'x', icon: '', ref: '', experience: '',
+    }],
+  },
+  apps: {
+    total: 1,
+    limit: 1,
+    offset: 0,
+    data: [{
+      title: 'Translate', description: 'd', path: 'p', image: '', ref: '',
+    }],
+  },
 };
 
 test('appending keeps existing rows first and unchanged, fills the sheet columns and updates counts', () => {

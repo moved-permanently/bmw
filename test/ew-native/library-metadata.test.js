@@ -1,6 +1,7 @@
 /*
  * Library block documents carry a library-metadata table (description / searchtags for the DA
- * block library). On a page preview it must not 404 (no block code) or show: the block hides itself.
+ * block library). On a page preview it must not 404 (no block code) or show: the block hides
+ * itself.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';

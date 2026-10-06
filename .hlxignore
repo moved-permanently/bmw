@@ -19,3 +19,4 @@ tools/aida/showcase/content.mjs
 tools/aida/showcase/data/*
 tools/semantic-styles/*
 docs/*
+tools/ew-native/*
