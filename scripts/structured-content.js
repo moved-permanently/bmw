@@ -56,18 +56,25 @@ export function blockRows(block) {
 }
 
 const DELIVERY = 'https://da-sc.adobeaem.workers.dev';
-const TIERS = { page: 'preview', reviews: 'review', live: 'live' };
+const TIERS = { page: 'preview', live: 'live' };
+
+/** Snapshot review host (<snapshot>--<ref>--<site>--<org>.aem.reviews or <ref>--…aem.reviews). */
+export function isSnapshotReview(location) {
+  return /\.aem\.reviews$/.test(location.hostname);
+}
 
 /**
  * Official structured-content JSON delivery URL (adobe-rnd/da-sc) of a record for the current host:
- * <ref>--<site>--<org>.aem.page|reviews|live -> preview|review|live; other hosts -> preview of
- * moved-permanently/bmw.
+ * <ref>--<site>--<org>.aem.page|live -> preview|live; other hosts -> preview of
+ * moved-permanently/bmw. Not available in snapshot reviews: da-sc's review tier reads
+ * main--<site>--<org>.aem.reviews, not the named (frozen) snapshot, so it would show other content.
  * @param {URL|Location} location the page location
  * @param {string} path site path of the record (e.g. /aida/structured/offers/x)
  */
 export function deliveryUrl(location, path) {
   if (!/^\/[a-z0-9/_-]+$/i.test(path || '')) throw new Error(`invalid record path ${path}`);
-  const m = location.hostname.match(/^(?:[a-z0-9-]+--)?[a-z0-9-]+--([a-z0-9-]+)--([a-z0-9-]+)\.aem\.(page|reviews|live)$/);
+  if (isSnapshotReview(location)) throw new Error('JSON delivery is not available in a snapshot review');
+  const m = location.hostname.match(/^(?:[a-z0-9-]+--)?[a-z0-9-]+--([a-z0-9-]+)--([a-z0-9-]+)\.aem\.(page|live)$/);
   const [site, org, tier] = m ? [m[1], m[2], TIERS[m[3]]] : ['bmw', 'moved-permanently', 'preview'];
   return `${DELIVERY}/${tier}/${org}/${site}${path}`;
 }

@@ -1,5 +1,5 @@
 import {
-  deliveryUrl, recordFromDelivery, offerFacts,
+  deliveryUrl, recordFromDelivery, offerFacts, isSnapshotReview,
 } from '../../scripts/structured-content.js';
 import { valuesFromSheet, dataRootForPath } from '../../scripts/aida-wdh.js';
 import { buildResponsivePicture, fetchSheet } from '../../scripts/bmw-utils.js';
@@ -17,7 +17,20 @@ const el = (tag, className, textContent) => Object.assign(
   { className, textContent },
 );
 
-async function teaser(path) {
+/** Snapshot review: no JSON delivery for frozen snapshots; link the same-origin record page. */
+function reviewLink(path, text) {
+  const li = el('li', 'offer-teaser-item offer-teaser-unavailable');
+  li.append(el('p', '', 'Offer data is not loaded in a snapshot review.'));
+  const p = el('p', 'button-wrapper');
+  const a = el('a', 'button secondary', text);
+  a.href = path;
+  p.append(a);
+  li.append(p);
+  return li;
+}
+
+async function teaser(path, text) {
+  if (isSnapshotReview(window.location)) return reviewLink(path, text);
   const li = el('li', 'offer-teaser-item');
   try {
     const resp = await fetch(deliveryUrl(window.location, path));
@@ -53,10 +66,14 @@ async function teaser(path) {
 }
 
 export default async function decorate(block) {
-  const paths = [...block.querySelectorAll('a')]
-    .map((a) => new URL(a.href, window.location.href).pathname)
-    .filter((p) => p.startsWith('/aida/structured/offers/'));
+  const offers = [...block.querySelectorAll('a')]
+    .map((a) => ({
+      path: new URL(a.href, window.location.href).pathname,
+      text: a.textContent.trim(),
+    }))
+    .filter(({ path }) => path.startsWith('/aida/structured/offers/'));
   const list = el('ul', 'offer-teaser-list');
   block.replaceChildren(list);
-  (await Promise.all(paths.map(teaser))).forEach((li) => list.append(li));
+  const items = await Promise.all(offers.map(({ path, text }) => teaser(path, text)));
+  items.forEach((li) => list.append(li));
 }
