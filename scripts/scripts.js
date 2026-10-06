@@ -13,6 +13,7 @@ import {
   getMetadata,
 } from './aem.js';
 import { decorateBmwSections } from './bmw-sections.js';
+import { createWdhSession } from './aida-wdh.js';
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
   const innerTT = window.trustedTypes.createPolicy('tt-inner', {
@@ -407,7 +408,7 @@ function decorateButtons(main) {
   });
 }
 
-const wdhBindings = [];
+const wdhSession = createWdhSession();
 
 /**
  * WDH tech values are authored as links to their market sheet row
@@ -420,7 +421,7 @@ function decorateWdhValues(main) {
     span.className = 'wdh-value';
     span.dataset.wdh = a.getAttribute('href');
     span.textContent = a.textContent;
-    wdhBindings.push({ href: span.dataset.wdh, text: a.textContent.replace(/\s+/g, ' ').trim() });
+    wdhSession.add({ href: span.dataset.wdh, text: a.textContent.replace(/\s+/g, ' ').trim() });
     a.replaceWith(span);
   });
 }
@@ -479,6 +480,8 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   applyPagePrimaryColor();
   const main = doc.querySelector('main');
+  // a new render (quick edit calls loadPage again): collect this render's WDH bindings only
+  wdhSession.start();
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
@@ -517,8 +520,8 @@ async function loadLazy(doc) {
   import('./bmw-consent.js').then((m) => m.default());
   import('./bmw-sidebar.js').then((m) => m.default());
   const showcasePage = /^\/(?:drafts\/)?aida\/showcase\//.test(window.location.pathname);
-  if (wdhBindings.length && !showcasePage && /(\.aem\.page|\.preview\.da\.live|^localhost)$/.test(window.location.hostname)) {
-    import('./aida.js').then((m) => m.checkWdhValues(wdhBindings));
+  if (wdhSession.bindings.length && !showcasePage && /(\.aem\.page|\.preview\.da\.live|^localhost)$/.test(window.location.hostname)) {
+    import('./aida.js').then((m) => m.checkWdhValues(wdhSession));
   }
 }
 

@@ -210,3 +210,32 @@ export function staleBindings(bindings, market, values) {
     };
   }).filter(Boolean);
 }
+
+/**
+ * WDH bindings of the current page render. Experience Workspace quick edit replaces the body and
+ * calls loadPage again: start() begins a fresh collection, and a check started for an earlier
+ * render can tell that it was superseded (isCurrent).
+ */
+export function createWdhSession() {
+  let generation = 0;
+  let bindings = [];
+  return {
+    start() {
+      generation += 1;
+      bindings = [];
+      return generation;
+    },
+    add(binding) {
+      bindings.push(binding);
+    },
+    get bindings() {
+      return bindings;
+    },
+    get generation() {
+      return generation;
+    },
+    isCurrent(value) {
+      return value === generation;
+    },
+  };
+}

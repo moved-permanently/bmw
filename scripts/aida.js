@@ -14,12 +14,16 @@ const REASONS = {
 
 /**
  * Preview only: compares the page's WDH values with the current market sheet, marks outdated
- * values and summarises them in a small panel.
- * @param {{href: string, text: string}[]} found bindings collected while decorating the page
+ * values and summarises them in a small panel (one per page; a check superseded by a newer render,
+ * e.g. Experience Workspace quick edit, renders nothing).
+ * @param {{bindings: {href: string, text: string}[], generation: number,
+ *   isCurrent: function(number): boolean}} session WDH bindings of the current render
  */
 // eslint-disable-next-line import/prefer-default-export
-export async function checkWdhValues(found) {
-  const bindings = found.map((b) => ({ ...parseBinding(b.href), ...b })).filter((b) => b.key);
+export async function checkWdhValues(session) {
+  const { generation } = session;
+  const bindings = session.bindings
+    .map((b) => ({ ...parseBinding(b.href), ...b })).filter((b) => b.key);
   if (!bindings.length) return;
   const market = marketForPath(window.location.pathname)?.market || bindings[0].market;
   let values = new Map();
@@ -28,6 +32,7 @@ export async function checkWdhValues(found) {
   } catch (e) {
     // no sheet for this market: every value is reported as unknown
   }
+  if (!session.isCurrent(generation)) return;
   const stale = staleBindings(bindings, market, values);
 
   stale.forEach((s) => {
@@ -39,6 +44,7 @@ export async function checkWdhValues(found) {
   });
 
   await loadCSS(`${window.hlx.codeBasePath}/styles/aida.css`);
+  if (!session.isCurrent(generation)) return;
   const panel = document.createElement('aside');
   panel.className = `wdh-check${stale.length ? ' has-drift' : ''}`;
   const unique = [...new Map(stale.map((s) => [`${s.key}|${s.reason}|${s.text}`, s])).values()];
@@ -63,5 +69,6 @@ export async function checkWdhValues(found) {
     panel.append(list);
   }
   panel.querySelector('.wdh-check-close').addEventListener('click', () => panel.remove());
+  document.querySelectorAll('aside.wdh-check').forEach((p) => p.remove());
   document.body.append(panel);
 }
