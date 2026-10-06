@@ -1,8 +1,9 @@
 /* eslint-disable max-len */
 /*
- * Prepared BMW skills for the Experience Workspace assistant, stored where the Skills Editor
- * (da.live/apps/skills) keeps them: .da/skills/<id>/skill.md (flat frontmatter: name, description,
- * version, status). Plus prompts for the DA config `prompts` sheet. Public / synthetic inputs only;
+ * Prepared BMW skills for the Experience Workspace assistant: flat .da/skills/<id>.md plus the
+ * config `skills` sheet (deployed Skills Editor) and .da/skills/<id>/skill.md (folder-layout agent
+ * loader), same content (frontmatter: name, description, version, status). Plus prompts for the
+ * DA config `prompts` sheet. Public / synthetic inputs only;
  * the skills never preview or publish and never type tech values (WDH is the source of truth).
  */
 
@@ -90,4 +91,16 @@ export function skillFiles() {
     `/.da/skills/${s.id}/skill.md`,
     `---\nname: ${s.id}\ndescription: ${s.description}\nversion: 1\nstatus: approved\n---\n${s.body}\n`,
   ]));
+}
+
+/** Deployed Skills Editor layout: flat .da/skills/<id>.md (same content as the folder layout). */
+export function flatSkillFiles() {
+  const folder = skillFiles();
+  return Object.fromEntries(SKILLS.map((s) => [`/.da/skills/${s.id}.md`, folder[`/.da/skills/${s.id}/skill.md`]]));
+}
+
+/** Rows for the site config `skills` sheet (key, content, explicit status). */
+export function skillsSheetRows() {
+  const flat = flatSkillFiles();
+  return SKILLS.map((s) => ({ key: s.id, content: flat[`/.da/skills/${s.id}.md`], status: 'approved' }));
 }

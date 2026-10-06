@@ -143,3 +143,15 @@ export const RECORDS = [
     source: DEMO,
   }),
 ];
+
+/** Normal BMW page consuming the market-offer records through the JSON delivery endpoint. */
+export function teaserPage() {
+  const offers = RECORDS.filter((r) => r.json.metadata.schemaName === 'market-offer');
+  const rows = offers.map((r) => `<div><div><a href="${r.path}">${r.json.metadata.title}</a></div></div>`).join('');
+  return '<body><header></header><main>'
+    + '<div><h1>BMW i5 launch offers by market</h1><p>Each card is a structured content record (form → JSON) with tech values from the market\'s WDH sheet.</p>'
+    + '<div class="section-metadata"><div><div>Style</div><div>space-below-tight-m</div></div></div></div>'
+    + `<div><div class="offer-teaser">${rows}</div><div class="section-metadata"><div><div>Style</div><div>space-regular</div></div></div></div>`
+    + '<div><div class="metadata"><div><div>Title</div><div>BMW i5 launch offers by market</div></div><div><div>html-lang</div><div>en</div></div></div></div>'
+    + '</main><footer></footer></body>\n';
+}

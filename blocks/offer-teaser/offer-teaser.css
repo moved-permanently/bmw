@@ -1,0 +1,45 @@
+.offer-teaser .offer-teaser-list {
+  display: grid;
+  gap: var(--bmw-spacing-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (width >= 768px) {
+  .offer-teaser .offer-teaser-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.offer-teaser .offer-teaser-item picture,
+.offer-teaser .offer-teaser-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.offer-teaser .offer-teaser-market {
+  margin: var(--bmw-spacing-4) 0 0;
+  font-size: var(--bmw-body-2-font-size);
+  color: var(--bmw-grey-500);
+}
+
+.offer-teaser .offer-teaser-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--bmw-spacing-3) var(--bmw-spacing-6);
+}
+
+.offer-teaser .offer-teaser-facts dt {
+  color: var(--bmw-grey-500);
+}
+
+.offer-teaser .offer-teaser-facts dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.offer-teaser .offer-teaser-unavailable {
+  color: var(--bmw-grey-500);
+}

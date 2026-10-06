@@ -54,3 +54,31 @@ export function blockRows(block) {
     };
   });
 }
+
+const DELIVERY = 'https://da-sc.adobeaem.workers.dev';
+const TIERS = { page: 'preview', reviews: 'review', live: 'live' };
+
+/**
+ * Official structured-content JSON delivery URL (adobe-rnd/da-sc) of a record for the current host:
+ * <ref>--<site>--<org>.aem.page|reviews|live -> preview|review|live; other hosts -> preview of
+ * moved-permanently/bmw.
+ * @param {URL|Location} location the page location
+ * @param {string} path site path of the record (e.g. /aida/structured/offers/x)
+ */
+export function deliveryUrl(location, path) {
+  if (!/^\/[a-z0-9/_-]+$/i.test(path || '')) throw new Error(`invalid record path ${path}`);
+  const m = location.hostname.match(/^(?:[a-z0-9-]+--)?[a-z0-9-]+--([a-z0-9-]+)--([a-z0-9-]+)\.aem\.(page|reviews|live)$/);
+  const [site, org, tier] = m ? [m[1], m[2], TIERS[m[3]]] : ['bmw', 'moved-permanently', 'preview'];
+  return `${DELIVERY}/${tier}/${org}/${site}${path}`;
+}
+
+/**
+ * Record fields from a delivery response ({ metadata: { schemaName }, data }).
+ * @param {object} json
+ * @param {string} schemaName expected schema
+ */
+export function recordFromDelivery(json, schemaName) {
+  if (!json || json.error) throw new Error(`record not delivered: ${json?.error || 'empty'}`);
+  if (json.metadata?.schemaName !== schemaName) throw new Error(`unexpected schema ${json.metadata?.schemaName}`);
+  return { ...json.data };
+}
