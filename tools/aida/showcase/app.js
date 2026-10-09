@@ -9,11 +9,11 @@ import {
   overview, assetView, deliveryView, marketFromSearch,
 } from './view.js';
 
-const KEY = 'bmw-aida-showcase-v3';
+const KEY = 'bmw-aida-showcase-v4';
 let state = createDemo();
 let storage = true;
 try {
-  localStorage.removeItem('bmw-aida-showcase-v2');
+  ['bmw-aida-showcase-v2', 'bmw-aida-showcase-v3'].forEach((old) => localStorage.removeItem(old));
   const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
   if (saved?.demo && saved?.hq && saved?.personas && saved?.markets) state = saved;
 } catch (e) { storage = false; }

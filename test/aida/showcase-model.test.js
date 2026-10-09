@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -459,11 +460,21 @@ test('manual correction changes the authoritative translated document and rollou
   assert.equal(state.markets.be.components.find((c) => c.id === 'story').text, body);
 });
 
-test('initial fixture makes no unsupported numeric WDH legal claims and assets are synthetic', () => {
+test('seeded legal statements carry the supplied WDH values and assets stay references', () => {
   const state = createDemo();
-  assert.doesNotMatch(state.hq.fields.legal, /\d+[.,]\d+|\d+[–-]\d+/);
-  assert.match(state.hq.fields.legal, /no numeric model claims/i);
-  assert.equal(state.hq.fields.heroAsset, '/aida/showcase/data/sample-i5-asset');
+  const wdh = (market) => Object.fromEntries(JSON.parse(readFileSync(new URL(`../../tools/aida/showcase/data/wdh-${market}.json`, import.meta.url), 'utf8'))
+    .values.data.filter((row) => row.code === '61HG').map((row) => [row.field, row.value]));
+  const de = wdh('de');
+  const fr = wdh('fr');
+  [de.electricRange, de.electricConsumption.replace(',', '.'), 'CO₂', 'WLTP'].forEach((value) => assert.ok(state.hq.fields.legal.includes(value), `hq ${value}`));
+  const rolled = rollout();
+  [de.electricRange, de.electricConsumption, 'CO₂-Klasse', 'WLTP'].forEach((value) => assert.ok(rolled.markets.de.fields.legal.includes(value), `de ${value}`));
+  [fr.electricRange, fr.electricConsumption, 'CO₂', 'WLTP'].forEach((value) => assert.ok(rolled.markets.fr.fields.legal.includes(value), `fr ${value}`));
+  [state.hq, rolled.markets.de, rolled.markets.fr].forEach((doc) => {
+    assert.doesNotMatch(`${doc.fields.body} ${doc.fields.legal}`, /illustrat|numeri|demo|exemple|beispiel/i);
+    assert.match(doc.fields.body, /WLTP/);
+  });
+  assert.equal(state.hq.fields.heroAsset, '/aida/showcase/data/asset-i5-launch');
   assert.equal(state.hq.components.find((c) => c.id === 'hero').asset, state.hq.fields.heroAsset);
   assert.equal(state.rightsPolicy.sampleAsset, state.hq.fields.heroAsset);
   assert.match(state.rightsPolicy.assets, /sample|not.*image/i);
@@ -544,18 +555,18 @@ test('scripted source update copy has meaningful DE/FR dictionary translations w
     de: {
       title: 'Die BMW i5 Premiere. Jetzt mit einer Geschichte rund ums Laden.',
       headline: 'Der BMW i5. Ein neues Kapitel beim Laden.',
-      disclaimer: 'Aktualisierter WLTP Hinweis der Quelle. Nur ein Demobeispiel.',
+      disclaimer: 'Aktualisierter WLTP-Hinweis aus den Quelldaten.',
       teaser: 'BMW i5 eDrive: die aktualisierte elektrische Geschichte der Quelle.',
-      features: 'Parking Assistant: aktualisiertes Verfügbarkeitsbeispiel.',
+      features: 'Parking Assistant: aktualisierte Verfügbarkeit.',
       charging: 'BMW Charging: ein neuer Abschnitt aus der Quelle.',
       cta: 'BMW i5 entdecken',
     },
     fr: {
       title: 'Le lancement de la BMW i5. Avec une nouvelle histoire de recharge.',
       headline: 'La BMW i5. Un nouveau chapitre de recharge.',
-      disclaimer: 'Mention WLTP de la source mise à jour. Exemple uniquement.',
+      disclaimer: 'Mention WLTP mise à jour depuis les données source.',
       teaser: 'BMW i5 eDrive : le récit électrique actualisé de la source.',
-      features: 'Parking Assistant : exemple de disponibilité mis à jour.',
+      features: 'Parking Assistant : disponibilité mise à jour.',
       charging: 'BMW Charging : une nouvelle section issue de la source.',
       cta: 'Découvrir la BMW i5',
     },

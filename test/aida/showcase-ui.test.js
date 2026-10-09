@@ -41,7 +41,7 @@ test('showcase ships real vendored Spectrum styles and a labelled rehearsal boun
 
 test('playground persists only its own versioned rehearsal state and never publishes implicitly', () => {
   const app = read('tools/aida/showcase/app.js');
-  assert.match(app, /bmw-aida-showcase-v3/);
+  assert.match(app, /bmw-aida-showcase-v4/);
   assert.doesNotMatch(app, /localStorage\.clear\(/);
   assert.doesNotMatch(app, /admin\.hlx\.page|api\.aem\.live|Bearer/);
   assert.match(app, /Storage unavailable/);

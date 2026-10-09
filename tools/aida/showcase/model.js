@@ -6,13 +6,13 @@ const SOURCE_FIELDS = ['title', 'description', 'body', 'legal'];
 const LOCAL_FIELDS = ['localIntro', 'localCta', 'headline', 'heroAsset', 'disclaimer'];
 const START = '2030-05-01T08:00:00.000Z';
 const EMBARGO = '2030-05-01T10:00:00.000Z';
-const SAMPLE_ASSET = '/aida/showcase/data/sample-i5-asset';
+const SAMPLE_ASSET = '/aida/showcase/data/asset-i5-launch';
 const COPY = {
   en: {
     title: 'The all-electric BMW i5 launch.',
     description: 'Discover the BMW i5 with eDrive technology, refined design and electric driving pleasure.',
-    body: 'The BMW i5 combines eDrive innovation with electric driving pleasure. Discover the new launch. WLTP figures are illustrative.',
-    legal: 'BMW i5 eDrive: illustrative WLTP legal statement; no numeric model claims. Market verification required.',
+    body: 'The BMW i5 combines eDrive innovation with electric driving pleasure. Discover the new launch. Consumption and range according to WLTP.',
+    legal: 'BMW i5 eDrive40 Sedan: combined energy consumption: 17.9 kWh/100 km (WLTP); combined CO₂ emissions: 0 g/km (WLTP); CO₂ class: A; electric range: 513–627 km (WLTP).',
     headline: 'The BMW i5.',
     cta: 'Discover the BMW i5',
     teaser: 'BMW i5 eDrive: electric driving pleasure.',
@@ -27,33 +27,33 @@ const COPY = {
   de: {
     title: 'Die vollelektrische BMW i5 Premiere.',
     description: 'Entdecken Sie den BMW i5 mit eDrive Technologie, elegantem Design und elektrischer Fahrfreude.',
-    body: 'Der BMW i5 verbindet eDrive Innovation mit elektrischer Fahrfreude. Entdecken Sie die Premiere. WLTP Angaben dienen nur der Illustration.',
-    legal: 'BMW i5 eDrive: illustrativer WLTP Rechtshinweis ohne numerische Modellangaben. Marktprüfung erforderlich.',
+    body: 'Der BMW i5 verbindet eDrive Innovation mit elektrischer Fahrfreude. Entdecken Sie die Premiere. Verbrauch und Reichweite nach WLTP.',
+    legal: 'BMW i5 eDrive40 Limousine: Energieverbrauch kombiniert: 17,9 kWh/100 km (WLTP); CO₂-Emissionen kombiniert: 0 g/km (WLTP); CO₂-Klasse: A; Elektrische Reichweite: 513–627 km (WLTP).',
     headline: 'Der BMW i5.',
     cta: 'BMW i5 entdecken',
     teaser: 'BMW i5 eDrive: elektrische Fahrfreude.',
     feature: 'Parking Assistant',
     updatedTitle: 'Die BMW i5 Premiere. Jetzt mit einer Geschichte rund ums Laden.',
     updatedHeadline: 'Der BMW i5. Ein neues Kapitel beim Laden.',
-    updatedDisclaimer: 'Aktualisierter WLTP Hinweis der Quelle. Nur ein Demobeispiel.',
+    updatedDisclaimer: 'Aktualisierter WLTP-Hinweis aus den Quelldaten.',
     updatedTeaser: 'BMW i5 eDrive: die aktualisierte elektrische Geschichte der Quelle.',
-    updatedFeature: 'Parking Assistant: aktualisiertes Verfügbarkeitsbeispiel.',
+    updatedFeature: 'Parking Assistant: aktualisierte Verfügbarkeit.',
     charging: 'BMW Charging: ein neuer Abschnitt aus der Quelle.',
   },
   fr: {
     title: 'La première de la BMW i5 entièrement électrique.',
     description: 'Découvrez la BMW i5 avec la technologie eDrive, un design raffiné et le plaisir électrique.',
-    body: 'La BMW i5 associe innovation eDrive et plaisir de conduire électrique. Découvrez son lancement. Données WLTP illustratives.',
-    legal: 'BMW i5 eDrive : mention WLTP illustrative, sans données numériques du modèle. Vérification locale requise.',
+    body: 'La BMW i5 associe innovation eDrive et plaisir de conduire électrique. Découvrez son lancement. Consommation et autonomie selon WLTP.',
+    legal: 'BMW i5 eDrive40 : consommation électrique combinée : 14,7–17,8 kWh/100 km (WLTP) ; émissions de CO₂ combinées : 0 g/km (WLTP) ; classe de CO₂ : A ; autonomie électrique : 518–627 km (WLTP).',
     headline: 'La BMW i5.',
     cta: 'Découvrir la BMW i5',
     teaser: 'BMW i5 eDrive : le plaisir électrique.',
     feature: 'Parking Assistant',
     updatedTitle: 'Le lancement de la BMW i5. Avec une nouvelle histoire de recharge.',
     updatedHeadline: 'La BMW i5. Un nouveau chapitre de recharge.',
-    updatedDisclaimer: 'Mention WLTP de la source mise à jour. Exemple uniquement.',
+    updatedDisclaimer: 'Mention WLTP mise à jour depuis les données source.',
     updatedTeaser: 'BMW i5 eDrive : le récit électrique actualisé de la source.',
-    updatedFeature: 'Parking Assistant : exemple de disponibilité mis à jour.',
+    updatedFeature: 'Parking Assistant : disponibilité mise à jour.',
     charging: 'BMW Charging : une nouvelle section issue de la source.',
   },
 };
