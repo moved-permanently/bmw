@@ -430,6 +430,11 @@
   font-size: 17px;
   }
 
+.showcase-path-step .spectrum-Button--accent.spectrum-Button--fill,
+.showcase-path-step .spectrum-Button--accent.spectrum-Button--fill:hover {
+  color: #fff;
+  }
+
 .showcase-path-step {
   display: flex;
   justify-content: space-between;
