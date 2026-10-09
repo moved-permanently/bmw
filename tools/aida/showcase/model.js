@@ -6,22 +6,22 @@ const SOURCE_FIELDS = ['title', 'description', 'body', 'legal'];
 const LOCAL_FIELDS = ['localIntro', 'localCta', 'headline', 'heroAsset', 'disclaimer'];
 const START = '2030-05-01T08:00:00.000Z';
 const EMBARGO = '2030-05-01T10:00:00.000Z';
-const MOCK_ASSET = '/aida/showcase/data/mock-i5-asset';
+const SAMPLE_ASSET = '/aida/showcase/data/sample-i5-asset';
 const COPY = {
   en: {
     title: 'The all-electric BMW i5 launch.',
     description: 'Discover the BMW i5 with eDrive technology, refined design and electric driving pleasure.',
     body: 'The BMW i5 combines eDrive innovation with electric driving pleasure. Discover the new launch. WLTP figures are illustrative.',
-    legal: 'BMW i5 eDrive: illustrative WLTP legal fixture; no numeric model claims. Market verification required.',
+    legal: 'BMW i5 eDrive: illustrative WLTP legal statement; no numeric model claims. Market verification required.',
     headline: 'The BMW i5.',
     cta: 'Discover the BMW i5',
     teaser: 'BMW i5 eDrive: electric driving pleasure.',
     feature: 'Parking Assistant',
     updatedTitle: 'The BMW i5 launch. Now with a charging story.',
     updatedHeadline: 'The BMW i5. A new charging chapter.',
-    updatedDisclaimer: 'Updated source WLTP statement. Fixture only.',
+    updatedDisclaimer: 'Updated source WLTP statement. Demo only.',
     updatedTeaser: 'BMW i5 eDrive: the updated upstream electric story.',
-    updatedFeature: 'Parking Assistant, updated availability fixture.',
+    updatedFeature: 'Parking Assistant, updated availability.',
     charging: 'BMW Charging: a new upstream section.',
   },
   de: {
@@ -65,7 +65,7 @@ const PERSONAS = [
   ['market-author', 'Market author', 'market-author'], ['market-reviewer', 'Market reviewer', 'market-reviewer'],
   ['publisher', 'Release publisher', 'publisher'], ['translator', 'Translation specialist', 'translator'],
 ].map(([id, label, role]) => ({
-  id, label: `${label} (simulated)`, role, simulated: true,
+  id, label: `${label} (demo)`, role, demo: true,
 }));
 
 export function createDemo() {
@@ -75,7 +75,7 @@ export function createDemo() {
     language: MARKET_LANGUAGE[market] || 'en',
     region: market === 'hq' ? 'global' : 'Europe',
     market,
-    importer: market === 'hq' ? null : `simulated-${market}-importer`,
+    importer: market === 'hq' ? null : `${market}-importer`,
     dealer: null,
     env: 'showcase',
     vehicle: 'BMW i5',
@@ -89,12 +89,12 @@ export function createDemo() {
     localIntro: '',
     localCta: '',
     headline: COPY.en.headline,
-    heroAsset: MOCK_ASSET,
+    heroAsset: SAMPLE_ASSET,
     disclaimer: '',
   };
   const components = [
     {
-      id: 'hero', type: 'hero', headline: fields.headline, asset: MOCK_ASSET, cta: COPY.en.cta,
+      id: 'hero', type: 'hero', headline: fields.headline, asset: SAMPLE_ASSET, cta: COPY.en.cta,
     },
     { id: 'story', type: 'text', text: fields.body },
     { id: 'teaser', type: 'teaser', text: COPY.en.teaser },
@@ -124,14 +124,14 @@ export function createDemo() {
     rolledOut: market === 'hq',
     assignment: { team: 'Editorial', stakeholder: market === 'hq' ? 'hq-reviewer' : 'market-reviewer' },
     history: [{
-      revision: 1, type: 'SEED', at: START, simulated: true,
+      revision: 1, type: 'SEED', at: START, demo: true,
     }],
     baseDocument: null,
   });
   const hq = document('hq');
   return {
-    simulated: true,
-    boundary: 'Browser-local simulation only: personas are not IAM, checks are not security, no publication or real telemetry.',
+    demo: true,
+    boundary: 'Demo state in this browser only: roles stand in for AEM identity, checks are not security, nothing is published and no real telemetry is used.',
     actor: 'hq-author',
     market: 'hq',
     clock: START,
@@ -151,10 +151,10 @@ export function createDemo() {
     },
     personas: clone(PERSONAS),
     rightsPolicy: {
-      simulated: true,
+      demo: true,
       separationOfDuties: true,
-      syntheticAsset: MOCK_ASSET,
-      assets: 'Synthetic asset reference, not an image URL or production rights clearance.',
+      sampleAsset: SAMPLE_ASSET,
+      assets: 'Sample asset reference, not an image URL or production rights clearance.',
     },
     hq,
     source: hq,
@@ -164,11 +164,11 @@ export function createDemo() {
     translationMemory: {},
     planning: [...Object.keys(MARKET_LANGUAGE), ...Array.from({ length: 60 }, (_, i) => `planning-${String(i + 1).padStart(2, '0')}`)]
       .map((id) => ({
-        id, populated: Boolean(MARKET_LANGUAGE[id]), simulated: true, status: MARKET_LANGUAGE[id] ? 'demo fixture' : 'planning placeholder, not production',
+        id, populated: Boolean(MARKET_LANGUAGE[id]), demo: true, status: MARKET_LANGUAGE[id] ? 'demo market' : 'planning slot, no content yet',
       })),
-    metrics: Object.fromEntries(['hq', ...Object.keys(MARKET_LANGUAGE)].map((market) => [market, { visits: 0, conversions: 0, simulated: true }])),
+    metrics: Object.fromEntries(['hq', ...Object.keys(MARKET_LANGUAGE)].map((market) => [market, { visits: 0, conversions: 0, demo: true }])),
     events: [],
-    notices: ['All actors, releases, translation provenance and metrics are simulated.'],
+    notices: ['Roles, releases, translation provenance and metrics in this app are demo data.'],
     inbox: [],
     taskExport: [],
   };
@@ -186,17 +186,17 @@ export function checks(state, market = 'hq') {
   const legal = doc.fields.disclaimer || doc.components.find((c) => c.id === 'disclaimer')?.text || '';
   const conditions = [
     ['seo', 'Metadata', text(doc.fields.title) && text(doc.fields.description) && text(doc.fields.body), 'Title, description and body are required.'],
-    ['legal', 'WLTP legal statement', /WLTP/.test(doc.fields.legal) && /WLTP/.test(legal), 'A WLTP legal statement is required; fixture validation only.'],
+    ['legal', 'WLTP legal statement', /WLTP/.test(doc.fields.legal) && /WLTP/.test(legal), 'A WLTP legal statement is required.'],
     ['brand', 'BMW glossary', /BMW i5/.test(copy) && /eDrive/.test(copy) && !/bmw|BMW I5|e-drive/.test(copy), 'Preserve BMW i5 and eDrive glossary spelling.'],
-    ['assets', 'Simulated asset policy', text(doc.fields.heroAsset) && doc.fields.heroAsset.startsWith('/') && doc.components.filter((c) => c.asset !== undefined).every((c) => text(c.asset) && c.asset.startsWith('/')), 'Use local fixture asset references; rights remain simulated.'],
-    ['features', 'Market feature fixture', !['fr', 'be'].includes(market) || !/Highway Assistant/.test(copy), 'Highway Assistant is unavailable in the FR/BE fixture.'],
+    ['assets', 'Asset policy', text(doc.fields.heroAsset) && doc.fields.heroAsset.startsWith('/') && doc.components.filter((c) => c.asset !== undefined).every((c) => text(c.asset) && c.asset.startsWith('/')), 'Use governed asset references.'],
+    ['features', 'Market feature availability', !['fr', 'be'].includes(market) || !/Highway Assistant/.test(copy), 'Highway Assistant is not offered in France and Belgium.'],
     ['source', 'Source freshness', market === 'hq' || (doc.rolledOut && doc.acceptedSourceRevision === state.hq.revision && state.hq.approvedRevision === state.hq.revision), 'Accept the current approved source revision.'],
     ['conflicts', 'Resolved inheritance', doc.conflicts.length === 0, 'Resolve all component and property conflicts.'],
     ['translation', 'Current translation acceptance', market === 'hq' || (doc.rolledOut && doc.translationRevision === state.translations[MARKET_LANGUAGE[market]]?.revision && state.translations[MARKET_LANGUAGE[market]]?.sourceRevision === state.hq.revision), 'The translation changed: re-roll out and review the current language revision.'],
     ['approval', 'Current source-bound approval', doc.approvedRevision === doc.revision && (market === 'hq' || (doc.acceptedSourceRevision === state.hq.revision && state.hq.approvedRevision === state.hq.revision)), 'Current revision needs approval; source changes invalidate market release approval.'],
   ];
   return conditions.map(([id, label, pass, message]) => ({
-    id, label, pass: Boolean(pass), message: pass ? 'Passed (simulated).' : message,
+    id, label, pass: Boolean(pass), message: pass ? 'Passed.' : message,
   }));
 }
 
@@ -258,7 +258,7 @@ function localizedCopy(value, language) {
   if (!value || value.startsWith('/') || /^https?:\/\//i.test(value)) return value;
   const key = Object.keys(COPY.en).find((id) => COPY.en[id] === value);
   if (key) return COPY[language][key];
-  return `Fixture fallback — source copy (not translated): ${value}`;
+  return `Not translated yet — source copy: ${value}`;
 }
 
 function translationDocument(source, language, bodyCorrection) {
@@ -355,7 +355,7 @@ export function transition(state, action) {
   ensure(action && typeof action.type === 'string', 'Action type required.');
   if (action.type === 'RESET') return createDemo();
   if (action.type === 'AUTO_TRANSLATE_ROLLOUT') {
-    ensure((action.actor || state.actor) === 'hq-author', 'HQ author role must trigger simulated automation.');
+    ensure((action.actor || state.actor) === 'hq-author', 'HQ author role must trigger the automation.');
     const translated = transition(state, {
       type: 'TRANSLATE', actor: 'translator', market: 'hq', languages: ['de', 'fr'],
     });
@@ -369,14 +369,14 @@ export function transition(state, action) {
   const doc = getDocument(next, market);
   const actor = action.actor || next.actor;
   const persona = next.personas.find((item) => item.id === actor);
-  ensure(persona, 'Unknown simulated actor persona.');
-  const role = (...roles) => ensure(roles.includes(persona.role), `Simulated role required: ${roles.join(' or ')}.`);
+  ensure(persona, 'Unknown actor role.');
+  const role = (...roles) => ensure(roles.includes(persona.role), `Role required: ${roles.join(' or ')}.`);
   const author = () => role(market === 'hq' ? 'hq-author' : 'market-author');
   const reviewer = () => role(market === 'hq' ? 'hq-reviewer' : 'market-reviewer');
   const hqOnly = () => { ensure(market === 'hq', 'HQ action only.'); role('hq-author'); };
   switch (action.type) {
     case 'ACTOR':
-      ensure(next.personas.some((p) => p.id === action.id), 'Unknown simulated actor persona.'); next.actor = action.id; break;
+      ensure(next.personas.some((p) => p.id === action.id), 'Unknown actor role.'); next.actor = action.id; break;
     case 'MARKET': getDocument(next, action.market); next.market = action.market; break;
     case 'SAVE':
       hqOnly(); patchFields(doc, action.fields, SOURCE_FIELDS); revise(doc);
@@ -394,11 +394,11 @@ export function transition(state, action) {
     case 'REJECT': {
       reviewer(); ensure(doc.review === 'submitted', 'Submitted review required.');
       const f = action.feedback;
-      ensure(f && text(f.field) && text(f.message) && text(f.team) && next.personas.some((p) => p.id === f.mention), 'Required feedback: field, message, simulated mention and team.');
+      ensure(f && text(f.field) && text(f.message) && text(f.team) && next.personas.some((p) => p.id === f.mention), 'Required feedback: field, message, mention and team.');
       ensure(Object.hasOwn(doc.fields, f.field) || doc.components.some((c) => c.id === f.field), 'Feedback field must exist.');
       doc.feedback = clone(f); doc.review = 'rejected'; doc.approvedRevision = null;
       next.inbox.push({
-        ...clone(f), market, at: next.clock, simulated: true,
+        ...clone(f), market, at: next.clock, demo: true,
       }); break;
     }
     case 'APPROVE':
@@ -422,8 +422,8 @@ export function transition(state, action) {
           sourceRevision: next.hq.revision,
           revision: (next.translations[language]?.revision || 0) + 1,
           glossary: ['BMW', 'eDrive', 'WLTP'],
-          style: 'BMW concise premium editorial fixture; unmapped prose remains labelled source copy',
-          provenance: memory ? 'manual correction / translation memory' : 'simulated full-page fixture / glossary / style / translation memory seed',
+          style: 'BMW concise premium editorial; untranslated prose stays labelled source copy',
+          provenance: memory ? 'manual correction / translation memory' : 'full-page demo translation / glossary / style / translation memory',
         };
       }); break;
     }
@@ -435,7 +435,7 @@ export function transition(state, action) {
       const story = translation.document.components.find((c) => c.id === 'story');
       if (story) story.text = action.text;
       translation.revision += 1; translation.provenance = 'manual correction / translation memory';
-      next.translationMemory[`${action.language}:${next.hq.fields.body}`] = { text: action.text, simulated: true }; break;
+      next.translationMemory[`${action.language}:${next.hq.fields.body}`] = { text: action.text, demo: true }; break;
     }
     case 'ROLLOUT':
     case 'REROLLOUT': {
@@ -460,7 +460,7 @@ export function transition(state, action) {
           type: action.type,
           at: next.clock,
           sourceRevision: target.sourceRevision,
-          simulated: true,
+          demo: true,
         });
       }); break;
     }
@@ -498,16 +498,16 @@ export function transition(state, action) {
         revision: doc.revision,
         sourceRevision: next.hq.revision,
         document: snapshot(doc),
-        simulated: true,
+        demo: true,
       };
       doc.release = 'scheduled'; break;
     case 'PUBLISH':
-      role('publisher'); ensure(action.dryRun === true, 'Dry-run simulated publication only.');
+      role('publisher'); ensure(action.demoRelease === true, 'Demo release only: nothing is published from this app.');
       ensure(doc.schedule && doc.schedule.revision === doc.revision && doc.approvedRevision === doc.revision && doc.schedule.sourceRevision === next.hq.revision, 'Current source-bound approved frozen schedule required.'); gates(next, market, true);
       ensure(Date.parse(next.clock) >= Date.parse(next.embargo) && Date.parse(next.clock) >= Date.parse(doc.schedule.at), 'Demo clock must reach embargo and scheduled time.');
       doc.publishedRevision = doc.schedule.revision;
-      doc.published = { ...clone(doc.schedule), at: next.clock, simulated: true };
-      doc.release = 'simulated-published'; break;
+      doc.published = { ...clone(doc.schedule), at: next.clock, demo: true };
+      doc.release = 'demo-published'; break;
     case 'ADVANCE_TIME': {
       ensure(Number.isInteger(action.minutes) && action.minutes >= 0 && action.minutes <= 10080, 'Demo clock minutes must be bounded (0–10080).');
       const time = Date.parse(next.clock) + action.minutes * 60000;
@@ -516,12 +516,12 @@ export function transition(state, action) {
     }
     case 'METRIC': {
       const metric = next.metrics[market];
-      ensure(Number.isSafeInteger(action.visits) && Number.isSafeInteger(action.conversions) && action.visits >= 0 && action.conversions >= 0 && action.conversions <= action.visits, 'Simulated metric counters require visits >= conversions >= 0.');
-      ensure(Number.isSafeInteger(metric.visits + action.visits) && Number.isSafeInteger(metric.conversions + action.conversions), 'Simulated metric counter overflow.');
+      ensure(Number.isSafeInteger(action.visits) && Number.isSafeInteger(action.conversions) && action.visits >= 0 && action.conversions >= 0 && action.conversions <= action.visits, 'Sample metric counters require visits >= conversions >= 0.');
+      ensure(Number.isSafeInteger(metric.visits + action.visits) && Number.isSafeInteger(metric.conversions + action.conversions), 'Sample metric counter overflow.');
       metric.visits += action.visits; metric.conversions += action.conversions; break;
     }
     case 'ASSIGN':
-      author(); ensure(text(action.team) && next.personas.some((p) => p.id === action.stakeholder), 'Review team and simulated stakeholder persona required.');
+      author(); ensure(text(action.team) && next.personas.some((p) => p.id === action.stakeholder), 'Review team and stakeholder role required.');
       doc.assignment = { team: action.team, stakeholder: action.stakeholder }; break;
     case 'NOTIFY':
       ensure(text(action.message), 'Notification message required.');
@@ -531,17 +531,17 @@ export function transition(state, action) {
         mention: doc.assignment.stakeholder,
         team: doc.assignment.team,
         at: next.clock,
-        simulated: true,
+        demo: true,
       });
       if (action.exportTasks) next.taskExport = clone(next.inbox); break;
     default: throw new Error(`Unknown action: ${action.type}`);
   }
   const event = {
-    id: `event-${next.events.length + 1}`, type: action.type, actor, market, revision: doc.revision, at: next.clock, simulated: true,
+    id: `event-${next.events.length + 1}`, type: action.type, actor, market, revision: doc.revision, at: next.clock, demo: true,
   };
   next.events.push(event);
   if (!['ACTOR', 'MARKET', 'ADVANCE_TIME', 'METRIC', 'TRANSLATE', 'CORRECT_TRANSLATION', 'ROLLOUT', 'REROLLOUT'].includes(action.type)) doc.history.push({ ...event, document: snapshot(doc) });
-  next.notices.push(`${action.type} completed locally (simulated).`);
+  next.notices.push(`${action.type} completed in this demo.`);
   return next;
 }
 
@@ -571,7 +571,7 @@ export function radarRows(state) {
       review: doc.review,
       release: doc.release,
       blockers,
-      actions: [{ label: 'Open simulated workflow', href: `${url}#workflow` }, { label: 'Open rollout workspace', href: `${url}#rollout` }],
+      actions: [{ label: 'Open workflow', href: `${url}#workflow` }, { label: 'Open rollout workspace', href: `${url}#rollout` }],
     };
   });
 }

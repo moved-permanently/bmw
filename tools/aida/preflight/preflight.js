@@ -77,7 +77,7 @@ function render(main, state, onSync) {
   if (window.parent === window) {
     const query = new URLSearchParams(window.location.search);
     const path = query.get('path');
-    main.querySelector('p').textContent = 'Preflight checks the current DA source, not a published snapshot. Open the page in DA and choose Preflight from the plugin menu to run checks and update WDH values.';
+    main.querySelector('p').textContent = 'Preflight checks the current page source, not a published snapshot. Open the page in Experience Workspace and choose Preflight from the plugin menu to run checks and update WDH values.';
     if (path) {
       try {
         const routes = pageActions({
@@ -93,11 +93,11 @@ function render(main, state, onSync) {
         link.rel = 'noopener noreferrer';
         const label = document.createElement('span');
         label.className = 'spectrum-Button-label';
-        label.textContent = `Open ${path} in DA`;
+        label.textContent = `Open ${path} in Experience Workspace`;
         link.append(label);
         main.append(link);
       } catch (e) {
-        main.querySelector('p').textContent = `Preflight needs a valid DA page: ${e.message}`;
+        main.querySelector('p').textContent = `Preflight needs a valid page: ${e.message}`;
       }
     }
     return;

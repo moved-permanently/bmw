@@ -6,7 +6,7 @@ import {
 (async function init() {
   const main = document.querySelector('main');
   if (window.parent === window) {
-    main.querySelector('p').textContent = 'Insert linked WDH values from inside a DA document. Open the integrated showcase to explore the market data and simulated review workflow.';
+    main.querySelector('p').textContent = 'Insert linked WDH values from inside a page in Experience Workspace. Open the integrated showcase to explore the market data and the demo review workflow.';
     return;
   }
   try {
@@ -18,7 +18,7 @@ import {
     const insertLabel = { en: 'Insert', de: 'Einfügen', fr: 'Insérer' }[lang] || 'Insert';
 
     main.innerHTML = '<h1>WDH values</h1><p class="aida-muted"></p><p><label class="spectrum-FieldLabel" for="wdh-model">Model</label><select id="wdh-model" class="spectrum-Picker spectrum-Picker--sizeM" aria-label="Model"></select></p><div class="wdh-table-scroll"><table class="spectrum-Table spectrum-Table--sizeM"><caption>Linked technical values</caption><thead class="spectrum-Table-head"><tr class="spectrum-Table-row"><th scope="col" class="spectrum-Table-headCell">Property</th><th scope="col" class="spectrum-Table-headCell">Current source value</th><th scope="col" class="spectrum-Table-headCell">Action</th></tr></thead><tbody class="spectrum-Table-body"></tbody></table></div>';
-    main.querySelector('.aida-muted').textContent = `Insert a linked value (${market.toUpperCase()} market). Source badges distinguish WDH exports, demo fixtures and derived statements. Preflight checks for changes against the current sheet.`;
+    main.querySelector('.aida-muted').textContent = `Insert a linked value (${market.toUpperCase()} market). Source badges distinguish WDH exports, demo data and derived statements. Preflight checks for changes against the current sheet.`;
     const select = main.querySelector('select');
     models.forEach((m) => select.append(new Option(`${m.name} (${m.code})`, m.code)));
 

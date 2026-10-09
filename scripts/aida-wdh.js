@@ -38,7 +38,7 @@ const VALUE_LABELS = {
 const SOURCE_LABELS = {
   'supplied-wdh': ['WDH export', 'WDH-Export', 'Export WDH'],
   'external-wdh': ['WDH export', 'WDH-Export', 'Export WDH'],
-  'brief-fixture': ['Demo fixture', 'Demo-Datensatz', 'Données de démonstration'],
+  'brief-fixture': ['Demo data', 'Demo-Datensatz', 'Données de démonstration'],
   'derived-demo-wltp-statement': ['Derived WLTP statement', 'Abgeleitete WLTP-Angabe', 'Mention WLTP dérivée'],
 };
 const UNKNOWN_SOURCE = ['Source not specified', 'Quelle nicht angegeben', 'Source non précisée'];

@@ -50,8 +50,8 @@ async function checkDrift(da, cells) {
 function appendActions(el, routes, missing = false) {
   const actions = document.createElement('div');
   actions.className = 'radar-actions';
-  const entries = missing ? [['translate', 'Create in DA Translate'], ['workflow', 'Workflow simulation']]
-    : [['edit', 'Edit'], ['preview', 'Preview'], ['preflight', 'Preflight'], ['workflow', 'Workflow simulation']];
+  const entries = missing ? [['translate', 'Create in Translate'], ['workflow', 'Workflow demo']]
+    : [['edit', 'Edit'], ['preview', 'Preview'], ['preflight', 'Preflight'], ['workflow', 'Workflow demo']];
   entries.forEach(([key, label]) => {
     const link = document.createElement('a');
     link.className = 'spectrum-Link';
@@ -85,7 +85,7 @@ function renderDependencies(main, { source, languages }) {
   const main = document.querySelector('main');
   const status = document.querySelector('#radar-status');
   if (window.parent === window) {
-    status.textContent = 'Native DA source timestamps require the radar app inside DA. Open the integrated showcase for the interactive rollout and accepted-revision simulation, or DA Translate for real source and target pages.';
+    status.textContent = 'Source timestamps require the radar app inside Experience Workspace. Open the integrated showcase for the interactive rollout and accepted-revision demo, or Translate for real source and target pages.';
     return;
   }
   try {

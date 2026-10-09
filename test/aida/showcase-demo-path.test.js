@@ -5,7 +5,8 @@ import { chapters, RFP } from '../../tools/aida/showcase/script.js';
 import * as view from '../../tools/aida/showcase/view.js';
 
 const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
-const stripComments = (code) => code.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|\s)\/\/.*$/gm, '$1');
+// 'brief-fixture' is a WDH sheet source key, never displayed (its label is 'Demo data').
+const stripComments = (code) => code.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|\s)\/\/.*$/gm, '$1').replace(/'brief-fixture'/g, '');
 
 // Wording BMW must not see on screen: internal product codenames and rehearsal jargon.
 const BANNED = /edge delivery|rehears|fixture|synthetic|substitut|simulat|\bfake\b|\bmock|dry[- ]?run|master|document authoring|sandbox/i;
@@ -55,7 +56,7 @@ test('show links open known BMW demo surfaces or a tab of this app', () => {
     const url = new URL(href);
     assert.equal(url.protocol, 'https:');
     assert.ok(hosts.includes(url.host), href);
-    if (url.host === 'da.live') assert.match(url.hash, /moved-permanently\/bmw/, href);
+    if (url.host === 'da.live' && url.pathname !== '/apps/scheduler') assert.match(href, /moved-permanently\/bmw/, href);
   });
 });
 

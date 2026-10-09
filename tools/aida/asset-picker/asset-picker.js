@@ -34,7 +34,7 @@ export default function mountPicker(main, { assets, context = {}, actions = null
     .forEach((code) => find('country').append(new Option(countryName(code), code)));
   find('country').value = initialCountry;
   find('context').textContent = assetContextMessage(context);
-  if (!actions) find('context').textContent += ' Standalone preview: open through DA to insert.';
+  if (!actions) find('context').textContent += ' Standalone preview: open in Experience Workspace to insert.';
 
   function insertion() {
     find('message').textContent = '';
