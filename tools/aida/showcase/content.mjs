@@ -179,7 +179,7 @@ export function buildContent({ catalogue, wdh } = {}) {
     const teaser = (entry, short = false) => [image(entry.asset),
       `${heading(entry[lang].title, 3)}${paragraph(entry[lang][short ? 'teaserShort' : 'teaserLong'])}${cta(local(`news/${entry.id}`), t.learn, false)}`];
     const modelCard = (model) => [image(model.asset),
-      `${heading(model.name, 3)}${paragraph(model.drivetrain === 'BEVE' ? t.electric : 'Plug-in hybrid')}${price(model.code)}${stats(model.code, model.drivetrain === 'BEVE' ? [[t.rangeLabel, 'electricRange'], [t.acceleration, 'acceleration']] : [[t.power, 'power'], [t.acceleration, 'acceleration']])}${cta(model.code === '61HG' ? local('i5') : `https://www.bmw.de${assets[model.asset].sources[0]}.html`, t.discover, false)}`];
+      `${heading(model.name, 3)}${paragraph(model.drivetrain === 'BEVE' ? t.electric : t.plugInHybrid)}${price(model.code)}${stats(model.code, model.drivetrain === 'BEVE' ? [[t.rangeLabel, 'electricRange'], [t.acceleration, 'acceleration']] : [[t.power, 'power'], [t.acceleration, 'acceleration']])}${cta(model.code === '61HG' ? local('i5') : `https://www.bmw.de${assets[model.asset].sources[0]}.html`, t.discover, false)}`];
     const related = editorial.models.filter((model) => model.discovery && ['BEVE', 'PHEV'].includes(model.drivetrain) && model.code !== '61HG');
     const electricModels = editorial.models.filter((model) => model.discovery && model.drivetrain === 'BEVE');
     const emob = () => section('emob-section', heading(t.allElectric) + block('carousel slides-triples', [
@@ -226,7 +226,7 @@ export function buildContent({ catalogue, wdh } = {}) {
       const news = entry[lang];
       document(`news/${entry.id}`, news.title, news.teaserShort, 'NewsArticle', [
         stage('news-stage', news.title, news.teaserShort, entry.asset, '', 'hero-stage'),
-        section('news-body', `${paragraph(news.teaserLong)}${entry.code ? `${stats(entry.code, i5Fields)}${legal()}${cta(local('i5'), t.discover)}` : ''}${paragraph(`${entry.sourceKind} · ${editorial.source}`)}`, 'content-two-thirds-centered, space-above-related-l, space-below-regular'),
+        section('news-body', `${paragraph(news.teaserLong)}${entry.code ? `${stats(entry.code, i5Fields)}${legal()}${cta(local('i5'), t.discover)}` : ''}${paragraph(t.sourceNote[entry.sourceKind])}`, 'content-two-thirds-centered, space-above-related-l, space-below-regular'),
       ], entry.code);
       newsIndex.push({
         path: local(`news/${entry.id}`), id: entry.id, context: id, title: news.title, description: news.teaserShort, image: assets[entry.asset].url, demo: true,

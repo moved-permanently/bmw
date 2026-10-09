@@ -130,7 +130,7 @@
       "en": {
         "title": "BMW in Cannes",
         "teaserShort": "A shared Cannes editorial story for the BMW briefing demo.",
-        "teaserLong": "A shared Cannes editorial story for the BMW briefing demo. This synthetic fixture demonstrates mandatory home-page news reuse; the vehicle photograph is illustrative and does not document an event."
+        "teaserLong": "A shared Cannes editorial story for the BMW briefing demo. This demo story shows mandatory home-page news reuse; the vehicle photograph is illustrative and does not document an event."
       },
       "de": {
         "title": "BMW in Cannes",
@@ -140,7 +140,7 @@
       "fr": {
         "title": "BMW à Cannes",
         "teaserShort": "Une actualité Cannes partagée pour la démonstration BMW.",
-        "teaserLong": "Une actualité Cannes partagée pour la démonstration BMW. Ce contenu éditorial fictif illustre la réutilisation sur la page d’accueil. La photo du véhicule est illustrative et ne documente pas un événement."
+        "teaserLong": "Une actualité Cannes partagée pour la démonstration BMW. Ce contenu éditorial de démonstration illustre la réutilisation sur la page d’accueil. La photo du véhicule est illustrative et ne documente pas un événement."
       }
     },
     {
@@ -150,7 +150,7 @@
       "en": {
         "title": "BMW Concept M",
         "teaserShort": "An editorial concept story, shared across the demo contexts.",
-        "teaserLong": "An editorial concept story, shared across the demo contexts. This synthetic fixture demonstrates the mandatory Concept M teaser. The photograph shows a BMW M5, not an asserted concept vehicle."
+        "teaserLong": "An editorial concept story, shared across the demo contexts. This demo story shows the mandatory Concept M teaser. The photograph shows a BMW M5, not an asserted concept vehicle."
       },
       "de": {
         "title": "BMW Concept M",
@@ -160,7 +160,7 @@
       "fr": {
         "title": "BMW Concept M",
         "teaserShort": "Un récit éditorial de concept partagé entre les contextes de démonstration.",
-        "teaserLong": "Un récit éditorial de concept partagé entre les contextes de démonstration. Ce contenu fictif illustre le teaser Concept M obligatoire. La photographie représente une BMW M5 et non un véhicule concept revendiqué."
+        "teaserLong": "Un récit éditorial de concept partagé entre les contextes de démonstration. Ce contenu de démonstration illustre le teaser Concept M obligatoire. La photographie représente une BMW M5 et non un véhicule concept revendiqué."
       }
     },
     {

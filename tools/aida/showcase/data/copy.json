@@ -1,6 +1,6 @@
 {
   "en": {
-    "demo": "Demo fixture · BMW RfP III · supplied WDH extract and exemplary briefing copy, not a live offer.",
+    "demo": "Demo content · BMW RfP III · supplied WDH extract and exemplary briefing copy, not a live offer.",
     "fallback": "iX3 uses the supplied DE extract as a demo fallback; no valid FR iX3 extract was supplied.",
     "belgium": "Belgium demo context · French language and French-market data fallback, not Belgian homologation or pricing.",
     "home": "The i5",
@@ -56,7 +56,13 @@
     "initialStatus": "0 fact requests · initial authored values",
     "co2": "Combined CO₂ emissions",
     "co2Class": "CO₂ class",
-    "legal": "WLTP demo values from the supplied extract. Availability, options, offers and homologation need market verification."
+    "legal": "WLTP demo values from the supplied extract. Availability, options, offers and homologation need market verification.",
+    "plugInHybrid": "Plug-in hybrid",
+    "sourceNote": {
+      "supplied-wdh": "Source: WDH extract supplied by BMW",
+      "brief-fixture": "Source: BMW briefing copy (demo)",
+      "synthetic-editorial-fixture": "Demo story written for this showcase"
+    }
   },
   "de": {
     "demo": "Demo-Datensatz · BMW RfP III · bereitgestellter WDH-Auszug und beispielhafter Briefing-Inhalt, kein Live-Angebot.",
@@ -116,7 +122,13 @@
     "initialStatus": "0 Datenanfragen · initiale redaktionelle Werte",
     "co2": "CO₂-Emissionen kombiniert",
     "co2Class": "CO₂-Klasse",
-    "legal": "WLTP-Demowerte aus dem bereitgestellten Auszug. Verfügbarkeit, Ausstattung, Angebote und Homologation müssen marktspezifisch geprüft werden."
+    "legal": "WLTP-Demowerte aus dem bereitgestellten Auszug. Verfügbarkeit, Ausstattung, Angebote und Homologation müssen marktspezifisch geprüft werden.",
+    "plugInHybrid": "Plug-in-Hybrid",
+    "sourceNote": {
+      "supplied-wdh": "Quelle: von BMW bereitgestellter WDH-Auszug",
+      "brief-fixture": "Quelle: BMW-Briefing-Text (Demo)",
+      "synthetic-editorial-fixture": "Für diese Demo verfasste Geschichte"
+    }
   },
   "fr": {
     "demo": "Données de démonstration · BMW RfP III · extrait WDH fourni et contenu exemplaire du briefing, pas une offre en cours.",
@@ -175,6 +187,12 @@
     "initialStatus": "0 requête de données · valeurs initiales rédigées",
     "co2": "Émissions de CO₂ combinées",
     "co2Class": "Classe de CO₂",
-    "legal": "Valeurs WLTP de démonstration issues de l’extrait fourni. La disponibilité, les équipements, les offres et l’homologation nécessitent une vérification par marché."
+    "legal": "Valeurs WLTP de démonstration issues de l’extrait fourni. La disponibilité, les équipements, les offres et l’homologation nécessitent une vérification par marché.",
+    "plugInHybrid": "Hybride rechargeable",
+    "sourceNote": {
+      "supplied-wdh": "Source : extrait WDH fourni par BMW",
+      "brief-fixture": "Source : texte du briefing BMW (démo)",
+      "synthetic-editorial-fixture": "Récit rédigé pour cette démonstration"
+    }
   }
 }
