@@ -50,9 +50,9 @@ export const chapters = [
       'Several authors work at once, comment in context and restore any earlier version.',
     ],
     show: [
-      { label: 'Visual editing: BMW i5 (EN source)', href: canvas('/aida/en/i5') },
-      { label: 'Document view: BMW i5', href: source('/aida/en/i5') },
-      { label: 'Preview: BMW i5', href: page('/aida/en/i5') },
+      { label: 'Visual editing: BMW i5 (Germany)', href: canvas('/aida/de/de/i5') },
+      { label: 'Document view: BMW i5', href: source('/aida/de/de/i5') },
+      { label: 'Preview: BMW i5', href: page('/aida/de/de/i5') },
     ],
     recap: 'WYSIWYG for marketers, clean structure underneath, collaboration and versions built in.',
   },
@@ -96,7 +96,7 @@ export const chapters = [
     title: 'Assets: find, crop, reuse',
     rfp: ['I 1b', 'III Modeling', 'III Connectors'],
     tell: [
-      'Find BMW images and films and see on which pages they are used.',
+      'Find BMW images and films across the site in the media library.',
       'Insert by reference from BMW’s image delivery: crop, frame and sharpen without copying files.',
       'Extend a format for a new placement; the asset connector is ready for BMW’s DAM.',
     ],
@@ -129,7 +129,7 @@ export const chapters = [
     tell: [
       'The author requests review; the reviewer rejects with feedback on a specific field.',
       'The author corrects, resubmits, and the exact revision is approved by a team or a named stakeholder.',
-      'A launch review package freezes a set of pages for stakeholders, with review links and comments.',
+      'A launch review package freezes a set of pages and gives stakeholders a review link.',
     ],
     show: [
       { label: 'Workflow: request, reject, approve', href: '#workflow' },
@@ -158,14 +158,14 @@ export const chapters = [
     rfp: ['I 3', 'I 4', 'III Localization'],
     tell: [
       'English source → German and French → Germany, Austria, France and Belgium.',
-      'Belgium adapts its page: data format, disclaimer, hero image, headline, CTA, an added and a removed section, a new order. A feature not offered in France is not shown.',
+      'Markets adapt locally: Germany shows the Highway Assistant, France does not offer it; Belgium drops a section. The workflow demo covers data format, disclaimer, hero image, headline, CTA, added and removed sections and a new order.',
       'A new HQ update rolls out again: local changes stay, conflicts are resolved property by property.',
     ],
     show: [
+      { label: 'Germany: BMW i5', href: page('/aida/showcase/de/de/i5') },
       { label: 'France: BMW i5', href: page('/aida/showcase/fr/fr/i5') },
       { label: 'Belgium: BMW i5', href: page('/aida/showcase/fr/be/i5') },
-      { label: 'Germany: BMW i5', href: page('/aida/showcase/de/de/i5') },
-      { label: 'Re-rollout and conflicts', href: '#rollout' },
+      { label: 'Localize and re-roll out', href: '#rollout' },
     ],
     recap: 'Push centrally, adapt locally, update again without losing local work.',
   },
@@ -194,7 +194,7 @@ export const chapters = [
       'Code moves through DEV, TEST, STAGE and LIVE as branches; content has preview and live.',
     ],
     show: [
-      { label: 'Schedule publish from the editor', href: canvas('/aida/en/i5') },
+      { label: 'Schedule publish from the editor', href: canvas('/aida/de/de/i5') },
       { label: 'Scheduler', href: 'https://da.live/apps/scheduler' },
       { label: 'Launch review packages', href: app('snapshots') },
       { label: 'Preview', href: page('/aida/showcase/en/i5') },
