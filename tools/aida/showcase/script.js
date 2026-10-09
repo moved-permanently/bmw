@@ -227,7 +227,7 @@ export const chapters = [
     tell: [
       'AEM measures real visits and Core Web Vitals of every page out of the box.',
       'Creators see the KPIs of their pages; HQ sees them per market next to the rollout status.',
-      'Analytics and task tools such as Workfront connect at the same points. The numbers in this demo are samples.',
+      'Analytics and task tools such as Workfront connect at the same points. The numbers shown are sample values.',
     ],
     show: [
       { label: 'KPIs next to the rollout status', href: '#radar' },

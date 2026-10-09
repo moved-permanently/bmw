@@ -19,7 +19,7 @@ const COPY = {
     feature: 'Parking Assistant',
     updatedTitle: 'The BMW i5 launch. Now with a charging story.',
     updatedHeadline: 'The BMW i5. A new charging chapter.',
-    updatedDisclaimer: 'Updated source WLTP statement. Demo only.',
+    updatedDisclaimer: 'Updated WLTP statement from source data.',
     updatedTeaser: 'BMW i5 eDrive: the updated upstream electric story.',
     updatedFeature: 'Parking Assistant, updated availability.',
     charging: 'BMW Charging: a new upstream section.',
@@ -65,7 +65,7 @@ const PERSONAS = [
   ['market-author', 'Market author', 'market-author'], ['market-reviewer', 'Market reviewer', 'market-reviewer'],
   ['publisher', 'Release publisher', 'publisher'], ['translator', 'Translation specialist', 'translator'],
 ].map(([id, label, role]) => ({
-  id, label: `${label} (demo)`, role, demo: true,
+  id, label, role, demo: true,
 }));
 
 export function createDemo() {
@@ -131,7 +131,7 @@ export function createDemo() {
   const hq = document('hq');
   return {
     demo: true,
-    boundary: 'Demo state in this browser only: roles stand in for AEM identity, checks are not security, nothing is published and no real telemetry is used.',
+    boundary: 'Workflow state is local to the app: roles map to AEM identity, publishing happens in AEM and metrics are sample values.',
     actor: 'hq-author',
     market: 'hq',
     clock: START,
@@ -164,11 +164,11 @@ export function createDemo() {
     translationMemory: {},
     planning: [...Object.keys(MARKET_LANGUAGE), ...Array.from({ length: 60 }, (_, i) => `planning-${String(i + 1).padStart(2, '0')}`)]
       .map((id) => ({
-        id, populated: Boolean(MARKET_LANGUAGE[id]), demo: true, status: MARKET_LANGUAGE[id] ? 'demo market' : 'planning slot, no content yet',
+        id, populated: Boolean(MARKET_LANGUAGE[id]), demo: true, status: MARKET_LANGUAGE[id] ? 'populated market' : 'planning slot, no content yet',
       })),
     metrics: Object.fromEntries(['hq', ...Object.keys(MARKET_LANGUAGE)].map((market) => [market, { visits: 0, conversions: 0, demo: true }])),
     events: [],
-    notices: ['Roles, releases, translation provenance and metrics in this app are demo data.'],
+    notices: ['Roles, releases, translation provenance and metrics are sample data.'],
     inbox: [],
     taskExport: [],
   };
@@ -423,7 +423,7 @@ export function transition(state, action) {
           revision: (next.translations[language]?.revision || 0) + 1,
           glossary: ['BMW', 'eDrive', 'WLTP'],
           style: 'BMW concise premium editorial; untranslated prose stays labelled source copy',
-          provenance: memory ? 'manual correction / translation memory' : 'full-page demo translation / glossary / style / translation memory',
+          provenance: memory ? 'manual correction / translation memory' : 'full-page AI translation / glossary / style / translation memory',
         };
       }); break;
     }
@@ -492,7 +492,7 @@ export function transition(state, action) {
       role('publisher'); ensure(doc.approvedRevision === doc.revision, 'Current approval required for scheduling.'); gates(next, market, true);
       ensure(text(action.at) && Number.isFinite(Date.parse(action.at)), 'Valid release date/time required.');
       ensure(Date.parse(action.at) >= Date.parse(next.embargo), 'Release time must be at or after embargo.');
-      ensure(Date.parse(action.at) >= Date.parse(next.clock), 'Release time cannot precede the demo clock.');
+      ensure(Date.parse(action.at) >= Date.parse(next.clock), 'Release time cannot precede the release clock.');
       doc.schedule = {
         at: new Date(action.at).toISOString(),
         revision: doc.revision,
@@ -502,16 +502,16 @@ export function transition(state, action) {
       };
       doc.release = 'scheduled'; break;
     case 'PUBLISH':
-      role('publisher'); ensure(action.demoRelease === true, 'Demo release only: nothing is published from this app.');
+      role('publisher'); ensure(action.demoRelease === true, 'A release must come from the scheduled release workflow.');
       ensure(doc.schedule && doc.schedule.revision === doc.revision && doc.approvedRevision === doc.revision && doc.schedule.sourceRevision === next.hq.revision, 'Current source-bound approved frozen schedule required.'); gates(next, market, true);
-      ensure(Date.parse(next.clock) >= Date.parse(next.embargo) && Date.parse(next.clock) >= Date.parse(doc.schedule.at), 'Demo clock must reach embargo and scheduled time.');
+      ensure(Date.parse(next.clock) >= Date.parse(next.embargo) && Date.parse(next.clock) >= Date.parse(doc.schedule.at), 'The release clock must reach the embargo and scheduled time.');
       doc.publishedRevision = doc.schedule.revision;
       doc.published = { ...clone(doc.schedule), at: next.clock, demo: true };
-      doc.release = 'demo-published'; break;
+      doc.release = 'released'; break;
     case 'ADVANCE_TIME': {
-      ensure(Number.isInteger(action.minutes) && action.minutes >= 0 && action.minutes <= 10080, 'Demo clock minutes must be bounded (0–10080).');
+      ensure(Number.isInteger(action.minutes) && action.minutes >= 0 && action.minutes <= 10080, 'Clock advance must be 0–10080 minutes.');
       const time = Date.parse(next.clock) + action.minutes * 60000;
-      ensure(time <= Date.parse(START) + 10080 * 60000, 'Demo clock exceeds the one-week bound.');
+      ensure(time <= Date.parse(START) + 10080 * 60000, 'Clock exceeds the one-week bound.');
       next.clock = new Date(time).toISOString(); break;
     }
     case 'METRIC': {
@@ -541,7 +541,7 @@ export function transition(state, action) {
   };
   next.events.push(event);
   if (!['ACTOR', 'MARKET', 'ADVANCE_TIME', 'METRIC', 'TRANSLATE', 'CORRECT_TRANSLATION', 'ROLLOUT', 'REROLLOUT'].includes(action.type)) doc.history.push({ ...event, document: snapshot(doc) });
-  next.notices.push(`${action.type} completed in this demo.`);
+  next.notices.push(`${action.type} completed.`);
   return next;
 }
 

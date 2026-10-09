@@ -41,7 +41,7 @@ test('showcase ships real vendored Spectrum styles and a labelled rehearsal boun
 
 test('playground persists only its own versioned rehearsal state and never publishes implicitly', () => {
   const app = read('tools/aida/showcase/app.js');
-  assert.match(app, /bmw-aida-showcase-v2/);
+  assert.match(app, /bmw-aida-showcase-v3/);
   assert.doesNotMatch(app, /localStorage\.clear\(/);
   assert.doesNotMatch(app, /admin\.hlx\.page|api\.aem\.live|Bearer/);
   assert.match(app, /Storage unavailable/);
@@ -70,4 +70,26 @@ test('architecture preserves all named independent organizations and separates e
   assert.equal(new Set(architecture.organizations.map((org) => org.space)).size, names.length);
   assert.ok(architecture.organizations.every((org) => org.shareCapabilities && !org.shareContent));
   assert.deepEqual(architecture.environments, ['DEV', 'TEST', 'STAGE', 'LIVE']);
+});
+
+test('customer-visible showcase copy never explains demo mechanics', () => {
+  const internal = /this browser|each browser|in this demo|this demo (shows|uses|scheduler)|in this app|in memory|stands? in for|in place of OTMM|modeled in|\(demo\)|demo (role|inbox|model|provider|release|clock|market|translation|state|data|only)|demo-published|fictitious|measured locally|in this session|not BMW analytics|BMW i5 demo|numbers in this demo/i;
+  ['index.html', 'app.js', 'view.js', 'model.js', 'connectors.js', 'script.js'].forEach((file) => {
+    const source = read(`tools/aida/showcase/${file}`);
+    const hit = source.match(internal);
+    assert.equal(hit, null, `${file}: ${hit?.[0]}`);
+  });
+});
+
+test('header badge carries Spectrum label padding and no internal boundary note', () => {
+  const page = read('tools/aida/showcase/index.html');
+  assert.match(page, /class="spectrum-Badge-label">Interactive demo</);
+  assert.doesNotMatch(page, /showcase-boundary/);
+});
+
+test('JSON shown on screen omits internal demo flags', () => {
+  assert.equal(typeof view.json, 'function');
+  const shown = view.json({ be: { visits: 1, demo: true }, demo: true });
+  assert.doesNotMatch(shown, /demo/);
+  assert.match(shown, /"visits": 1/);
 });

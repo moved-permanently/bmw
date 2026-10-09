@@ -4,15 +4,16 @@ import {
   createDemo, transition, checks, radarRows,
 } from './model.js';
 import {
-  tabs, defaultTab, demoPath, chapterFromHash, escape, links,
+  tabs, defaultTab, demoPath, chapterFromHash, escape, json, links,
   button, link, field, select, heading, badge, card,
   overview, assetView, deliveryView, marketFromSearch,
 } from './view.js';
 
-const KEY = 'bmw-aida-showcase-v2';
+const KEY = 'bmw-aida-showcase-v3';
 let state = createDemo();
 let storage = true;
 try {
+  localStorage.removeItem('bmw-aida-showcase-v2');
   const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
   if (saved?.demo && saved?.hq && saved?.personas && saved?.markets) state = saved;
 } catch (e) { storage = false; }
@@ -35,13 +36,14 @@ function apply(action) {
   state = transition(state, action);
   try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { storage = false; }
   render(); // eslint-disable-line no-use-before-define
-  notify(`${action.type.replaceAll('_', ' ')} completed in this demo. No published content changed.`);
+  const done = action.type.replaceAll('_', ' ').toLowerCase();
+  notify(`${done[0].toUpperCase()}${done.slice(1)} completed.`);
 }
 
 const documentOf = () => (state.market === 'hq' ? state.hq : state.markets[state.market]);
 const actions = (html) => `<div class="showcase-actions">${html}</div>`;
 const list = (items) => `<ul class="showcase-list">${items.map((item) => `<li>${escape(item)}</li>`).join('')}</ul>`;
-const toolbar = () => `<div class="showcase-toolbar">${select('Demo role', 'actor', state.personas.map((p) => [p.id, p.label]), state.actor)}${select('Document context', 'market', ['hq', ...Object.keys(state.markets)].map((m) => [m, m === 'hq' ? 'HQ · English source' : `${m.toUpperCase()} · market copy`]), state.market)}<span class="showcase-clock">Fictitious clock: ${escape(state.clock)}<br>Embargo: ${escape(state.embargo)}</span></div>`;
+const toolbar = () => `<div class="showcase-toolbar">${select('Role', 'actor', state.personas.map((p) => [p.id, p.label]), state.actor)}${select('Document context', 'market', ['hq', ...Object.keys(state.markets)].map((m) => [m, m === 'hq' ? 'HQ · English source' : `${m.toUpperCase()} · market copy`]), state.market)}<span class="showcase-clock">Release clock: ${escape(state.clock)}<br>Embargo: ${escape(state.embargo)}</span></div>`;
 const quality = () => checks(state, state.market).map((c) => `<li>${badge(c.pass ? 'Pass' : 'Blocked', c.pass ? 'pass' : 'fail')} <strong>${escape(c.label)}</strong><small> ${escape(c.message)}</small></li>`).join('');
 const timeline = (events) => `<ol class="showcase-timeline">${events.slice(-10).reverse().map((e) => `<li><strong>${escape(e.type || 'Message')}</strong> · ${escape(e.actor || e.mention || e.team || '')}<small>${escape(e.at)} · revision ${escape(e.revision || '—')} · ${escape(e.market || '')}</small>${e.message ? `<p>${escape(e.message)}</p>` : ''}</li>`).join('') || '<li>No activity yet. Start the workflow.</li>'}</ol>`;
 
@@ -49,16 +51,16 @@ function workflow() {
   const doc = documentOf();
   const isHq = state.market === 'hq';
   const editable = isHq && state.actor === 'hq-author';
-  return `${heading('Briefing I · create / review / release', 'One launch. A complete editorial loop.', 'Create, request review, reject with field feedback, correct and approve. Demo roles show the policy; in production, roles come from AEM identity and permissions.')
-    + toolbar()}<div class="showcase-two">${card(isHq ? 'HQ news source' : `${state.market.toUpperCase()} market news`, `${badge(doc.review, doc.review === 'approved' ? 'pass' : 'warn')} <small>Revision ${doc.revision} · approved ${doc.approvedRevision ?? '—'} · ${escape(doc.release)}</small><form id="news-form"><fieldset ${editable ? '' : 'disabled'} style="border:0;padding:16px 0 0">${field('Headline / SEO title', 'title', doc.fields.title)}${field('Description', 'description', doc.fields.description)}${field('Article body', 'body', doc.fields.body, true)}${field('Legal statement', 'legal', doc.fields.legal, true)}</fieldset>${editable ? button('Save source revision', 'SAVE', true) : '<p class="showcase-note">Switch to HQ author and HQ source to edit central fields. Market changes happen in Market rollout.</p>'}</form>${actions(button('Request review', 'SUBMIT', true) + button('Approve revision', 'APPROVE') + button('Preview this revision', 'PREVIEW') + link('Open in Experience Workspace', links(doc.path).edit))}${doc.feedback ? `<div class="showcase-conflict"><strong>Changes requested · ${escape(doc.feedback.field)}</strong><p>${escape(doc.feedback.message)}</p><small>To ${escape(doc.feedback.mention)} · ${escape(doc.feedback.team)} (demo inbox)</small></div>` : ''}`)}${card('Reviewer feedback & quality gates', `${field('Feedback on legal field', 'feedback', 'Please confirm the market-specific WLTP statement before release.', true)}${actions(button('Reject with field feedback', 'REJECT') + button('Assign editorial team', 'ASSIGN') + button('Notify review team', 'NOTIFY'))}<ul class="showcase-list">${quality()}</ul><p class="showcase-note">No confidential embargo material is stored here. A release is blocked by the demo clock and policy; in production, preview access protection and scheduled publishing enforce the embargo.</p>`)}</div>`
-    + `<div class="showcase-two" style="margin-top:24px">${card('Release preparation', `${field('Scheduled time (timezone required)', 'schedule', doc.schedule?.at || state.embargo)}${actions(button('Schedule demo release', 'SCHEDULE', true) + button('Advance clock 120 minutes', 'ADVANCE_TIME') + button('Run scheduled demo release', 'PUBLISH'))}<p>${badge(doc.release, doc.release === 'demo-published' ? 'pass' : 'warn')} · frozen revision ${doc.schedule?.revision ?? '—'}</p><p class="showcase-note">Publishing real pages happens in Experience Workspace (Schedule Publish). This demo scheduler never publishes.</p>`)}${card('Version history & inbox', timeline(state.events) + timeline(state.inbox) + actions(button('Export task handoff', 'EXPORT_TASKS') + button('Record sample insights', 'METRIC')))}</div>`;
+  return `${heading('Briefing I · create / review / release', 'One launch. A complete editorial loop.', 'Create, request review, reject with field feedback, correct and approve. Each role maps to AEM identity and permissions.')
+    + toolbar()}<div class="showcase-two">${card(isHq ? 'HQ news source' : `${state.market.toUpperCase()} market news`, `${badge(doc.review, doc.review === 'approved' ? 'pass' : 'warn')} <small>Revision ${doc.revision} · approved ${doc.approvedRevision ?? '—'} · ${escape(doc.release)}</small><form id="news-form"><fieldset ${editable ? '' : 'disabled'} style="border:0;padding:16px 0 0">${field('Headline / SEO title', 'title', doc.fields.title)}${field('Description', 'description', doc.fields.description)}${field('Article body', 'body', doc.fields.body, true)}${field('Legal statement', 'legal', doc.fields.legal, true)}</fieldset>${editable ? button('Save source revision', 'SAVE', true) : '<p class="showcase-note">Switch to HQ author and HQ source to edit central fields. Market changes happen in Market rollout.</p>'}</form>${actions(button('Request review', 'SUBMIT', true) + button('Approve revision', 'APPROVE') + button('Preview this revision', 'PREVIEW') + link('Open in Experience Workspace', links(doc.path).edit))}${doc.feedback ? `<div class="showcase-conflict"><strong>Changes requested · ${escape(doc.feedback.field)}</strong><p>${escape(doc.feedback.message)}</p><small>To ${escape(doc.feedback.mention)} · ${escape(doc.feedback.team)} · inbox</small></div>` : ''}`)}${card('Reviewer feedback & quality gates', `${field('Feedback on legal field', 'feedback', 'Please confirm the market-specific WLTP statement before release.', true)}${actions(button('Reject with field feedback', 'REJECT') + button('Assign editorial team', 'ASSIGN') + button('Notify review team', 'NOTIFY'))}<ul class="showcase-list">${quality()}</ul><p class="showcase-note">A release stays blocked until the embargo time and policy allow it. Preview access protection and scheduled publishing enforce the embargo on live pages.</p>`)}</div>`
+    + `<div class="showcase-two" style="margin-top:24px">${card('Release preparation', `${field('Scheduled time (timezone required)', 'schedule', doc.schedule?.at || state.embargo)}${actions(button('Schedule release', 'SCHEDULE', true) + button('Advance clock 120 minutes', 'ADVANCE_TIME') + button('Run scheduled release', 'PUBLISH'))}<p>${badge(doc.release, doc.release === 'released' ? 'pass' : 'warn')} · frozen revision ${doc.schedule?.revision ?? '—'}</p><p class="showcase-note">Live pages are scheduled in Experience Workspace with Schedule Publish.</p>`)}${card('Version history & inbox', timeline(state.events) + timeline(state.inbox) + actions(button('Export task handoff', 'EXPORT_TASKS') + button('Record sample insights', 'METRIC')))}</div>`;
 }
 
 function translate() {
   const results = Object.values(state.translations);
-  return `${heading('Briefing I + III · scaled localization', 'Translate the page. Keep the contract.', 'A repeatable demo provider stands in for the AI model. The connector separates the model choice from glossary, editorial style, memory and human correction.')
-    + toolbar() + card('Batch translation with a human feedback loop', `<p>Choose Translation specialist after current HQ approval. One action produces the DE and FR translations; four markets consume them. Optional automation: the HQ author triggers translation and four-market rollout in one step.</p>${actions(button('Translate DE + FR', 'TRANSLATE', true) + button('Automate translation → rollout', 'AUTO_TRANSLATE_ROLLOUT') + link('Open AEM Translate', 'https://da.live/apps/loc#/moved-permanently/bmw'))}<p class="showcase-note">Provider: demo model · Glossary: BMW, eDrive, WLTP · Style: concise premium editorial · Memory: corrections scoped to source text and language.</p>`)
-  }<div class="showcase-two" style="margin-top:24px">${results.map((t) => card(`${t.language.toUpperCase()} · revision ${t.revision}`, `<p>${badge(t.sourceRevision === state.hq.revision ? 'Current source' : 'Source changed', t.sourceRevision === state.hq.revision ? 'pass' : 'warn')} · source r${t.sourceRevision}</p>${field('Manual translation correction', `translation-${t.language}`, t.text, true)}${actions(button('Save correction to memory', 'CORRECT_TRANSLATION', false, `data-language="${t.language}"`))}<p class="showcase-note">${escape(t.provenance)}</p><details><summary>Whole-page translation</summary><pre class="showcase-code">${escape(JSON.stringify(t.document || t, null, 2))}</pre></details>`)).join('') || card('No translations yet', '<p>Approve the HQ revision, switch to Translation specialist and run the batch.</p>')}</div>`;
+  return `${heading('Briefing I + III · scaled localization', 'Translate the page. Keep the contract.', 'The connector separates the model choice (BMW can bring its own) from glossary, editorial style, memory and human correction.')
+    + toolbar() + card('Batch translation with a human feedback loop', `<p>Choose Translation specialist after current HQ approval. One action produces the DE and FR translations; four markets consume them. Optional automation: the HQ author triggers translation and four-market rollout in one step.</p>${actions(button('Translate DE + FR', 'TRANSLATE', true) + button('Automate translation → rollout', 'AUTO_TRANSLATE_ROLLOUT') + link('Open AEM Translate', 'https://da.live/apps/loc#/moved-permanently/bmw'))}<p class="showcase-note">Model: configurable · Glossary: BMW, eDrive, WLTP · Style: concise premium editorial · Memory: corrections scoped to source text and language.</p>`)
+  }<div class="showcase-two" style="margin-top:24px">${results.map((t) => card(`${t.language.toUpperCase()} · revision ${t.revision}`, `<p>${badge(t.sourceRevision === state.hq.revision ? 'Current source' : 'Source changed', t.sourceRevision === state.hq.revision ? 'pass' : 'warn')} · source r${t.sourceRevision}</p>${field('Manual translation correction', `translation-${t.language}`, t.text, true)}${actions(button('Save correction to memory', 'CORRECT_TRANSLATION', false, `data-language="${t.language}"`))}<p class="showcase-note">${escape(t.provenance)}</p><details><summary>Whole-page translation</summary><pre class="showcase-code">${escape(json(t.document || t))}</pre></details>`)).join('') || card('No translations yet', '<p>Approve the HQ revision, switch to Translation specialist and run the batch.</p>')}</div>`;
 }
 
 function rollout() {
@@ -74,13 +76,13 @@ function radar() {
   }<div class="showcase-actions">${link('Open rollout radar', 'https://da.live/app/moved-permanently/bmw/tools/aida/radar/radar?ref=main')}${link('AEM Translate', 'https://da.live/apps/loc#/moved-permanently/bmw')}${button('Export status evidence', 'EXPORT_STATE')}</div>`
     + `<div class="showcase-kpis"><div class="showcase-kpi"><strong>${rows.filter((r) => r.review === 'approved').length} / ${rows.length}</strong><span>Current approvals</span></div><div class="showcase-kpi"><strong>${rows.reduce((sum, r) => sum + r.blockers.length, 0)}</strong><span>Readiness blockers, not publish status</span></div><div class="showcase-kpi"><strong>${state.planning.length}</strong><span>Market planning slots · 4 populated</span></div></div>`
     + `<div class="showcase-table-wrap"><table class="showcase-table spectrum-Table"><thead><tr>${['Context', 'Source acceptance', 'Translation', 'Review / release', 'Blockers', 'Next action'].map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr><td><strong>${r.market.toUpperCase()}</strong><small>Document r${r.revision} · ${escape(r.context.language)}</small></td><td>Accepted r${r.acceptedSourceRevision}<small>HQ r${state.hq.revision}</small></td><td>${escape(r.translation)}</td><td>${badge(r.review, r.review === 'approved' ? 'pass' : 'warn')}<small>${escape(r.release)}</small></td><td>${r.blockers.length ? escape(r.blockers.join(' ')) : badge('Checks passed', 'pass')}</td><td><a href="#${r.market === 'hq' ? 'workflow' : 'rollout'}" data-context="${r.market}">Resolve / review</a><a href="${links(r.path).edit}" target="_blank" rel="noopener">Edit</a><a href="${links(r.path).preview}" target="_blank" rel="noopener">Preview</a></td></tr>`).join('')}</tbody></table></div>${
-      card('HQ feedback and task handoff', `<p>Visits and conversions below are sample numbers, not BMW analytics. Task export is a JSON handoff to a task tool such as Workfront.</p><div class="showcase-actions">${button('Generate sample insight', 'METRIC')}${button('Export tasks', 'EXPORT_TASKS')}</div><pre class="showcase-code">${escape(JSON.stringify(state.metrics, null, 2))}</pre>`)}`;
+      card('HQ feedback and task handoff', `<p>Visits and conversions below are sample values. Task export is a JSON handoff to a task tool such as Workfront.</p><div class="showcase-actions">${button('Generate sample insight', 'METRIC')}${button('Export tasks', 'EXPORT_TASKS')}</div><pre class="showcase-code">${escape(json(state.metrics))}</pre>`)}`;
 }
 
 function architecture() {
   return `${heading('Briefing III · architecture', 'Share capabilities. Preserve contexts.', 'Brands, languages, regions, markets, importers and dealers are independent dimensions. Environment promotion is a separate technical axis—not the parent of the content model.')
-  }<div class="showcase-grid">${card('Content and domain entities', list(['Car: stable WDH product code, typed facts, variants and feature references', 'Topic: editorial narrative and product/news relationships', 'News: article source plus contextual teaser text', 'Asset reference: provider identity, delivery URL, rights metadata boundary']))}${card('Ownership and reuse', list(['Shared schemas, connectors and editor capabilities', 'Brand-specific components and content spaces; no implicit cross-brand content pool', 'Language sources; translate localizable properties only', 'Market/importer/dealer instances with controlled local ownership']))}${card('Technical environments', list(['DEV: branch code and local test content', 'TEST: tested branch preview', 'STAGE: reviewed content snapshots / release policy', 'LIVE: published content and main code', 'This demo shows the model; promotion and identity policy come with the BMW setup']))}</div>`
-    + `<div class="showcase-two" style="margin-top:24px">${card('Context contract', `<pre class="showcase-code">${escape(JSON.stringify(state.contexts, null, 2))}</pre>`)}${card('Connector contracts', list(['WDH extract → market sheet → stored HTML facts → optional bounded refresh', 'OTMM (public catalogue in this demo) → reference/crop/format extension', 'Salesforce/API → market offer record; demo data, not a live quote', 'Documents → Experience Workspace → AEM HTML, fragments and Markdown', 'BMW AI (bring your own) → glossary/style/memory → human corrections', 'Notifications/tasks/analytics → inbox, task export, KPIs']))}</div>${
+  }<div class="showcase-grid">${card('Content and domain entities', list(['Car: stable WDH product code, typed facts, variants and feature references', 'Topic: editorial narrative and product/news relationships', 'News: article source plus contextual teaser text', 'Asset reference: provider identity, delivery URL, rights metadata boundary']))}${card('Ownership and reuse', list(['Shared schemas, connectors and editor capabilities', 'Brand-specific components and content spaces; no implicit cross-brand content pool', 'Language sources; translate localizable properties only', 'Market/importer/dealer instances with controlled local ownership']))}${card('Technical environments', list(['DEV: branch code and local test content', 'TEST: tested branch preview', 'STAGE: reviewed content snapshots / release policy', 'LIVE: published content and main code', 'Promotion and identity policy are set up with BMW']))}</div>`
+    + `<div class="showcase-two" style="margin-top:24px">${card('Context contract', `<pre class="showcase-code">${escape(json(state.contexts))}</pre>`)}${card('Connector contracts', list(['WDH extract → market sheet → stored HTML facts → optional bounded refresh', 'OTMM → reference/crop/format extension (public BMW catalogue until connected)', 'Salesforce/API → market offer record (sample offer data)', 'Documents → Experience Workspace → AEM HTML, fragments and Markdown', 'BMW AI (bring your own) → glossary/style/memory → human corrections', 'Notifications/tasks/analytics → inbox, task export, KPIs']))}</div>${
       card('A production path, without a platform rewrite', '<p>Connect each integration with an authenticated adapter, authoritative metadata and audit storage. Validate protected preview/media, real identities and publisher separation. Keep the content contracts, authoring extensions and delivery blocks.</p>')}`;
 }
 
@@ -101,7 +103,7 @@ function render() {
   main.innerHTML = tab === 'path' || !views[tab]
     ? demoPath(chapters, chapterFromHash(window.location.hash, chapters.length), RFP)
     : views[tab]();
-  if (!storage) main.insertAdjacentHTML('afterbegin', '<p class="showcase-note">Storage unavailable. The demo still works in memory; export evidence before closing this tab.</p>');
+  if (!storage) main.insertAdjacentHTML('afterbegin', '<p class="showcase-note">Storage unavailable. Changes last until this tab closes; export evidence first.</p>');
 }
 
 function download(name, value) {
@@ -142,7 +144,7 @@ function actionFor(target) {
       ...base,
       market: 'hq',
       fields: {
-        title: 'The BMW i5 launch. Now with a charging story.', headline: 'The BMW i5. A new charging chapter.', heroAsset: '/aida/showcase/data/asset-i5-update', disclaimer: 'Updated source WLTP statement. Demo only.',
+        title: 'The BMW i5 launch. Now with a charging story.', headline: 'The BMW i5. A new charging chapter.', heroAsset: '/aida/showcase/data/asset-i5-update', disclaimer: 'Updated WLTP statement from source data.',
       },
       components: { update: [{ id: 'hero', fields: { headline: 'The BMW i5. A new charging chapter.', asset: '/aida/showcase/data/asset-i5-update', cta: '/aida/showcase/en/i5' } }, { id: 'teaser', fields: { text: 'BMW i5 eDrive: the updated upstream electric story.' } }, { id: 'features', fields: { text: 'Parking Assistant, updated availability.' } }], add: [{ id: 'charging', type: 'text', text: 'BMW Charging: a new upstream section.' }, { id: 'charging-asset', type: 'image', asset: '/aida/showcase/data/asset-charging-update' }] },
     };
@@ -181,7 +183,7 @@ main.addEventListener('click', async (event) => {
       dialog.id = 'revision-preview';
       dialog.className = 'showcase-card';
       dialog.style.maxWidth = '800px';
-      dialog.innerHTML = `<p class="showcase-eyebrow">Revision preview · ${escape(doc.market)} · r${doc.revision}</p><h1>${escape(doc.fields.title)}</h1><p>${escape(doc.fields.description)}</p><p>${escape(doc.fields.localIntro)}</p><p style="white-space:pre-wrap">${escape(doc.fields.body)}</p><p><small>${escape(doc.fields.disclaimer || doc.fields.legal)}</small></p><p class="showcase-note">This is the exact revision in this demo. The linked AEM page is published separately; protected review links come from AEM preview access control.</p>${button('Close preview', 'CLOSE_PREVIEW')}`;
+      dialog.innerHTML = `<p class="showcase-eyebrow">Revision preview · ${escape(doc.market)} · r${doc.revision}</p><h1>${escape(doc.fields.title)}</h1><p>${escape(doc.fields.description)}</p><p>${escape(doc.fields.localIntro)}</p><p style="white-space:pre-wrap">${escape(doc.fields.body)}</p><p><small>${escape(doc.fields.disclaimer || doc.fields.legal)}</small></p><p class="showcase-note">Exact revision under review. The linked AEM page is published separately; protected review links come from AEM preview access control.</p>${button('Close preview', 'CLOSE_PREVIEW')}`;
       dialog.querySelector('button').addEventListener('click', () => { dialog.close(); dialog.remove(); });
       document.body.append(dialog); dialog.showModal(); return;
     }
@@ -193,7 +195,7 @@ main.addEventListener('click', async (event) => {
     }
     if (type === 'SAMPLE_WDH') {
       const result = sampleFactUpdate(currentSheet);
-      document.querySelector('#delivery-result').textContent = JSON.stringify(result, null, 2);
+      document.querySelector('#delivery-result').textContent = json(result);
       notify(result.boundary); return;
     }
     if (type === 'REFRESH_DATA') {
@@ -215,7 +217,7 @@ main.addEventListener('click', async (event) => {
 });
 document.querySelector('#reset').addEventListener('click', () => {
   // eslint-disable-next-line no-alert
-  if (window.confirm('Reset the demo in this browser? Published pages are unchanged.')) apply({ type: 'RESET' });
+  if (window.confirm('Start the demo over? Published pages are unchanged.')) apply({ type: 'RESET' });
 });
 window.addEventListener('hashchange', render);
 document.addEventListener('keydown', (event) => {

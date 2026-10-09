@@ -49,7 +49,7 @@ test('self-contained fixtures expose independent contexts and simulation boundar
   assert.equal(state.contexts.be.language, 'fr');
   assert.equal(state.contexts.be.market, 'be');
   assert.equal(state.demo, true);
-  assert.match(state.boundary, /browser|local/i);
+  assert.match(state.boundary, /AEM/);
   assert.ok(state.personas.every((persona) => persona.demo));
   assert.ok(state.rightsPolicy);
   assert.ok(state.events && state.notices && state.hq.history);
@@ -298,10 +298,10 @@ test('dry-run publish enforces simulated clock and frozen scheduled revision', (
   assert.equal(state.markets.de.schedule.revision, revision);
   assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market: 'de', demoRelease: true }), /clock|time|embargo/i);
   state = act(state, 'ADVANCE_TIME', { minutes: 120 });
-  assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market: 'de', demoRelease: false }), /demo/i);
+  assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market: 'de', demoRelease: false }), /release/i);
   state = act(state, 'PUBLISH', { actor: 'publisher', market: 'de', demoRelease: true });
   assert.equal(state.markets.de.publishedRevision, revision);
-  assert.equal(state.markets.de.release, 'demo-published');
+  assert.equal(state.markets.de.release, 'released');
   assert.equal(state.markets.de.published.demo, true);
   const edited = localize(state, { fields: { localIntro: 'Another edit' } });
   assert.equal(edited.markets.de.schedule, null);
@@ -537,7 +537,7 @@ test('scripted source update copy has meaningful DE/FR dictionary translations w
   }, {
     title: 'The BMW i5 launch. Now with a charging story.',
     headline: 'The BMW i5. A new charging chapter.',
-    disclaimer: 'Updated source WLTP statement. Demo only.',
+    disclaimer: 'Updated WLTP statement from source data.',
   });
   state = act(state, 'TRANSLATE', { actor: 'translator' });
   const expected = {

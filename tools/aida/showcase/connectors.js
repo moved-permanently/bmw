@@ -8,7 +8,7 @@ export function sampleFactUpdate(source) {
   const row = { ...original, value: '520–630', unit: 'km' };
   const about = {
     '@type': 'Vehicle',
-    name: 'BMW i5 demo',
+    name: 'BMW i5 eDrive40',
     additionalProperty: [{ '@type': 'PropertyValue', name: 'electricRange', value: original.display }],
   };
   const ld = {
@@ -22,7 +22,7 @@ export function sampleFactUpdate(source) {
   const html = setMetadata(synced.html, 'json-ld', JSON.stringify(updatedLd));
   return {
     demo: true,
-    boundary: 'Sample connector update, not published. The BMW page and WDH source remain unchanged.',
+    boundary: 'Sample WDH update applied to stored HTML, Markdown and NewsArticle metadata. Not published; the BMW page and WDH source are unchanged.',
     sourceValue: original.display,
     updatedValue: `${row.value} ${row.unit}`,
     html,
