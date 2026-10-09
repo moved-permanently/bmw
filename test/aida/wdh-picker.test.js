@@ -85,8 +85,8 @@ test('source labels distinguish supplied data, demo fixtures and derived stateme
   ];
   const values = valuesFromSheet({ values: rows });
   assert.equal(values.get('61HG.electricRange').sourceLabel, 'WDH export');
-  assert.equal(values.get('61HG.leasePrice').sourceLabel, 'Demo fixture');
-  assert.equal(values.get('61HG.drivingAssistantSpeed').sourceLabel, 'Demo fixture');
+  assert.equal(values.get('61HG.leasePrice').sourceLabel, 'Demo data');
+  assert.equal(values.get('61HG.drivingAssistantSpeed').sourceLabel, 'Demo data');
   assert.equal(values.get('61HG.wltp').sourceLabel, 'Derived WLTP statement');
   assert.equal(values.get('61HG.external').sourceLabel, 'WDH export');
   assert.equal(values.get('61HG.legacy').sourceLabel, 'Source not specified');

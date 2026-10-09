@@ -9,7 +9,7 @@ const { escape, links, tabs } = view;
 const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
 
 test('showcase has one coherent route for every RfP demo activity', () => {
-  assert.deepEqual(tabs.map(([id]) => id), ['overview', 'workflow', 'translate', 'rollout', 'radar', 'architecture', 'assets', 'delivery']);
+  assert.deepEqual(tabs.map(([id]) => id), ['path', 'overview', 'workflow', 'translate', 'rollout', 'radar', 'architecture', 'assets', 'delivery']);
 });
 
 test('public links connect DA authoring, preview, live and open representations', () => {
@@ -30,7 +30,7 @@ test('showcase ships real vendored Spectrum styles and a labelled rehearsal boun
   const page = read('tools/aida/showcase/index.html');
   assert.match(page, /\.\.\/spectrum\.css/);
   assert.match(page, /spectrum--light/);
-  assert.match(page, /Synthetic rehearsal/);
+  assert.match(page, /Interactive demo/);
   const css = read('tools/aida/spectrum.css');
   ['vars', 'button', 'textfield', 'picker', 'checkbox', 'table', 'badge', 'fieldlabel', 'typography', 'card', 'link'].forEach((component) => {
     assert.match(css, new RegExp(`vendor/spectrum/${component}\\.css`));
@@ -41,7 +41,7 @@ test('showcase ships real vendored Spectrum styles and a labelled rehearsal boun
 
 test('playground persists only its own versioned rehearsal state and never publishes implicitly', () => {
   const app = read('tools/aida/showcase/app.js');
-  assert.match(app, /bmw-aida-showcase-v1/);
+  assert.match(app, /bmw-aida-showcase-v2/);
   assert.doesNotMatch(app, /localStorage\.clear\(/);
   assert.doesNotMatch(app, /admin\.hlx\.page|api\.aem\.live|Bearer/);
   assert.match(app, /Storage unavailable/);
@@ -49,8 +49,8 @@ test('playground persists only its own versioned rehearsal state and never publi
 
 test('reviewers can preview the exact rehearsal revision without mistaking a static published fixture for it', () => {
   const app = read('tools/aida/showcase/app.js');
-  assert.match(app, /Preview rehearsal revision/);
-  assert.match(app, /simulated-preview/);
+  assert.match(app, /Preview this revision/);
+  assert.match(app, /revision-preview/);
   assert.match(app, /doc\.fields\.title/);
   assert.match(app, /doc\.fields\.body/);
 });

@@ -42,15 +42,15 @@ test('self-contained fixtures expose independent contexts and simulation boundar
   assert.equal(state.planning.length, 64);
   assert.equal(state.planning.filter((market) => market.populated).length, 4);
   assert.ok(state.planning.filter((market) => !market.populated)
-    .every((market) => market.simulated));
+    .every((market) => market.demo));
   assert.deepEqual(Object.keys(state.contexts.hq).sort(), [
     'brand', 'org', 'language', 'region', 'market', 'importer', 'dealer', 'env', 'vehicle', 'topic',
   ].sort());
   assert.equal(state.contexts.be.language, 'fr');
   assert.equal(state.contexts.be.market, 'be');
-  assert.equal(state.simulated, true);
+  assert.equal(state.demo, true);
   assert.match(state.boundary, /browser|local/i);
-  assert.ok(state.personas.every((persona) => persona.simulated));
+  assert.ok(state.personas.every((persona) => persona.demo));
   assert.ok(state.rightsPolicy);
   assert.ok(state.events && state.notices && state.hq.history);
   assert.deepEqual(createDemo(), state);
@@ -296,16 +296,16 @@ test('dry-run publish enforces simulated clock and frozen scheduled revision', (
   state = act(state, 'SCHEDULE', { actor: 'publisher', market: 'de', at: state.embargo });
   const { revision } = state.markets.de;
   assert.equal(state.markets.de.schedule.revision, revision);
-  assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market: 'de', dryRun: true }), /clock|time|embargo/i);
+  assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market: 'de', demoRelease: true }), /clock|time|embargo/i);
   state = act(state, 'ADVANCE_TIME', { minutes: 120 });
-  assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market: 'de', dryRun: false }), /dry.run|simulat/i);
-  state = act(state, 'PUBLISH', { actor: 'publisher', market: 'de', dryRun: true });
+  assert.throws(() => act(state, 'PUBLISH', { actor: 'publisher', market: 'de', demoRelease: false }), /demo/i);
+  state = act(state, 'PUBLISH', { actor: 'publisher', market: 'de', demoRelease: true });
   assert.equal(state.markets.de.publishedRevision, revision);
-  assert.equal(state.markets.de.release, 'simulated-published');
-  assert.equal(state.markets.de.published.simulated, true);
+  assert.equal(state.markets.de.release, 'demo-published');
+  assert.equal(state.markets.de.published.demo, true);
   const edited = localize(state, { fields: { localIntro: 'Another edit' } });
   assert.equal(edited.markets.de.schedule, null);
-  assert.throws(() => act(edited, 'PUBLISH', { actor: 'publisher', market: 'de', dryRun: true }), /schedule|approv/i);
+  assert.throws(() => act(edited, 'PUBLISH', { actor: 'publisher', market: 'de', demoRelease: true }), /schedule|approv/i);
 });
 
 test('demo clock is bounded and counters are validated, local and explicitly simulated', () => {
@@ -316,7 +316,7 @@ test('demo clock is bounded and counters are validated, local and explicitly sim
   assert.throws(() => act(state, 'METRIC', { visits: 1, conversions: 2 }), /conversion|metric/i);
   assert.throws(() => act(state, 'METRIC', { visits: -1, conversions: 0 }), /metric|counter/i);
   const next = act(state, 'METRIC', { market: 'be', visits: 120, conversions: 8 });
-  assert.deepEqual(next.metrics.be, { visits: 120, conversions: 8, simulated: true });
+  assert.deepEqual(next.metrics.be, { visits: 120, conversions: 8, demo: true });
   assert.equal(state.metrics.be.visits, 0);
 });
 
@@ -325,7 +325,7 @@ test('assignment, notifications and task export remain a simulated in-browser in
   assert.deepEqual(state.hq.assignment, { team: 'Legal', stakeholder: 'hq-reviewer' });
   state = act(state, 'NOTIFY', { actor: 'hq-author', message: 'Please review legal.', exportTasks: true });
   assert.match(state.inbox.at(-1).message, /review legal/);
-  assert.ok(state.taskExport.every((task) => task.simulated));
+  assert.ok(state.taskExport.every((task) => task.demo));
   assert.throws(() => act(state, 'ASSIGN', { actor: 'hq-author', team: '', stakeholder: 'real-person' }), /team|persona|stakeholder/i);
 });
 
@@ -463,10 +463,10 @@ test('initial fixture makes no unsupported numeric WDH legal claims and assets a
   const state = createDemo();
   assert.doesNotMatch(state.hq.fields.legal, /\d+[.,]\d+|\d+[–-]\d+/);
   assert.match(state.hq.fields.legal, /no numeric model claims/i);
-  assert.equal(state.hq.fields.heroAsset, '/aida/showcase/data/mock-i5-asset');
+  assert.equal(state.hq.fields.heroAsset, '/aida/showcase/data/sample-i5-asset');
   assert.equal(state.hq.components.find((c) => c.id === 'hero').asset, state.hq.fields.heroAsset);
-  assert.equal(state.rightsPolicy.syntheticAsset, state.hq.fields.heroAsset);
-  assert.match(state.rightsPolicy.assets, /synthetic|not.*image/i);
+  assert.equal(state.rightsPolicy.sampleAsset, state.hq.fields.heroAsset);
+  assert.match(state.rightsPolicy.assets, /sample|not.*image/i);
 });
 
 test('radar workflow and rollout action links carry the exact document context', () => {
@@ -502,7 +502,7 @@ test('HQ changes invalidate source and market publication checks and frozen sour
       /approval|approv|source|check/i,
     );
     assert.throws(
-      () => act(state, 'PUBLISH', { actor: 'publisher', market, dryRun: true }),
+      () => act(state, 'PUBLISH', { actor: 'publisher', market, demoRelease: true }),
       /approval|approv|schedule|source|check/i,
     );
   });
@@ -531,13 +531,13 @@ test('scripted source update copy has meaningful DE/FR dictionary translations w
     update: [
       { id: 'hero', fields: { headline: 'The BMW i5. A new charging chapter.', cta: '/aida/showcase/en/i5' } },
       { id: 'teaser', fields: { text: 'BMW i5 eDrive: the updated upstream electric story.' } },
-      { id: 'features', fields: { text: 'Parking Assistant, updated availability fixture.' } },
+      { id: 'features', fields: { text: 'Parking Assistant, updated availability.' } },
     ],
     add: [{ id: 'charging', type: 'text', text: 'BMW Charging: a new upstream section.' }],
   }, {
     title: 'The BMW i5 launch. Now with a charging story.',
     headline: 'The BMW i5. A new charging chapter.',
-    disclaimer: 'Updated source WLTP statement. Fixture only.',
+    disclaimer: 'Updated source WLTP statement. Demo only.',
   });
   state = act(state, 'TRANSLATE', { actor: 'translator' });
   const expected = {
@@ -586,7 +586,7 @@ test('unknown prose keeps source copy in a human-readable untranslated fixture f
   const state = act(source, 'TRANSLATE', { actor: 'translator' });
   ['de', 'fr'].forEach((language) => {
     const doc = state.translations[language].document;
-    const expected = `Fixture fallback — source copy (not translated): ${body}`;
+    const expected = `Not translated yet — source copy: ${body}`;
     assert.equal(doc.fields.body, expected);
     assert.equal(doc.components.find((c) => c.id === 'story').text, expected);
     assert.doesNotMatch(doc.fields.body, /\[[a-z0-9]+\]/);
