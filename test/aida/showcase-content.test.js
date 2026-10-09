@@ -53,7 +53,7 @@ test('generator is deterministic, non-mutating and builds all four complete cont
   for (const html of Object.values(first.pages)) {
     assert.match(html, /^<body><header><\/header><main>/);
     assert.match(html, /class="metadata"/);
-    assert.match(html, /Demo fixture|Demo-Datensatz|Données de démonstration/);
+    assert.match(html, /Demo content|Demo-Datensatz|Données de démonstration/);
     assert.doesNotMatch(html, /<script|\[object Object\]|undefined/i);
     assert.doesNotMatch(html, /(?:^|[ "'])autoplay(?:[ "'])/i, 'Native no-autoplay option disables background video autoplay');
   }
@@ -469,4 +469,16 @@ test('legacy published generic block: stage media can shrink below its minimum-h
   const media = css.match(/\.aida-showcase\.stage \.aida-showcase-media \{([^}]+)\}/)?.[1] || '';
   assert.match(media, /min-width:\s*0/);
   assert.match(media, /width:\s*100%/);
+});
+
+test('generated pages use customer-facing demo wording and localized drivetrain labels', () => {
+  const { pages } = build();
+  for (const [path, html] of Object.entries(pages)) {
+    assert.doesNotMatch(html, /fixture|synthetic|fictif|VendorBriefing|supplied-wdh/i, path);
+  }
+  assert.match(pages['/aida/showcase/de/de/i5'], /<p>Plug-in-Hybrid<\/p>/);
+  assert.match(pages['/aida/showcase/fr/fr/i5'], /<p>Hybride rechargeable<\/p>/);
+  assert.match(pages['/aida/showcase/en/i5'], /<p>Plug-in hybrid<\/p>/);
+  assert.match(pages['/aida/showcase/en/news/i5-launch'], /<p>Source: WDH extract supplied by BMW<\/p>/);
+  assert.match(pages['/aida/showcase/fr/fr/news/cannes'], /<p>Récit rédigé pour cette démonstration<\/p>/);
 });
