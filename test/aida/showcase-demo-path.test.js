@@ -73,6 +73,11 @@ test('a chapter renders with full navigation, previous/next and escaped text', (
   assert.match(view.demoPath(chapters, -5), new RegExp(view.escape(chapters[0].title)));
 });
 
+test('chapters name their RfP references in full', () => {
+  const html = view.demoPath(chapters, 0, RFP);
+  chapters[0].rfp.forEach((r) => assert.ok(html.includes(view.escape(RFP[r])), r));
+});
+
 test('the presenter can step through chapters with the arrow keys', () => {
   const app = read('tools/aida/showcase/app.js');
   assert.match(app, /ArrowRight/);

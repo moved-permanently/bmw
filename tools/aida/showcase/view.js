@@ -74,13 +74,13 @@ export function chapterFromHash(hash, count) {
 
 const showLink = ({ label, href }) => link(label, href);
 
-export function demoPath(chapters, requested = 0) {
+export function demoPath(chapters, requested = 0, labels = {}) {
   const index = Math.max(0, Math.min(requested, chapters.length - 1));
   const chapter = chapters[index];
   const nav = chapters.map((c, i) => `<li><a href="#path/${i}" ${i === index ? 'aria-current="step"' : ''}><span>${i + 1}</span>${escape(c.title)}</a></li>`).join('');
   const prev = index > 0 ? `<a class="spectrum-Button spectrum-Button--secondary spectrum-Button--outline" href="#path/${index - 1}"><span class="spectrum-Button-label">← ${escape(chapters[index - 1].title)}</span></a>` : '<span></span>';
   const next = index < chapters.length - 1 ? `<a class="spectrum-Button spectrum-Button--accent spectrum-Button--fill" href="#path/${index + 1}"><span class="spectrum-Button-label">${escape(chapters[index + 1].title)} →</span></a>` : '';
-  const refs = chapter.rfp.map((r) => `<span class="showcase-status">${escape(r)}</span>`).join(' ');
+  const refs = chapter.rfp.map((r) => `<span class="showcase-status">${escape(labels[r] || r)}</span>`).join(' ');
   return `<div class="showcase-path"><ol class="showcase-path-nav" aria-label="Demo chapters">${nav}</ol><article class="showcase-path-chapter">`
     + `<div class="showcase-eyebrow">Chapter ${index + 1} of ${chapters.length}</div><h1>${escape(chapter.title)}</h1><p class="showcase-path-refs">${refs}</p>`
     + `${card('Show', `<div class="showcase-actions">${chapter.show.map(showLink).join('')}</div>`)}`

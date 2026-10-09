@@ -1,5 +1,5 @@
 import { sampleFactUpdate } from './connectors.js';
-import { chapters } from './script.js';
+import { chapters, RFP } from './script.js';
 import {
   createDemo, transition, checks, radarRows,
 } from './model.js';
@@ -99,7 +99,7 @@ function render() {
   const tab = window.location.hash.slice(1).split('/')[0] || defaultTab;
   document.querySelector('#navigation').innerHTML = tabs.map(([id, label]) => `<a href="#${id}" ${id === tab ? 'aria-current="page"' : ''}>${label}</a>`).join('');
   main.innerHTML = tab === 'path' || !views[tab]
-    ? demoPath(chapters, chapterFromHash(window.location.hash, chapters.length))
+    ? demoPath(chapters, chapterFromHash(window.location.hash, chapters.length), RFP)
     : views[tab]();
   if (!storage) main.insertAdjacentHTML('afterbegin', '<p class="showcase-note">Storage unavailable. The demo still works in memory; export evidence before closing this tab.</p>');
 }
