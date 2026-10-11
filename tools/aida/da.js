@@ -14,9 +14,10 @@ export function sdkUrl(search = '') {
   return `https://${nx}--da-nx--adobe.aem.live/nx/utils/sdk.js`;
 }
 
-// DA posts its one-time handshake ~750ms after the iframe loads; hold it until the SDK has loaded.
-const handshakes = [];
-const hold = (e) => { if (e.data?.ready && e.ports?.length) handshakes.push(e); };
+// DA posts its one-time handshake ~750ms after the iframe loads, then only changes (such as the
+// link under the cursor). Hold the parent's messages until the SDK has loaded, then replay them.
+const early = [];
+const hold = (e) => { if (e.source === window.parent) early.push(e); };
 window.addEventListener('message', hold);
 
 let sdk;
@@ -25,7 +26,7 @@ function loadSdk() {
     .catch(() => import(MAIN_SDK))
     .then((module) => {
       window.removeEventListener('message', hold);
-      handshakes.splice(0).forEach(({
+      early.splice(0).forEach(({
         data, ports, origin, source,
       }) => window.dispatchEvent(new MessageEvent('message', {
         data, ports: [...ports], origin, source,
