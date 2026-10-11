@@ -168,6 +168,104 @@ await test('double-click sends only one insertion while the SDK call is in fligh
   clean.replaceWith(main);
 });
 
+function mountFresh(actions) {
+  const root = new DOMParser().parseFromString(html, 'text/html').querySelector('main');
+  document.body.append(root);
+  mountPicker(root, { assets, actions });
+  return { root, q: (id) => root.querySelector(`#asset-${id}`) };
+}
+
+const blueprint = { href: 'https://bmw.scene7.com/is/image/BMW/g60-front:3to2?fit=constrain,1', text: 'blueprint' };
+let notify;
+const replaced = [];
+let replaceResult = () => Promise.resolve();
+main.hidden = true;
+const linked = mountFresh({
+  sendHTML: () => {},
+  closeLibrary: () => {},
+  onSelectionChange: (callback) => { notify = callback; return () => {}; },
+  replaceLink: (value, options) => { replaced.push({ value, options }); return replaceResult(); },
+});
+
+await test('without a selected document image the picker offers insertion only', () => {
+  assert(linked.q('replace').hidden, 'Replace must stay hidden without a selected image');
+  assert(linked.q('selection').hidden, 'No document selection note without a selected image');
+});
+
+await test('a selected document image opens its asset with the document alt text and crop', async () => {
+  notify({ link: blueprint });
+  await tick();
+  assert(!linked.q('detail').hidden && linked.q('title').textContent === 'BMW i5 front', 'The selected image must open');
+  assert(linked.q('alt').value === 'blueprint', 'Document alt text must prefill');
+  assert(linked.q('crop').value === '3to2', 'Document smart crop must be preselected');
+  assert(!linked.q('replace').hidden && !linked.q('replace').disabled, 'Replace must be offered');
+  assert(linked.q('selection').textContent.includes('blueprint'), 'The selected document image must be named');
+});
+
+await test('replace sends the edited image for the selected link and keeps the picker open', async () => {
+  linked.q('alt').value = 'BMW i5 eDrive40';
+  linked.q('alt').dispatchEvent(new Event('input'));
+  linked.q('replace').click();
+  linked.q('replace').click();
+  await tick();
+  assert(replaced.length === 1, 'Exactly one replacement per click burst');
+  assert(replaced[0].options.href === blueprint.href, 'Replace must target the selected link');
+  assert(replaced[0].value.includes('BMW i5 eDrive40') && replaced[0].value.includes('g60-front:3to2'), 'Edited image markup expected');
+  assert(!linked.q('detail').hidden, 'Picker stays on the image after replacing');
+  assert(/replaced/i.test(linked.q('message').textContent), 'Replacement must be confirmed');
+});
+
+await test('the replaced link reporting back does not reset the edited image', async () => {
+  notify({ link: { href: `${blueprint.href}&op_sharpen=1`, text: 'BMW i5 eDrive40' } });
+  await tick();
+  assert(linked.q('alt').value === 'BMW i5 eDrive40', 'Alt text must stay');
+  assert(linked.q('crop').value === '3to2', 'Crop must stay');
+});
+
+await test('a text link hides replace and keeps the open image', async () => {
+  notify({ link: { href: 'https://configure.bmw.de/de_DE/configure/G60E', text: 'Konfigurieren' } });
+  await tick();
+  assert(linked.q('replace').hidden, 'Text links cannot be replaced with images');
+  assert(!linked.q('detail').hidden, 'The open image stays');
+});
+
+await test('an image outside the catalogue can be replaced with a chosen asset', async () => {
+  notify({ link: { href: 'https://bmw.scene7.com/is/image/BMW/not-in-catalogue', text: 'blueprint' } });
+  await tick();
+  assert(/not in the catalogue/i.test(linked.q('selection').textContent), 'Unknown images must be named as such');
+  linked.q('back').click();
+  linked.q('results').querySelector('button').click();
+  await tick();
+  assert(!linked.q('replace').hidden && !linked.q('replace').disabled, 'Any chosen asset can replace it');
+});
+
+await test('the selected document image can be shown again after browsing away', async () => {
+  notify({ link: blueprint });
+  await tick();
+  linked.q('back').click();
+  assert(!linked.q('show').hidden, 'Show must bring back the selected image');
+  linked.q('show').click();
+  await tick();
+  assert(!linked.q('detail').hidden && linked.q('alt').value === 'blueprint', 'Show must reopen it from the document');
+});
+
+await test('a failed replacement is reported and can be retried', async () => {
+  replaceResult = () => Promise.reject(new Error('The selected link has changed'));
+  linked.q('replace').click();
+  await tick();
+  assert(/could not replace/i.test(linked.q('message').textContent), 'Failure must be reported');
+  assert(!linked.q('replace').disabled, 'Replace must be available again');
+  replaceResult = () => Promise.resolve();
+});
+
+await test('hosts without link selection keep the insert-only picker', () => {
+  const plain = mountFresh({ sendHTML: () => {}, closeLibrary: () => {} });
+  assert(plain.q('replace').hidden && plain.q('selection').hidden, 'No replace UI without host support');
+  plain.root.remove();
+});
+
+linked.root.remove();
+main.hidden = false;
 window.Image = originalImage;
 
 await test('DA context is received even when the catalogue loads after the initial handshake', async () => {
