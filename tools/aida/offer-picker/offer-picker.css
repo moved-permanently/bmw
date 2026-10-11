@@ -1,0 +1,19 @@
+.offer-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.offer-item {
+  padding: 12px 0;
+  border-top: 1px solid var(--spectrum-gray-300);
+}
+
+.offer-item .offer-title {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.offer-item .offer-meta {
+  margin: 0 0 8px;
+}
