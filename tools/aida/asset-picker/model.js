@@ -130,6 +130,27 @@ export function scene7Url(asset, options = {}) {
   return src;
 }
 
+const DECORATIVE = 'Image without alt text';
+
+const imageName = (url) => new URL(url).pathname.match(/^\/is\/image\/BMW\/([^:/]+)(?::([a-z0-9]+))?$/i);
+
+export function documentImage(assets, link) {
+  if (!link || !supportedUrl(link.href)) return null;
+  const decorative = link.text === DECORATIVE;
+  const image = {
+    href: link.href, asset: null, crop: '', alt: decorative ? '' : link.text || '', decorative,
+  };
+  const name = imageName(link.href);
+  if (!name) {
+    image.asset = assets.find((asset) => asset.url === link.href) || null;
+    return image;
+  }
+  image.asset = assets.find((asset) => supportedUrl(asset.url)
+    && imageName(asset.url)?.[1] === name[1]) || null;
+  if (name[2] && image.asset?.crops?.[name[2]]) [, , image.crop] = name;
+  return image;
+}
+
 const escape = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;')
   .replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
@@ -137,5 +158,5 @@ const escape = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&l
 export function assetLink(asset, url, alt, decorative = false) {
   if (!supportedUrl(asset.url) || !supportedUrl(url)) throw new Error('Unsupported asset URL');
   if (!decorative && !String(alt || '').trim()) throw new Error('Add alt text or mark the image decorative');
-  return `<p><a href="${escape(url)}">${escape(decorative ? 'Image without alt text' : alt.trim())}</a></p>`;
+  return `<p><a href="${escape(url)}">${escape(decorative ? DECORATIVE : alt.trim())}</a></p>`;
 }

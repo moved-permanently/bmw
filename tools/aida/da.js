@@ -2,13 +2,41 @@
  * Shared plumbing for the Experience Workspace plugins and apps under /tools/aida/: SDK context,
  * Document Authoring source reads/writes with the author's token.
  */
-// eslint-disable-next-line import/no-unresolved
-import DA_SDK from 'https://da.live/nx/utils/sdk.js';
-
 const DA_SOURCE = 'https://admin.da.live/source';
+const MAIN_SDK = 'https://da.live/nx/utils/sdk.js';
+
+// `?nx=<branch>` in the plugin URL (library sheet) loads that da-nx branch's SDK, like
+// da.live's own `?nx=`. A missing branch falls back to the da.live SDK.
+export function sdkUrl(search = '') {
+  const nx = new URLSearchParams(search).get('nx');
+  if (!nx || nx === 'main' || !/^[a-z0-9-]+$/.test(nx)) return MAIN_SDK;
+  if (nx === 'local') return 'http://localhost:6456/nx/utils/sdk.js';
+  return `https://${nx}--da-nx--adobe.aem.live/nx/utils/sdk.js`;
+}
+
+// DA posts its one-time handshake ~750ms after the iframe loads; hold it until the SDK has loaded.
+const handshakes = [];
+const hold = (e) => { if (e.data?.ready && e.ports?.length) handshakes.push(e); };
+window.addEventListener('message', hold);
+
+let sdk;
+function loadSdk() {
+  sdk ??= import(sdkUrl(window.location.search))
+    .catch(() => import(MAIN_SDK))
+    .then((module) => {
+      window.removeEventListener('message', hold);
+      handshakes.splice(0).forEach(({
+        data, ports, origin, source,
+      }) => window.dispatchEvent(new MessageEvent('message', {
+        data, ports: [...ports], origin, source,
+      })));
+      return module.default;
+    });
+  return sdk;
+}
 
 export default async function connect() {
-  const { context, actions, token } = await DA_SDK;
+  const { context, actions, token } = await loadSdk();
   const org = context.org || context.owner;
   const site = context.site || context.repo;
   const url = (path) => `${DA_SOURCE}/${org}/${site}${/\.[a-z]+$/.test(path) ? path : `${path}.html`}`;
