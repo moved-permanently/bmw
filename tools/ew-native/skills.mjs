@@ -95,7 +95,7 @@ export const PROMPTS = [
 export function skillFiles() {
   return Object.fromEntries(SKILLS.map((s) => [
     `/.da/skills/${s.id}/skill.md`,
-    `---\nname: ${s.id}\ndescription: ${s.description}\nversion: ${s.version || 1}\nstatus: approved\n---\n${s.body}\n`,
+    `---\nname: ${s.id}\ndescription: ${JSON.stringify(s.description)}\nversion: ${s.version || 1}\nstatus: approved\n---\n${s.body}\n`,
   ]));
 }
 
