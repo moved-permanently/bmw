@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 
 const read = (path) => readFile(new URL(`../../tools/aida/${path}`, import.meta.url), 'utf8');
 
-['radar', 'asset-picker', 'preflight', 'wdh-picker'].forEach((tool) => {
+['radar', 'asset-picker', 'preflight', 'wdh-picker', 'icon-picker'].forEach((tool) => {
   test(`${tool} loads shared Spectrum and declares medium/light theme`, async () => {
     const html = await read(`${tool}/${tool}.html`);
     assert.match(html, /href="\.\.\/spectrum\.css"/);

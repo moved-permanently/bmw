@@ -18,6 +18,7 @@ const visible = [
   'tools/aida/preflight/preflight.html', 'tools/aida/preflight/preflight.js',
   'tools/aida/wdh-picker/wdh-picker.html', 'tools/aida/wdh-picker/wdh-picker.js',
   'tools/aida/asset-picker/asset-picker.html', 'tools/aida/asset-picker/asset-picker.js',
+  'tools/aida/icon-picker/icon-picker.html', 'tools/aida/icon-picker/icon-picker.js', 'tools/aida/icon-picker/icons.js',
   'scripts/aida-wdh.js',
 ];
 
