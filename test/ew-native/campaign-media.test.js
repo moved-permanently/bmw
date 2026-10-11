@@ -52,9 +52,11 @@ test('a model collects its catalogue assets and the media used on its pages, wit
   assert.equal(film.pages, '/aida/showcase/de/de/i5, /aida/showcase/fr/be/i5');
 });
 
-test('rows are ordered by usage and only use Scene7 originals', () => {
+test('rows with alt text come first, then by usage; only Scene7 originals', () => {
   const rows = campaignMedia(catalogue, index).i5;
-  assert.deepEqual(rows.map((r) => r.uses), [2, 2, 0]);
+  assert.deepEqual(rows.map((r) => [r.url.split('/').pop(), r.uses]), [['i5-stage', 2], ['P001_SL_G60_Ext_Dsk', 2], ['i5-cosy-render', 0]]);
+  const filmFirst = campaignMedia([{ ...catalogue[1], alt: 'BMW i5 render.' }], index).i5;
+  assert.equal(filmFirst[0].url.split('/').pop(), 'i5-cosy-render');
   rows.forEach((r) => assert.match(r.url, /^https:\/\/bmw\.scene7\.com\/is\//));
 });
 
