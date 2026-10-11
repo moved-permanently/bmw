@@ -144,6 +144,13 @@ test('autoBind turns hard-coded values of one model into bindings', () => {
   assert.equal(bound.length, 5);
 });
 
+test('a value with a non-breaking space is not reported or rewritten as changed', () => {
+  const values = valuesFromSheet({ values: [{ key: '31HR.fromPrice', value: '70.900\u00a0€', unit: '' }] });
+  const html = '<p><a href="/aida/data/wdh-de.json#31HR.fromPrice">70.900\u00a0€</a></p>';
+  assert.deepEqual(staleBindings(findBindings(html), 'de', values), []);
+  assert.deepEqual(syncBindings(html, 'de', values), { html, changes: [], unknown: [] });
+});
+
 test('autoBind leaves metadata and section metadata untouched', () => {
   const meta = '<div class="section-metadata"><div><div>style</div><div>250 kW (340 PS)</div></div></div>'
     + '<div class="metadata"><div><div>json-ld</div><div>{"range":"513–627 km"}</div></div></div>';
