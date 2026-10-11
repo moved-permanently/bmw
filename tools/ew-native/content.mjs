@@ -35,6 +35,7 @@ export function siteConfigSteps() {
         { title: 'Blocks', path: 'https://content.da.live/moved-permanently/bmw/library/blocks.json' },
         { title: 'Templates', path: 'https://content.da.live/moved-permanently/bmw/library/templates.json' },
         { title: 'Media Library', path: 'https://main--aem-apps--adobe-rnd.aem.live/tools/plugins/media-library/media-library.html', experience: 'fullsize-dialog' },
+        { title: 'BMW icons', path: 'https://main--bmw--moved-permanently.aem.page/tools/aida/icon-picker/icon-picker.html' },
       ],
     },
     { sheet: 'prepare', key: 'title', rows: [{ title: 'Schedule Publish', path: '' }] },
