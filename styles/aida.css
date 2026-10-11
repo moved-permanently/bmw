@@ -63,3 +63,20 @@
   font-size: 20px;
   cursor: pointer;
 }
+
+.wdh-check-update {
+  margin: 4px 0;
+  padding: 4px 14px;
+  border: 0;
+  border-radius: 16px;
+  background: #1c69d4;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.wdh-check-update:disabled {
+  background: #8e8e8e;
+  cursor: default;
+}

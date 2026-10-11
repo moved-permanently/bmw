@@ -1,5 +1,6 @@
 import {
   parseBinding, marketForPath, valuesFromSheet, staleBindings, dataRootForPath,
+  wdhUpdateAction,
 } from './aida-wdh.js';
 import { fetchSheet } from './bmw-utils.js';
 import { loadCSS } from './aem.js';
@@ -54,6 +55,20 @@ export async function checkWdhValues(session) {
   panel.innerHTML = `<button type="button" class="wdh-check-close" aria-label="Close">×</button>
     <p class="wdh-check-title">WDH check · preview only</p>
     <p class="wdh-check-summary">${summary}</p>`;
+  const action = wdhUpdateAction(stale, window.location);
+  if (action) {
+    const update = document.createElement('button');
+    update.type = 'button';
+    update.className = 'wdh-check-update';
+    update.textContent = 'Update';
+    update.title = `Update ${action.count} values from WDH (${market.toUpperCase()}) in the document`;
+    update.addEventListener('click', () => {
+      if (!window.open(action.url, 'wdh-update', 'popup,width=640,height=720')) return;
+      update.disabled = true;
+      update.textContent = 'Updating…';
+    });
+    panel.append(update);
+  }
   if (unique.length) {
     const list = document.createElement('ul');
     unique.forEach((s) => {
