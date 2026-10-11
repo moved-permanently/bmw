@@ -1,9 +1,11 @@
+import { DA_EDITOR } from '../editor.js';
+
 const PREVIEW = 'https://main--bmw--moved-permanently.aem.page';
 const LIVE = 'https://main--bmw--moved-permanently.aem.live';
 const SITE = 'moved-permanently/bmw';
-const canvas = (path) => `https://da.live/canvas#/${SITE}${path}`;
-const source = (path) => `https://da.live/edit#/${SITE}${path}`;
-const app = (name) => `https://da.live/apps/${name}#/${SITE}`;
+const canvas = (path) => `${DA_EDITOR}/canvas#/${SITE}${path}`;
+const source = (path) => `${DA_EDITOR}/edit#/${SITE}${path}`;
+const app = (name) => `${DA_EDITOR}/apps/${name}#/${SITE}`;
 const page = (path) => `${PREVIEW}${path}`;
 
 export const RFP = {
@@ -71,7 +73,7 @@ export const chapters = [
       { label: 'Topic page: e-mobility', href: page('/aida/showcase/en/e-mobility') },
       { label: 'News article', href: page('/aida/showcase/en/news/i5-launch') },
       { label: 'Schemas: news and market offer', href: app('schema') },
-      { label: 'Market offer as a form (FR)', href: `https://da.live/form#/${SITE}/aida/structured/offers/bmw-i5-launch-fr` },
+      { label: 'Market offer as a form (FR)', href: `${DA_EDITOR}/form#/${SITE}/aida/structured/offers/bmw-i5-launch-fr` },
     ],
     recap: 'One content model for car, topic and news: blocks for pages, schemas for data.',
   },
@@ -179,7 +181,7 @@ export const chapters = [
       'Each row links to the next action: edit, preview, check.',
     ],
     show: [
-      { label: 'Rollout radar', href: `https://da.live/app/${SITE}/tools/aida/radar/radar?ref=main` },
+      { label: 'Rollout radar', href: `${DA_EDITOR}/app/${SITE}/tools/aida/radar/radar?ref=main` },
       { label: 'Action radar', href: '#radar' },
     ],
     recap: 'HQ sees the rollout status of all markets and what blocks each one.',
@@ -195,7 +197,7 @@ export const chapters = [
     ],
     show: [
       { label: 'Schedule publish from the editor', href: canvas('/aida/de/de/i5') },
-      { label: 'Scheduler', href: 'https://da.live/apps/scheduler' },
+      { label: 'Scheduler', href: `${DA_EDITOR}/apps/scheduler` },
       { label: 'Launch review packages', href: app('snapshots') },
       { label: 'Preview', href: page('/aida/showcase/en/i5') },
       { label: 'Live', href: `${LIVE}/aida/showcase/en/i5` },

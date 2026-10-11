@@ -1,3 +1,5 @@
+import { DA_EDITOR } from '../editor.js';
+
 export const tabs = [
   ['path', 'Demo path'], ['overview', 'Start here'], ['workflow', 'News workflow'], ['translate', 'Translate'],
   ['rollout', 'Market rollout'], ['radar', 'Action radar'], ['architecture', 'Architecture'],
@@ -21,7 +23,7 @@ export function links(path) {
   if (!/^\/aida\/showcase\/[a-z0-9/-]+$/.test(path)) throw new Error('Invalid showcase path');
   const preview = `https://main--bmw--moved-permanently.aem.page${path}`;
   return {
-    edit: `https://da.live/canvas#/moved-permanently/bmw${path}`,
+    edit: `${DA_EDITOR}/canvas#/moved-permanently/bmw${path}`,
     preview,
     live: `https://main--bmw--moved-permanently.aem.live${path}`,
     markdown: `${preview}.md`,

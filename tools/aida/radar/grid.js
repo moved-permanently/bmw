@@ -1,3 +1,5 @@
+import { DA_EDITOR } from '../editor.js';
+
 /*
  * Rollout radar model: which language and market copies of each source page exist, and whether the
  * source changed after a copy was last edited. Topology comes from the site's translation config
@@ -68,11 +70,11 @@ export function pageActions({
     path: decoded, org, site, ref,
   });
   return {
-    edit: `https://da.live/edit#/${org}/${site}${encoded}`,
+    edit: `${DA_EDITOR}/edit#/${org}/${site}${encoded}`,
     preview: `https://${ref}--${site}--${org}.aem.page${encoded}`,
     preflight: `/tools/aida/preflight/preflight.html?${query}`,
     workflow: `/tools/aida/showcase/index.html?${new URLSearchParams({ path: decoded })}#workflow`,
-    translate: `https://da.live/apps/loc#/${org}/${site}`,
+    translate: `${DA_EDITOR}/apps/loc#/${org}/${site}`,
   };
 }
 

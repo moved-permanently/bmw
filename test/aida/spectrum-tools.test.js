@@ -44,7 +44,7 @@ test('native radar has actionable navigation, a timestamp disclaimer and no HTML
   const html = await read('radar/radar.html');
   const js = await read('radar/radar.js');
   assert.match(html, /href="\/tools\/aida\/showcase\/index\.html"/);
-  assert.match(html, /href="https:\/\/da\.live\/apps\/loc#\/moved-permanently\/bmw"/);
+  assert.match(html, /href="https:\/\/pocasset--da-live--adobe\.aem\.live\/apps\/loc#\/moved-permanently\/bmw"/);
   assert.match(html, /href="\/governance"/);
   assert.match(html, /href="\/tools\/aida\/showcase\/index\.html#workflow"/);
   assert.match(html, /timestamps[^<]*not[^<]*approval/i);
