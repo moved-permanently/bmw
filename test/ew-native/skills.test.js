@@ -55,7 +55,7 @@ test('skills stay on public / synthetic inputs and never preview, publish or inv
   assert.match(draft, /\/aida\/data\/brand-terms\.json/);
   const media = skillFiles()['/.da/skills/bmw-find-campaign-media/skill.md'];
   assert.match(media, /bmw\.scene7\.com/);
-  assert.match(media, /catalogue\.json/);
+  assert.match(media, /\/aida\/data\/media\//);
 });
 
 test('prompts for the config prompts sheet (title, prompt) point to the skills', () => {
@@ -75,11 +75,12 @@ test('deployed Skills Editor storage: flat .da/skills/<id>.md files and skills s
   assert.deepEqual(skillsSheetRows(), SKILLS.map((s) => ({ key: s.id, content: flat[`/.da/skills/${s.id}.md`], status: 'approved' })));
 });
 
-test('find-campaign-media reads the native Media Library index and inserts Scene7 originals, not media-bus copies', () => {
+test('find-campaign-media reads one compact per-model media sheet, never the full index or catalogue (assistant context limit)', () => {
   const md = skillFiles()['/.da/skills/bmw-find-campaign-media/skill.md'];
-  assert.match(md, /\nversion: 2\n/);
-  assert.match(md, /\.da\/media-insights\/index-meta\.json/);
-  assert.match(md, /index-\*\.json|index-000\.json/);
-  assert.match(md, /originalPath/);
+  assert.match(md, /\nversion: 3\n/);
+  assert.match(md, /\/aida\/data\/media\/index\.json/);
+  assert.match(md, /\/aida\/data\/media\/<model>\.json/);
+  assert.match(md, /never read[^\n]*\.da\/media-insights/i);
+  assert.match(md, /never read[^\n]*catalogue\.json/i);
   assert.match(md, /never insert[^\n]*media_/i);
 });
