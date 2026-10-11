@@ -3,37 +3,54 @@
  * Used by the Preflight plugin (preflight.js); pure functions, covered by tests.
  */
 import {
-  findBindings, staleBindings, autoBind, textOf, parseBinding,
+  findBindings, staleBindings, autoBind, textOf, parseBinding, withoutMetadata,
 } from '../../../scripts/aida-wdh.js';
 import { getMetadata } from '../../../scripts/aida-doc.js';
 
 const LEGAL_FIELDS = ['electricRange', 'electricConsumption', 'fuelConsumption'];
 const CONSUMPTION_TEXT = /\d\s*(kWh|l)\/100\s*km/;
+const FOOTNOTES = /<sup\b[^>]*>[\s\S]*?<\/sup>/gi;
 const list = (s) => (s || '').split(',').map((t) => t.trim()).filter(Boolean);
 const reEscape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const status = (details, level) => (details.length ? level : 'pass');
 
+function countSame(items, id) {
+  const groups = new Map();
+  items.forEach((item) => {
+    const group = groups.get(id(item)) || { ...item, count: 0 };
+    group.count += 1;
+    groups.set(id(item), group);
+  });
+  return [...groups.values()].map((g) => ({ ...g, label: g.count > 1 ? `${g.key} (${g.count}×)` : g.key }));
+}
+
 // one line per distinct value; same text from another market's sheet is named as such
 function describeStale(stale, market) {
-  const groups = new Map();
-  stale.forEach((s) => {
-    const id = `${s.key}|${s.text}|${s.expected}|${s.reason}`;
-    const group = groups.get(id) || { ...s, count: 0 };
-    group.count += 1;
-    groups.set(id, group);
-  });
-  return [...groups.values()].map((g) => {
-    const label = g.count > 1 ? `${g.key} (${g.count}×)` : g.key;
+  return countSame(stale, (s) => `${s.key}|${s.text}|${s.expected}|${s.reason}`).map((g) => {
     if (g.reason === 'market') {
       const from = parseBinding(g.href)?.market?.toUpperCase() || 'other';
-      return `${label}: "${g.text}" is ${from} data, ${market.toUpperCase()} has the same text`;
+      return `${g.label}: "${g.text}" is ${from} data, ${market.toUpperCase()} has the same text`;
     }
-    return `${label}: "${g.text}" → "${g.expected ?? 'not in WDH'}"`;
+    return `${g.label}: "${g.text}" → "${g.expected ?? 'not in WDH'}"`;
   });
 }
 
+// text of the page content (no metadata, no footnote markers), compared with sheet values
+const contentText = (html) => textOf(withoutMetadata(html).replace(FOOTNOTES, ''));
+const fieldValues = (values, field) => [...values.entries()]
+  .filter(([key, v]) => key.endsWith(`.${field}`) && v.display);
+
+// models the page is about: its wdh-model, else every model whose name appears on the page
+function pageModels(html, values) {
+  const code = getMetadata(html, 'wdh-model');
+  if (code) return [code];
+  const text = contentText(html);
+  return fieldValues(values, 'name').filter(([, v]) => text.includes(v.display)).map(([key]) => key.split('.')[0]);
+}
+
 function wdhCheck(html, market, values) {
-  const stale = staleBindings(findBindings(html), market, values);
+  const bindings = findBindings(html);
+  const stale = staleBindings(bindings, market, values);
   if (stale.length) {
     return {
       status: 'fail',
@@ -42,28 +59,38 @@ function wdhCheck(html, market, values) {
       fixable: stale.filter((s) => s.expected).length,
     };
   }
-  const code = getMetadata(html, 'wdh-model');
-  const unbound = code ? autoBind(html, market, values, code).bound : [];
+  const codes = pageModels(html, values);
+  const unbound = codes.flatMap((code) => autoBind(html, market, values, code).bound);
   if (unbound.length) {
     return {
       status: 'warn',
-      summary: `${unbound.length} hard-coded values of ${code} could be bound to WDH`,
-      details: unbound.map((b) => `${b.key}: "${b.text}"`),
+      summary: `${unbound.length} hard-coded values of ${codes.join(', ')} could be bound to WDH`,
+      details: countSame(unbound, (b) => `${b.key}|${b.text}`).map((g) => `${g.label}: "${g.text}"`),
     };
   }
+  if (!bindings.length) return { status: 'pass', summary: 'No WDH-linked values on this page', details: [] };
   return { status: 'pass', summary: 'All tech values match WDH', details: [] };
 }
 
-function wltpCheck(html) {
+function wltpCheck(html, values) {
   const bindings = findBindings(html);
   const showsValues = bindings.some((b) => LEGAL_FIELDS.includes(b.field))
     || CONSUMPTION_TEXT.test(textOf(html));
-  const hasStatement = bindings.some((b) => b.field === 'wltp');
-  const ok = !showsValues || hasStatement;
+  if (!showsValues || bindings.some((b) => b.field === 'wltp')) {
+    return { status: 'pass', summary: 'WLTP statement present where required', details: [] };
+  }
+  const text = contentText(html);
+  if (fieldValues(values, 'wltp').some(([, v]) => text.includes(v.display))) {
+    return {
+      status: 'warn',
+      summary: 'WLTP statement written as text, not linked to WDH',
+      details: ['Replace it with the model\'s WLTP statement (WDH value "wltp") so it follows WDH updates'],
+    };
+  }
   return {
-    status: ok ? 'pass' : 'fail',
-    summary: ok ? 'WLTP statement present where required' : 'Range or consumption shown without the WLTP statement',
-    details: ok ? [] : ['Insert the model\'s WLTP statement (WDH value "wltp") on this page'],
+    status: 'fail',
+    summary: 'Range or consumption shown without the WLTP statement',
+    details: ['Insert the model\'s WLTP statement (WDH value "wltp") on this page'],
   };
 }
 
@@ -118,7 +145,7 @@ export function runChecks({
   const text = textOf(html);
   return [
     { id: 'wdh', title: 'WDH tech values', ...wdhCheck(html, market, values) },
-    { id: 'wltp', title: 'WLTP statement', ...wltpCheck(html) },
+    { id: 'wltp', title: 'WLTP statement', ...wltpCheck(html, values) },
     { id: 'features', title: 'Market availability', ...featuresCheck(text, market, features) },
     { id: 'brand', title: 'Brand terms', ...brandCheck(text, terms) },
     { id: 'seo', title: 'SEO basics', ...seoCheck(html) },

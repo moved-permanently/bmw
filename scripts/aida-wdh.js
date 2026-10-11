@@ -151,6 +151,32 @@ export function syncBindings(html, market, values) {
 }
 
 const MIN_INLINE = 8;
+const METADATA_RE = /^<div\b[^>]*\bclass="(?:section-)?metadata"/i;
+
+// document split into tags and text, each part flagged inside a link / a (section) metadata block
+function parts(html) {
+  let link = 0;
+  let meta = 0;
+  return html.split(/(<[^>]+>)/).map((part) => {
+    if (!part.startsWith('<')) return { part, link: link > 0, meta: meta > 0 };
+    if (meta) {
+      if (/^<div\b/i.test(part)) meta += 1;
+      else if (/^<\/div>/i.test(part)) meta -= 1;
+      return { part, tag: true, meta: true };
+    }
+    if (METADATA_RE.test(part)) {
+      meta = 1;
+      return { part, tag: true, meta: true };
+    }
+    if (/^<a\b/i.test(part)) link += 1;
+    else if (/^<\/a>/i.test(part)) link -= 1;
+    return { part, tag: true };
+  });
+}
+
+export function withoutMetadata(html) {
+  return parts(html || '').filter((p) => !p.meta).map((p) => p.part).join('');
+}
 
 export function autoBind(html, market, values, code) {
   const candidates = [...values.entries()]
@@ -184,15 +210,9 @@ export function autoBind(html, market, values, code) {
     return out + rest;
   };
 
-  let depth = 0;
-  const out = html.split(/(<[^>]+>)/).map((part) => {
-    if (part.startsWith('<')) {
-      if (/^<a\b/i.test(part)) depth += 1;
-      else if (/^<\/a>/i.test(part)) depth -= 1;
-      return part;
-    }
-    return depth > 0 || !part.trim() ? part : bindText(part);
-  }).join('');
+  const out = parts(html).map(({
+    part, tag, link, meta,
+  }) => (tag || link || meta || !part.trim() ? part : bindText(part))).join('');
   return { html: out, bound };
 }
 
