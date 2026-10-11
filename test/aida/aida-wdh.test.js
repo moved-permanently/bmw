@@ -144,6 +144,19 @@ test('autoBind turns hard-coded values of one model into bindings', () => {
   assert.equal(bound.length, 5);
 });
 
+test('autoBind leaves metadata and section metadata untouched', () => {
+  const meta = '<div class="section-metadata"><div><div>style</div><div>250 kW (340 PS)</div></div></div>'
+    + '<div class="metadata"><div><div>json-ld</div><div>{"range":"513–627 km"}</div></div></div>';
+  const html = `<div><p>Reichweite 513–627 km</p>${meta}</div><div><p>250 kW (340 PS)</p></div>`;
+  const { html: out, bound } = autoBind(html, 'de', valuesFromSheet(deSheet), '61HG');
+  assert.equal(
+    out,
+    `<div><p>Reichweite <a href="/aida/data/wdh-de.json#61HG.electricRange">513–627 km</a></p>${meta}</div>`
+    + '<div><p><a href="/aida/data/wdh-de.json#61HG.power">250 kW (340 PS)</a></p></div>',
+  );
+  assert.deepEqual(bound.map((b) => b.key), ['61HG.electricRange', '61HG.power']);
+});
+
 test('staleBindings reports outdated values, foreign markets and unknown keys', () => {
   const bindings = [
     {
