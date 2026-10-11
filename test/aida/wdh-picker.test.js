@@ -89,7 +89,7 @@ test('source labels distinguish supplied data, demo fixtures and derived stateme
   assert.equal(values.get('61HG.drivingAssistantSpeed').sourceLabel, 'Demo data');
   assert.equal(values.get('61HG.wltp').sourceLabel, 'Derived WLTP statement');
   assert.equal(values.get('61HG.external').sourceLabel, 'WDH export');
-  assert.equal(values.get('61HG.legacy').sourceLabel, 'Source not specified');
+  assert.equal(values.get('61HG.legacy').sourceLabel, '', 'An unknown source has no label');
   assert.equal(valuesFromSheet({ values: rows }, 'de').get('61HG.leasePrice').sourceLabel, 'Demo-Datensatz');
   assert.equal(valuesFromSheet({ values: rows }, 'fr').get('61HG.leasePrice').sourceLabel, 'Données de démonstration');
 });
@@ -103,6 +103,13 @@ test('picker requests document-language labels and shows property and source con
   assert.match(source, /spectrum-Badge/);
   assert.match(source, /link\.textContent = v\.display;/, 'Insertion must remain the value, not its label');
   assert.match(source, /setAttribute\('aria-label', `\$\{insertLabel\} \$\{v\.label\}`\)/);
+});
+
+test('connector sheets without source kinds show no source badge and no badge explanation', () => {
+  const source = read('tools/aida/wdh-picker/wdh-picker.js');
+  assert.doesNotMatch(read('scripts/aida-wdh.js'), /Source not specified|Quelle nicht angegeben|Source non précisée/);
+  assert.match(source, /if \(v\.sourceLabel\)/, 'Badge only for a known source');
+  assert.match(source, /\.some\(\(v\) => v\.sourceLabel\)/, 'Badge explanation only when badges are shown');
 });
 
 test('localized property names, source badges and insert buttons declare their language', () => {
