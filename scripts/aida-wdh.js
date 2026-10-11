@@ -41,7 +41,6 @@ const SOURCE_LABELS = {
   'brief-fixture': ['Demo data', 'Demo-Datensatz', 'Données de démonstration'],
   'derived-demo-wltp-statement': ['Derived WLTP statement', 'Abgeleitete WLTP-Angabe', 'Mention WLTP dérivée'],
 };
-const UNKNOWN_SOURCE = ['Source not specified', 'Quelle nicht angegeben', 'Source non précisée'];
 
 export function parseBinding(href) {
   if (!href) return null;
@@ -90,12 +89,11 @@ export function valuesFromSheet(sheet, lang = 'en') {
     const supplied = typeof r.label === 'string' ? r.label.trim() : '';
     const readable = field.replace(/([a-z\d])([A-Z])/g, (all, before, after) => `${before} ${after.toLowerCase()}`)
       .replace(/[_-]+/g, ' ').trim();
-    const source = Object.hasOwn(SOURCE_LABELS, r.sourceKind)
-      ? SOURCE_LABELS[r.sourceKind] : UNKNOWN_SOURCE;
+    const source = Object.hasOwn(SOURCE_LABELS, r.sourceKind) ? SOURCE_LABELS[r.sourceKind] : null;
     return [r.key, {
       ...r,
       label: labels?.[language] || supplied || readable.replace(/^./, (c) => c.toUpperCase()) || r.key?.trim() || 'Unknown property',
-      sourceLabel: source[language],
+      sourceLabel: source ? source[language] : '',
       display: r.unit ? `${r.value} ${r.unit}` : r.value,
     }];
   }));

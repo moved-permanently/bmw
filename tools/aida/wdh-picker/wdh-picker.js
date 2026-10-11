@@ -18,7 +18,8 @@ import {
     const insertLabel = { en: 'Insert', de: 'Einfügen', fr: 'Insérer' }[lang] || 'Insert';
 
     main.innerHTML = '<h1>WDH values</h1><p class="aida-muted"></p><p><label class="spectrum-FieldLabel" for="wdh-model">Model</label><select id="wdh-model" class="spectrum-Picker spectrum-Picker--sizeM" aria-label="Model"></select></p><div class="wdh-table-scroll"><table class="spectrum-Table spectrum-Table--sizeM"><caption>Linked technical values</caption><thead class="spectrum-Table-head"><tr class="spectrum-Table-row"><th scope="col" class="spectrum-Table-headCell">Property</th><th scope="col" class="spectrum-Table-headCell">Current source value</th><th scope="col" class="spectrum-Table-headCell">Action</th></tr></thead><tbody class="spectrum-Table-body"></tbody></table></div>';
-    main.querySelector('.aida-muted').textContent = `Insert a linked value (${market.toUpperCase()} market). Source badges distinguish WDH exports, demo data and derived statements. Preflight checks for changes against the current sheet.`;
+    const badges = [...values.values()].some((v) => v.sourceLabel);
+    main.querySelector('.aida-muted').textContent = `Insert a linked value (${market.toUpperCase()} market).${badges ? ' Source badges distinguish WDH exports, demo data and derived statements.' : ''} Preflight checks for changes against the current sheet.`;
     const select = main.querySelector('select');
     models.forEach((m) => select.append(new Option(`${m.name} (${m.code})`, m.code)));
 
@@ -33,8 +34,12 @@ import {
         tr.children[0].lang = lang;
         tr.querySelector('.wdh-display').textContent = v.display.length > 90 ? `${v.display.slice(0, 87)}…` : v.display;
         tr.querySelector('.wdh-display').title = v.display;
-        tr.querySelector('.spectrum-Badge-label').textContent = v.sourceLabel;
-        tr.querySelector('.wdh-source').lang = lang;
+        if (v.sourceLabel) {
+          tr.querySelector('.spectrum-Badge-label').textContent = v.sourceLabel;
+          tr.querySelector('.wdh-source').lang = lang;
+        } else {
+          tr.querySelector('.wdh-source').remove();
+        }
         const button = tr.querySelector('button');
         button.lang = lang;
         button.querySelector('.spectrum-Button-label').textContent = insertLabel;
