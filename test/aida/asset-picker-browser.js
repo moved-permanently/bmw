@@ -293,5 +293,22 @@ await test('DA context is received even when the catalogue loads after the initi
   assert(country === 'be' && count.includes('0 images'), 'Early DA context must survive slow catalogue loading');
 });
 
+await test('a da-nx branch that cannot be loaded falls back to the da.live SDK', async () => {
+  const frame = document.createElement('iframe');
+  frame.onload = () => {
+    const channel = new MessageChannel();
+    frame.contentWindow.postMessage({
+      ready: true,
+      context: { org: 'demo', repo: 'demo', path: '/aida/fr/be/check' },
+    }, window.location.origin, [channel.port2]);
+  };
+  frame.src = '/tools/aida/asset-picker/asset-picker.html?nx=no-such-branch';
+  document.body.append(frame);
+  await new Promise((resolve) => { setTimeout(resolve, 4000); });
+  const country = frame.contentDocument.querySelector('#asset-country').value;
+  frame.remove();
+  assert(country === 'be', 'The picker must connect through the fallback SDK');
+});
+
 window.assetPickerTests = results;
 document.querySelector('#results').textContent = JSON.stringify(results, null, 2);
