@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { chapters, RFP } from '../../tools/aida/showcase/script.js';
+import { DA_EDITOR } from '../../tools/aida/editor.js';
 import * as view from '../../tools/aida/showcase/view.js';
 
 const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
@@ -44,7 +45,8 @@ test('the chapters tell the full RfP story of Briefings I and III', () => {
 });
 
 test('show links open known BMW demo surfaces or a tab of this app', () => {
-  const hosts = ['da.live', 'main--bmw--moved-permanently.aem.page', 'main--bmw--moved-permanently.aem.live', 'da-sc.adobeaem.workers.dev'];
+  const editor = new URL(DA_EDITOR).host;
+  const hosts = [editor, 'main--bmw--moved-permanently.aem.page', 'main--bmw--moved-permanently.aem.live', 'da-sc.adobeaem.workers.dev'];
   const ids = view.tabs.map(([id]) => id);
   chapters.flatMap((c) => c.show).forEach(({ label, href }) => {
     assert.ok(label, href);
@@ -57,7 +59,7 @@ test('show links open known BMW demo surfaces or a tab of this app', () => {
     const url = new URL(href);
     assert.equal(url.protocol, 'https:');
     assert.ok(hosts.includes(url.host), href);
-    if (url.host === 'da.live' && url.pathname !== '/apps/scheduler') assert.match(href, /moved-permanently\/bmw/, href);
+    if (url.host === editor && url.pathname !== '/apps/scheduler') assert.match(href, /moved-permanently\/bmw/, href);
   });
 });
 

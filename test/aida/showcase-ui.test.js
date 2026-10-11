@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import * as view from '../../tools/aida/showcase/view.js';
 import { createDemo } from '../../tools/aida/showcase/model.js';
+import { DA_EDITOR } from '../../tools/aida/editor.js';
 
 const { escape, links, tabs } = view;
 
@@ -14,7 +15,7 @@ test('showcase has one coherent route for every RfP demo activity', () => {
 
 test('public links connect DA authoring, preview, live and open representations', () => {
   const urls = links('/aida/showcase/fr/be/i5');
-  assert.equal(urls.edit, 'https://da.live/canvas#/moved-permanently/bmw/aida/showcase/fr/be/i5');
+  assert.equal(urls.edit, `${DA_EDITOR}/canvas#/moved-permanently/bmw/aida/showcase/fr/be/i5`);
   assert.equal(urls.preview, 'https://main--bmw--moved-permanently.aem.page/aida/showcase/fr/be/i5');
   assert.equal(urls.live, 'https://main--bmw--moved-permanently.aem.live/aida/showcase/fr/be/i5');
   assert.equal(urls.markdown, `${urls.preview}.md`);
