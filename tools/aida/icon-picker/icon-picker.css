@@ -1,0 +1,75 @@
+/* stylelint-disable selector-class-pattern -- official Spectrum component names */
+
+/* the site's ligature icon font: the text "arrow_chevron_right" renders the glyph */
+@font-face {
+  font-family: "bmw_next_icons";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('/fonts/bmw_next_icons_regular.woff2') format('woff2');
+}
+
+.icon-picker .icon-search {
+  display: flex;
+  margin: 4px 0 12px;
+}
+
+.icon-picker .icon-search .spectrum-Textfield-input {
+  flex: 1;
+}
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.icon-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  padding: 12px 6px;
+  border: 1px solid var(--spectrum-gray-300);
+  border-radius: var(--spectrum-corner-radius-100);
+  background: var(--spectrum-gray-50);
+  color: var(--spectrum-neutral-content-color-default);
+  font: inherit;
+  cursor: pointer;
+}
+
+.icon-tile:focus-visible {
+  outline: 2px solid var(--spectrum-focus-indicator-color);
+  outline-offset: 2px;
+}
+
+.icon-tile:disabled {
+  cursor: default;
+}
+
+.icon-tile:hover:not(:disabled) {
+  background: var(--spectrum-gray-200);
+}
+
+.icon-glyph {
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  font-family: "bmw_next_icons", sans-serif;
+  font-size: 32px;
+  font-feature-settings: "liga";
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.icon-name {
+  font-size: 12px;
+  line-height: 1.3;
+  text-align: center;
+  overflow-wrap: anywhere;
+}

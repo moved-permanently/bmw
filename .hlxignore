@@ -20,3 +20,4 @@ tools/aida/showcase/data/*
 tools/semantic-styles/*
 docs/*
 tools/ew-native/*
+tools/aida/icon-picker/*.py
