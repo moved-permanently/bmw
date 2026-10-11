@@ -22,14 +22,24 @@ const catalogue = [
 ];
 const index = [
   // film on two i5 pages, not in the catalogue
-  { url: `${S7}/content/BMW/P001_SL_G60_Ext_Dsk`, originalPath: '', type: 'video', doc: '/aida/showcase/de/de/i5.md' },
-  { url: `${S7}/content/BMW/P001_SL_G60_Ext_Dsk`, originalPath: '', type: 'video', doc: '/aida/showcase/fr/be/i5.md' },
+  {
+    url: `${S7}/content/BMW/P001_SL_G60_Ext_Dsk`, originalPath: '', type: 'video', doc: '/aida/showcase/de/de/i5.md',
+  },
+  {
+    url: `${S7}/content/BMW/P001_SL_G60_Ext_Dsk`, originalPath: '', type: 'video', doc: '/aida/showcase/fr/be/i5.md',
+  },
   // catalogue image used on a further page (preview-copy row, original in originalPath)
-  { url: 'https://main--bmw--moved-permanently.aem.page/media_abc.webp', originalPath: '/BMW/i5-stage', type: 'image', doc: '/aida/de/de/i5.md' },
+  {
+    url: 'https://main--bmw--moved-permanently.aem.page/media_abc.webp', originalPath: '/BMW/i5-stage', type: 'image', doc: '/aida/de/de/i5.md',
+  },
   // media on an X5 page
-  { url: `${S7}/image/BMW/x5-detail`, originalPath: '', type: 'image', doc: '/de/neufahrzeuge/x/x5/bmw-x5.md' },
+  {
+    url: `${S7}/image/BMW/x5-detail`, originalPath: '', type: 'image', doc: '/de/neufahrzeuge/x/x5/bmw-x5.md',
+  },
   // row without a page
-  { url: `${S7}/image/BMW/orphan`, originalPath: '', type: 'image', doc: '' },
+  {
+    url: `${S7}/image/BMW/orphan`, originalPath: '', type: 'image', doc: '',
+  },
 ];
 
 test('model slugs are lowercase path segments', () => {

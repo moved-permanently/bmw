@@ -12,29 +12,26 @@ const CATALOGUE = 'https://main--bmw--moved-permanently.aem.page/tools/aida/asse
 export const SKILLS = [
   {
     id: 'bmw-find-campaign-media',
-    version: 2,
-    description: 'Finds existing public BMW Scene7 images and films for a campaign, model or topic from the native Media Library index and the BMW assets catalogue, and returns them in the site link convention with crops and alt text.',
+    version: 3,
+    description: 'Finds existing public BMW Scene7 images and films for a model or campaign from a compact per-model media sheet, shows where they are used and returns them in the site link convention with crops and alt text.',
     body: `# Find campaign media (BMW)
 
 Use when an author asks for images or films for a campaign, a model or a topic (for example "media for the BMW i5 launch").
 
-## Sources (read only, current org/site only)
-1. **Native Media Library index** of this site: read \`.da/media-insights/index-meta.json\` (lastFetchTime, entriesCount, chunkCount), then every \`.da/media-insights/index-*.json\` chunk (index-000.json, …; sheet \`media\`: url, originalPath, doc, type, operation, displayName). If the index is missing, say so and point to https://da.live/apps/media-library#/moved-permanently/bmw; if lastFetchTime is older than a day, mention that it may be stale.
-2. **BMW assets catalogue**: ${CATALOGUE} (url, title, alt, kind, models, families, sources = pages that use the asset, crops).
-
-## How BMW media appear in the index
-- Scene7 films (\`https://bmw.scene7.com/is/content/BMW/…\`) and bmw.de files are rows whose \`doc\` is the page that uses them.
-- Scene7 images appear as preview copies: \`url\` = \`…/media_<hash>.webp\`, \`originalPath\` = \`/BMW/<name>\`, usually with an empty \`doc\` (the Media Library then shows no references). The original is \`https://bmw.scene7.com/is/image/BMW/<name>\`; take its page usage and alt text from the catalogue (\`sources\`, \`alt\`).
+## Source (read only, small)
+1. Read \`/aida/data/media/index.json\`: one row per model (model, sheet, assets). Pick the model the author means (e.g. "BMW i5" → i5; G60 is the i5 / 5 Series generation).
+2. Read only that model's sheet \`/aida/data/media/<model>.json\` (rows: kind image/film, url = Scene7 original, alt, crops, uses = number of pages, pages). It is built from the BMW assets catalogue and this site's Media Library index.
+3. Never read \`.da/media-insights\` index chunks and never read the full assets catalogue (${CATALOGUE}): both are too large for one conversation. For anything beyond the sheet, point the author to the Media Library app (https://da.live/apps/media-library#/moved-permanently/bmw) or the BMW assets picker.
 
 ## Steps
-1. Ask for the model (e.g. "BMW i5", WDH code 61HG; search names such as "G60") or topic if it is not given.
-2. Match \`displayName\` / \`originalPath\` in the index and title / alt / models in the catalogue. Prefer assets used on several pages and stage images ("stage", "Dsk", "Mob").
-3. Return at most 10 candidates as a table: original Scene7 link, alt text (catalogue), pages that use it (index \`doc\` or catalogue \`sources\`, as https://main--bmw--moved-permanently.aem.page<path>), available crops, and the source of each fact (index / catalogue).
+1. Ask for the model if it is not given.
+2. Prefer images with alt text and assets used on several pages; add films only when asked or when they are the obvious stage media.
+3. Return at most 10 candidates as a table: preview thumbnail link (\`<url>?wid=400\` for images), alt text, used on (pages as https://main--bmw--moved-permanently.aem.page<path>, at most three), crops.
 4. Insert only on request, as a link in the site convention: \`[alt text](https://bmw.scene7.com/is/image/BMW/<name>)\`, keeping a smart-crop suffix such as \`:16to7\` or \`:3to2\` when the block needs a ratio. Films are \`https://bmw.scene7.com/is/content/BMW/<name>\` links after the poster image. The BMW assets picker does the same with alt and crop checks.
 
 ## Rules
 - Only existing public BMW Scene7 references; never generate, upload or edit imagery.
-- Never insert the index's media_ preview URLs; always the Scene7 original.
+- Never insert media_ preview URLs; always the Scene7 original from the sheet.
 - Do not change tech values in captions; WDH values are inserted with the WDH values panel.
 - Never preview or publish; the author decides.`,
   },
