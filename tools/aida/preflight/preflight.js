@@ -1,13 +1,22 @@
 import connect from '../da.js';
 import { runChecks } from './checks.js';
 import {
-  marketForPath, valuesFromSheet, syncBindings, dataRootForPath,
+  marketForPath, valuesFromSheet, syncBindings, dataRootForPath, wdhUpdateTarget,
 } from '../../../scripts/aida-wdh.js';
 import { getMetadata, withVehicleJsonLd } from '../../../scripts/aida-doc.js';
 import { pageActions } from '../radar/grid.js';
 
 const LABELS = { pass: 'Pass', warn: 'Review', fail: 'Issue' };
 const VARIANTS = { pass: 'positive', warn: 'notice', fail: 'negative' };
+
+// the editor overlay of a page of this site opened this app window (same origin as this frame)
+function openedBySite() {
+  try {
+    return window.top.opener?.location.origin === window.location.origin;
+  } catch (e) {
+    return false;
+  }
+}
 
 async function load(da, path) {
   const page = marketForPath(path);
@@ -70,6 +79,7 @@ function render(main, state, onSync) {
     }
     main.append(item);
   });
+  return results;
 }
 
 (async function init() {
@@ -104,23 +114,42 @@ function render(main, state, onSync) {
   }
   try {
     const da = await connect();
-    const { path } = da.context;
+    const request = wdhUpdateTarget(window.location.search, da.context.path);
+    if (!request && new URLSearchParams(window.location.search).has('update')) {
+      throw new Error('the update link does not name a page of this site');
+    }
+    const path = request?.path || da.context.path;
+    let state;
+    const note = (text) => {
+      const p = document.createElement('p');
+      p.className = 'aida-note';
+      p.textContent = text;
+      main.prepend(p);
+    };
+    let sync;
     const refresh = async () => {
-      const state = { ...(await load(da, path)), path };
-      render(main, state, async (button) => {
+      state = { ...(await load(da, path)), path };
+      return render(main, state, sync);
+    };
+    sync = async (button) => {
+      if (button) {
         button.disabled = true;
         button.querySelector('.spectrum-Button-label').textContent = 'Updating…';
-        const { html } = syncBindings(state.html, state.market, state.values);
-        const model = state.models.find((m) => m.code === getMetadata(html, 'wdh-model'));
-        await da.write(path, model?.jsonld ? withVehicleJsonLd(html, model.jsonld) : html);
-        await refresh();
-        const done = document.createElement('p');
-        done.className = 'aida-note';
-        done.textContent = 'Values updated in the document. Preview the page to see them.';
-        main.prepend(done);
-      });
+      }
+      const { html, changes } = syncBindings(state.html, state.market, state.values);
+      const model = state.models.find((m) => m.code === getMetadata(html, 'wdh-model'));
+      await da.write(path, model?.jsonld ? withVehicleJsonLd(html, model.jsonld) : html);
+      await refresh();
+      note(`Updated ${changes.length} values from WDH (${state.market.toUpperCase()}) in the document.${request?.fromLink ? ' This window closes.' : ''}`);
+      if (request?.fromLink) setTimeout(() => window.top.close(), 1500);
     };
-    await refresh();
+    const results = await refresh();
+    if (!request) return;
+    if (!results.find((r) => r.id === 'wdh')?.fixable) {
+      note(`All linked values match WDH (${state.market.toUpperCase()}). Nothing to update.`);
+    } else if (!request.fromLink || openedBySite()) {
+      await sync();
+    }
   } catch (e) {
     main.innerHTML = '<p class="aida-error"></p>';
     main.querySelector('p').textContent = `Preflight could not run: ${e.message}`;

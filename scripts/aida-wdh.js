@@ -230,4 +230,36 @@ export function staleBindings(bindings, market, values) {
   }).filter(Boolean);
 }
 
+const UPDATE_APP = 'tools/aida/preflight/preflight';
+const SITE_HOST_RE = /^([a-z0-9-]+)--([a-z0-9-]+)--([a-z0-9-]+)\./i;
+const PAGE_PATH_RE = /^\/[\w\-/]+$/;
+
+/**
+ * Overlay action while editing (Experience Workspace / quick edit): the page frame has no DA
+ * credentials, so the fixable values are updated by the Preflight app (?update=<page path>).
+ */
+export function wdhUpdateAction(stale, { hostname, pathname, search }) {
+  const count = stale.filter((s) => s.expected).length;
+  const site = (hostname || '').match(SITE_HOST_RE);
+  if (!count || !site || !new URLSearchParams(search).has('quick-edit')) return null;
+  const [, ref, repo, org] = site;
+  const branch = ref === 'main' ? '' : `&ref=${ref}`;
+  return {
+    count,
+    url: `https://da.live/app/${org}/${repo}/${UPDATE_APP}?update=${encodeURIComponent(pathname)}${branch}`,
+  };
+}
+
+/**
+ * Page Preflight updates: `?update` from the "…" menu (DA context), `?update=<path>` from the
+ * editor overlay.
+ */
+export function wdhUpdateTarget(search, contextPath) {
+  const params = new URLSearchParams(search);
+  if (!params.has('update')) return null;
+  const link = params.get('update');
+  if (!link) return { path: contextPath, fromLink: false };
+  return PAGE_PATH_RE.test(link) ? { path: link, fromLink: true } : null;
+}
+
 export { createWdhSession } from './wdh-session.js';
