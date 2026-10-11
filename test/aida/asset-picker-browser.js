@@ -310,5 +310,27 @@ await test('a da-nx branch that cannot be loaded falls back to the da.live SDK',
   assert(country === 'be', 'The picker must connect through the fallback SDK');
 });
 
+await test('a document selection that arrives before the SDK has loaded is not lost', async () => {
+  const frame = document.createElement('iframe');
+  frame.onload = () => {
+    const channel = new MessageChannel();
+    frame.contentWindow.postMessage({
+      ready: true,
+      context: { org: 'demo', repo: 'demo', path: '/aida/de/de/check' },
+    }, window.location.origin, [channel.port2]);
+    frame.contentWindow.postMessage({
+      action: 'selectionChange',
+      details: { link: { href: 'https://bmw.scene7.com/is/image/BMW/P001_SL_G60-8135_Ext_Mob_v001', text: 'early' } },
+    }, window.location.origin);
+  };
+  frame.src = '/tools/aida/asset-picker/asset-picker.html?nx=pocasset';
+  document.body.append(frame);
+  await new Promise((resolve) => { setTimeout(resolve, 4000); });
+  const detail = !frame.contentDocument.querySelector('#asset-detail').hidden;
+  const alt = frame.contentDocument.querySelector('#asset-alt').value;
+  frame.remove();
+  assert(detail && alt === 'early', 'The early selection must open its image');
+});
+
 window.assetPickerTests = results;
 document.querySelector('#results').textContent = JSON.stringify(results, null, 2);
