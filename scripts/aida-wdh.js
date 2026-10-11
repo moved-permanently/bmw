@@ -103,16 +103,17 @@ const ENTITIES = {
   amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
 };
 
+// link texts are compared whitespace-normalised (sheet values may carry non-breaking spaces)
+const flat = (s) => s.replace(/[\s\u00a0]+/g, ' ').trim();
+
 export function textOf(html) {
-  return (html || '')
+  return flat((html || '')
     .replace(/<[^>]*>/g, '')
     .replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (all, ent) => {
       if (ent[0] !== '#') return ENTITIES[ent.toLowerCase()] ?? all;
       const code = ent[1].toLowerCase() === 'x' ? parseInt(ent.slice(2), 16) : Number(ent.slice(1));
       return String.fromCodePoint(code);
-    })
-    .replace(/[\s\u00a0]+/g, ' ')
-    .trim();
+    }));
 }
 
 const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -139,7 +140,7 @@ export function syncBindings(html, market, values) {
       return all;
     }
     const text = textOf(inner);
-    if (text === current.display && binding.market === market) return all;
+    if (text === flat(current.display) && binding.market === market) return all;
     changes.push({
       key: binding.key, from: text, to: current.display, fromMarket: binding.market,
     });
@@ -149,6 +150,32 @@ export function syncBindings(html, market, values) {
 }
 
 const MIN_INLINE = 8;
+const METADATA_RE = /^<div\b[^>]*\bclass="(?:section-)?metadata"/i;
+
+// document split into tags and text, each part flagged inside a link / a (section) metadata block
+function parts(html) {
+  let link = 0;
+  let meta = 0;
+  return html.split(/(<[^>]+>)/).map((part) => {
+    if (!part.startsWith('<')) return { part, link: link > 0, meta: meta > 0 };
+    if (meta) {
+      if (/^<div\b/i.test(part)) meta += 1;
+      else if (/^<\/div>/i.test(part)) meta -= 1;
+      return { part, tag: true, meta: true };
+    }
+    if (METADATA_RE.test(part)) {
+      meta = 1;
+      return { part, tag: true, meta: true };
+    }
+    if (/^<a\b/i.test(part)) link += 1;
+    else if (/^<\/a>/i.test(part)) link -= 1;
+    return { part, tag: true };
+  });
+}
+
+export function withoutMetadata(html) {
+  return parts(html || '').filter((p) => !p.meta).map((p) => p.part).join('');
+}
 
 export function autoBind(html, market, values, code) {
   const candidates = [...values.entries()]
@@ -182,15 +209,9 @@ export function autoBind(html, market, values, code) {
     return out + rest;
   };
 
-  let depth = 0;
-  const out = html.split(/(<[^>]+>)/).map((part) => {
-    if (part.startsWith('<')) {
-      if (/^<a\b/i.test(part)) depth += 1;
-      else if (/^<\/a>/i.test(part)) depth -= 1;
-      return part;
-    }
-    return depth > 0 || !part.trim() ? part : bindText(part);
-  }).join('');
+  const out = parts(html).map(({
+    part, tag, link, meta,
+  }) => (tag || link || meta || !part.trim() ? part : bindText(part))).join('');
   return { html: out, bound };
 }
 
@@ -201,7 +222,7 @@ export function staleBindings(bindings, market, values) {
     const current = values.get(key);
     let reason = null;
     if (!current) reason = 'unknown';
-    else if (text !== current.display) reason = 'value';
+    else if (text !== flat(current.display)) reason = 'value';
     else if (binding.market !== market) reason = 'market';
     return reason && {
       href, key, text, expected: current ? current.display : null, reason,

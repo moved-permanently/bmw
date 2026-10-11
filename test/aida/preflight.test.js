@@ -99,3 +99,60 @@ test('wdh details group repeated values and name data taken from another market'
   ]);
   assert.equal(wdh.fixable, 4);
 });
+
+const NAME = 'BMW i5 eDrive40 Berline';
+const named = valuesFromSheet({
+  values: [
+    { key: '61HG.name', value: NAME, unit: '' },
+    { key: '61HG.electricRange', value: '518–627', unit: 'km' },
+    { key: '61HG.wltp', value: WLTP_FR, unit: '' },
+    { key: '31HR.name', value: 'BMW iX3 50 xDrive', unit: '' },
+    { key: '31HR.topSpeed', value: '210', unit: 'km/h' },
+  ],
+});
+const runNamed = (html) => runChecks({
+  html, market: 'fr', values: named, features, terms,
+});
+const RANGE_FR = '<a href="/aida/data/wdh-fr.json#61HG.electricRange">518–627 km</a>';
+
+test('wdh finds hard-coded values of a model named on a page without wdh-model', () => {
+  const wdh = check(runNamed(page(`<h1>La ${NAME}.</h1><p>Autonomie 518–627 km.</p>`)), 'wdh');
+  assert.equal(wdh.status, 'warn');
+  assert.equal(wdh.summary, '2 hard-coded values of 61HG could be bound to WDH');
+  assert.deepEqual(wdh.details, [`61HG.name: "${NAME}"`, '61HG.electricRange: "518–627 km"']);
+});
+
+test('wdh ignores values of models the page does not name and does not claim a match', () => {
+  const wdh = check(runNamed(page('<h1>X</h1><p>Le Driving Assistant jusqu’à 210 km/h.</p>')), 'wdh');
+  assert.equal(wdh.status, 'pass');
+  assert.equal(wdh.summary, 'No WDH-linked values on this page');
+});
+
+test('wdh ignores the page metadata, e.g. the model name in json-ld', () => {
+  const meta = '<div><div>WDH Model</div><div>61HG</div></div>'
+    + `<div><div>json-ld</div><div>{"@type":"Car","name":"${NAME}"}</div></div>`;
+  const wdh = check(runNamed(page(`<h1>X</h1><p>Autonomie ${RANGE_FR}.</p>`, meta)), 'wdh');
+  assert.equal(wdh.status, 'pass');
+  assert.equal(wdh.summary, 'All tech values match WDH');
+});
+
+test('wdh groups repeated hard-coded values', () => {
+  const wdh = check(runNamed(page(
+    '<h1>X</h1><p>518–627 km</p><p>518–627 km</p><p>518–627 km</p>',
+    '<div><div>WDH Model</div><div>61HG</div></div>',
+  )), 'wdh');
+  assert.equal(wdh.summary, '3 hard-coded values of 61HG could be bound to WDH');
+  assert.deepEqual(wdh.details, ['61HG.electricRange (3×): "518–627 km"']);
+});
+
+test('wltp warns instead of failing when the statement is written as text', () => {
+  const wltp = check(run(page(`<h1>X</h1><p>Autonomie ${RANGE_FR}.</p><p>${WLTP_FR}</p>`)), 'wltp');
+  assert.equal(wltp.status, 'warn');
+  assert.match(wltp.summary, /not linked to WDH/);
+});
+
+test('wltp recognises a written statement with a footnote marker', () => {
+  const statement = WLTP_FR.replace('Berline', 'Berline<sup>2</sup>');
+  const wltp = check(run(page(`<h1>X</h1><p>Autonomie ${RANGE_FR}.</p><p>${statement}</p>`)), 'wltp');
+  assert.equal(wltp.status, 'warn');
+});
