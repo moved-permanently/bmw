@@ -316,12 +316,17 @@ function startFallback() {
  *   ?rum=off&consent=disabled&quick-edit=on&controller=parent
  * - standalone from aem.page (adobe/da-nx quick-edit standalone.js): the aem.page shell carries
  *   ?quick-edit=…, the embedded preview.da.live page gets quick-edit=on&controller=parent.
+ * The Experience Workspace block library frames the authoring-only library documents
+ * (/library/blocks/*, /library/templates/*) on aem.page without any of these parameters
+ * (adobe/da-live ew-panel-extensions/helpers.js getItemPreviewUrl): the banner would cover the
+ * block preview, and a choice made in that frame does not stick.
  * In all of these, consent is not initialised at all (no ePaaS, no fallback banner).
  * @returns {boolean}
  */
 export function isConsentDisabled() {
   const params = new URLSearchParams(window.location.search);
-  return params.get('consent') === 'disabled'
+  return window.location.pathname.startsWith('/library/')
+    || params.get('consent') === 'disabled'
     || params.has('quick-edit')
     || params.get('controller') === 'parent';
 }

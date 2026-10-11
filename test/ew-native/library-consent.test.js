@@ -1,8 +1,9 @@
+/* global globalThis */
 /*
  * Library documents (/library/blocks/*, /library/templates/*) are authoring-only. The Experience
  * Workspace block library frames them on aem.page without consent=disabled (adobe/da-live
- * blocks/canvas/ew-panel-extensions/helpers.js getItemPreviewUrl), where a consent choice cannot
- * persist, so the consent banner must never start there.
+ * blocks/canvas/ew-panel-extensions/helpers.js getItemPreviewUrl), where the banner covers the
+ * block preview and a choice made in that frame does not stick, so consent must never start there.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';

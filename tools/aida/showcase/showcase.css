@@ -23,22 +23,21 @@
   font-size: 22px;
   }
 
-.showcase-brand strong {
-  font-weight: 600;
+.showcase-brand img {
+  display: block;
+  }
+
+.showcase-brand-x {
+  color: #666;
+  line-height: 1;
   }
 
 .showcase-brand small {
-  display: block;
   font-size: 13px;
   color: #666;
-  margin-top: 2px;
-  }
-
-.showcase-adobe {
-  font-size: 32px;
-  font-weight: 800;
-  color: #eb1000;
-  line-height: 1;
+  border-left: 1px solid #ddd;
+  padding-left: 14px;
+  margin-left: 4px;
   }
 
 .showcase-header-actions {
@@ -466,6 +465,18 @@
 
 .showcase-header {
   align-items: start;
+  }
+
+.showcase-brand {
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  }
+
+.showcase-brand small {
+  flex-basis: 100%;
+  border-left: 0;
+  padding-left: 0;
+  margin-left: 0;
   }
 
 .showcase-header-actions {
