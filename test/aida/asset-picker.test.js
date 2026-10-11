@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  countryForContext, filterAssets, facetValues, cropRegion, scene7Url, assetLink,
+  countryForContext, filterAssets, facetValues, cropRegion, scene7Url, assetLink, documentImage,
 } from '../../tools/aida/asset-picker/model.js';
 
 test('showcase document country is explicit and does not confuse its namespace with language', () => {
@@ -139,4 +139,32 @@ test('asset insertion keeps remote URLs as escaped image-carrier links and requi
   assert.throws(() => assetLink(marketing, marketing.url, ''), /alt/i);
   assert.throws(() => assetLink(marketing, unsafeScript, 'Car'), /URL/i);
   assert.throws(() => assetLink(marketing, 'https://evil.example/image.jpg', 'Car'), /URL/i);
+});
+
+test('an image link in the document resolves to its catalogue asset, smart crop and alt text', () => {
+  const href = 'https://bmw.scene7.com/is/image/BMW/g60-exterior:1to1?fit=constrain,1&cropN=0,0,1,1';
+  assert.deepEqual(documentImage(assets, { href, text: 'BMW i5 front' }), {
+    href, asset: marketing, crop: '1to1', alt: 'BMW i5 front', decorative: false,
+  });
+  const plain = 'https://bmw.scene7.com/is/image/BMW/g60-exterior';
+  assert.equal(documentImage(assets, { href: plain, text: 'Car' }).asset, marketing);
+  assert.equal(documentImage(assets, { href: plain, text: 'Car' }).crop, '');
+});
+
+test('COSY links match exactly and the decorative sentinel becomes empty alt text', () => {
+  assert.deepEqual(documentImage(assets, { href: cosy.url, text: 'Image without alt text' }), {
+    href: cosy.url, asset: cosy, crop: '', alt: '', decorative: true,
+  });
+  assert.equal(documentImage(assets, { href: `${cosy.url}x`, text: 'Other render' }).asset, null);
+});
+
+test('image links outside the catalogue are still images; videos and page links are not', () => {
+  const unknown = 'https://bmw.scene7.com/is/image/BMW/not-in-catalogue';
+  assert.deepEqual(documentImage(assets, { href: unknown, text: 'blueprint' }), {
+    href: unknown, asset: null, crop: '', alt: 'blueprint', decorative: false,
+  });
+  assert.equal(documentImage(assets, { href: 'https://bmw.scene7.com/is/content/BMW/clip-AVS.m3u8', text: 'blueprint' }), null);
+  assert.equal(documentImage(assets, { href: 'https://configure.bmw.de/de_DE/configure/G60E', text: 'Konfigurieren' }), null);
+  assert.equal(documentImage(assets, { href: unsafeScript, text: 'x' }), null);
+  assert.equal(documentImage(assets, null), null);
 });
