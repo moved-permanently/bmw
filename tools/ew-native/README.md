@@ -7,6 +7,7 @@ Not served (`.hlxignore`). Labels: **product** = native DA / Experience Workspac
 |---|---|---|
 | Block library: Stage, Key figures, Video, Assist features, News teaser, Disclaimer, Call to action | DA `/library/blocks/*`, sheet `/library/blocks.json`; site config `library` row "Blocks" | product library, custom content (`library.mjs`) |
 | Templates: News story, Vehicle launch, E-mobility topic | DA `/library/templates/*`, sheet `/library/templates.json`; row "Templates" | product library, custom content |
+| BMW icons: searchable grid of the 994 BMW icon font names, inserts `:name:` | config `library` row "BMW icons" → `/tools/aida/icon-picker/icon-picker.html` (names: `icons.json`, generated from the font by `icons.py`) | custom plugin; the native "Icons" library needs one preview image per icon, and BMW icons exist only as font ligatures |
 | Media Library plugin (fullsize-dialog) + app | config `library` row "Media Library", `apps` row; index `.da/media-insights/` (built by a signed-in discovery run: 5094 entries, schemaVersion 2, 1 chunk) | product; usage coverage limited (below) |
 | Structured content: schemas `news`, `market-offer` | DA `/.da/forms/schemas/*`; Schema Editor `https://da.live/apps/schema#/moved-permanently/bmw` | product (schemas custom, `structured.mjs`) |
 | Form routing | org config `editor.path` for `/aida/structured/news` and `/aida/structured/offers` → `https://da.live/form#` (classic DA browser; the Workspace canvas tree ignores it) | product |
