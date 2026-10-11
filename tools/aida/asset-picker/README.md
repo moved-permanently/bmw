@@ -21,6 +21,12 @@ Text search matches captions, asset identifiers and the above metadata. Filters 
 
 Catalogue tags are derived from published pages and explicit URL markers, not authoritative DAM metadata or rights permissions. A missing country marker means unlocalized, not a licence to reuse worldwide. This demo catalogue contains German-specific and unlocalized assets; it does not invent French/Belgian rights metadata.
 
+## Follow and replace document images
+
+When the editor reports the link under the cursor, clicking an image link in the document opens its catalogue asset. The picker prefills the document's alt text and smart crop. **Replace selected image** then swaps that link in place: the editor extends the selection to the whole link and replaces it, so the rest of the paragraph stays as it was. A link that points to an image outside the catalogue can be replaced with any catalogue asset. Videos and page links are not image carriers and never offer replacement. **Show** reopens the selected document image after browsing away.
+
+This needs an editor and SDK that support `onSelectionChange` and `replaceLink` (da-live and da-nx branch `pocasset`). The SDK comes from `https://da.live/nx/utils/sdk.js` unless the library URL names a da-nx branch with `?nx=<branch>`; if that branch cannot be loaded, the picker falls back to the da.live SDK. Without editor support, the picker keeps working as an insert-only picker.
+
 ## Scene7 image options
 
 - **Smart crop:** only named variants observed on source pages. “As authored” preserves an observed rendition; it does not invent an original URL or an unobserved crop name.

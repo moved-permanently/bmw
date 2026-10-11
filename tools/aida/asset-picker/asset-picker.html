@@ -14,6 +14,7 @@
         <h1>BMW assets</h1>
         <p class="asset-note">Published demo catalogue · derived tags, not DAM permissions.</p>
         <p id="asset-context" class="asset-note"></p>
+        <p id="asset-selection" class="asset-note asset-selection" hidden><span id="asset-selection-text"></span><button id="asset-show" type="button" hidden class="spectrum-Button spectrum-Button--sizeS spectrum-Button--secondary spectrum-Button--outline"><span class="spectrum-Button-label">Show</span></button></p>
       </header>
       <section id="asset-browser" aria-label="Find an image">
         <form id="asset-filters" role="search">
@@ -51,7 +52,7 @@
         <label class="asset-check spectrum-Checkbox spectrum-Checkbox--sizeM"><input id="asset-decorative" type="checkbox" class="spectrum-Checkbox-input"><span class="spectrum-Checkbox-box"><svg class="spectrum-Checkbox-checkmark" viewBox="0 0 10 10" aria-hidden="true"><path d="M3.5 8.5 0 5l1.5-1.5 2 2 5-5L10 2z"/></svg></span><span class="spectrum-Checkbox-label">Decorative image (empty alt text)</span></label>
         <details><summary>Source pages</summary><ul id="asset-sources"></ul></details>
         <details><summary>Delivery URL and insertion markup</summary><label>Delivery URL<span class="spectrum-Textfield spectrum-Textfield--multiline spectrum-Textfield--sizeM"><textarea id="asset-url" rows="2" readonly class="spectrum-Textfield-input"></textarea></span></label><label>Insertion markup<span class="spectrum-Textfield spectrum-Textfield--multiline spectrum-Textfield--sizeM"><textarea id="asset-markup" rows="3" readonly class="spectrum-Textfield-input"></textarea></span></label></details>
-        <div class="asset-actions"><button id="asset-insert" type="button" disabled class="spectrum-Button spectrum-Button--sizeM spectrum-Button--accent spectrum-Button--fill"><span class="spectrum-Button-label">Insert image</span></button><button id="asset-copy" type="button" disabled class="spectrum-Button spectrum-Button--sizeM spectrum-Button--secondary spectrum-Button--outline"><span class="spectrum-Button-label">Copy markup</span></button></div>
+        <div class="asset-actions"><button id="asset-replace" type="button" hidden disabled class="spectrum-Button spectrum-Button--sizeM spectrum-Button--accent spectrum-Button--fill"><span class="spectrum-Button-label">Replace selected image</span></button><button id="asset-insert" type="button" disabled class="spectrum-Button spectrum-Button--sizeM spectrum-Button--accent spectrum-Button--fill"><span class="spectrum-Button-label">Insert image</span></button><button id="asset-copy" type="button" disabled class="spectrum-Button spectrum-Button--sizeM spectrum-Button--secondary spectrum-Button--outline"><span class="spectrum-Button-label">Copy markup</span></button></div>
         <p id="asset-message" role="status" aria-live="polite"></p>
       </section>
       <p id="asset-error" class="asset-error" role="alert" hidden></p>

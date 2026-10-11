@@ -178,6 +178,13 @@
   padding: 12px 0;
 }
 
+.asset-picker .asset-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
 .asset-picker .asset-error {
   color: var(--spectrum-negative-content-color-default);
 }

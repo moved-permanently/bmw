@@ -1,6 +1,6 @@
 import {
   countryForContext, assetContextMessage, filterAssets, facetValues,
-  cropRegion, scene7Url, assetLink,
+  cropRegion, scene7Url, assetLink, documentImage,
 } from './model.js';
 import connect from '../da.js';
 
@@ -8,6 +8,7 @@ const PAGE_SIZE = 36;
 const COUNTRY_NAMES = new Intl.DisplayNames(['en'], { type: 'region' });
 const countryName = (code) => COUNTRY_NAMES.of(code.toUpperCase());
 const sourceOrigin = 'https://main--bmw--moved-permanently.aem.page';
+const REPLACE_TIMEOUT = 5000;
 
 function options(select, values, label) {
   const selected = select.value;
@@ -28,6 +29,9 @@ export default function mountPicker(main, { assets, context = {}, actions = null
   let loaded = false;
   let deliveryUrl = '';
   let inserting = false;
+  let target = null;
+  const following = typeof actions?.onSelectionChange === 'function'
+    && typeof actions?.replaceLink === 'function';
   const countries = [...new Set(['de', 'fr', 'at', 'be', initialCountry,
     ...assets.flatMap((asset) => asset.countries || [])])].filter(Boolean);
   countries.sort((a, b) => countryName(a).localeCompare(countryName(b)))
@@ -35,6 +39,24 @@ export default function mountPicker(main, { assets, context = {}, actions = null
   find('country').value = initialCountry;
   find('context').textContent = assetContextMessage(context);
   if (!actions) find('context').textContent += ' Standalone preview: open in Experience Workspace to insert.';
+
+  function updateReplace() {
+    const replacing = !!target;
+    find('replace').hidden = !replacing;
+    find('replace').disabled = inserting || !loaded || !find('markup').value;
+    find('insert').classList.toggle('spectrum-Button--accent', !replacing);
+    find('insert').classList.toggle('spectrum-Button--fill', !replacing);
+    find('insert').classList.toggle('spectrum-Button--secondary', replacing);
+    find('insert').classList.toggle('spectrum-Button--outline', replacing);
+  }
+
+  function showTarget() {
+    find('selection').hidden = !target;
+    if (!target) return;
+    const name = target.decorative ? 'a decorative image' : `“${target.alt}”`;
+    find('selection-text').textContent = `Selected in document: ${name}${target.asset ? '' : ' · not in the catalogue'}`;
+    find('show').hidden = !target.asset || target.asset === selected;
+  }
 
   function insertion() {
     find('message').textContent = '';
@@ -50,6 +72,7 @@ export default function mountPicker(main, { assets, context = {}, actions = null
     find('markup').value = html;
     find('insert').disabled = inserting || !actions || !loaded || !html;
     find('copy').disabled = !loaded || !html;
+    updateReplace();
   }
 
   function preview() {
@@ -87,7 +110,7 @@ export default function mountPicker(main, { assets, context = {}, actions = null
     img.src = scene7Url(selected, { ...modifiers, width: 960 });
   }
 
-  function choose(asset) {
+  function choose(asset, image = null) {
     selected = asset;
     dimensions = null;
     find('browser').hidden = true;
@@ -108,6 +131,12 @@ export default function mountPicker(main, { assets, context = {}, actions = null
     find('anchor').value = 'center';
     find('anchor').disabled = true;
     find('sharpen').checked = new URL(asset.url).searchParams.get('op_sharpen') === '1';
+    if (image) {
+      find('alt').value = image.alt;
+      find('decorative').checked = image.decorative;
+      find('alt').disabled = image.decorative;
+      if (image.crop) crop.value = image.crop;
+    }
     find('sources').replaceChildren(...asset.sources.map((path) => {
       const li = document.createElement('li');
       const link = document.createElement('a');
@@ -120,7 +149,8 @@ export default function mountPicker(main, { assets, context = {}, actions = null
       return li;
     }));
     preview();
-    find('back').focus();
+    showTarget();
+    if (!image) find('back').focus();
   }
 
   function results() {
@@ -193,6 +223,7 @@ export default function mountPicker(main, { assets, context = {}, actions = null
   find('more').addEventListener('click', () => { limit += PAGE_SIZE; results(); });
   find('back').addEventListener('click', () => {
     selected = null;
+    showTarget();
     previewRequest += 1;
     find('detail').hidden = true;
     find('browser').hidden = false;
@@ -229,6 +260,33 @@ export default function mountPicker(main, { assets, context = {}, actions = null
       find('message').textContent = 'Could not insert the image. Please reopen the picker.';
     }
   });
+  find('replace').addEventListener('click', async () => {
+    if (inserting || find('replace').disabled || !target) return;
+    inserting = true;
+    updateReplace();
+    const html = assetLink(selected, deliveryUrl, find('alt').value, find('decorative').checked);
+    let message = 'Image replaced in the document.';
+    try {
+      await Promise.race([
+        actions.replaceLink(html, { href: target.href }),
+        new Promise((_, reject) => { setTimeout(() => reject(new Error('timeout')), REPLACE_TIMEOUT); }),
+      ]);
+    } catch {
+      message = 'Could not replace the image. Select it in the document again.';
+    }
+    inserting = false;
+    insertion();
+    find('message').textContent = message;
+  });
+  find('show').addEventListener('click', () => { if (target?.asset) choose(target.asset, target); });
+  if (following) {
+    actions.onSelectionChange(({ link } = {}) => {
+      target = documentImage(assets, link);
+      if (target?.asset && target.asset !== selected) choose(target.asset, target);
+      showTarget();
+      updateReplace();
+    });
+  }
   find('copy').addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(find('markup').value);
