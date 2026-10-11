@@ -32,7 +32,8 @@ test('content files: library, both skill layouts, teaser page and schema documen
 
 test('site config steps: library, prepare Schedule Publish, apps, prompts, inline skills sheet, canvas flag', () => {
   const steps = Object.fromEntries(siteConfigSteps().map((s) => [s.sheet, s]));
-  assert.deepEqual(steps.library.rows.map((r) => r.title), ['Blocks', 'Templates', 'Media Library']);
+  assert.deepEqual(steps.library.rows.map((r) => r.title), ['Blocks', 'Templates', 'Media Library', 'BMW icons']);
+  assert.deepEqual(steps.library.rows.at(-1), { title: 'BMW icons', path: 'https://main--bmw--moved-permanently.aem.page/tools/aida/icon-picker/icon-picker.html' }, 'custom plugin: a title other than the built-in "Icons" sheet library');
   assert.deepEqual(steps.prepare.rows, [{ title: 'Schedule Publish', path: '' }]);
   assert.deepEqual(steps.apps.rows.map((r) => r.title), ['Media Library', 'Launch review (Snapshots)', 'Structured content schemas', 'Skills Lab', 'Scheduler']);
   assert.ok(!steps.apps.rows.some((r) => /optel|rum|domainkey|publish requests/i.test(`${r.title} ${r.path}`)), 'no dead tiles, no keys in config');
