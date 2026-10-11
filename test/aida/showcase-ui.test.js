@@ -39,6 +39,29 @@ test('showcase ships real vendored Spectrum styles and a labelled rehearsal boun
   assert.match(read('tools/aida/vendor/spectrum/NOTICE.md'), /Adobe|Spectrum/);
 });
 
+test('showcase header carries the real Adobe and BMW logos instead of a text stand-in', () => {
+  const page = read('tools/aida/showcase/index.html');
+  assert.doesNotMatch(page, /showcase-adobe/);
+  const header = page.slice(page.indexOf('<header'), page.indexOf('</header>'));
+  const imgs = [...header.matchAll(/<img\b[^>]*>/g)].map(([tag]) => Object.fromEntries(
+    [...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(([, name, value]) => [name, value]),
+  ));
+  const adobe = imgs.find((img) => img.src === './adobe-logo.svg');
+  const bmw = imgs.find((img) => img.src === './bmw-logo.svg');
+  assert.equal(adobe?.alt, 'Adobe');
+  assert.equal(bmw?.alt, 'BMW');
+  [adobe, bmw].forEach((img) => assert.ok(Number(img.width) > 0 && Number(img.height) > 0));
+
+  // Adobe Red lockup ("A" mark + wordmark) as on adobe.com (adobecom/milo global navigation)
+  const adobeSvg = read('tools/aida/showcase/adobe-logo.svg');
+  assert.match(adobeSvg, /fill="#eb1000"/);
+  assert.match(adobeSvg, /d="M6\.27,10\.22h4\.39l6\.2,14\.94h-4\.64l-3\.92-9\.92-2\.59,6\.51h3\.08l1\.23,3\.41H0l6\.27-14\.94Z/);
+  // BMW roundel the migrated site's own header uses (nav logo for light backgrounds)
+  const bmwSvg = read('tools/aida/showcase/bmw-logo.svg');
+  assert.match(bmwSvg, /\.st1\{fill:#0066b1\}/);
+  assert.match(bmwSvg, /viewBox="0 0 340\.16 340\.16"/);
+});
+
 test('playground persists only its own versioned rehearsal state and never publishes implicitly', () => {
   const app = read('tools/aida/showcase/app.js');
   assert.match(app, /bmw-aida-showcase-v4/);
