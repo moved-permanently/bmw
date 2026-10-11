@@ -17,7 +17,7 @@
  * window.ssb.gcChat.open(). URL parameter ?openAIAssistant=true opens the AI assistant.
  */
 import { isUsageAllowed, loadConsent, showConsentSettings } from './bmw-consent.js';
-import { bmwProxyUrl } from './bmw-utils.js';
+import { bmwProxyUrl, isLibraryDocument } from './bmw-utils.js';
 
 const FRAGMENT_PATH = '/de/fragments/help-sidebar';
 const CSS_PATH = '/scripts/bmw-sidebar.css';
@@ -1035,13 +1035,13 @@ export async function openLiveChat() {
 }
 
 /**
- * Starts the help sidebar (idempotent).
+ * Starts the help sidebar (idempotent; never on authoring-only library documents).
  * @returns {Promise<void>}
  */
 export default function loadSidebar() {
   if (!started) {
     started = (async () => {
-      if (document.querySelector('.bmw-sidebar')) return;
+      if (isLibraryDocument() || document.querySelector('.bmw-sidebar')) return;
       const [config] = await Promise.all([loadConfig(), loadCss()]);
       loadConsent();
       await new Sidebar(config).init();

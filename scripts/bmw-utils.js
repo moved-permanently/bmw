@@ -912,6 +912,16 @@ export function createInfoButton(content, { label = 'Weitere Informationen', cla
   return button;
 }
 
+/**
+ * Whether a path is an authoring-only library document (/library/blocks/*, /library/templates/*),
+ * which the Experience Workspace block library previews in a frame.
+ * @param {string} [path]
+ * @returns {boolean}
+ */
+export function isLibraryDocument(path = window.location.pathname) {
+  return path.startsWith('/library/');
+}
+
 /* ------------------------------------------------------------------------------------------
  * bmw-proxy (Cloudflare worker, tools/workers/bmw-proxy): www.bmw.de endpoints without CORS.
  * Paths are identical to www.bmw.de; other upstream hosts are addressed as /<host>/<path>.

@@ -20,7 +20,7 @@
  * Events on window: 'bmw-consent-change' {detail: {mode, categories}},
  *   'consent.update' {detail: {consented}}
  */
-import { bmwProxyUrl } from './bmw-utils.js';
+import { bmwProxyUrl, isLibraryDocument } from './bmw-utils.js';
 
 const EPAAS_SRC = 'https://www.bmw.com/etc/clientlibs/wcmp/consentcontroller.fallback/epaas.js';
 const EPAAS_PROXY_PATH = '/www.bmw.com/etc/clientlibs/wcmp/consentcontroller.fallback/epaas.js';
@@ -325,7 +325,7 @@ function startFallback() {
  */
 export function isConsentDisabled() {
   const params = new URLSearchParams(window.location.search);
-  return window.location.pathname.startsWith('/library/')
+  return isLibraryDocument()
     || params.get('consent') === 'disabled'
     || params.has('quick-edit')
     || params.get('controller') === 'parent';
