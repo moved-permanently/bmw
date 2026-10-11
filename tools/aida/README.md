@@ -45,7 +45,9 @@ clicked. Content lives under `/aida/`; the migrated site is unchanged.
    [Belgium page](https://aida--bmw--moved-permanently.aem.page/aida/fr/be/i5) still carries German
    data: the panel says "20 of 20 values need an update (FR)". In the
    [editor](https://da.live/edit#/moved-permanently/bmw/aida/fr/be/i5), prepare menu → *Preflight*
-   lists them and updates them in one click. **Leave the drift in place for the demo** unless rehearsing.
+   lists them and updates them in one click. Prepare menu → *Update WDH values* updates them directly,
+   and while editing, the WDH panel's *Update* button does the same through a short popup (the
+   Preflight app, trusted once per branch). **Leave the drift in place for the demo** unless rehearsing.
    It also checks the WLTP statement, market features
    (the Highway Assistant is not available in France, see the
    [French page in the editor](https://da.live/edit#/moved-permanently/bmw/aida/fr/fr/i5)), brand
