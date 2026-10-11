@@ -15,6 +15,15 @@ const frontmatter = (md) => {
   return Object.fromEntries(m[1].split('\n').map((l) => l.split(/:\s(.+)/).slice(0, 2)).map(([k, v]) => [k.trim().toLowerCase(), v.trim()]));
 };
 
+test('frontmatter values with ": " are quoted, so YAML parsers (Agent Orchestrator upload) read name and description', () => {
+  Object.values(skillFiles()).forEach((md) => {
+    const line = md.split('\n').find((l) => l.startsWith('description: '));
+    const value = line.slice('description: '.length);
+    assert.match(value, /^".*"$/, line);
+    assert.ok(JSON.parse(value).length > 0);
+  });
+});
+
 test('three purposeful skills: campaign media, drafting from approved facts, brand/market readiness', () => {
   assert.deepEqual(SKILLS.map((s) => s.id), ['bmw-find-campaign-media', 'bmw-draft-from-approved-facts', 'bmw-brand-market-readiness']);
 });
