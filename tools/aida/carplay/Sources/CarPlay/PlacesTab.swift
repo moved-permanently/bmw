@@ -82,6 +82,10 @@ final class PlacesTab {
                 }
                 let a = CPAlertTemplate(titleVariants: ["\(row.name): \(headline)", row.name], actions: [read, later])
                 interface.presentTemplate(a, animated: true, completion: nil)
+                // The alert must not block the tabs for good; drop it after 20 s if nobody answered.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 20) { [weak self] in
+                    if self?.interface.presentedTemplate === a { self?.interface.dismissTemplate(animated: true, completion: nil) }
+                }
             }
         }
     }

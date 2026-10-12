@@ -11,6 +11,8 @@ A demo layer on the migrated bmw.de that answers the RfP's content-creator and V
 scenarios, told as the BMW i5 launch. It is built, live on preview, and everything below can be
 clicked. Content lives under `/aida/`; the migrated site is unchanged.
 
+The same pages also drive a [CarPlay demo app](carplay/README.md) for the iOS Simulator: places with a story, the car and the news on the car screen, read through html2json.
+
 ## Check it yourself
 
 1. **Open formats, LLM visibility.** [Hub](https://aida--bmw--moved-permanently.aem.page/aida/):
