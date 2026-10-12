@@ -133,3 +133,26 @@ test('unknown timestamps do not count as edited since source; ISO dates compare 
 test('empty translation setup reports a clear configuration problem', () => {
   assert.throws(() => topology({}), /translation config/i);
 });
+
+test('rebase moves the translation layout to another root, e.g. the showcase tree', () => {
+  const showcase = radar.rebase(config, '/aida/showcase');
+  assert.deepEqual(topology(showcase), {
+    source: { name: 'English', location: '/aida/showcase/en' },
+    targets: [
+      { name: 'German', location: '/aida/showcase/de', kind: 'language' },
+      { name: 'de', location: '/aida/showcase/de/de', kind: 'locale' },
+      { name: 'French', location: '/aida/showcase/fr', kind: 'language' },
+      { name: 'fr', location: '/aida/showcase/fr/fr', kind: 'locale' },
+      { name: 'be', location: '/aida/showcase/fr/be', kind: 'locale' },
+    ],
+  });
+  assert.equal(config.languages.data[0].location, '/aida/en', 'the original config is unchanged');
+});
+
+test('rebase keeps the config without a root and rejects unsafe roots', () => {
+  assert.deepEqual(radar.rebase(config, ''), config);
+  assert.deepEqual(radar.rebase(config, null), config);
+  ['aida/showcase', '/aida/../x', '/aida//x', '/aida/x?y', '/aida/<x>', '/aida/x/'].forEach((root) => {
+    assert.throws(() => radar.rebase(config, root), /Invalid radar root/, root);
+  });
+});

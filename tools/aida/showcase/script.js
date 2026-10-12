@@ -189,7 +189,7 @@ export const chapters = [
       'Each cell links to the next action: edit, review, preview, check; Files shows what is in preview and what is live.',
     ],
     show: [
-      { label: 'Rollout radar', href: `${DA_EDITOR}/app/${SITE}/tools/aida/radar/radar?ref=main` },
+      { label: 'Rollout radar', href: `${DA_EDITOR}/app/${SITE}/tools/aida/radar/radar?ref=main&root=/aida/showcase` },
       { label: 'Belgian news in Files: review and publish status', href: files('/aida/showcase/fr/be/news') },
     ],
     recap: 'HQ sees the rollout status of all markets and what blocks each one.',

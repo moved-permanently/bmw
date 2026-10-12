@@ -1,6 +1,7 @@
 import connect from '../da.js';
 import {
-  topology, dependencies, buildGrid, TIMESTAMP_LABELS, pageActions, reviewState, commentCounts,
+  topology, dependencies, buildGrid, rebase,
+  TIMESTAMP_LABELS, pageActions, reviewState, commentCounts,
 } from './grid.js';
 import {
   findBindings, staleBindings, valuesFromSheet, marketForPath,
@@ -143,7 +144,8 @@ function renderDependencies(main, { source, languages }) {
   try {
     const da = await connect();
     const ref = da.context.ref || 'main';
-    const config = JSON.parse(await da.read('/.da/translate.json'));
+    const root = new URLSearchParams(window.location.search).get('root');
+    const config = rebase(JSON.parse(await da.read('/.da/translate.json')), root);
     const { source, targets } = topology(config);
     renderDependencies(main, dependencies(config));
     status.textContent = `Reading ${source.location} and ${targets.length} language and market folders…`;

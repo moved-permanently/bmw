@@ -23,6 +23,26 @@ export function topology(config) {
 }
 
 /**
+ * The same language and market layout under another root folder: locations in the translation
+ * config live under the parent of the source folder (/aida/en -> /aida); rebase swaps that parent
+ * for `root` (e.g. /aida/showcase). Without a root the config is returned as is.
+ */
+export function rebase(config, root) {
+  if (!root) return config;
+  if (!/^(\/[a-z0-9-]+)+$/.test(root)) throw new Error('Invalid radar root');
+  const { source } = topology(config);
+  const base = source.location.slice(0, source.location.lastIndexOf('/'));
+  const move = (location) => (location === base || location.startsWith(`${base}/`)
+    ? `${root}${location.slice(base.length)}` : location);
+  const languages = rowsOf(config.languages).map((l) => ({
+    ...l,
+    location: move(l.location),
+    locales: split(l.locales).map(move).join(', '),
+  }));
+  return { ...config, languages: { ...config.languages, data: languages } };
+}
+
+/**
  * Language -> market structure of the rollout (translation config only; no status): the source
  * language, each target language and the market folders that are rolled out from it.
  */
