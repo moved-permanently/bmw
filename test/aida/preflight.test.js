@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { runChecks } from '../../tools/aida/preflight/checks.js';
 import { valuesFromSheet } from '../../scripts/aida-wdh.js';
 
@@ -155,4 +156,9 @@ test('wltp recognises a written statement with a footnote marker', () => {
   const statement = WLTP_FR.replace('Berline', 'Berline<sup>2</sup>');
   const wltp = check(run(page(`<h1>X</h1><p>Autonomie ${RANGE_FR}.</p><p>${statement}</p>`)), 'wltp');
   assert.equal(wltp.status, 'warn');
+});
+
+test('the Preflight report has no disclaimer paragraph', () => {
+  const source = readFileSync(new URL('../../tools/aida/preflight/preflight.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(source, /Deterministic content checks only/);
 });

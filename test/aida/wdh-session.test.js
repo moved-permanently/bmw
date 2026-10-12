@@ -52,6 +52,7 @@ test('runtime wiring: every loadPage starts a session before decorating, the che
   assert.ok(scripts.indexOf('captureEditorPort()') > -1 && scripts.indexOf('captureEditorPort()') < scripts.indexOf('\nloadPage();'), 'the editor port is captured before quick edit loads (appended after loadPage())');
   const aida = read('scripts/aida.js');
   assert.match(aida, /isCurrent\(generation\)/, 'a superseded render does not render its panel');
+  assert.match(aida, /<p class="wdh-check-title">WDH check<\/p>/, 'the panel title is just "WDH check"');
   assert.match(aida, /panel\.addEventListener\('mousedown', \(e\) => \{\s*e\.preventDefault\(\);\s*e\.stopPropagation\(\);/, 'clicks on the panel neither focus the editor frame (canvas selection toolbar) nor reach quick edit');
   assert.match(aida, /querySelectorAll\('aside\.wdh-check'\)\.forEach\(\(p\) => p\.remove\(\)\)/, 'an existing panel is replaced, not duplicated');
 });
