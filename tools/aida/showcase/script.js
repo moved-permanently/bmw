@@ -235,14 +235,14 @@ export const chapters = [
     title: 'Insights back to HQ',
     rfp: ['I 5', 'III Governance'],
     tell: [
-      'AEM measures real visits and Core Web Vitals of every page out of the box.',
-      'Creators see the KPIs of their pages; HQ sees them per market next to the rollout status.',
-      'Analytics and task tools such as Workfront connect at the same points. The numbers shown are sample values.',
+      'AEM operational telemetry measures real visits and Core Web Vitals of every page out of the box.',
+      'The same data can be broken down per market, next to the rollout status HQ already sees.',
+      'Analytics and task tools such as Workfront connect at the same points.',
     ],
     show: [
-      { label: 'KPIs next to the rollout status', href: '#radar' },
+      { label: 'How AEM operational telemetry works', href: 'https://www.aem.live/docs/operational-telemetry' },
     ],
-    recap: 'From publishing to learning: KPIs per page and market, pushed to HQ.',
+    recap: 'From publishing to learning: real usage per page and market goes back to HQ.',
   },
   {
     id: 'architecture',
