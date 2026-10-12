@@ -130,6 +130,12 @@ test('the WDH chapter keeps path/3 and links to server-side HTML cleanup without
   assert.doesNotMatch(data.recap, /always.*current/i);
 });
 
+test('long briefing labels can wrap in the agenda on narrow screens', () => {
+  const css = read('tools/aida/showcase/showcase.css');
+  const th = css.match(/\.showcase-path-agenda th\s*\{([^}]+)\}/)[1];
+  assert.doesNotMatch(th, /white-space:\s*nowrap/);
+});
+
 test('the presenter can step through chapters with the arrow keys', () => {
   const app = read('tools/aida/showcase/app.js');
   assert.match(app, /ArrowRight/);
