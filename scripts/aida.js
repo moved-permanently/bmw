@@ -147,6 +147,12 @@ export async function checkWdhValues(session, editor) {
     }
   });
   panel.querySelector('.wdh-check-close').addEventListener('click', () => panel.remove());
+  // clicks on the panel stay out of the editor: the frame does not take focus (the canvas would
+  // show its selection toolbar over the panel) and quick edit does not select or edit anything
+  panel.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
   show();
   document.querySelectorAll('aside.wdh-check').forEach((p) => p.remove());
   document.body.append(panel);
