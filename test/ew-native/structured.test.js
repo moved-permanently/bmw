@@ -62,8 +62,8 @@ test('schema documents use the Schema Editor storage format', () => {
 test('editor routing only for the task-owned demo folders (distinct, no prefix of another path)', () => {
   assert.deepEqual(FOLDERS, ['/aida/structured/news', '/aida/structured/offers']);
   assert.deepEqual(editorRoutes(), [
-    { key: 'editor.path', value: '/moved-permanently/bmw/aida/structured/news=https://da.live/form#' },
-    { key: 'editor.path', value: '/moved-permanently/bmw/aida/structured/offers=https://da.live/form#' },
+    { key: 'editor.path', value: '/moved-permanently/bmw/aida/structured/news=https://ewdemo--da-live--adobe.aem.live/form#' },
+    { key: 'editor.path', value: '/moved-permanently/bmw/aida/structured/offers=https://ewdemo--da-live--adobe.aem.live/form#' },
   ]);
 });
 

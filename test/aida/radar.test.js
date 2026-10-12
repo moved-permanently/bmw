@@ -62,25 +62,60 @@ test('timestamp labels never claim approval or publishing evidence', () => {
   });
 });
 
-test('source and target pages expose edit, preview, preflight and simulated workflow routes', () => {
+test('source and target pages link to the editor, review inbox, Files and Snapshots on the demo branch', () => {
   assert.equal(typeof radar.pageActions, 'function');
   const actions = radar.pageActions({
     org: 'moved-permanently', site: 'bmw', path: '/aida/fr/be/i5', ref: 'demo',
   });
   assert.deepEqual(actions, {
-    edit: `${DA_EDITOR}/edit#/moved-permanently/bmw/aida/fr/be/i5`,
+    edit: `${DA_EDITOR}/canvas#/moved-permanently/bmw/aida/fr/be/i5`,
     preview: 'https://demo--bmw--moved-permanently.aem.page/aida/fr/be/i5',
     preflight: '/tools/aida/preflight/preflight.html?path=%2Faida%2Ffr%2Fbe%2Fi5&org=moved-permanently&site=bmw&ref=demo',
-    workflow: '/tools/aida/showcase/index.html?path=%2Faida%2Ffr%2Fbe%2Fi5#workflow',
+    review: `${DA_EDITOR}/app/adobe-rnd/aem-apps/tools/apps/publish-requests-inbox/publish-requests-inbox?org=moved-permanently&site=bmw&path=%2Faida%2Ffr%2Fbe%2Fi5&env=ci&ref=ewdemo&nx=ewdemo`,
+    files: `${DA_EDITOR}/#/moved-permanently/bmw/aida/fr/be`,
+    snapshots: `${DA_EDITOR}/apps/snapshots#/moved-permanently/bmw`,
     translate: `${DA_EDITOR}/apps/loc#/moved-permanently/bmw`,
   });
+});
+
+const SETTINGS = [
+  { key: 'workflow.step.1.title', value: 'Market review' },
+  { key: 'workflow.step.2.title', value: 'Legal review' },
+];
+
+test('a pending publish request shows the step it waits on', () => {
+  const rows = [
+    {
+      path: '/aida/fr/be/i5', status: 'pending', requester: 'author@example.com', step: '',
+    },
+    {
+      path: '/aida/de/de/i5', status: 'pending', requester: 'other@example.com', step: 'reviewer@example.com:1:2026-10-12T11:00:00Z',
+    },
+    { path: '/aida/fr/fr/i5', status: 'approved', requester: 'author@example.com' },
+  ];
+  assert.deepEqual(radar.reviewState(rows, SETTINGS, '/aida/fr/be/i5'), { step: 1, title: 'Market review', requester: 'author@example.com' });
+  assert.deepEqual(radar.reviewState(rows, SETTINGS, '/aida/de/de/i5'), { step: 2, title: 'Legal review', requester: 'other@example.com' });
+  assert.equal(radar.reviewState(rows, SETTINGS, '/aida/fr/fr/i5'), null);
+  assert.equal(radar.reviewState(rows, SETTINGS, '/aida/en/i5'), null);
+  assert.equal(radar.reviewState(rows, [], '/aida/fr/be/i5').title, 'Step 1');
+});
+
+test('comment counts are per thread: open and resolved roots, replies ignored', () => {
+  const comments = [
+    { id: 'a', threadId: null, resolved: false },
+    { id: 'b', threadId: 'a' },
+    { id: 'c', threadId: null, resolved: true },
+    { id: 'd', threadId: null, resolved: false },
+  ];
+  assert.deepEqual(radar.commentCounts(comments), { open: 2, resolved: 1 });
+  assert.deepEqual(radar.commentCounts([]), { open: 0, resolved: 0 });
 });
 
 test('action routes encode authored names and reject unsafe site/path input', () => {
   assert.equal(typeof radar.pageActions, 'function');
   const routes = radar.pageActions({ org: 'demo', site: 'demo', path: '/aida/car & range' });
   assert.equal(routes.preview, 'https://main--demo--demo.aem.page/aida/car%20%26%20range');
-  assert.equal(routes.edit, `${DA_EDITOR}/edit#/demo/demo/aida/car%20%26%20range`);
+  assert.equal(routes.edit, `${DA_EDITOR}/canvas#/demo/demo/aida/car%20%26%20range`);
   assert.throws(() => radar.pageActions({ org: 'bad.example/', site: 'demo', path: '/aida/i5' }), /site/i);
   ['/../outside', '//evil.example/x', '/aida/<img>', '/aida/x?y=1', '/aida/x#y'].forEach((path) => {
     assert.throws(() => radar.pageActions({ org: 'demo', site: 'demo', path }), /path/i);
