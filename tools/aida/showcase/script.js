@@ -30,11 +30,11 @@ export const RFP = {
 export const chapters = [
   {
     id: 'journey',
-    title: 'Agenda: one launch, every market',
+    title: 'Agenda: Briefings I and III',
     rfp: [],
     tell: [
       'We follow one story through Briefing I: HQ creates the BMW i5 launch once, and stakeholders review it before the embargo.',
-      'Then AI translates it, the markets adapt and publish it, and status and insights come back to HQ. The agenda shows the chapter for each step.',
+      'AI translates it, markets adapt and publish it, and status and insights come back to HQ. The agenda links both briefings to the chapters below.',
       'The starting point: bmw.de, migrated and running on AEM, authored in Experience Workspace.',
     ],
     show: [
@@ -43,14 +43,22 @@ export const chapters = [
     ],
     agenda: [
       { rfp: 'I 1a', chapters: ['model'] },
-      { rfp: 'I 1b', chapters: ['edit', 'assets'] },
+      { rfp: 'I 1b', chapters: ['edit', 'assets', 'review', 'release'] },
       { rfp: 'I 2', chapters: ['review'] },
-      { rfp: 'I 3', chapters: ['translate', 'rollout'] },
-      { rfp: 'I 4', chapters: ['rollout', 'status', 'release'] },
+      { rfp: 'I 3', chapters: ['data', 'translate', 'rollout', 'status'] },
+      { rfp: 'I 4', chapters: ['review', 'rollout', 'status', 'release'] },
       { rfp: 'I 5', chapters: ['insights'] },
-      { rfp: 'III Architecture', chapters: ['architecture'] },
+      { rfp: 'III Architecture', chapters: ['release', 'architecture'] },
+      { rfp: 'III Workflows', chapters: ['review', 'status', 'release'] },
+      { rfp: 'III AI translation', chapters: ['quality', 'translate'] },
+      { rfp: 'III Connectors', chapters: ['data', 'assets'] },
+      { rfp: 'III Modeling', chapters: ['model', 'assets', 'delivery'] },
+      { rfp: 'III Composition', chapters: ['edit', 'model'] },
+      { rfp: 'III Localization', chapters: ['translate', 'rollout'] },
+      { rfp: 'III Governance', chapters: ['quality', 'status', 'insights'] },
+      { rfp: 'III Delivery', chapters: ['delivery'] },
     ],
-    recap: 'One story in six steps; each step is shown live in the chapters that follow.',
+    recap: 'Both briefings mapped to the demo chapters, from content modeling to delivery and insights.',
   },
   {
     id: 'edit',
@@ -92,15 +100,16 @@ export const chapters = [
     rfp: ['III Connectors', 'I 3'],
     tell: [
       'Technical data is linked to WDH, not typed: range, consumption, power and price come from the WDH extract.',
-      'Each market gets its own values and formatting, for example consumption and price in Germany and in France.',
-      'Authors insert values from the WDH picker; a check flags any value that no longer matches WDH.',
+      'Authors insert market-specific values and formatting with the WDH picker; Preflight flags values that no longer match the extract.',
+      'The proxy worker removes WDH links from the delivered HTML without browser JavaScript. It keeps the saved values and their source references; it does not fetch fresh WDH data.',
     ],
     show: [
       { label: 'DE and FR offers from WDH', href: page('/aida/structured/teasers') },
       { label: 'WDH picker in the editor (FR/BE)', href: canvas('/aida/fr/be/i5') },
       { label: 'WDH extract (FR)', href: page('/aida/data/wdh-fr.json') },
+      { label: 'WDH proxy worker: i5 HTML without data links', href: 'https://wdh-proxy.aem-poc-lab.workers.dev/aida/showcase/de/de/i5' },
     ],
-    recap: 'WDH stays the source of truth; pages always show the market’s current values.',
+    recap: 'WDH references connect market figures to their source; the worker removes clickable data links before delivery.',
   },
   {
     id: 'assets',

@@ -4,6 +4,10 @@
 
 The demo path walks the BMW launch story chapter by chapter and links each step to the real product surface: the editor, Snapshots, Translate, Request Publish and its inbox, the rollout radar, Files and the published pages. The other tabs explain the architecture, the BMW asset picker and delivery formats. The showcase keeps no workflow state of its own: review, translation, rollout and publication happen in Experience Workspace.
 
+The opening agenda lists all six Briefing I steps and all nine in-scope Briefing III sections. Each row links to every demo chapter tagged with that reference, excluding the recap. Regression tests check both section and chapter coverage. This maps the demo story; it does not claim that the production connections described in the architecture view are already configured.
+
+The WDH chapter at `#path/3` also links to [the worker-served German i5 page](https://wdh-proxy.aem-poc-lab.workers.dev/aida/showcase/de/de/i5). The deployed [worker implementation](https://github.com/moved-permanently/bmw/blob/af335eb73d7ff315f5250c7fb3f4bc5df21e5c9e/tools/workers/wdh-proxy/src/index.js) replaces authored WDH anchors with non-clickable spans in the HTML response, before browser JavaScript runs. It preserves the saved figures and source references; it does not fetch fresh WDH values. Direct AEM preview pages keep the browser-side cleanup.
+
 Editor and DA app links (canvas, document view, forms, Translate, Media Library, Snapshots, Schemas, Scheduler, Rollout radar) open the da-live branch the demo is pinned to: `DA_EDITOR` in [`tools/aida/editor.js`](../editor.js), currently `ewdemo` (the editor with Request Publish and the live comparison), the same branch as the `editor.path` rows of the site and org config. To unpin, set it to `https://da.live` and update the Translate link in `radar/radar.html`.
 
 ## Real and substituted boundaries
