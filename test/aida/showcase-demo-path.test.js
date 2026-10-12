@@ -46,7 +46,7 @@ test('the chapters tell the full RfP story of Briefings I and III', () => {
 
 test('show links open known BMW demo surfaces or a tab of this app', () => {
   const editor = new URL(DA_EDITOR).host;
-  const hosts = [editor, 'main--bmw--moved-permanently.aem.page', 'main--bmw--moved-permanently.aem.live', 'da-sc.adobeaem.workers.dev', 'www.aem.live'];
+  const hosts = [editor, 'main--bmw--moved-permanently.aem.page', 'main--bmw--moved-permanently.aem.live', 'da-sc.adobeaem.workers.dev', 'wdh-proxy.aem-poc-lab.workers.dev', 'www.aem.live'];
   const ids = view.tabs.map(([id]) => id);
   chapters.flatMap((c) => c.show).forEach(({ label, href }) => {
     assert.ok(label, href);
@@ -98,6 +98,36 @@ test('chapter 1 is the agenda: it claims no RfP step itself and links every Brie
       assert.ok(html.includes(`href="#path/${i}"`), `${rfp} → ${id}`);
     });
   });
+});
+
+test('the agenda lists every Briefing I and III section and all its demo chapters, excluding the recap', () => {
+  const [intro] = chapters;
+  assert.deepEqual(intro.agenda.map((a) => a.rfp), Object.keys(RFP));
+  const html = view.demoPath(chapters, 0, RFP);
+  intro.agenda.forEach(({ rfp, chapters: ids }) => {
+    const expected = chapters.filter((c) => c.id !== 'recap' && c.rfp.includes(rfp));
+    assert.deepEqual(ids, expected.map((c) => c.id), rfp);
+    assert.ok(html.includes(view.escape(RFP[rfp])), rfp);
+    const row = html.match(/<tr>[\s\S]*?<\/tr>/g).find((r) => r.includes(view.escape(RFP[rfp])));
+    expected.forEach((c) => {
+      assert.ok(row.includes(`href="#path/${chapters.indexOf(c)}"`), `${rfp} → ${c.id}`);
+    });
+  });
+  chapters.filter((c) => !['journey', 'recap'].includes(c.id)).forEach((c) => {
+    assert.ok(intro.agenda.some((a) => a.chapters.includes(c.id)), `${c.id} is missing from the agenda`);
+  });
+});
+
+test('the WDH chapter keeps path/3 and links to server-side HTML cleanup without claiming live value resolution', () => {
+  const data = chapters[3];
+  assert.equal(data.id, 'data');
+  const href = 'https://wdh-proxy.aem-poc-lab.workers.dev/aida/showcase/de/de/i5';
+  assert.ok(data.show.some((s) => s.href === href));
+  const html = view.demoPath(chapters, 3, RFP);
+  assert.ok(html.includes(`href="${href}"`));
+  assert.match(data.tell.join(' '), /worker.*removes.*links.*without.*JavaScript/i);
+  assert.match(data.tell.join(' '), /does not fetch.*WDH/i);
+  assert.doesNotMatch(data.recap, /always.*current/i);
 });
 
 test('the presenter can step through chapters with the arrow keys', () => {
