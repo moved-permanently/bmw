@@ -49,7 +49,7 @@ test('native radar keeps app navigation and page actions without explanatory cop
   assert.doesNotMatch(html, /#workflow/);
   assert.match(html, /publish-requests-inbox/);
   assert.doesNotMatch(html, /radar-disclaimer|Edit timestamps show/);
-  assert.doesNotMatch(js, /source pages ×|open comment threads|WDH badges identify|createCaption|integrated showcase/i);
+  assert.doesNotMatch(js, /source pages ×|WDH badges identify|createCaption|integrated showcase/i);
   assert.match(js, /status\.hidden = true/);
   assert.match(js, /publish-workflow-requests\.json/);
   assert.match(js, /\.da\/comments\//);

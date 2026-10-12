@@ -91,14 +91,13 @@ async function pageComments(da, path) {
   return comments.filter(Boolean);
 }
 
-/** Review step from the publish requests and open comment threads, per page; returns totals. */
+/** Review step from the publish requests and open comment threads, per page. */
 async function showWorkflow(da, pages) {
   const [requests, config] = await Promise.all([
     da.rows('/.da/publish-workflow-requests.json'),
     da.actions.daFetch(`https://admin.da.live/config/${da.org}/${da.site}/`).then((r) => (r.ok ? r.json() : {})),
   ]);
   const settings = config['publish-workflow-settings']?.data || [];
-  const totals = { review: 0, open: 0 };
   const queue = [...pages];
   const worker = async () => {
     while (queue.length) {
@@ -107,17 +106,14 @@ async function showWorkflow(da, pages) {
       // eslint-disable-next-line no-await-in-loop
       const { open } = commentCounts(await pageComments(da, path).catch(() => []));
       if (review) {
-        totals.review += 1;
         el.append(badge(`In review: ${review.title}`, 'informative'), link(routes.review, 'Review'));
       }
       if (open) {
-        totals.open += open;
         el.append(badge(`${open} open comment${open === 1 ? '' : 's'}`, 'yellow'));
       }
     }
   };
   await Promise.all(Array.from({ length: 6 }, worker));
-  return totals;
 }
 
 /** Compact language -> market view (structure from the translation config only). */
@@ -138,7 +134,7 @@ function renderDependencies(main, { source, languages }) {
   const main = document.querySelector('main');
   const status = document.querySelector('#radar-status');
   if (window.parent === window) {
-    status.textContent = 'Source timestamps require the radar app inside Experience Workspace. Open the integrated showcase for the interactive rollout and accepted-revision demo, or Translate for real source and target pages.';
+    status.textContent = 'Open the radar app inside Experience Workspace.';
     return;
   }
   try {
@@ -159,8 +155,6 @@ function renderDependencies(main, { source, languages }) {
 
     const table = document.createElement('table');
     table.className = 'radar spectrum-Table spectrum-Table--sizeM';
-    const caption = table.createCaption();
-    caption.textContent = 'Source and target edit recency — not approval or release status';
     const head = table.createTHead();
     head.className = 'spectrum-Table-head';
     const header = head.insertRow();
@@ -210,10 +204,7 @@ function renderDependencies(main, { source, languages }) {
         }
       });
     });
-    const total = grid.length * targets.length;
-    const recent = grid.flatMap((r) => r.cells).filter((c) => c.status === 'current').length;
-    const summary = `${grid.length} source pages × ${targets.length} languages and markets: ${recent} of ${total} edited since source.`;
-    status.textContent = `${summary} Reading review state, comments and WDH values…`;
+    status.textContent = 'Reading review state, comments and WDH values…';
     const scroll = document.createElement('div');
     scroll.className = 'radar-table-scroll';
     scroll.tabIndex = 0;
@@ -221,8 +212,8 @@ function renderDependencies(main, { source, languages }) {
     scroll.setAttribute('aria-label', 'Rollout edit timestamps and page actions');
     scroll.append(table);
     main.append(scroll);
-    const [totals] = await Promise.all([showWorkflow(da, workflow), checkDrift(da, drift)]);
-    status.textContent = `${summary} ${totals.review} in review, ${totals.open} open comment threads. WDH badges identify tech values that differ from the current WDH export.`;
+    await Promise.all([showWorkflow(da, workflow), checkDrift(da, drift)]);
+    status.hidden = true;
   } catch (e) {
     status.className = 'aida-error';
     status.textContent = `The radar could not load: ${e.message}`;

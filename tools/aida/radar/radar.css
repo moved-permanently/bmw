@@ -3,18 +3,8 @@
   font-size: var(--spectrum-font-size-500);
 }
 
-.radar-app .radar-disclaimer {
-  max-width: 90ch;
-}
-
 .radar-app .radar-table-scroll {
   overflow-x: auto;
-}
-
-.radar caption {
-  margin: 0 0 12px;
-  text-align: left;
-  color: var(--spectrum-neutral-subdued-content-color-default);
 }
 
 .radar .spectrum-Table-cell,
