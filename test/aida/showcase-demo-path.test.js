@@ -117,3 +117,15 @@ test('nothing BMW sees uses internal codenames or rehearsal jargon', () => {
     assert.equal(hit, null, `${file}: "${hit?.[0]}" near "${hit ? code.slice(Math.max(0, hit.index - 40), hit.index + 40) : ''}"`);
   });
 });
+
+test('the demo path shows Experience Workspace itself, not the click-through workflow tabs', () => {
+  const links = chapters.flatMap((c) => c.show.map((s) => ({ id: c.id, href: s.href })));
+  links.forEach(({ id, href }) => assert.doesNotMatch(href, /^#(workflow|translate|rollout|radar)\b/, `${id}: ${href}`));
+  const of = (id) => chapters.find((c) => c.id === id).show.map((s) => s.href);
+  assert.ok(of('review').includes(`${DA_EDITOR}/canvas#/moved-permanently/bmw/aida/showcase/en/news/i5-launch`));
+  assert.ok(of('review').includes(`${DA_EDITOR}/apps/snapshots#/moved-permanently/bmw`));
+  assert.ok(of('rollout').includes(`${DA_EDITOR}/canvas#/moved-permanently/bmw/aida/showcase/fr/be/news/i5-launch`));
+  assert.ok(of('rollout').some((h) => h.includes('/app/adobe-rnd/aem-apps/tools/apps/publish-requests-inbox/publish-requests-inbox?org=moved-permanently&site=bmw')));
+  assert.ok(of('status').some((h) => h.includes('/tools/aida/radar/radar')));
+  assert.ok(of('status').includes(`${DA_EDITOR}/#/moved-permanently/bmw/aida/showcase/fr/be/news`));
+});
