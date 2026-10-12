@@ -450,6 +450,25 @@
   gap: 6px;
   }
 
+.showcase-path-agenda {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 16px;
+  }
+
+.showcase-path-agenda th,
+.showcase-path-agenda td {
+  padding: 8px 12px 8px 0;
+  border-bottom: 1px solid #e1e1e1;
+  text-align: left;
+  vertical-align: top;
+  }
+
+.showcase-path-agenda th {
+  font-weight: 600;
+  white-space: nowrap;
+  }
+
 .showcase-path-recap {
   margin-top: 16px;
   padding: 16px 20px;

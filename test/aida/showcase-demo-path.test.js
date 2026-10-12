@@ -35,7 +35,7 @@ test('every chapter is show-tell-show: links to show, at most three points to te
     assert.ok(c.title && c.recap, c.id);
     assert.ok(c.tell.length >= 1 && c.tell.length <= 3, c.id);
     assert.ok(c.show.length >= 1, c.id);
-    assert.ok(c.rfp.length >= 1 && c.rfp.every((r) => RFP[r]), c.id);
+    assert.ok((c.agenda || c.rfp.length >= 1) && c.rfp.every((r) => RFP[r]), c.id);
   });
 });
 
@@ -77,8 +77,27 @@ test('a chapter renders with full navigation, previous/next and escaped text', (
 });
 
 test('chapters name their RfP references in full', () => {
+  const html = view.demoPath(chapters, 1, RFP);
+  chapters[1].rfp.forEach((r) => assert.ok(html.includes(view.escape(RFP[r])), r));
+});
+
+test('chapter 1 is the agenda: it claims no RfP step itself and links every Briefing I step to the chapters that show it', () => {
+  const [intro] = chapters;
+  assert.deepEqual(intro.rfp, []);
+  const steps = Object.keys(RFP).filter((r) => r.startsWith('I '));
+  assert.deepEqual(intro.agenda.map((a) => a.rfp).filter((r) => r.startsWith('I ')), steps);
   const html = view.demoPath(chapters, 0, RFP);
-  chapters[0].rfp.forEach((r) => assert.ok(html.includes(view.escape(RFP[r])), r));
+  assert.match(html, /Agenda/);
+  intro.agenda.forEach(({ rfp, chapters: ids }) => {
+    assert.ok(html.includes(view.escape(RFP[rfp])), rfp);
+    assert.ok(ids.length >= 1, rfp);
+    ids.forEach((id) => {
+      const i = chapters.findIndex((c) => c.id === id);
+      assert.ok(i > 0, `${rfp}: unknown chapter ${id}`);
+      assert.ok(chapters[i].rfp.includes(rfp), `${id} does not cover ${rfp}`);
+      assert.ok(html.includes(`href="#path/${i}"`), `${rfp} → ${id}`);
+    });
+  });
 });
 
 test('the presenter can step through chapters with the arrow keys', () => {
