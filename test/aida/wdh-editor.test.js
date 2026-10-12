@@ -7,7 +7,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  syncNodeBindings, editorTargets, createEditorLink, updateEditorValues,
+  syncNodeBindings, wdhOffsets, createEditorLink, updateEditorValues,
 } from '../../scripts/wdh-editor.js';
 import { captureEditorPort } from '../../scripts/wdh-session.js';
 
@@ -75,32 +75,22 @@ test('links in nested nodes are synced, other links stay, showcase links keep th
   assert.equal(changes.length, 1);
 });
 
-// editor body (quick-edit set-body): ProseMirror HTML, outermost editables carry data-prose-index
-const BODY = `<div class="block-marker" data-prose-index="0"></div><div class="tableWrapper"><table><tbody>
-<tr><td colspan="2"><p data-prose-index="3">hero-teaser</p></td></tr>
-<tr><td><p data-prose-index="18">La <a href="${DE('61HG.name')}">BMW i5</a></p></td></tr></tbody></table></div>
+// editor body (quick-edit set-body): the canvas converts its document with prose2aem (blocks as
+// divs, metadata removed); outermost text blocks carry data-prose-index
+const BODY = `<main><div><div class="hero-teaser" data-block-index="0"><div><div><p data-prose-index="3">Titre</p></div></div>
+<div><div><p data-prose-index="18">La <a href="${DE('61HG.name')}">BMW i5</a></p></div></div></div>
 <h2 data-prose-index="40">Puissance <a href="${DE('61HG.power')}" title="x">250 kW</a></h2>
 <p class="x" data-prose-index="60">Plain text <a href="https://www.bmw.fr/">bmw.fr</a></p>
-<ul data-prose-index="80"><li><p>A <a href="${DE('61HG.power')}">250 kW</a></p></li><li><p>B <a href="${DE('61HG.electricRange')}">513 km</a></p></li></ul>
-<div class="tableWrapper"><table><tbody>
-<tr><td colspan="2"><p data-prose-index="120">metadata</p></td></tr>
-<tr><td><p data-prose-index="133">Title</p></td><td><p data-prose-index="141">Titre FR</p></td></tr>
-<tr><td><p data-prose-index="152">wdh-model</p></td><td><p data-prose-index="163">61HG</p></td></tr>
-<tr><td><p data-prose-index="170">json-ld</p></td><td><p data-prose-index="179">{"@type":"Car","name":"BMW i5 eDrive40 Limousine"}</p></td></tr>
-</tbody></table></div>`;
+<ul data-prose-index="80"><li>A <a href="${DE('61HG.power')}">250 kW</a></li><li>B <a href="${DE('61HG.electricRange')}">513 km</a></li></ul>
+</div></main>`;
 
-test('the editor body tells which nodes hold WDH links (last first) and where the metadata values are', () => {
-  const { offsets, meta } = editorTargets(BODY);
-  assert.deepEqual(offsets, [80, 40, 18]);
-  assert.deepEqual(meta.get('json-ld'), { offset: 179, text: '{"@type":"Car","name":"BMW i5 eDrive40 Limousine"}' });
-  assert.equal(meta.get('wdh-model').text, '61HG');
-  assert.equal(meta.get('title').text, 'Titre FR');
-  assert.equal(meta.has('metadata'), false);
+test('the editor body tells which text blocks hold WDH links, last first', () => {
+  assert.deepEqual(wdhOffsets(BODY), [80, 40, 18]);
+  assert.deepEqual(wdhOffsets('<main><div><p data-prose-index="2">no values</p></div></main>'), []);
 });
 
-test('updating in the editor syncs every node with WDH links, last node first, then redraws the page', async () => {
+test('updating in the editor syncs every text block with WDH links, last first, then redraws the page', async () => {
   const nodes = new Map([
-    [179, para(text('{"@type":"Car","name":"BMW i5 eDrive40 Limousine"}'))],
     [80, {
       type: 'bullet_list',
       content: [
@@ -119,16 +109,11 @@ test('updating in the editor syncs every node with WDH links, last node first, t
     updateNode: (node, offset) => { calls.push(`update ${offset}`); updates.set(offset, node); },
     reload: () => calls.push('reload'),
   };
-  const models = [{ code: '61HG', jsonld: '{"@type":"Car","name":"BMW i5 eDrive40 Berline"}' }];
-  const count = await updateEditorValues(editor, { market: 'fr', values: VALUES, models });
-  assert.deepEqual(calls, ['read', 'get 179', 'update 179', 'get 80', 'update 80', 'get 40', 'update 40', 'get 18', 'reload']);
+  const count = await updateEditorValues(editor, { market: 'fr', values: VALUES });
+  assert.deepEqual(calls, ['read', 'get 80', 'update 80', 'get 40', 'update 40', 'get 18', 'reload']);
   assert.equal(count, 3);
-  assert.deepEqual(updates.get(179), para(text('{"@type":"Car","name":"BMW i5 eDrive40 Berline"}')));
   assert.equal(updates.get(80).content[1].content[0].content[1].text, '518–627 km');
-
-  calls.length = 0;
-  await updateEditorValues(editor, { market: 'fr', values: VALUES, models: [] });
-  assert.equal(calls.includes('get 179'), false, 'no model data: the JSON-LD stays as it is');
+  assert.deepEqual(updates.get(40).content[1].marks, [link(FR('61HG.power'))]);
 });
 
 // quick-edit port: a fake window and MessagePorts (EventTargets)
