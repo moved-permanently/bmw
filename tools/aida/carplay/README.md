@@ -32,9 +32,33 @@ Other: `./demo/run.sh at munich|iphitos|bmw-park|ruhpolding|salzburg`, `./demo/r
 
 Deep links drive the app without tapping: `bmwcarplay://vehicle?soc=15&odo=29800&market=fr/fr&lang=fr` (`market=auto` clears the override), `bmwcarplay://refresh`, `bmwcarplay://reset`, `bmwcarplay://tab?index=1`, `bmwcarplay://open?path=/aida/showcase/de/de/news/cannes`. `run.sh` sends them without a prompt: it writes the URL to the app's `Documents/cmd.txt` and posts the notification `com.adobe.aida.BMWCarPlay.cmd`. `xcrun simctl openurl <udid> '<url>'` also works, but iOS 18 asks "Open in BMW?" on the phone each time.
 
-The Xcode way: open `BMWCarPlay.xcodeproj`, scheme BMWCarPlay, the "BMW CarPlay 18.6" simulator, Run; I/O > External Displays > CarPlay; Features > Location > Custom Location, or run `xcrun simctl location <udid> start --speed=1000 --interval=1 - < demo/drive-munich-salzburg.txt`. `demo/drive-munich-salzburg.gpx` carries timestamps for Xcode's location simulation.
+The Xcode way: open `BMWCarPlay.xcodeproj`, scheme BMWCarPlay, the "BMW CarPlay 18.6" simulator, Run; I/O > External Displays > CarPlay; Features > Location > Custom Location, or play the drive with `./demo/run.sh drive` (see "The drive"). `demo/drive-munich-salzburg.gpx` carries timestamps for Xcode's location simulation.
 
 Tests: `xcodebuild -project BMWCarPlay.xcodeproj -scheme BMWCarPlay -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build test` (any simulator works for the tests).
+
+## The drive
+
+`./demo/run.sh drive [minutes]` plays a Munich to Salzburg drive on the simulated phone: BMW Headquarters, MTTC Iphitos, BMW Park, then the A8 east to the Walserberg border and Salzburg Mirabellplatz.
+
+**Two routes.** The default goes **via Ruhpolding**: Apple Maps routes from BMW Park to the Chiemgau Arena, Ruhpolding, which leaves the A8 near Traunstein/Siegsdorf (about 47.83, 12.55), runs through Ruhpolding and rejoins the A8 near Siegsdorf. This detour is deliberate: the Chiemgau Arena is one of the seeded places (radius 25 km) and the drive passes right at it. It adds 30.6 km (about 31 minutes at Apple's expected travel times) to the 172 km direct route. `ROUTE=direct ./demo/run.sh drive 2` stays on the A8. The Ruhpolding alert fires on both: the A8 passes 12.3 km from the arena, inside its 25 km radius, and the alert first fires about 104 km into the route (A8 near Bernau am Chiemsee) either way. The detour only adds the drive through Ruhpolding itself.
+
+**Road geometry.** Apple Maps (MapKit `MKDirections`, automobile), one request per leg, cached in `demo/apple-route.json` (full-resolution `MKRoute.polyline` points). `make-drive.mjs` needs no network or Apple Maps access. Where a leg ends at a stop, Apple adds an access road or parking loop; `make-drive.mjs` cuts these out-and-back spurs (up to 400 m around a stop) so the track stays on the through road.
+
+**Points.** The simulator moves in straight lines between points, so every point must be close to the road. `make-drive.mjs` simplifies the Apple polyline with Douglas-Peucker: the output is never more than 4 m from the Apple polyline, and no segment is longer than 200 m. Result: 1,512 points for the default route (1,186 direct); points are 7 to 40 m apart in tight bends and about 200 m apart on straights. A fixed 20 m step would give over 10,000 points, which the car map cannot follow at drive speed. `node demo/verify-drive.mjs` prints the deviation, spacing and proximity numbers.
+
+**Playback.** `simctl location start --interval` sends one update per interval and moves at most speed x interval per update. A segment shorter than that still takes a whole interval, so the drive lasts (points - 1) x interval no matter what speed is set. `run.sh drive N` therefore sets the interval to N x 60 / (points - 1) and a speed high enough that no segment is split, so each update lands on a point. `drive 2` is 12.7 updates per second, `drive 4` 6.3. The update rate is capped at 20 per second (`MIN_INTERVAL=0.05`), so a drive cannot get shorter than about 75 seconds for the default route. Because the points are dense in bends and sparse on straights, the car looks slower in the city than on the A8.
+
+**Refresh the route** (a Mac with network and Apple Maps; MapKit rate-limits to about 50 requests a minute, the tool waits between legs and retries):
+
+```sh
+cd tools/aida/carplay/demo
+swiftc -O apple-route.swift -o /tmp/apple-route
+/tmp/apple-route apple-route-legs.json apple-route.json   # about 40 seconds
+node make-drive.mjs                                       # regenerates the .txt and .gpx files
+node verify-drive.mjs
+```
+
+Stops are in `apple-route-legs.json`. `make-drive.mjs --default direct` makes the direct route the default (also change `DEFAULT_ROUTE` in `run.sh`). `--tolerance` and `--max-segment` change the simplification.
 
 ## How it works
 
@@ -42,7 +66,7 @@ Tests: `xcodebuild -project BMWCarPlay.xcodeproj -scheme BMWCarPlay -destination
 - `Sources/Vehicle`: vehicle state (model, charge, odometer, language, market override), market resolution (language from the setting, country from the car's position), proximity detection, deep links.
 - `Sources/CarPlay`: tab bar, list, information, point-of-interest and alert templates; speech.
 - `Sources/Cockpit`: a one-screen SwiftUI cockpit on the phone to set charge, language and market.
-- `demo/make-drive.mjs` rebuilds the drive from waypoints via the public OSRM demo server; `--from file.gpx` regenerates the `.txt` from a recorded track.
+- `demo/make-drive.mjs` builds the drive files from the cached Apple Maps route (`demo/apple-route.json`); `--from file.gpx` regenerates the `.txt` from a recorded track.
 
 Language is a personal setting (phone locale or the cockpit); the market (`de/de`, `de/at`, `fr/fr`, `fr/be`) comes from the car's position via reverse geocoding, or from the cockpit override.
 
@@ -57,7 +81,7 @@ CarPlay draws list text in a fixed style and cuts it with "…"; apps have no fo
 - Preview content through html2json on `workers.dev`; a production site would front it with its own CDN worker.
 - Only the blocks the showcase and place pages use are mapped; others (`video`, `embed`, `link-list`, columns, card lists) are skipped and counted in the cockpit.
 - Place pages are German only. Only the i5 (`61HG`) has a showcase page.
-- The drive's road geometry is generated once from OSRM and checked in.
+- The drive's road geometry comes from Apple Maps (MKDirections), fetched once and checked in (`demo/apple-route.json`).
 
 ## Navigation map (branch carplay-nav-map)
 

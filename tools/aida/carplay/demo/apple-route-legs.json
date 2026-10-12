@@ -1,0 +1,8 @@
+[
+  {"id": "hq-iphitos", "label": "BMW Headquarters to MTTC Iphitos", "from": [48.1766, 11.5611], "to": [48.1845, 11.6148]},
+  {"id": "iphitos-bmwpark", "label": "MTTC Iphitos to BMW Park", "fromLeg": "hq-iphitos", "to": [48.1260, 11.5254]},
+  {"id": "bmwpark-border", "label": "BMW Park to A8 Walserberg border (direct)", "fromLeg": "iphitos-bmwpark", "to": [47.8300, 12.9900]},
+  {"id": "bmwpark-ruhpolding", "label": "BMW Park to Chiemgau Arena Ruhpolding", "fromLeg": "iphitos-bmwpark", "to": [47.7150, 12.6479]},
+  {"id": "ruhpolding-border", "label": "Chiemgau Arena Ruhpolding to A8 Walserberg border", "fromLeg": "bmwpark-ruhpolding", "to": [47.8300, 12.9900]},
+  {"id": "border-salzburg", "label": "A8 Walserberg border to Salzburg Mirabellplatz", "fromLeg": "bmwpark-border", "to": [47.8095, 13.0550]}
+]
