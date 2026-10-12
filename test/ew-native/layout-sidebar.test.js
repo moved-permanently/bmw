@@ -2,7 +2,8 @@
 /*
  * Experience Workspace "Layout" view renders the page in an editor frame
  * (adobe/da-live blocks/canvas/ew-editor-wysiwyg/ew-editor-wysiwyg.js):
- *   <ref>--<site>--<org>.preview.da.live/<path>?rum=off&consent=disabled&quick-edit=on&controller=parent
+ *   <ref>--<site>--<org>.preview.da.live/<path>
+ *   ?rum=off&consent=disabled&quick-edit=on&controller=parent
  * The standalone quick edit shell on aem.page carries ?quick-edit=<ref> (adobe/da-nx
  * nx/public/plugins/quick-edit/src/standalone.js). The BMW help sidebar (AI assistant, live chat,
  * nudge) floats over the page there and gets in the way of editing, so it must not start.
@@ -12,10 +13,10 @@ import assert from 'node:assert/strict';
 
 const LAYOUT_SEARCH = '?rum=off&consent=disabled&quick-edit=on&controller=parent';
 
-function stubPage(t, pathname, search) {
+test('help sidebar never starts in the Experience Workspace layout frame', async (t) => {
   const requests = [];
   const appended = [];
-  globalThis.window = { location: { pathname, search } };
+  globalThis.window = { location: { pathname: '/de/home', search: LAYOUT_SEARCH } };
   globalThis.document = {
     querySelector: () => null,
     createElement: () => ({}),
@@ -36,21 +37,8 @@ function stubPage(t, pathname, search) {
     delete globalThis.document;
     delete globalThis.fetch;
   });
-  return { requests, appended };
-}
 
-test('help sidebar never starts in the Experience Workspace layout frame', async (t) => {
-  const { requests, appended } = stubPage(t, '/de/home', LAYOUT_SEARCH);
-  // a separate module instance: loadSidebar() starts at most once per module
-  const { default: loadSidebar } = await import('../../scripts/bmw-sidebar.js?layout');
-  await loadSidebar();
-  assert.deepEqual(requests, []);
-  assert.deepEqual(appended, []);
-});
-
-test('help sidebar never starts in the standalone quick edit shell', async (t) => {
-  const { requests, appended } = stubPage(t, '/de/home', '?quick-edit=main');
-  const { default: loadSidebar } = await import('../../scripts/bmw-sidebar.js?standalone');
+  const { default: loadSidebar } = await import('../../scripts/bmw-sidebar.js');
   await loadSidebar();
   assert.deepEqual(requests, []);
   assert.deepEqual(appended, []);

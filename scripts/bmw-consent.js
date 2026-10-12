@@ -20,7 +20,7 @@
  * Events on window: 'bmw-consent-change' {detail: {mode, categories}},
  *   'consent.update' {detail: {consented}}
  */
-import { bmwProxyUrl, isLibraryDocument } from './bmw-utils.js';
+import { bmwProxyUrl, isAuthoringFrame } from './bmw-utils.js';
 
 const EPAAS_SRC = 'https://www.bmw.com/etc/clientlibs/wcmp/consentcontroller.fallback/epaas.js';
 const EPAAS_PROXY_PATH = '/www.bmw.com/etc/clientlibs/wcmp/consentcontroller.fallback/epaas.js';
@@ -320,15 +320,13 @@ function startFallback() {
  * (/library/blocks/*, /library/templates/*) on aem.page without any of these parameters
  * (adobe/da-live ew-panel-extensions/helpers.js getItemPreviewUrl): the banner would cover the
  * block preview, and a choice made in that frame does not stick.
- * In all of these, consent is not initialised at all (no ePaaS, no fallback banner).
+ * In all of these (isAuthoringFrame in bmw-utils.js) and with ?consent=disabled, consent is not
+ * initialised at all (no ePaaS, no fallback banner).
  * @returns {boolean}
  */
 export function isConsentDisabled() {
-  const params = new URLSearchParams(window.location.search);
-  return isLibraryDocument()
-    || params.get('consent') === 'disabled'
-    || params.has('quick-edit')
-    || params.get('controller') === 'parent';
+  return isAuthoringFrame()
+    || new URLSearchParams(window.location.search).get('consent') === 'disabled';
 }
 
 export function loadConsent() {

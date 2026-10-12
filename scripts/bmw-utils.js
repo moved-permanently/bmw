@@ -922,6 +922,27 @@ export function isLibraryDocument(path = window.location.pathname) {
   return path.startsWith('/library/');
 }
 
+/**
+ * Whether the page is rendered for authoring rather than for visitors:
+ * - a library document (block library preview, see isLibraryDocument)
+ * - the Experience Workspace "Layout" view, which loads the page in an editor frame
+ *   (adobe/da-live ew-editor-wysiwyg.js):
+ *   <ref>--<site>--<org>.preview.da.live/<path>
+ *   ?rum=off&consent=disabled&quick-edit=on&controller=parent
+ * - the standalone quick edit shell on aem.page, which carries ?quick-edit=<ref>
+ *   (adobe/da-nx quick-edit standalone.js)
+ * Overlays meant for visitors (consent banner, help sidebar) stay off there.
+ * consent=disabled alone does not count: perf tests use it on plain pages.
+ * @param {{pathname: string, search: string}} [location]
+ * @returns {boolean}
+ */
+export function isAuthoringFrame({ pathname, search } = window.location) {
+  const params = new URLSearchParams(search);
+  return isLibraryDocument(pathname)
+    || params.has('quick-edit')
+    || params.get('controller') === 'parent';
+}
+
 /* ------------------------------------------------------------------------------------------
  * bmw-proxy (Cloudflare worker, tools/workers/bmw-proxy): www.bmw.de endpoints without CORS.
  * Paths are identical to www.bmw.de; other upstream hosts are addressed as /<host>/<path>.
