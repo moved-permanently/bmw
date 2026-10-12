@@ -35,5 +35,7 @@ tools/aida/content/out/
 
 tools/aida/carplay/build*/
 tools/aida/carplay/demo/shots/
+tools/aida/carplay/demo/.tts-cache/
+tools/aida/carplay/demo/.tts-helper.*
 *.xcuserstate
 xcuserdata/
