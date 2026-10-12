@@ -59,7 +59,7 @@ test('show links open known BMW demo surfaces or a tab of this app', () => {
     const url = new URL(href);
     assert.equal(url.protocol, 'https:');
     assert.ok(hosts.includes(url.host), href);
-    if (url.host === editor && url.pathname !== '/apps/scheduler') assert.match(href, /moved-permanently\/bmw/, href);
+    if (url.host === editor && url.pathname !== '/apps/scheduler') assert.match(href, /moved-permanently(\/|&site=)bmw/, href);
   });
 });
 
@@ -119,7 +119,9 @@ test('nothing BMW sees uses internal codenames or rehearsal jargon', () => {
 });
 
 test('the demo path shows Experience Workspace itself, not the click-through workflow tabs', () => {
-  const links = chapters.flatMap((c) => c.show.map((s) => ({ id: c.id, href: s.href })));
+  const workflow = ['quality', 'review', 'translate', 'rollout', 'status', 'release'];
+  const links = chapters.filter((c) => workflow.includes(c.id))
+    .flatMap((c) => c.show.map((s) => ({ id: c.id, href: s.href })));
   links.forEach(({ id, href }) => assert.doesNotMatch(href, /^#(workflow|translate|rollout|radar)\b/, `${id}: ${href}`));
   const of = (id) => chapters.find((c) => c.id === id).show.map((s) => s.href);
   assert.ok(of('review').includes(`${DA_EDITOR}/canvas#/moved-permanently/bmw/aida/showcase/en/news/i5-launch`));

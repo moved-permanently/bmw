@@ -6,6 +6,8 @@ const SITE = 'moved-permanently/bmw';
 const canvas = (path) => `${DA_EDITOR}/canvas#/${SITE}${path}`;
 const app = (name) => `${DA_EDITOR}/apps/${name}#/${SITE}`;
 const page = (path) => `${PREVIEW}${path}`;
+const files = (path) => `${DA_EDITOR}/#/${SITE}${path}`;
+const INBOX = `${DA_EDITOR}/app/adobe-rnd/aem-apps/tools/apps/publish-requests-inbox/publish-requests-inbox?org=moved-permanently&site=bmw&env=ci&ref=ewdemo&nx=ewdemo`;
 
 export const RFP = {
   'I 1a': 'Briefing I · 1a Content modeling',
@@ -127,7 +129,6 @@ export const chapters = [
     ],
     show: [
       { label: 'Belgian i5 page: run Preflight', href: canvas('/aida/fr/be/i5') },
-      { label: 'Quality gates in the workflow', href: '#workflow' },
     ],
     recap: 'Brand, compliance and SEO checks happen where the author works.',
   },
@@ -136,15 +137,15 @@ export const chapters = [
     title: 'Review, reject, approve',
     rfp: ['I 1b', 'I 2', 'I 4', 'III Workflows'],
     tell: [
-      'The author requests review; the reviewer rejects with feedback on a specific field.',
-      'The author corrects, resubmits, and the exact revision is approved by a team or a named stakeholder.',
-      'A launch review package freezes a set of pages and gives stakeholders a review link.',
+      'HQ puts the i5 launch pages into a launch review package and requests review; stakeholders open a review link to exactly these pages.',
+      'The reviewer comments on the headline right in the page and rejects; the author fixes it, resolves the comment and requests review again.',
+      'The approval covers these frozen pages, and approving with a date schedules the go-live for the embargo time.',
     ],
     show: [
-      { label: 'Workflow: request, reject, approve', href: '#workflow' },
+      { label: 'HQ i5 launch news in the editor', href: canvas('/aida/showcase/en/news/i5-launch') },
       { label: 'Launch review packages', href: app('snapshots') },
     ],
-    recap: 'A feedback loop with a rejection, a correction and an approval bound to one revision.',
+    recap: 'Stakeholder feedback on the page itself, a correction, and an approval of exactly the pages that go live.',
   },
   {
     id: 'translate',
@@ -153,11 +154,10 @@ export const chapters = [
     tell: [
       'The whole page is translated in one go, into several languages at once.',
       'A glossary keeps BMW terms such as eDrive, xDrive and Driving Assistant Professional untranslated.',
-      'The translation provider is pluggable: BMW’s own AI fits in; human corrections feed translation memory.',
+      'The translation service is pluggable: BMW’s own AI fits in, and translation memory stays in the translation service BMW already uses.',
     ],
     show: [
       { label: 'Translate and roll out', href: app('loc') },
-      { label: 'Batch translation with corrections', href: '#translate' },
     ],
     recap: 'AI translation at scale, with BMW’s glossary, style and human feedback.',
   },
@@ -166,30 +166,31 @@ export const chapters = [
     title: 'Roll out and localize',
     rfp: ['I 3', 'I 4', 'III Localization'],
     tell: [
-      'English source → German and French → Germany, Austria, France and Belgium.',
-      'Markets adapt locally: Germany shows the Highway Assistant, France does not offer it; Belgium drops a section. The workflow demo covers data format, disclaimer, hero image, headline, CTA, added and removed sections and a new order.',
-      'A new HQ update rolls out again: local changes stay, conflicts are resolved property by property.',
+      'English source → German and French → Germany, Austria, France and Belgium; each market adapts its copy, for example Germany shows the Highway Assistant and France does not offer it.',
+      'The Belgian market requests publication in the editor: it compares the page with what is live, then market review and legal review approve it, each notified by email; the last approval publishes.',
+      'When HQ updates the source and rolls out again, local changes stay: the editor shows each conflict with the HQ text next to the local one, and the market decides.',
     ],
     show: [
+      { label: 'Belgian i5 launch news in the editor', href: canvas('/aida/showcase/fr/be/news/i5-launch') },
+      { label: 'Publish requests inbox', href: INBOX },
       { label: 'Germany: BMW i5', href: page('/aida/showcase/de/de/i5') },
       { label: 'France: BMW i5', href: page('/aida/showcase/fr/fr/i5') },
       { label: 'Belgium: BMW i5', href: page('/aida/showcase/fr/be/i5') },
-      { label: 'Localize and re-roll out', href: '#rollout' },
     ],
-    recap: 'Push centrally, adapt locally, update again without losing local work.',
+    recap: 'Push centrally, adapt and approve locally, update again without losing local work.',
   },
   {
     id: 'status',
     title: 'Status across all markets',
     rfp: ['I 3', 'I 4', 'III Governance', 'III Workflows'],
     tell: [
-      'One view of every page in every market: source freshness, translation, review and release.',
+      'One view of every page in every market: which copies exist, whether the source changed since, which review step a page waits on and how many comments are open.',
       'WDH values that drifted are flagged per market.',
-      'Each row links to the next action: edit, preview, check.',
+      'Each cell links to the next action: edit, review, preview, check; Files shows what is in preview and what is live.',
     ],
     show: [
       { label: 'Rollout radar', href: `${DA_EDITOR}/app/${SITE}/tools/aida/radar/radar?ref=main` },
-      { label: 'Action radar', href: '#radar' },
+      { label: 'Belgian news in Files: review and publish status', href: files('/aida/showcase/fr/be/news') },
     ],
     recap: 'HQ sees the rollout status of all markets and what blocks each one.',
   },
@@ -199,7 +200,7 @@ export const chapters = [
     rfp: ['I 1b', 'I 4', 'III Workflows', 'III Architecture'],
     tell: [
       'Preview and live are separate: nothing is public until it is published; preview can be access-protected.',
-      'Schedule the publish for the exact embargo time, or launch a whole package of pages together.',
+      'Schedule the publish for the exact embargo time from the editor, or approve a launch review package with its go-live date so all its pages go live together.',
       'Code moves through DEV, TEST, STAGE and LIVE as branches; content has preview and live.',
     ],
     show: [
