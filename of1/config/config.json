@@ -1,1 +1,16 @@
-{ "domain": "bmw.de" }
+{
+  "domain": "bmw.de",
+  "templates": {
+    "names": [
+      "budget-value",
+      "comparison-duel",
+      "comparison-kpis",
+      "deep-dive-spec",
+      "discovery-explore",
+      "recommendation-a"
+    ]
+  },
+  "contentIngestion": {
+    "indexPath": "/sitemap.json"
+  }
+}
