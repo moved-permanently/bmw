@@ -33,8 +33,8 @@ export default function mountPicker(main, { assets, context = {}, actions = null
   countries.sort((a, b) => countryName(a).localeCompare(countryName(b)))
     .forEach((code) => find('country').append(new Option(countryName(code), code)));
   find('country').value = initialCountry;
-  find('context').textContent = assetContextMessage(context);
-  if (!actions) find('context').textContent += ' Standalone preview: open in Experience Workspace to insert.';
+  find('context').textContent = `${assetContextMessage(context)}${actions ? '' : ' Standalone preview: open in Experience Workspace to insert.'}`.trim();
+  find('context').hidden = !find('context').textContent;
 
   function insertion() {
     find('message').textContent = '';
