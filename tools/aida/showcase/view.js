@@ -77,6 +77,16 @@ export function chapterFromHash(hash, count) {
 
 const showLink = ({ label, href }) => link(label, href);
 
+// A step is plain text with three marks: [label](https://…) for a link, **Button** for a label
+// on screen and `text` for something to type or paste. The text is escaped before the marks
+// become HTML.
+export const stepHtml = (step) => escape(step)
+  .replace(/\[([^\]]+)\]\((https:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+  .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+  .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+const stepList = (steps) => (steps ? `<details class="showcase-path-steps"><summary>Step by step</summary><ol>${steps.map((s) => `<li>${stepHtml(s)}</li>`).join('')}</ol></details>` : '');
+
 function agendaCard(agenda, chapters, labels) {
   const chapterLink = (id) => {
     const i = chapters.findIndex((c) => c.id === id);
@@ -96,7 +106,7 @@ export function demoPath(chapters, requested = 0, labels = {}) {
   return `<div class="showcase-path"><ol class="showcase-path-nav" aria-label="Demo chapters">${nav}</ol><article class="showcase-path-chapter">`
     + `<div class="showcase-eyebrow">Chapter ${index + 1} of ${chapters.length}</div><h1>${escape(chapter.title)}</h1><p class="showcase-path-refs">${refs}</p>`
     + `${chapter.agenda ? agendaCard(chapter.agenda, chapters, labels) : ''}`
-    + `${card('Show', `<div class="showcase-actions">${chapter.show.map(showLink).join('')}</div>`)}`
+    + `${card('Show', `<div class="showcase-actions">${chapter.show.map(showLink).join('')}</div>${stepList(chapter.steps)}`)}`
     + `${card('Tell', `<ul class="showcase-list">${chapter.tell.map((t) => `<li>${escape(t)}</li>`).join('')}</ul>`)}`
     + `<p class="showcase-path-recap"><strong>Recap</strong> ${escape(chapter.recap)}</p>`
     + `<div class="showcase-path-step">${prev}${next}</div></article></div>`;

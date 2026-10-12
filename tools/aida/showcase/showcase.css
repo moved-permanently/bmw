@@ -514,3 +514,34 @@
   padding: 18px;
   }
 }
+
+.showcase-path-steps {
+  margin-top: 16px;
+  border-top: 1px solid #e1e1e1;
+  padding-top: 12px;
+  }
+
+.showcase-path-steps summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #1d4fd8;
+  }
+
+.showcase-path-steps ol {
+  margin: 12px 0 0;
+  padding-left: 24px;
+  }
+
+.showcase-path-steps li {
+  margin-bottom: 10px;
+  font-size: 17px;
+  line-height: 1.5;
+  }
+
+.showcase-path-steps code {
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: #f3f3f3;
+  font-size: 14px;
+  word-break: break-all;
+  }

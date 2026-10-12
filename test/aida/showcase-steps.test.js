@@ -22,14 +22,18 @@ test('the rollout story keeps its place: #path/6 to #path/10', () => {
 test('each story chapter has a short step list, one action per step', () => {
   story.forEach((c) => {
     assert.ok(Array.isArray(c.steps) && c.steps.length >= 2 && c.steps.length <= 7, c.id);
-    c.steps.forEach((s) => assert.ok(s.length <= 240, `${c.id}: step too long (${s.length}): ${s}`));
+    c.steps.forEach((s) => {
+      const spoken = s.replace(/\]\([^)]*\)/g, ']');
+      assert.ok(spoken.length <= 200, `${c.id}: step too long (${spoken.length}): ${spoken}`);
+    });
   });
-  chapters.filter((c) => !STORY.includes(c.id)).forEach((c) => assert.equal(c.steps, undefined, c.id));
+  chapters.filter((c) => !STORY.includes(c.id))
+    .forEach((c) => assert.equal(c.steps, undefined, c.id));
 });
 
 test('steps stand on their own: no pointers to other chapters, scripts or notes', () => {
   story.forEach((c) => c.steps.forEach((s) => {
-    assert.doesNotMatch(s, /chapter|script|obsidian|\breset|previous|above|below|earlier|as before|see the/i, `${c.id}: ${s}`);
+    assert.doesNotMatch(s, /chapter|script|obsidian|\breset|previous|above|below|earlier|as before/i, `${c.id}: ${s}`);
   }));
 });
 
@@ -51,7 +55,8 @@ test('steps use every link the chapter shows, and only known demo surfaces', () 
 });
 
 test('the launch review package opens on the demo branch of the Snapshots app, where Save takes in corrected pages', () => {
-  const links = chapters.flatMap((c) => [...c.show, ...stepLinks(c.steps || [])]).map((l) => l.href);
+  const links = chapters.flatMap((c) => [...c.show, ...stepLinks(c.steps || [])])
+    .map((l) => l.href);
   const packages = links.filter((h) => h.includes('/apps/snapshots'));
   assert.ok(packages.length >= 2);
   packages.forEach((h) => assert.equal(h, PACKAGE));

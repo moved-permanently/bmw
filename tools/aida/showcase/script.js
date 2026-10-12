@@ -1,4 +1,4 @@
-import { DA_EDITOR } from '../editor.js';
+import { DA_EDITOR, DEMO_BRANCH } from '../editor.js';
 
 const PREVIEW = 'https://main--bmw--moved-permanently.aem.page';
 const LIVE = 'https://main--bmw--moved-permanently.aem.live';
@@ -8,6 +8,17 @@ const app = (name) => `${DA_EDITOR}/apps/${name}#/${SITE}`;
 const page = (path) => `${PREVIEW}${path}`;
 const files = (path) => `${DA_EDITOR}/#/${SITE}${path}`;
 const INBOX = `${DA_EDITOR}/app/adobe-rnd/aem-apps/tools/apps/publish-requests-inbox/publish-requests-inbox?org=moved-permanently&site=bmw&env=ci&ref=ewdemo&nx=ewdemo`;
+const RADAR = `${DA_EDITOR}/app/${SITE}/tools/aida/radar/radar?ref=main&root=/aida/showcase`;
+const TRANSLATE = app('loc');
+
+// The rollout story (#path/6 to #path/10) follows one article: the HQ i5 launch news and its
+// German, French and Belgian copies.
+const HQ_NEWS = '/aida/showcase/en/news/i5-launch';
+const BE_NEWS = '/aida/showcase/fr/be/news/i5-launch';
+// The launch review package, opened in the Snapshots app of the demo branch: only there does Save
+// take in pages that were corrected and previewed after the package was created.
+const PACKAGE = `${DA_EDITOR}/apps/snapshots?nx=${DEMO_BRANCH}&snapshot=i5-launch-news#/${SITE}`;
+const REVIEW = `https://i5-launch-news--main--bmw--moved-permanently.aem.reviews${HQ_NEWS}`;
 
 export const RFP = {
   'I 1a': 'Briefing I · 1a Content modeling',
@@ -151,8 +162,17 @@ export const chapters = [
       'The approval covers these frozen pages, and approving with a date schedules the go-live for the embargo time.',
     ],
     show: [
-      { label: 'HQ i5 launch news in the editor', href: canvas('/aida/showcase/en/news/i5-launch') },
-      { label: 'Launch review packages', href: app('snapshots') },
+      { label: 'HQ i5 launch news in the editor', href: canvas(HQ_NEWS) },
+      { label: 'Launch review package', href: PACKAGE },
+      { label: 'Review link for stakeholders', href: REVIEW },
+    ],
+    steps: [
+      `Open [the HQ launch review package](${PACKAGE}) and click **Request review**. The package locks and its status shows **Ready**.`,
+      `Open [the review link](${REVIEW}): stakeholders see the HQ news exactly as it was submitted.`,
+      `Open [the HQ news in the editor](${canvas(HQ_NEWS)}), select the headline, click the speech bubble at the end of the toolbar, type \`Lead with the range.\` and click **Comment**.`,
+      `In [the package](${PACKAGE}), click **Reject & unlock**. The status changes to **Rejected**.`,
+      `In [the editor](${canvas(HQ_NEWS)}), change the headline to \`The BMW i5. Up to 627 km, 100% electric.\` and resolve the comment with its ✓. Then **Send** → **Preview** → **Update**.`,
+      `In [the package](${PACKAGE}), click **Save** to take in the corrected page, then **Request review**. Reload [the review link](${REVIEW}): it shows the new headline.`,
     ],
     recap: 'Stakeholder feedback on the page itself, a correction, and an approval of exactly the pages that go live.',
   },
@@ -166,7 +186,15 @@ export const chapters = [
       'The translation service is pluggable: BMW’s own AI fits in, and translation memory stays in the translation service BMW already uses.',
     ],
     show: [
-      { label: 'Translate and roll out', href: app('loc') },
+      { label: 'Translate and roll out', href: TRANSLATE },
+      { label: 'German i5 launch news', href: canvas('/aida/showcase/de/news/i5-launch') },
+      { label: 'French i5 launch news', href: canvas('/aida/showcase/fr/news/i5-launch') },
+    ],
+    steps: [
+      `Open [Translate](${TRANSLATE}) and click **Create new project**. Title: \`i5-launch-news\`. URLs: \`${PREVIEW}${HQ_NEWS}\`.`,
+      'Click **Validate sources**, then **Confirm options**. Set **All languages & locales** to **Translate**: German and French get translated, and Belgium is the market selected for rollout.',
+      'Click **Start project**, then **Translate all**.',
+      `When both languages are done, open [the German news](${canvas('/aida/showcase/de/news/i5-launch')}) and [the French news](${canvas('/aida/showcase/fr/news/i5-launch')}): the text is translated, BMW terms such as eDrive40 are not.`,
     ],
     recap: 'AI translation at scale, with BMW’s glossary, style and human feedback.',
   },
@@ -180,11 +208,19 @@ export const chapters = [
       'When HQ updates the source and rolls out again, local changes stay: the editor shows each conflict with the HQ text next to the local one, and the market decides.',
     ],
     show: [
-      { label: 'Belgian i5 launch news in the editor', href: canvas('/aida/showcase/fr/be/news/i5-launch') },
+      { label: 'Belgian i5 launch news in the editor', href: canvas(BE_NEWS) },
       { label: 'Publish requests inbox', href: INBOX },
       { label: 'Germany: BMW i5', href: page('/aida/showcase/de/de/i5') },
       { label: 'France: BMW i5', href: page('/aida/showcase/fr/fr/i5') },
       { label: 'Belgium: BMW i5', href: page('/aida/showcase/fr/be/i5') },
+      { label: 'Translate and roll out', href: TRANSLATE },
+    ],
+    steps: [
+      `Compare the i5 page in [Germany](${page('/aida/showcase/de/de/i5')}), [France](${page('/aida/showcase/fr/fr/i5')}) and [Belgium](${page('/aida/showcase/fr/be/i5')}): Germany shows the Highway Assistant, France doesn't offer it.`,
+      `In [Translate](${TRANSLATE}), open the i5-launch-news project, click **Rollout locales**, then **Rollout all ready**: the French news goes out to Belgium.`,
+      `Open [the Belgian news in the editor](${canvas(BE_NEWS)}). The headline is marked as a conflict between Belgium's text and HQ's: click the ✓ next to **Upstream** to take HQ's. Belgium's range, 518–627 km, stays.`,
+      `In [the Belgian news editor](${canvas(BE_NEWS)}), click ⋯ next to **Send** → **Request Publish** → **Review changes** to compare with the live page. Close it, add a note to reviewers and click **Request publish**.`,
+      `Open [the publish requests inbox](${INBOX}), pick the Belgian request and click **Approve Step**: market review is done, and the legal reviewer gets an e-mail.`,
     ],
     recap: 'Push centrally, adapt and approve locally, update again without losing local work.',
   },
@@ -198,8 +234,12 @@ export const chapters = [
       'Each cell links to the next action: edit, review, preview, check; Files shows what is in preview and what is live.',
     ],
     show: [
-      { label: 'Rollout radar', href: `${DA_EDITOR}/app/${SITE}/tools/aida/radar/radar?ref=main&root=/aida/showcase` },
+      { label: 'Rollout radar', href: RADAR },
       { label: 'Belgian news in Files: review and publish status', href: files('/aida/showcase/fr/be/news') },
+    ],
+    steps: [
+      `Open [the rollout radar](${RADAR}): the Belgian i5 launch news shows **In review: Legal review**, with a **Review** link to the request.`,
+      `Open [the Belgian news folder in Files](${files('/aida/showcase/fr/be/news')}): the **Workflow** column shows **In Review** for the i5 launch news.`,
     ],
     recap: 'HQ sees the rollout status of all markets and what blocks each one.',
   },
@@ -213,11 +253,20 @@ export const chapters = [
       'Code moves through DEV, TEST, STAGE and LIVE as branches; content has preview and live.',
     ],
     show: [
-      { label: 'Schedule publish from the editor', href: canvas('/aida/de/de/i5') },
+      { label: 'Publish requests inbox', href: INBOX },
+      { label: 'Belgian i5 launch news, live', href: `${LIVE}${BE_NEWS}` },
+      { label: 'HQ i5 launch news, preview', href: page(HQ_NEWS) },
+      { label: 'HQ i5 launch news, live', href: `${LIVE}${HQ_NEWS}` },
+      { label: 'Launch review package', href: PACKAGE },
       { label: 'Scheduler', href: `${DA_EDITOR}/apps/scheduler` },
-      { label: 'Launch review packages', href: app('snapshots') },
-      { label: 'Preview', href: page('/aida/showcase/en/i5') },
-      { label: 'Live', href: `${LIVE}/aida/showcase/en/i5` },
+      { label: 'Schedule publish from the editor', href: canvas('/aida/de/de/i5') },
+    ],
+    steps: [
+      `In [the publish requests inbox](${INBOX}), pick the Belgian request and click **Approve & Publish**: legal review signs off and [the Belgian news goes live](${LIVE}${BE_NEWS}).`,
+      `Compare the HQ news on [preview](${page(HQ_NEWS)}) and [live](${LIVE}${HQ_NEWS}): preview has the corrected headline, the live site keeps the old one until go-live.`,
+      `In [the HQ launch review package](${PACKAGE}), set **Schedule Publish** to a date next year and click **Approve & publish**. A dialog confirms the schedule.`,
+      `Open the [Scheduler](${DA_EDITOR}/apps/scheduler): it lists the package with its go-live date.`,
+      `For a single page: [German i5 in the editor](${canvas('/aida/de/de/i5')}) → ⋯ next to **Send** → **Schedule Publish**. Close the dialog without scheduling.`,
     ],
     recap: 'Embargo-safe: scheduled, packaged releases on separate preview and live tiers.',
   },
