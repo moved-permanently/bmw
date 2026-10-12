@@ -28,18 +28,27 @@ export const RFP = {
 export const chapters = [
   {
     id: 'journey',
-    title: 'One launch, every market',
-    rfp: ['I 1a', 'I 1b', 'I 2', 'I 3', 'I 4', 'I 5'],
+    title: 'Agenda: one launch, every market',
+    rfp: [],
     tell: [
-      'HQ creates the BMW i5 launch story once; stakeholders review it before the embargo.',
-      'AI translates it, it is pushed into the markets, and each market reviews, adapts and publishes.',
-      'Status and insights flow back to HQ. Everything shown runs on AEM, authored in Experience Workspace.',
+      'We follow one story through Briefing I: HQ creates the BMW i5 launch once, and stakeholders review it before the embargo.',
+      'Then AI translates it, the markets adapt and publish it, and status and insights come back to HQ. The agenda shows the chapter for each step.',
+      'The starting point: bmw.de, migrated and running on AEM, authored in Experience Workspace.',
     ],
     show: [
       { label: 'bmw.de home on AEM', href: page('/de/home') },
       { label: 'BMW i5 page on AEM', href: page('/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick') },
     ],
-    recap: 'Create → review → translate → roll out → adapt → publish → learn: one connected journey.',
+    agenda: [
+      { rfp: 'I 1a', chapters: ['model'] },
+      { rfp: 'I 1b', chapters: ['edit', 'assets'] },
+      { rfp: 'I 2', chapters: ['review'] },
+      { rfp: 'I 3', chapters: ['translate', 'rollout'] },
+      { rfp: 'I 4', chapters: ['rollout', 'status', 'release'] },
+      { rfp: 'I 5', chapters: ['insights'] },
+      { rfp: 'III Architecture', chapters: ['architecture'] },
+    ],
+    recap: 'One story in six steps; each step is shown live in the chapters that follow.',
   },
   {
     id: 'edit',

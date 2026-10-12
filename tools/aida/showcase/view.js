@@ -78,6 +78,15 @@ export function chapterFromHash(hash, count) {
 
 const showLink = ({ label, href }) => link(label, href);
 
+function agendaCard(agenda, chapters, labels) {
+  const chapterLink = (id) => {
+    const i = chapters.findIndex((c) => c.id === id);
+    return i < 0 ? '' : `<a href="#path/${i}">${i + 1} ${escape(chapters[i].title)}</a>`;
+  };
+  const rows = agenda.map(({ rfp, chapters: ids }) => `<tr><th scope="row">${escape(labels[rfp] || rfp)}</th><td>${ids.map(chapterLink).join(' · ')}</td></tr>`).join('');
+  return card('Agenda', `<table class="showcase-path-agenda"><tbody>${rows}</tbody></table>`);
+}
+
 export function demoPath(chapters, requested = 0, labels = {}) {
   const index = Math.max(0, Math.min(requested, chapters.length - 1));
   const chapter = chapters[index];
@@ -87,6 +96,7 @@ export function demoPath(chapters, requested = 0, labels = {}) {
   const refs = chapter.rfp.map((r) => `<span class="showcase-status">${escape(labels[r] || r)}</span>`).join(' ');
   return `<div class="showcase-path"><ol class="showcase-path-nav" aria-label="Demo chapters">${nav}</ol><article class="showcase-path-chapter">`
     + `<div class="showcase-eyebrow">Chapter ${index + 1} of ${chapters.length}</div><h1>${escape(chapter.title)}</h1><p class="showcase-path-refs">${refs}</p>`
+    + `${chapter.agenda ? agendaCard(chapter.agenda, chapters, labels) : ''}`
     + `${card('Show', `<div class="showcase-actions">${chapter.show.map(showLink).join('')}</div>`)}`
     + `${card('Tell', `<ul class="showcase-list">${chapter.tell.map((t) => `<li>${escape(t)}</li>`).join('')}</ul>`)}`
     + `<p class="showcase-path-recap"><strong>Recap</strong> ${escape(chapter.recap)}</p>`
