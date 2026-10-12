@@ -6,8 +6,8 @@ final class MapLayoutTests: XCTestCase {
 
     func testDotIsMiddleOfFreeArea() {
         // side panel took 300 pt on the left, buttons 80 pt on the right
-        let free = CGRect(x: 300, y: 0, width: 420, height: 480)
-        XCTAssertEqual(MapLayout.dotPoint(free: free), CGPoint(x: 510, y: 240))
+        let free = CGRect(x: 300, y: 60, width: 420, height: 420)   // top bar shrinks the safe area
+        XCTAssertEqual(MapLayout.dotPoint(free: free, bounds: bounds), CGPoint(x: 510, y: 240))
     }
     func testMapCentreIsTheDot() {
         let dot = CGPoint(x: 510, y: 240)

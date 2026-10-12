@@ -6,7 +6,8 @@ import CoreGraphics
 enum MapLayout {
     /// The middle of the free area: the safe area is what is left after the system took the side panel
     /// (left) and the map buttons (right), so its centre is halfway between them, and vertically centred.
-    static func dotPoint(free: CGRect) -> CGPoint { CGPoint(x: free.midX, y: free.midY) }
+    /// Vertically the middle of the screen: the bars at the top come and go and must not move the dot.
+    static func dotPoint(free: CGRect, bounds: CGRect) -> CGPoint { CGPoint(x: free.midX, y: bounds.midY) }
 
     /// A square map centred on `dot` that still covers all of `bounds`.
     static func mapFrame(bounds: CGRect, dot: CGPoint) -> CGRect {

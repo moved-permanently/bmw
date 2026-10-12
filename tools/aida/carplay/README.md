@@ -58,3 +58,10 @@ CarPlay draws list text in a fixed style and cuts it with "…"; apps have no fo
 - Only the blocks the showcase and place pages use are mapped; others (`video`, `embed`, `link-list`, columns, card lists) are skipped and counted in the cockpit.
 - Place pages are German only. Only the i5 (`61HG`) has a showcase page.
 - The drive's road geometry is generated once from OSRM and checked in.
+
+## Navigation map (branch carplay-nav-map)
+
+The app declares `com.apple.developer.carplay-maps`, draws its own `MKMapView` in the car window and keeps the dot at one
+fixed spot (`MapLayout`). The Orte list is a normal list template behind the "BMW" button.
+The iOS 26.5 simulator runtime crashes on any `CPMapTemplate` (missing `vehicleSupportsDestinationSharing`); run this branch on
+the iOS 18.6 runtime (`xcodebuild -downloadPlatform iOS -buildVersion 18.6`). The deployment target is 18.0.

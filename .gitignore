@@ -33,7 +33,7 @@ drafts/
 /aida/
 tools/aida/content/out/
 
-tools/aida/carplay/build/
+tools/aida/carplay/build*/
 tools/aida/carplay/demo/shots/
 *.xcuserstate
 xcuserdata/

@@ -9,35 +9,46 @@ final class CarMapViewController: UIViewController, MKMapViewDelegate {
     private var annotations: [String: MKPointAnnotation] = [:]
     private var latitudinalMeters: CLLocationDistance = 3000
     private(set) var dot = CGPoint.zero
+    private let marker = UIView(frame: CGRect(x: 0, y: 0, width: 22, height: 22))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.clipsToBounds = true
         map.delegate = self
-        map.showsUserLocation = true
+        map.showsUserLocation = false   // the dot is drawn below, at a fixed place
         map.isRotateEnabled = false
         map.isPitchEnabled = false
         map.pointOfInterestFilter = .excludingAll
         map.overrideUserInterfaceStyle = .dark
         view.addSubview(map)
+        marker.layer.cornerRadius = 11
+        marker.backgroundColor = UIColor(red: 0.2, green: 0.6, blue: 1, alpha: 1)
+        marker.layer.borderColor = UIColor.white.cgColor
+        marker.layer.borderWidth = 3
+        view.addSubview(marker)
         centre(animated: false)
         reloadPlaces()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        dot = MapLayout.dotPoint(free: view.safeAreaLayoutGuide.layoutFrame)
+        let free = view.safeAreaLayoutGuide.layoutFrame
+        NSLog("BMWCarPlay car map bounds=%@ safe=%@", NSCoder.string(for: view.bounds), NSCoder.string(for: free))
+        dot = MapLayout.dotPoint(free: free, bounds: view.bounds)
         map.frame = MapLayout.mapFrame(bounds: view.bounds, dot: dot)
+        marker.center = dot
+        view.bringSubviewToFront(marker)
         centre(animated: false)
     }
 
-    /// Called for every location change: put the session position under the dot.
+    /// Called for every location change: put the session position under the dot. It jumps, never animates,
+    /// so the dot is never off by the distance travelled during an animation.
     /// The user tracking mode is not used, because it re-centres on the map's own location manager
     /// and drops out whenever the camera is set from code.
     func centre(animated: Bool) {
         let c = CLLocationCoordinate2D(latitude: session.lat, longitude: session.lon)
         let region = MKCoordinateRegion(center: c, latitudinalMeters: latitudinalMeters, longitudinalMeters: latitudinalMeters)
-        map.setRegion(region, animated: animated)
+        map.setRegion(region, animated: false)
     }
 
     func zoom(by factor: Double) {
