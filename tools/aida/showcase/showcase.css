@@ -136,6 +136,44 @@
   text-underline-offset: 3px;
   }
 
+.showcase-architecture .showcase-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  padding: 0;
+  list-style: none;
+  }
+
+.showcase-architecture .showcase-flow li {
+  position: relative;
+  }
+
+.showcase-architecture .showcase-flow li:not(:last-child)::after {
+  content: '\2192';
+  position: absolute;
+  top: 50%;
+  right: -24px;
+  color: #0265dc;
+  font-size: 22px;
+  }
+
+.showcase-architecture > .showcase-card,
+.showcase-architecture > .showcase-two {
+  margin-top: 24px;
+  }
+
+.showcase-architecture .showcase-card p,
+.showcase-architecture .showcase-table td {
+  line-height: 1.6;
+  }
+
+.showcase-architecture .showcase-table th[scope='row'] {
+  width: 160px;
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 14px;
+  }
+
 .showcase-card-media {
   display: block;
   width: 100%;
@@ -433,6 +471,15 @@
   }
 
 @media (width <= 1000px) {
+  .showcase-architecture .showcase-flow {
+    grid-template-columns: 1fr;
+    }
+
+  .showcase-architecture .showcase-flow li:not(:last-child)::after {
+    content: '\2193';
+    inset: auto 50% -28px auto;
+    }
+
   .showcase-path {
     grid-template-columns: 1fr;
     }

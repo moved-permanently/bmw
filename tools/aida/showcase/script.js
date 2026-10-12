@@ -241,14 +241,14 @@ export const chapters = [
     title: 'Architecture for BMW Group',
     rfp: ['III Architecture'],
     tell: [
-      'Brands and organizations are their own sites that share code and capabilities, not one content pool.',
-      'Language source → languages → regions → markets → importers → dealers, each with clear ownership.',
-      'Environments are a separate axis: DEV, TEST, STAGE and LIVE for code and integrations.',
+      'Authors bring vehicle facts, media and offers into pages in Experience Workspace. AEM publishes the pages; site code is managed separately in GitHub.',
+      'German serves Germany and Austria; French serves France and Belgium. Each market can adapt its pages. Other brands would have separate sites and content.',
+      'The architecture view explains the working connections and what still needs connecting: WDH feeds, OTMM, Salesforce, translation AI and shared review services.',
     ],
     show: [
       { label: 'Architecture', href: '#architecture' },
     ],
-    recap: 'Independent contexts, shared capabilities, one operating model.',
+    recap: 'Source systems provide facts and media. Authors build pages. AEM publishes them.',
   },
   {
     id: 'recap',
