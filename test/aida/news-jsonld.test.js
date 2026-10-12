@@ -28,3 +28,16 @@ test('invalid existing JSON-LD stops synchronization without silently dropping a
   const broken = html({ '@type': 'NewsArticle' }).replace('{"@type":"NewsArticle"}', '{broken');
   assert.throws(() => reconcile(broken, '{"@type":"Car"}'), /JSON/i);
 });
+
+test('the JSON-LD value is computed from metadata values alone (WDH panel update in the editor)', () => {
+  const article = JSON.stringify({
+    '@type': 'NewsArticle', headline: 'English', datePublished: '2026-09-15', about: { name: 'DE vehicle' },
+  });
+  const next = JSON.parse(documents.vehicleJsonLd(article, '{"@context":"https://schema.org","@type":"Car","name":"FR vehicle"}', { title: 'Titre', description: 'Description FR' }));
+  assert.equal(next.headline, 'Titre');
+  assert.equal(next.description, 'Description FR');
+  assert.equal(next.datePublished, '2026-09-15');
+  assert.deepEqual(next.about, { '@type': 'Car', name: 'FR vehicle' });
+  assert.equal(documents.vehicleJsonLd('{"@type":"Car","name":"Old"}', '{"@type":"Car","name":"New"}'), '{"@type":"Car","name":"New"}');
+  assert.equal(documents.vehicleJsonLd('', '{"@type":"Car"}'), '{"@type":"Car"}');
+});

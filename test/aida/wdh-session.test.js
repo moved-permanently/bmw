@@ -9,6 +9,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createWdhSession } from '../../scripts/aida-wdh.js';
+import { showWdhCheck } from '../../scripts/wdh-session.js';
 
 const read = (p) => readFileSync(new URL(`../../${p}`, import.meta.url), 'utf8');
 const binding = (i) => ({ href: `/aida/data/wdh-de.json#61HG.v${i % 7}`, text: `value ${i}` });
@@ -46,8 +47,22 @@ test('runtime wiring: every loadPage starts a session before decorating, the che
   assert.ok(eager.indexOf('wdhSession.start()') > -1 && eager.indexOf('wdhSession.start()') < eager.indexOf('decorateMain(main)'), 'loadEager starts a new WDH session before decorateMain');
   assert.doesNotMatch(scripts, /const wdhBindings = \[\]/, 'no module-level array that grows across renders');
   assert.match(scripts, /wdhSession\.add\(/);
-  assert.match(scripts, /checkWdhValues\(wdhSession\)/);
+  assert.match(scripts, /checkWdhValues\(wdhSession, wdhEditor\)/);
+  assert.match(scripts, /showWdhCheck\(window\.location\)/, 'the panel shows where showWdhCheck allows it');
+  assert.ok(scripts.indexOf('captureEditorPort()') > -1 && scripts.indexOf('captureEditorPort()') < scripts.indexOf('\nloadPage();'), 'the editor port is captured before quick edit loads (appended after loadPage())');
   const aida = read('scripts/aida.js');
   assert.match(aida, /isCurrent\(generation\)/, 'a superseded render does not render its panel');
   assert.match(aida, /querySelectorAll\('aside\.wdh-check'\)\.forEach\(\(p\) => p\.remove\(\)\)/, 'an existing panel is replaced, not duplicated');
+});
+
+test('the WDH panel shows on preview hosts, not on showcase pages or block library documents', () => {
+  const at = (hostname, pathname) => showWdhCheck({ hostname, pathname });
+  assert.equal(at('main--bmw--moved-permanently.preview.da.live', '/aida/fr/be/i5'), true);
+  assert.equal(at('main--bmw--moved-permanently.aem.page', '/aida/fr/be/i5'), true);
+  assert.equal(at('localhost', '/aida/fr/be/i5'), true);
+  assert.equal(at('main--bmw--moved-permanently.aem.live', '/aida/fr/be/i5'), false);
+  assert.equal(at('main--bmw--moved-permanently.preview.da.live', '/library/blocks/model-offer'), false);
+  assert.equal(at('main--bmw--moved-permanently.preview.da.live', '/library/templates/model-page'), false);
+  assert.equal(at('main--bmw--moved-permanently.preview.da.live', '/aida/showcase/fr/be/i5'), false);
+  assert.equal(at('main--bmw--moved-permanently.preview.da.live', '/drafts/aida/showcase/fr/be/i5'), false);
 });
