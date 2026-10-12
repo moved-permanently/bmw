@@ -1,0 +1,4148 @@
+{
+  "_provenance": {
+    "writtenBy": "stardust:extract",
+    "writtenAt": "2026-10-12T14:09:35.479Z",
+    "script": "style-census.mjs",
+    "readArtifacts": [
+      "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+      "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/3-series",
+      "https://of1--bmw--moved-permanently.aem.page/de/home"
+    ],
+    "widths": [
+      1440
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+    "synthesizedInputs": [],
+    "failed": []
+  },
+  "pages": {
+    "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home": {
+      "1440": {
+        "title": "Der i5",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "elements": {
+          "total": 798,
+          "visible": 359
+        },
+        "occluders": [],
+        "headings": [
+          {
+            "tag": "h1",
+            "text": "Der i5",
+            "selector": "#der-i5",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "43px",
+            "fontWeight": "300",
+            "lineHeight": "60px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "h2",
+            "text": "Der neue BMW iX3 50 xDrive",
+            "selector": "#der-neue-bmw-ix3-50-xdrive",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "35px",
+            "fontWeight": "300",
+            "lineHeight": "50px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h2",
+            "text": "BMW Charging.",
+            "selector": "#bmw-charging",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "35px",
+            "fontWeight": "300",
+            "lineHeight": "50px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h2",
+            "text": "Finden Sie Ihren BMW",
+            "selector": "#finden-sie-ihren-bmw",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "35px",
+            "fontWeight": "300",
+            "lineHeight": "50px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "BMW in Cannes",
+            "selector": "#bmw-in-cannes",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "BMW Concept M",
+            "selector": "#bmw-concept-m",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "BMW X",
+            "selector": "#bmw-x",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Wie die BMW Group Nachhaltigkeit bis in…",
+            "selector": "#carousel-1-slide-4 > div:nth-of-type(2) > h3",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "50 Jahre BMW 3er – sieben Generationen …",
+            "selector": "#carousel-1-slide-5 > div:nth-of-type(2) > h3",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h2",
+            "text": "Bereit für den Sommer",
+            "selector": "main > div:nth-of-type(5) > div:nth-of-type(1) > div > div > div:nth-of-type(2) > h2",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "35px",
+            "fontWeight": "300",
+            "lineHeight": "50px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Kontakt",
+            "selector": "#kontakt",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "BMW erleben",
+            "selector": "#bmw-erleben",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Service- & Dienstleistungen",
+            "selector": "#service---dienstleistungen",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Auswählen & Kaufen",
+            "selector": "footer > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > h3",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Modelle",
+            "selector": "#modelle",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "BMW Elektrofahrzeuge",
+            "selector": "#bmw-elektrofahrzeuge",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          }
+        ],
+        "text": [
+          {
+            "tag": "p",
+            "text": "Der BMW i5. 100% elektrisch.",
+            "selector": "main > div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "p",
+            "text": "Konfigurieren & Preise",
+            "selector": "div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "p",
+            "text": "BMW i5 eDrive40: Energieverbrauch elekt…",
+            "selector": "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "300",
+            "lineHeight": "18px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Max. Reichweite WLTP: 805 km.",
+            "selector": "main > div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Sorgenfreies Laden, einfach, jederzeit …",
+            "selector": "main > div:nth-of-type(3) > div > div > div > div:nth-of-type(2) > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "li",
+            "text": "BMW in Cannes Eine gemeinsame Cannes-Ge…",
+            "selector": "#carousel-1-slide-1",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Eine gemeinsame Cannes-Geschichte für d…",
+            "selector": "#carousel-1-slide-1 > div:nth-of-type(2) > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "li",
+            "text": "BMW Concept M Eine redaktionelle Konzep…",
+            "selector": "#carousel-1-slide-2",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Eine redaktionelle Konzeptgeschichte fü…",
+            "selector": "#carousel-1-slide-2 > div:nth-of-type(2) > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "li",
+            "text": "BMW X Entdecken Sie die BMW X Familie m…",
+            "selector": "#carousel-1-slide-3",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Entdecken Sie die BMW X Familie mit dem…",
+            "selector": "#carousel-1-slide-3 > div:nth-of-type(2) > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "li",
+            "text": "Wie die BMW Group Nachhaltigkeit bis in…",
+            "selector": "#carousel-1-slide-4",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          }
+        ],
+        "buttons": [
+          {
+            "text": "Konfigurieren & Preise",
+            "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+            "count": 4,
+            "backgroundColor": "rgb(28, 105, 212)",
+            "color": "rgb(255, 255, 255)",
+            "borderRadius": "3px",
+            "padding": "4px 24px",
+            "border": "0px none rgb(255, 255, 255)",
+            "borderColor": "rgb(255, 255, 255)",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px inset",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "500",
+            "textTransform": "none",
+            "letterSpacing": "normal",
+            "hover": {
+              "backgroundColor": "rgb(6, 83, 182)",
+              "color": "rgb(255, 255, 255)",
+              "borderColor": "rgb(255, 255, 255)",
+              "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px inset",
+              "changed": true
+            }
+          }
+        ],
+        "links": [
+          {
+            "text": "Jetzt entdecken",
+            "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+            "count": 1,
+            "color": "rgb(242, 242, 242)",
+            "textDecoration": "none",
+            "fontWeight": "500",
+            "hover": {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(255, 255, 255)",
+              "borderColor": "rgb(255, 255, 255)",
+              "boxShadow": "rgb(255, 255, 255) 0px 0px 0px 2px inset",
+              "changed": true
+            }
+          },
+          {
+            "text": "Mehr erfahren",
+            "selector": "#carousel-1-slide-1 > div:nth-of-type(2) > div > p > a",
+            "count": 5,
+            "color": "rgb(38, 38, 38)",
+            "textDecoration": "none",
+            "fontWeight": "500",
+            "hover": {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(38, 38, 38)",
+              "borderColor": "rgb(38, 38, 38)",
+              "boxShadow": "rgb(38, 38, 38) 0px 0px 0px 2px inset",
+              "changed": true
+            }
+          }
+        ],
+        "surfaces": [
+          {
+            "matched": "nav",
+            "selector": "#nav",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 85
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "relative",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main",
+            "selector": "main",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 3141
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "footer",
+            "selector": "footer",
+            "rect": {
+              "x": 0,
+              "y": 3141,
+              "w": 1440,
+              "h": 1327
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(1)",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 696
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(2)",
+            "rect": {
+              "x": 0,
+              "y": 756,
+              "w": 1440,
+              "h": 404
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(3)",
+            "rect": {
+              "x": 0,
+              "y": 1256,
+              "w": 1440,
+              "h": 479
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(4)",
+            "rect": {
+              "x": 0,
+              "y": 1831,
+              "w": 1440,
+              "h": 710
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          }
+        ],
+        "radii": [
+          {
+            "value": "3px",
+            "count": 10,
+            "area": 82259,
+            "sources": [
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+              "div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > div > p > a"
+            ]
+          },
+          {
+            "value": "50%",
+            "count": 4,
+            "area": 6785,
+            "sources": [
+              "#nav > div:nth-of-type(1) > a",
+              "div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div > div > button",
+              "div > div > div > div > div > div:nth-of-type(1) > div > div:nth-of-type(2)"
+            ]
+          },
+          {
+            "value": "2px",
+            "count": 1,
+            "area": 2304,
+            "sources": [
+              "main > div:nth-of-type(4) > div:nth-of-type(2) > div > button:nth-of-type(2)"
+            ]
+          }
+        ],
+        "shadows": [
+          {
+            "value": "rgb(38, 38, 38) 0px 0px 0px 1px inset",
+            "count": 5,
+            "sources": [
+              "#carousel-1-slide-1 > div:nth-of-type(2) > div > p > a",
+              "#carousel-1-slide-2 > div:nth-of-type(2) > div > p > a",
+              "#carousel-1-slide-3 > div:nth-of-type(2) > div > p > a"
+            ]
+          },
+          {
+            "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px inset",
+            "count": 4,
+            "sources": [
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+              "div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > div > p > a",
+              "div:nth-of-type(3) > div > div > div > div:nth-of-type(2) > div > p > a"
+            ]
+          },
+          {
+            "value": "rgba(0, 0, 0, 0.16) 0px 6px 20px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px",
+            "count": 2,
+            "sources": [
+              "main > div:nth-of-type(4) > div:nth-of-type(2) > div > button:nth-of-type(2)",
+              "body > aside > div:nth-of-type(1) > button"
+            ]
+          },
+          {
+            "value": "rgb(242, 242, 242) 0px 0px 0px 1px inset",
+            "count": 1,
+            "sources": [
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+            ]
+          }
+        ],
+        "gradients": [],
+        "bgColors": [
+          {
+            "value": "rgb(255, 255, 255)",
+            "count": 5,
+            "area": 8350542,
+            "sources": [
+              "body",
+              "div > div > div > div > div > div:nth-of-type(1) > div > div:nth-of-type(2)",
+              "main > div:nth-of-type(4) > div:nth-of-type(2) > div > button:nth-of-type(2)"
+            ]
+          },
+          {
+            "value": "rgb(246, 246, 246)",
+            "count": 4,
+            "area": 1864800,
+            "sources": [
+              "footer > div > div:nth-of-type(1)",
+              "footer > div > div:nth-of-type(2)",
+              "footer > div > div:nth-of-type(3)"
+            ]
+          },
+          {
+            "value": "rgb(28, 105, 212)",
+            "count": 4,
+            "area": 35545,
+            "sources": [
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+              "div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > div > p > a",
+              "div:nth-of-type(3) > div > div > div > div:nth-of-type(2) > div > p > a"
+            ]
+          },
+          {
+            "value": "rgb(38, 38, 38)",
+            "count": 3,
+            "area": 1487164,
+            "sources": [
+              "main > div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div > div",
+              "div:nth-of-type(2) > div > div > div > div:nth-of-type(1) > div > div > div",
+              "div > div > div > div:nth-of-type(1) > div > div > div > div"
+            ]
+          },
+          {
+            "value": "rgb(0, 0, 0)",
+            "count": 2,
+            "area": 908496,
+            "sources": [
+              "main > div:nth-of-type(1) > div:nth-of-type(1) > div > div",
+              "div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div > div > button"
+            ]
+          },
+          {
+            "value": "rgba(255, 255, 255, 0.46)",
+            "count": 1,
+            "area": 2121,
+            "sources": [
+              "div:nth-of-type(1) > div > div > div > div > div > div:nth-of-type(1) > div"
+            ]
+          }
+        ],
+        "textColors": [
+          {
+            "value": "rgb(38, 38, 38)",
+            "count": 98,
+            "sources": [
+              "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > p",
+              "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > p > span:nth-of-type(1)",
+              "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > p > span:nth-of-type(2)"
+            ]
+          },
+          {
+            "value": "rgb(255, 255, 255)",
+            "count": 11,
+            "sources": [
+              "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(1) > a > span",
+              "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(2) > button > span:nth-of-type(1)",
+              "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(3) > button > span:nth-of-type(1)"
+            ]
+          },
+          {
+            "value": "rgba(255, 255, 255, 0.84)",
+            "count": 3,
+            "sources": [
+              "div > div:nth-of-type(1) > div > div > div > div > div > div:nth-of-type(2)",
+              "div:nth-of-type(1) > div > div > div > div > div > div:nth-of-type(2) > span:nth-of-type(1)",
+              "div:nth-of-type(1) > div > div > div > div > div > div:nth-of-type(2) > span:nth-of-type(2)"
+            ]
+          },
+          {
+            "value": "rgb(242, 242, 242)",
+            "count": 1,
+            "sources": [
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+            ]
+          }
+        ],
+        "borderColors": [
+          {
+            "value": "rgb(230, 230, 230)",
+            "count": 2,
+            "sources": [
+              "footer > div > div:nth-of-type(1)",
+              "footer > div > div:nth-of-type(4)"
+            ]
+          },
+          {
+            "value": "rgba(255, 255, 255, 0.46)",
+            "count": 1,
+            "sources": [
+              "div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div > div > button"
+            ]
+          }
+        ],
+        "customProps": {
+          "--bmw-color-white": {
+            "declared": "#fff",
+            "computed": "#fff"
+          },
+          "--bmw-color-black": {
+            "declared": "#000",
+            "computed": "#000"
+          },
+          "--bmw-grey-900": {
+            "declared": "#262626",
+            "computed": "#262626"
+          },
+          "--bmw-grey-800": {
+            "declared": "#4d4d4d",
+            "computed": "#4d4d4d"
+          },
+          "--bmw-grey-700": {
+            "declared": "#666",
+            "computed": "#666"
+          },
+          "--bmw-grey-600": {
+            "declared": "#8e8e8e",
+            "computed": "#8e8e8e"
+          },
+          "--bmw-grey-500": {
+            "declared": "#bbb",
+            "computed": "#bbb"
+          },
+          "--bmw-grey-300": {
+            "declared": "#e6e6e6",
+            "computed": "#e6e6e6"
+          },
+          "--bmw-grey-200": {
+            "declared": "#f2f2f2",
+            "computed": "#f2f2f2"
+          },
+          "--bmw-grey-100": {
+            "declared": "#f6f6f6",
+            "computed": "#f6f6f6"
+          },
+          "--bmw-blue": {
+            "declared": "#1c69d4",
+            "computed": "#1c69d4"
+          },
+          "--bmw-blue-hover": {
+            "declared": "#0653b6",
+            "computed": "#0653b6"
+          },
+          "--bmw-blue-disabled": {
+            "declared": "#bbd2f3",
+            "computed": "#bbd2f3"
+          },
+          "--bmw-blue-light": {
+            "declared": "#dde8f9",
+            "computed": "#dde8f9"
+          },
+          "--bmw-error": {
+            "declared": "#d20000",
+            "computed": "#d20000"
+          },
+          "--bmw-warning": {
+            "declared": "#ffad1f",
+            "computed": "#ffad1f"
+          },
+          "--bmw-success": {
+            "declared": "#3db014",
+            "computed": "#3db014"
+          },
+          "--bmw-color-text": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-color-heading": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-color-disclaimer": {
+            "declared": "var(--bmw-grey-700)",
+            "computed": "#666"
+          },
+          "--bmw-surface": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-surface-grey": {
+            "declared": "var(--bmw-grey-100)",
+            "computed": "#f6f6f6"
+          },
+          "--bmw-surface-dark": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-border": {
+            "declared": "var(--bmw-grey-300)",
+            "computed": "#e6e6e6"
+          },
+          "--bmw-backdrop": {
+            "declared": "rgb(0 0 0 / 80%)",
+            "computed": "rgb(0 0 0 / 80%)"
+          },
+          "--bmw-link": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-link-hover": {
+            "declared": "var(--bmw-blue)",
+            "computed": "#1c69d4"
+          },
+          "--bmw-link-active": {
+            "declared": "var(--bmw-blue-hover)",
+            "computed": "#0653b6"
+          },
+          "--bmw-link-disabled": {
+            "declared": "var(--bmw-grey-500)",
+            "computed": "#bbb"
+          },
+          "--bmw-cta": {
+            "declared": "var(--bmw-blue)",
+            "computed": "#1c69d4"
+          },
+          "--bmw-cta-hover": {
+            "declared": "var(--bmw-blue-hover)",
+            "computed": "#0653b6"
+          },
+          "--bmw-cta-disabled": {
+            "declared": "var(--bmw-blue-disabled)",
+            "computed": "#bbd2f3"
+          },
+          "--bmw-cta-text": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-nba": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-nba-hover": {
+            "declared": "var(--bmw-grey-800)",
+            "computed": "#4d4d4d"
+          },
+          "--bmw-nba-disabled": {
+            "declared": "var(--bmw-grey-500)",
+            "computed": "#bbb"
+          },
+          "--bmw-nba-text": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-nba-text-disabled": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-ol": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-hover": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-text": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-text-hover": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-disabled": {
+            "declared": "var(--bmw-grey-300)",
+            "computed": "#e6e6e6"
+          },
+          "--bmw-ol-text-disabled": {
+            "declared": "var(--bmw-grey-500)",
+            "computed": "#bbb"
+          },
+          "--bmw-ol-border-width": {
+            "declared": "1px",
+            "computed": "1px"
+          },
+          "--bmw-ol-border-width-hover": {
+            "declared": "2px",
+            "computed": "2px"
+          },
+          "--bmw-focus-outside": {
+            "declared": "0 0 0 0.0625rem #fff, 0 0 0 0.3125rem #1c69d4",
+            "computed": "0 0 0 0.0625rem #fff, 0 0 0 0.3125rem #1c69d4"
+          },
+          "--bmw-focus-inside": {
+            "declared": "inset 0 0 0 0.25rem #1c69d4, 0 0 0 0.0625rem #fff",
+            "computed": "inset 0 0 0 0.25rem #1c69d4, 0 0 0 0.0625rem #fff"
+          },
+          "--bmw-focus-background-link": {
+            "declared": "rgb(255 255 255 / 50%)",
+            "computed": "rgb(255 255 255 / 50%)"
+          },
+          "--bmw-font-family": {
+            "declared": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "computed": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif"
+          },
+          "--bmw-font-family-icons": {
+            "declared": "\"bmw_next_icons\"",
+            "computed": "\"bmw_next_icons\""
+          },
+          "--bmw-font-weight-light": {
+            "declared": "300",
+            "computed": "300"
+          },
+          "--bmw-font-weight-regular": {
+            "declared": "400",
+            "computed": "400"
+          },
+          "--bmw-font-weight-medium": {
+            "declared": "500",
+            "computed": "500"
+          },
+          "--bmw-font-weight-bold": {
+            "declared": "700",
+            "computed": "700"
+          },
+          "--bmw-font-weight-default": {
+            "declared": "var(--bmw-font-weight-light)",
+            "computed": "300"
+          },
+          "--bmw-font-weight-clickable": {
+            "declared": "var(--bmw-font-weight-medium)",
+            "computed": "500"
+          },
+          "--bmw-headline-1-font-size": {
+            "declared": "3.75rem",
+            "computed": "2.6875rem"
+          },
+          "--bmw-headline-1-line-height": {
+            "declared": "5.25rem",
+            "computed": "3.75rem"
+          },
+          "--bmw-headline-2-font-size": {
+            "declared": "2.8125rem",
+            "computed": "2.1875rem"
+          },
+          "--bmw-headline-2-line-height": {
+            "declared": "3.875rem",
+            "computed": "3.125rem"
+          },
+          "--bmw-headline-3-font-size": {
+            "declared": "2.125rem",
+            "computed": "1.75rem"
+          },
+          "--bmw-headline-3-line-height": {
+            "declared": "3rem",
+            "computed": "2.5rem"
+          },
+          "--bmw-subsection-1-font-size": {
+            "declared": "1.5625rem",
+            "computed": "1.4375rem"
+          },
+          "--bmw-subsection-1-line-height": {
+            "declared": "2.375rem",
+            "computed": "2.25rem"
+          },
+          "--bmw-subsection-2-font-size": {
+            "declared": "1.375rem",
+            "computed": "1.25rem"
+          },
+          "--bmw-subsection-2-line-height": {
+            "declared": "2.125rem",
+            "computed": "1.875rem"
+          },
+          "--bmw-body-1-font-size": {
+            "declared": "1.1875rem",
+            "computed": "1.125rem"
+          },
+          "--bmw-body-1-line-height": {
+            "declared": "1.875rem",
+            "computed": "1.75rem"
+          },
+          "--bmw-body-2-font-size": {
+            "declared": "1rem",
+            "computed": "0.9375rem"
+          },
+          "--bmw-body-2-line-height": {
+            "declared": "1.625rem",
+            "computed": "1.5rem"
+          },
+          "--bmw-body-3-font-size": {
+            "declared": "0.75rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-body-3-line-height": {
+            "declared": "1.125rem",
+            "computed": "1.125rem"
+          },
+          "--bmw-label-1-font-size": {
+            "declared": "0.75rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-label-1-line-height": {
+            "declared": "1rem",
+            "computed": "1rem"
+          },
+          "--bmw-headline-4-font-size": {
+            "declared": "var(--bmw-subsection-1-font-size)",
+            "computed": "1.4375rem"
+          },
+          "--bmw-headline-4-line-height": {
+            "declared": "var(--bmw-subsection-1-line-height)",
+            "computed": "2.25rem"
+          },
+          "--bmw-headline-5-font-size": {
+            "declared": "var(--bmw-subsection-2-font-size)",
+            "computed": "1.25rem"
+          },
+          "--bmw-headline-5-line-height": {
+            "declared": "var(--bmw-subsection-2-line-height)",
+            "computed": "1.875rem"
+          },
+          "--bmw-headline-6-font-size": {
+            "declared": "var(--bmw-body-1-font-size)",
+            "computed": "1.125rem"
+          },
+          "--bmw-headline-6-line-height": {
+            "declared": "var(--bmw-body-1-line-height)",
+            "computed": "1.75rem"
+          },
+          "--bmw-disclaimer-1-font-size": {
+            "declared": "var(--bmw-body-3-font-size)",
+            "computed": "0.75rem"
+          },
+          "--bmw-disclaimer-1-line-height": {
+            "declared": "var(--bmw-body-3-line-height)",
+            "computed": "1.125rem"
+          },
+          "--bmw-disclaimer-2-font-size": {
+            "declared": "var(--bmw-label-1-font-size)",
+            "computed": "0.75rem"
+          },
+          "--bmw-disclaimer-2-line-height": {
+            "declared": "var(--bmw-label-1-line-height)",
+            "computed": "1rem"
+          },
+          "--bmw-disclaimer-opacity": {
+            "declared": "0.7051",
+            "computed": "0.7051"
+          },
+          "--bmw-stage-zone-0-double-row-font-size": {
+            "declared": "6.25rem",
+            "computed": "3.375rem"
+          },
+          "--bmw-stage-zone-0-double-row-line-height": {
+            "declared": "6.375rem",
+            "computed": "3.5rem"
+          },
+          "--bmw-stage-zone-0-single-row-font-size": {
+            "declared": "8.125rem",
+            "computed": "4.625rem"
+          },
+          "--bmw-stage-zone-0-single-row-line-height": {
+            "declared": "8.25rem",
+            "computed": "4.75rem"
+          },
+          "--bmw-stage-zone-1-small-font-size": {
+            "declared": "3.75rem",
+            "computed": "2.6875rem"
+          },
+          "--bmw-stage-zone-1-small-line-height": {
+            "declared": "3.875rem",
+            "computed": "2.8125rem"
+          },
+          "--bmw-stage-zone-1-large-font-size": {
+            "declared": "5rem",
+            "computed": "3rem"
+          },
+          "--bmw-stage-zone-1-large-line-height": {
+            "declared": "5.125rem",
+            "computed": "3.125rem"
+          },
+          "--bmw-stage-sub-headline-font-size": {
+            "declared": "1.375rem",
+            "computed": "1.25rem"
+          },
+          "--bmw-stage-sub-headline-line-height": {
+            "declared": "1.625rem",
+            "computed": "1.5rem"
+          },
+          "--bmw-stage-model-1-font-size": {
+            "declared": "15.75rem",
+            "computed": "13.125rem"
+          },
+          "--bmw-stage-model-1-line-height": {
+            "declared": "14rem",
+            "computed": "11.625rem"
+          },
+          "--bmw-spacing-1": {
+            "declared": "0.125rem",
+            "computed": "0.125rem"
+          },
+          "--bmw-spacing-2": {
+            "declared": "0.5rem",
+            "computed": "0.25rem"
+          },
+          "--bmw-spacing-3": {
+            "declared": "0.75rem",
+            "computed": "0.5rem"
+          },
+          "--bmw-spacing-4": {
+            "declared": "1rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-spacing-5": {
+            "declared": "1.25rem",
+            "computed": "1rem"
+          },
+          "--bmw-spacing-6": {
+            "declared": "1.5rem",
+            "computed": "1.25rem"
+          },
+          "--bmw-spacing-8": {
+            "declared": "2rem",
+            "computed": "1.5rem"
+          },
+          "--bmw-spacing-10": {
+            "declared": "2.5rem",
+            "computed": "2rem"
+          },
+          "--bmw-spacing-12": {
+            "declared": "3rem",
+            "computed": "2.5rem"
+          },
+          "--bmw-spacing-16": {
+            "declared": "4rem",
+            "computed": "3rem"
+          },
+          "--bmw-spacing-20": {
+            "declared": "5rem",
+            "computed": "4rem"
+          },
+          "--bmw-spacing-24": {
+            "declared": "6rem",
+            "computed": "5rem"
+          },
+          "--bmw-spacing-32": {
+            "declared": "8rem",
+            "computed": "6rem"
+          },
+          "--bmw-spacing-40": {
+            "declared": "10rem",
+            "computed": "8rem"
+          },
+          "--bmw-spacing-60": {
+            "declared": "15rem",
+            "computed": "10rem"
+          },
+          "--bmw-page-max-width": {
+            "declared": "120rem",
+            "computed": "120rem"
+          },
+          "--bmw-grid-gutter": {
+            "declared": "0.75rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-grid-margin": {
+            "declared": "5.25rem",
+            "computed": "5.25rem"
+          },
+          "--bmw-grid-full": {
+            "declared": "6rem",
+            "computed": "6rem"
+          },
+          "--bmw-grid-additional-spacing": {
+            "declared": "5rem",
+            "computed": "4rem"
+          },
+          "--bmw-content-max-width": {
+            "declared": "calc(var(--bmw-page-max-width) - 2 * var(--bmw-grid-full))",
+            "computed": "calc(120rem - 2 * 6rem)"
+          },
+          "--bmw-button-height": {
+            "declared": "3.25rem",
+            "computed": "3.25rem"
+          },
+          "--bmw-button-small-height": {
+            "declared": "2.25rem",
+            "computed": "2.25rem"
+          },
+          "--bmw-button-radius": {
+            "declared": "3px",
+            "computed": "3px"
+          },
+          "--nav-height": {
+            "declared": "68px",
+            "computed": "68px"
+          }
+        },
+        "fonts": [
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "300",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "400",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "500",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "700",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmw_next_icons",
+            "weight": "400",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmw_next_icons",
+            "weight": "400",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "300",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "400",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "500",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "700",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "300",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmw_next_icons",
+            "weight": "300",
+            "style": "normal",
+            "status": "unloaded"
+          }
+        ],
+        "logoCandidates": [
+          {
+            "tag": "img",
+            "selector": "#nav > div:nth-of-type(1) > a > img:nth-of-type(1)",
+            "src": "https://of1--bmw--moved-permanently.aem.page/media_16d97c12ce1e80dd479f0e673cff81cafd7cfb263.svg?width=750&format=svg&optimize=medium",
+            "inlineSvg": false,
+            "alt": "",
+            "ariaLabel": "BMW Logo",
+            "class": "nav-logo nav-logo-light",
+            "id": null,
+            "href": "/de/home",
+            "inHomeLink": false,
+            "rect": {
+              "x": 96,
+              "y": 16,
+              "w": 52,
+              "h": 52
+            }
+          }
+        ],
+        "iconFont": {
+          "families": [
+            "bmw_next_icons"
+          ],
+          "glyphs": []
+        },
+        "consent": {
+          "dismissed": "Alle akzeptieren"
+        },
+        "finalUrl": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home"
+      }
+    },
+    "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/3-series": {
+      "1440": {
+        "title": "50 Jahre BMW 3er – sieben Generationen Fahrfreude.",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "elements": {
+          "total": 624,
+          "visible": 222
+        },
+        "occluders": [],
+        "headings": [
+          {
+            "tag": "h1",
+            "text": "50 Jahre BMW 3er – sieben Generationen …",
+            "selector": "main > div:nth-of-type(1) > div > div > div > div:nth-of-type(2) > div > h1",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "43px",
+            "fontWeight": "500",
+            "lineHeight": "45px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "h3",
+            "text": "Kontakt",
+            "selector": "#kontakt",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "BMW erleben",
+            "selector": "#bmw-erleben",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Service- & Dienstleistungen",
+            "selector": "#service---dienstleistungen",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Auswählen & Kaufen",
+            "selector": "footer > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > h3",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Modelle",
+            "selector": "#modelle",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "BMW Elektrofahrzeuge",
+            "selector": "#bmw-elektrofahrzeuge",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          }
+        ],
+        "text": [
+          {
+            "tag": "p",
+            "text": "50 Jahre, sieben Generationen, ein Vers…",
+            "selector": "main > div:nth-of-type(1) > div > div > div > div:nth-of-type(2) > div > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "20px",
+            "fontWeight": "500",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "uppercase",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "p",
+            "text": "50 Jahre, sieben Generationen, ein Vers…",
+            "selector": "main > div:nth-of-type(2) > div > p:nth-of-type(1)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Quelle: BMW-Briefing-Text (Demo)",
+            "selector": "main > div:nth-of-type(2) > div > p:nth-of-type(2)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Demo-Datensatz · BMW RfP III · bereitge…",
+            "selector": "main > div:nth-of-type(2) > div > p:nth-of-type(3)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          }
+        ],
+        "buttons": [],
+        "links": [],
+        "surfaces": [
+          {
+            "matched": "nav",
+            "selector": "#nav",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 85
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "relative",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main",
+            "selector": "main",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 950
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "footer",
+            "selector": "footer",
+            "rect": {
+              "x": 0,
+              "y": 950,
+              "w": 1440,
+              "h": 1327
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(1)",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 630
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(2)",
+            "rect": {
+              "x": 0,
+              "y": 682,
+              "w": 1440,
+              "h": 220
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          }
+        ],
+        "radii": [
+          {
+            "value": "50%",
+            "count": 2,
+            "area": 5408,
+            "sources": [
+              "#nav > div:nth-of-type(1) > a",
+              "body > aside > div:nth-of-type(1) > button"
+            ]
+          }
+        ],
+        "shadows": [
+          {
+            "value": "rgba(0, 0, 0, 0.16) 0px 6px 20px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px",
+            "count": 1,
+            "sources": [
+              "body > aside > div:nth-of-type(1) > button"
+            ]
+          }
+        ],
+        "gradients": [],
+        "bgColors": [
+          {
+            "value": "rgb(246, 246, 246)",
+            "count": 4,
+            "area": 1864800,
+            "sources": [
+              "footer > div > div:nth-of-type(1)",
+              "footer > div > div:nth-of-type(2)",
+              "footer > div > div:nth-of-type(3)"
+            ]
+          },
+          {
+            "value": "rgb(255, 255, 255)",
+            "count": 3,
+            "area": 5192464,
+            "sources": [
+              "body",
+              "footer > div",
+              "body > aside > div:nth-of-type(1) > button"
+            ]
+          },
+          {
+            "value": "rgb(0, 0, 0)",
+            "count": 1,
+            "area": 907200,
+            "sources": [
+              "main > div:nth-of-type(1) > div > div > div"
+            ]
+          }
+        ],
+        "textColors": [
+          {
+            "value": "rgb(38, 38, 38)",
+            "count": 71,
+            "sources": [
+              "main > div:nth-of-type(2) > div > p:nth-of-type(1)",
+              "main > div:nth-of-type(2) > div > p:nth-of-type(2)",
+              "main > div:nth-of-type(2) > div > p:nth-of-type(3)"
+            ]
+          },
+          {
+            "value": "rgb(255, 255, 255)",
+            "count": 7,
+            "sources": [
+              "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(1) > a > span",
+              "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(2) > button > span:nth-of-type(1)",
+              "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(3) > button > span:nth-of-type(1)"
+            ]
+          }
+        ],
+        "borderColors": [
+          {
+            "value": "rgb(230, 230, 230)",
+            "count": 2,
+            "sources": [
+              "footer > div > div:nth-of-type(1)",
+              "footer > div > div:nth-of-type(4)"
+            ]
+          }
+        ],
+        "customProps": {
+          "--bmw-color-white": {
+            "declared": "#fff",
+            "computed": "#fff"
+          },
+          "--bmw-color-black": {
+            "declared": "#000",
+            "computed": "#000"
+          },
+          "--bmw-grey-900": {
+            "declared": "#262626",
+            "computed": "#262626"
+          },
+          "--bmw-grey-800": {
+            "declared": "#4d4d4d",
+            "computed": "#4d4d4d"
+          },
+          "--bmw-grey-700": {
+            "declared": "#666",
+            "computed": "#666"
+          },
+          "--bmw-grey-600": {
+            "declared": "#8e8e8e",
+            "computed": "#8e8e8e"
+          },
+          "--bmw-grey-500": {
+            "declared": "#bbb",
+            "computed": "#bbb"
+          },
+          "--bmw-grey-300": {
+            "declared": "#e6e6e6",
+            "computed": "#e6e6e6"
+          },
+          "--bmw-grey-200": {
+            "declared": "#f2f2f2",
+            "computed": "#f2f2f2"
+          },
+          "--bmw-grey-100": {
+            "declared": "#f6f6f6",
+            "computed": "#f6f6f6"
+          },
+          "--bmw-blue": {
+            "declared": "#1c69d4",
+            "computed": "#1c69d4"
+          },
+          "--bmw-blue-hover": {
+            "declared": "#0653b6",
+            "computed": "#0653b6"
+          },
+          "--bmw-blue-disabled": {
+            "declared": "#bbd2f3",
+            "computed": "#bbd2f3"
+          },
+          "--bmw-blue-light": {
+            "declared": "#dde8f9",
+            "computed": "#dde8f9"
+          },
+          "--bmw-error": {
+            "declared": "#d20000",
+            "computed": "#d20000"
+          },
+          "--bmw-warning": {
+            "declared": "#ffad1f",
+            "computed": "#ffad1f"
+          },
+          "--bmw-success": {
+            "declared": "#3db014",
+            "computed": "#3db014"
+          },
+          "--bmw-color-text": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-color-heading": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-color-disclaimer": {
+            "declared": "var(--bmw-grey-700)",
+            "computed": "#666"
+          },
+          "--bmw-surface": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-surface-grey": {
+            "declared": "var(--bmw-grey-100)",
+            "computed": "#f6f6f6"
+          },
+          "--bmw-surface-dark": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-border": {
+            "declared": "var(--bmw-grey-300)",
+            "computed": "#e6e6e6"
+          },
+          "--bmw-backdrop": {
+            "declared": "rgb(0 0 0 / 80%)",
+            "computed": "rgb(0 0 0 / 80%)"
+          },
+          "--bmw-link": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-link-hover": {
+            "declared": "var(--bmw-blue)",
+            "computed": "#1c69d4"
+          },
+          "--bmw-link-active": {
+            "declared": "var(--bmw-blue-hover)",
+            "computed": "#0653b6"
+          },
+          "--bmw-link-disabled": {
+            "declared": "var(--bmw-grey-500)",
+            "computed": "#bbb"
+          },
+          "--bmw-cta": {
+            "declared": "var(--bmw-blue)",
+            "computed": "#1c69d4"
+          },
+          "--bmw-cta-hover": {
+            "declared": "var(--bmw-blue-hover)",
+            "computed": "#0653b6"
+          },
+          "--bmw-cta-disabled": {
+            "declared": "var(--bmw-blue-disabled)",
+            "computed": "#bbd2f3"
+          },
+          "--bmw-cta-text": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-nba": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-nba-hover": {
+            "declared": "var(--bmw-grey-800)",
+            "computed": "#4d4d4d"
+          },
+          "--bmw-nba-disabled": {
+            "declared": "var(--bmw-grey-500)",
+            "computed": "#bbb"
+          },
+          "--bmw-nba-text": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-nba-text-disabled": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-ol": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-hover": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-text": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-text-hover": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-disabled": {
+            "declared": "var(--bmw-grey-300)",
+            "computed": "#e6e6e6"
+          },
+          "--bmw-ol-text-disabled": {
+            "declared": "var(--bmw-grey-500)",
+            "computed": "#bbb"
+          },
+          "--bmw-ol-border-width": {
+            "declared": "1px",
+            "computed": "1px"
+          },
+          "--bmw-ol-border-width-hover": {
+            "declared": "2px",
+            "computed": "2px"
+          },
+          "--bmw-focus-outside": {
+            "declared": "0 0 0 0.0625rem #fff, 0 0 0 0.3125rem #1c69d4",
+            "computed": "0 0 0 0.0625rem #fff, 0 0 0 0.3125rem #1c69d4"
+          },
+          "--bmw-focus-inside": {
+            "declared": "inset 0 0 0 0.25rem #1c69d4, 0 0 0 0.0625rem #fff",
+            "computed": "inset 0 0 0 0.25rem #1c69d4, 0 0 0 0.0625rem #fff"
+          },
+          "--bmw-focus-background-link": {
+            "declared": "rgb(255 255 255 / 50%)",
+            "computed": "rgb(255 255 255 / 50%)"
+          },
+          "--bmw-font-family": {
+            "declared": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "computed": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif"
+          },
+          "--bmw-font-family-icons": {
+            "declared": "\"bmw_next_icons\"",
+            "computed": "\"bmw_next_icons\""
+          },
+          "--bmw-font-weight-light": {
+            "declared": "300",
+            "computed": "300"
+          },
+          "--bmw-font-weight-regular": {
+            "declared": "400",
+            "computed": "400"
+          },
+          "--bmw-font-weight-medium": {
+            "declared": "500",
+            "computed": "500"
+          },
+          "--bmw-font-weight-bold": {
+            "declared": "700",
+            "computed": "700"
+          },
+          "--bmw-font-weight-default": {
+            "declared": "var(--bmw-font-weight-light)",
+            "computed": "300"
+          },
+          "--bmw-font-weight-clickable": {
+            "declared": "var(--bmw-font-weight-medium)",
+            "computed": "500"
+          },
+          "--bmw-headline-1-font-size": {
+            "declared": "3.75rem",
+            "computed": "2.6875rem"
+          },
+          "--bmw-headline-1-line-height": {
+            "declared": "5.25rem",
+            "computed": "3.75rem"
+          },
+          "--bmw-headline-2-font-size": {
+            "declared": "2.8125rem",
+            "computed": "2.1875rem"
+          },
+          "--bmw-headline-2-line-height": {
+            "declared": "3.875rem",
+            "computed": "3.125rem"
+          },
+          "--bmw-headline-3-font-size": {
+            "declared": "2.125rem",
+            "computed": "1.75rem"
+          },
+          "--bmw-headline-3-line-height": {
+            "declared": "3rem",
+            "computed": "2.5rem"
+          },
+          "--bmw-subsection-1-font-size": {
+            "declared": "1.5625rem",
+            "computed": "1.4375rem"
+          },
+          "--bmw-subsection-1-line-height": {
+            "declared": "2.375rem",
+            "computed": "2.25rem"
+          },
+          "--bmw-subsection-2-font-size": {
+            "declared": "1.375rem",
+            "computed": "1.25rem"
+          },
+          "--bmw-subsection-2-line-height": {
+            "declared": "2.125rem",
+            "computed": "1.875rem"
+          },
+          "--bmw-body-1-font-size": {
+            "declared": "1.1875rem",
+            "computed": "1.125rem"
+          },
+          "--bmw-body-1-line-height": {
+            "declared": "1.875rem",
+            "computed": "1.75rem"
+          },
+          "--bmw-body-2-font-size": {
+            "declared": "1rem",
+            "computed": "0.9375rem"
+          },
+          "--bmw-body-2-line-height": {
+            "declared": "1.625rem",
+            "computed": "1.5rem"
+          },
+          "--bmw-body-3-font-size": {
+            "declared": "0.75rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-body-3-line-height": {
+            "declared": "1.125rem",
+            "computed": "1.125rem"
+          },
+          "--bmw-label-1-font-size": {
+            "declared": "0.75rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-label-1-line-height": {
+            "declared": "1rem",
+            "computed": "1rem"
+          },
+          "--bmw-headline-4-font-size": {
+            "declared": "var(--bmw-subsection-1-font-size)",
+            "computed": "1.4375rem"
+          },
+          "--bmw-headline-4-line-height": {
+            "declared": "var(--bmw-subsection-1-line-height)",
+            "computed": "2.25rem"
+          },
+          "--bmw-headline-5-font-size": {
+            "declared": "var(--bmw-subsection-2-font-size)",
+            "computed": "1.25rem"
+          },
+          "--bmw-headline-5-line-height": {
+            "declared": "var(--bmw-subsection-2-line-height)",
+            "computed": "1.875rem"
+          },
+          "--bmw-headline-6-font-size": {
+            "declared": "var(--bmw-body-1-font-size)",
+            "computed": "1.125rem"
+          },
+          "--bmw-headline-6-line-height": {
+            "declared": "var(--bmw-body-1-line-height)",
+            "computed": "1.75rem"
+          },
+          "--bmw-disclaimer-1-font-size": {
+            "declared": "var(--bmw-body-3-font-size)",
+            "computed": "0.75rem"
+          },
+          "--bmw-disclaimer-1-line-height": {
+            "declared": "var(--bmw-body-3-line-height)",
+            "computed": "1.125rem"
+          },
+          "--bmw-disclaimer-2-font-size": {
+            "declared": "var(--bmw-label-1-font-size)",
+            "computed": "0.75rem"
+          },
+          "--bmw-disclaimer-2-line-height": {
+            "declared": "var(--bmw-label-1-line-height)",
+            "computed": "1rem"
+          },
+          "--bmw-disclaimer-opacity": {
+            "declared": "0.7051",
+            "computed": "0.7051"
+          },
+          "--bmw-stage-zone-0-double-row-font-size": {
+            "declared": "6.25rem",
+            "computed": "3.375rem"
+          },
+          "--bmw-stage-zone-0-double-row-line-height": {
+            "declared": "6.375rem",
+            "computed": "3.5rem"
+          },
+          "--bmw-stage-zone-0-single-row-font-size": {
+            "declared": "8.125rem",
+            "computed": "4.625rem"
+          },
+          "--bmw-stage-zone-0-single-row-line-height": {
+            "declared": "8.25rem",
+            "computed": "4.75rem"
+          },
+          "--bmw-stage-zone-1-small-font-size": {
+            "declared": "3.75rem",
+            "computed": "2.6875rem"
+          },
+          "--bmw-stage-zone-1-small-line-height": {
+            "declared": "3.875rem",
+            "computed": "2.8125rem"
+          },
+          "--bmw-stage-zone-1-large-font-size": {
+            "declared": "5rem",
+            "computed": "3rem"
+          },
+          "--bmw-stage-zone-1-large-line-height": {
+            "declared": "5.125rem",
+            "computed": "3.125rem"
+          },
+          "--bmw-stage-sub-headline-font-size": {
+            "declared": "1.375rem",
+            "computed": "1.25rem"
+          },
+          "--bmw-stage-sub-headline-line-height": {
+            "declared": "1.625rem",
+            "computed": "1.5rem"
+          },
+          "--bmw-stage-model-1-font-size": {
+            "declared": "15.75rem",
+            "computed": "13.125rem"
+          },
+          "--bmw-stage-model-1-line-height": {
+            "declared": "14rem",
+            "computed": "11.625rem"
+          },
+          "--bmw-spacing-1": {
+            "declared": "0.125rem",
+            "computed": "0.125rem"
+          },
+          "--bmw-spacing-2": {
+            "declared": "0.5rem",
+            "computed": "0.25rem"
+          },
+          "--bmw-spacing-3": {
+            "declared": "0.75rem",
+            "computed": "0.5rem"
+          },
+          "--bmw-spacing-4": {
+            "declared": "1rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-spacing-5": {
+            "declared": "1.25rem",
+            "computed": "1rem"
+          },
+          "--bmw-spacing-6": {
+            "declared": "1.5rem",
+            "computed": "1.25rem"
+          },
+          "--bmw-spacing-8": {
+            "declared": "2rem",
+            "computed": "1.5rem"
+          },
+          "--bmw-spacing-10": {
+            "declared": "2.5rem",
+            "computed": "2rem"
+          },
+          "--bmw-spacing-12": {
+            "declared": "3rem",
+            "computed": "2.5rem"
+          },
+          "--bmw-spacing-16": {
+            "declared": "4rem",
+            "computed": "3rem"
+          },
+          "--bmw-spacing-20": {
+            "declared": "5rem",
+            "computed": "4rem"
+          },
+          "--bmw-spacing-24": {
+            "declared": "6rem",
+            "computed": "5rem"
+          },
+          "--bmw-spacing-32": {
+            "declared": "8rem",
+            "computed": "6rem"
+          },
+          "--bmw-spacing-40": {
+            "declared": "10rem",
+            "computed": "8rem"
+          },
+          "--bmw-spacing-60": {
+            "declared": "15rem",
+            "computed": "10rem"
+          },
+          "--bmw-page-max-width": {
+            "declared": "120rem",
+            "computed": "120rem"
+          },
+          "--bmw-grid-gutter": {
+            "declared": "0.75rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-grid-margin": {
+            "declared": "5.25rem",
+            "computed": "5.25rem"
+          },
+          "--bmw-grid-full": {
+            "declared": "6rem",
+            "computed": "6rem"
+          },
+          "--bmw-grid-additional-spacing": {
+            "declared": "5rem",
+            "computed": "4rem"
+          },
+          "--bmw-content-max-width": {
+            "declared": "calc(var(--bmw-page-max-width) - 2 * var(--bmw-grid-full))",
+            "computed": "calc(120rem - 2 * 6rem)"
+          },
+          "--bmw-button-height": {
+            "declared": "3.25rem",
+            "computed": "3.25rem"
+          },
+          "--bmw-button-small-height": {
+            "declared": "2.25rem",
+            "computed": "2.25rem"
+          },
+          "--bmw-button-radius": {
+            "declared": "3px",
+            "computed": "3px"
+          },
+          "--nav-height": {
+            "declared": "68px",
+            "computed": "68px"
+          }
+        },
+        "fonts": [
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "300",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "400",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "500",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "700",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmw_next_icons",
+            "weight": "400",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "300",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "400",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "500",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "700",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "300",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmw_next_icons",
+            "weight": "300",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmw_next_icons",
+            "weight": "400",
+            "style": "normal",
+            "status": "loaded"
+          }
+        ],
+        "logoCandidates": [
+          {
+            "tag": "img",
+            "selector": "#nav > div:nth-of-type(1) > a > img:nth-of-type(1)",
+            "src": "https://of1--bmw--moved-permanently.aem.page/media_16d97c12ce1e80dd479f0e673cff81cafd7cfb263.svg?width=750&format=svg&optimize=medium",
+            "inlineSvg": false,
+            "alt": "",
+            "ariaLabel": "BMW Logo",
+            "class": "nav-logo nav-logo-light",
+            "id": null,
+            "href": "/de/home",
+            "inHomeLink": false,
+            "rect": {
+              "x": 96,
+              "y": 16,
+              "w": 52,
+              "h": 52
+            }
+          }
+        ],
+        "iconFont": {
+          "families": [
+            "bmw_next_icons"
+          ],
+          "glyphs": []
+        },
+        "consent": {
+          "dismissed": null
+        },
+        "finalUrl": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/3-series"
+      }
+    },
+    "https://of1--bmw--moved-permanently.aem.page/de/home": {
+      "1440": {
+        "title": "Offizielle BMW DE Website: Premium Fahrzeuge & Innovation",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "elements": {
+          "total": 815,
+          "visible": 355
+        },
+        "occluders": [],
+        "headings": [
+          {
+            "tag": "h2",
+            "text": "DER NEUE BMW X5",
+            "selector": "#der-neue-bmw-x5",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "48px",
+            "fontWeight": "500",
+            "lineHeight": "50px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "h2",
+            "text": "Finden Sie Ihren BMW.",
+            "selector": "#finden-sie-ihren-bmw",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "35px",
+            "fontWeight": "300",
+            "lineHeight": "50px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h2",
+            "text": "Verfügbare Neuwagen.",
+            "selector": "main > div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(1) > div:nth-of-type(2) > h2",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h2",
+            "text": "Verfügbare Gebrauchtwagen.",
+            "selector": "main > div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(2) > div:nth-of-type(2) > h2",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h2",
+            "text": "Fahrzeug konfigurieren.",
+            "selector": "#fahrzeugkonfigurieren",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h2",
+            "text": "Intelligente Fahrzeugempfehlung.",
+            "selector": "#intelligentefahrzeugempfehlung",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h2",
+            "text": "Jetzt neu: Der BMW iX3 40.",
+            "selector": "#jetzt-neu-der-bmw-ix3-40",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "35px",
+            "fontWeight": "300",
+            "lineHeight": "50px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "h2",
+            "text": "Der neue BMW i3 50 xDriveals First Edit…",
+            "selector": "main > div:nth-of-type(4) > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > h2",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "35px",
+            "fontWeight": "300",
+            "lineHeight": "50px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "h2",
+            "text": "Die neue BMW 7er Limousine.",
+            "selector": "#die-neue-bmw-7er-limousine",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "35px",
+            "fontWeight": "300",
+            "lineHeight": "50px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "h3",
+            "text": "Ein Herbst voller Fahrfreude.",
+            "selector": "#ein-herbst-voller-fahrfreude",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "28px",
+            "fontWeight": "300",
+            "lineHeight": "40px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Kontakt",
+            "selector": "#kontakt",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "BMW erleben",
+            "selector": "#bmw-erleben",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Service- & Dienstleistungen",
+            "selector": "#service---dienstleistungen",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Auswählen & Kaufen",
+            "selector": "footer > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > h3",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "Modelle",
+            "selector": "#modelle",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "h3",
+            "text": "BMW Elektrofahrzeuge",
+            "selector": "#bmw-elektrofahrzeuge",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "23px",
+            "fontWeight": "300",
+            "lineHeight": "36px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          }
+        ],
+        "text": [
+          {
+            "tag": "p",
+            "text": "GESCHAFFEN, UM VORAUSZUGEHEN.",
+            "selector": "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "20px",
+            "fontWeight": "500",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "uppercase",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "p",
+            "text": "Konfigurieren & Preise",
+            "selector": "div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "p",
+            "text": "BMW X5 40 xDrive: Energieverbrauch komb…",
+            "selector": "main > div:nth-of-type(1) > div:nth-of-type(3) > div > div:nth-of-type(1) > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "300",
+            "lineHeight": "18px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "li",
+            "text": "car_front_double Verfügbare Neuwagen. N…",
+            "selector": "main > div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(1)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "li",
+            "text": "pre_owned_car_search Verfügbare Gebrauc…",
+            "selector": "main > div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(2)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Gebrauchtwagen suchen",
+            "selector": "div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(2) > div:nth-of-type(2) > div > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "li",
+            "text": "add_car Fahrzeug konfigurieren. Konfigu…",
+            "selector": "main > div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(3)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Konfigurieren & Preise",
+            "selector": "div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(3) > div:nth-of-type(2) > div > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "li",
+            "text": "intelligent_car_recommendation Intellig…",
+            "selector": "main > div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(4)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "24px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "intelligent_car_recommendation",
+            "selector": "main > div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(4) > div:nth-of-type(1) > p",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "300",
+            "lineHeight": "15px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(38, 38, 38)"
+          },
+          {
+            "tag": "p",
+            "text": "Neue Motorisierung mit kurzer Lieferzei…",
+            "selector": "main > div:nth-of-type(3) > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > p:nth-of-type(1)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          },
+          {
+            "tag": "p",
+            "text": "Ihr schneller Einstieg in die Neue Klas…",
+            "selector": "main > div:nth-of-type(3) > div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > p:nth-of-type(2)",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "18px",
+            "fontWeight": "300",
+            "lineHeight": "28px",
+            "letterSpacing": "normal",
+            "textTransform": "none",
+            "color": "rgb(255, 255, 255)"
+          }
+        ],
+        "buttons": [
+          {
+            "text": "Konfigurieren & Preise",
+            "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+            "count": 4,
+            "backgroundColor": "rgb(28, 105, 212)",
+            "color": "rgb(255, 255, 255)",
+            "borderRadius": "3px",
+            "padding": "4px 24px",
+            "border": "0px none rgb(255, 255, 255)",
+            "borderColor": "rgb(255, 255, 255)",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px inset",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px",
+            "fontWeight": "500",
+            "textTransform": "none",
+            "letterSpacing": "normal",
+            "hover": {
+              "backgroundColor": "rgb(6, 83, 182)",
+              "color": "rgb(255, 255, 255)",
+              "borderColor": "rgb(255, 255, 255)",
+              "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px inset",
+              "changed": true
+            }
+          }
+        ],
+        "links": [
+          {
+            "text": "Jetzt entdecken",
+            "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+            "count": 4,
+            "color": "rgb(242, 242, 242)",
+            "textDecoration": "none",
+            "fontWeight": "500",
+            "hover": {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(255, 255, 255)",
+              "borderColor": "rgb(255, 255, 255)",
+              "boxShadow": "rgb(255, 255, 255) 0px 0px 0px 2px inset",
+              "changed": true
+            }
+          },
+          {
+            "text": "Neuwagen suchen",
+            "selector": "div:nth-of-type(2) > div > ul > li:nth-of-type(1) > div:nth-of-type(2) > div > p > a",
+            "count": 6,
+            "color": "rgb(38, 38, 38)",
+            "textDecoration": "none",
+            "fontWeight": "500",
+            "hover": {
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(38, 38, 38)",
+              "borderColor": "rgb(38, 38, 38)",
+              "boxShadow": "rgb(38, 38, 38) 0px 0px 0px 2px inset",
+              "changed": true
+            }
+          }
+        ],
+        "surfaces": [
+          {
+            "matched": "nav",
+            "selector": "#nav",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 85
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "relative",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main",
+            "selector": "main",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 3479
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "footer",
+            "selector": "footer",
+            "rect": {
+              "x": 0,
+              "y": 3479,
+              "w": 1440,
+              "h": 1327
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(1)",
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 686
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(2)",
+            "rect": {
+              "x": 0,
+              "y": 734,
+              "w": 1440,
+              "h": 376
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(3)",
+            "rect": {
+              "x": 0,
+              "y": 1198,
+              "w": 1440,
+              "h": 520
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          },
+          {
+            "matched": "main > *",
+            "selector": "main > div:nth-of-type(4)",
+            "rect": {
+              "x": 0,
+              "y": 1758,
+              "w": 1440,
+              "h": 520
+            },
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "color": "rgb(38, 38, 38)",
+            "padding": "0px",
+            "maxWidth": "none",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "position": "static",
+            "fontFamily": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "fontSize": "15px"
+          }
+        ],
+        "radii": [
+          {
+            "value": "3px",
+            "count": 12,
+            "area": 116191,
+            "sources": [
+              "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+              "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+              "div:nth-of-type(2) > div > ul > li:nth-of-type(1) > div:nth-of-type(2) > div > p > a"
+            ]
+          },
+          {
+            "value": "50%",
+            "count": 7,
+            "area": 9008,
+            "sources": [
+              "#nav > div:nth-of-type(1) > a",
+              "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > div > button",
+              "main > div:nth-of-type(1) > div:nth-of-type(3) > div > div:nth-of-type(1) > p > button"
+            ]
+          }
+        ],
+        "shadows": [
+          {
+            "value": "rgb(242, 242, 242) 0px 0px 0px 1px inset",
+            "count": 4,
+            "sources": [
+              "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+            ]
+          },
+          {
+            "value": "rgb(38, 38, 38) 0px 0px 0px 1px inset",
+            "count": 4,
+            "sources": [
+              "div:nth-of-type(2) > div > ul > li:nth-of-type(1) > div:nth-of-type(2) > div > p > a",
+              "div:nth-of-type(2) > div > ul > li:nth-of-type(2) > div:nth-of-type(2) > div > p > a",
+              "div:nth-of-type(2) > div > ul > li:nth-of-type(3) > div:nth-of-type(2) > div > p > a"
+            ]
+          },
+          {
+            "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px inset",
+            "count": 4,
+            "sources": [
+              "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a"
+            ]
+          },
+          {
+            "value": "rgba(0, 0, 0, 0.16) 0px 6px 20px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px",
+            "count": 1,
+            "sources": [
+              "body > aside > div:nth-of-type(1) > button"
+            ]
+          }
+        ],
+        "gradients": [],
+        "bgColors": [
+          {
+            "value": "rgb(0, 0, 0)",
+            "count": 5,
+            "area": 2982096,
+            "sources": [
+              "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div",
+              "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > div > button",
+              "main > div:nth-of-type(3) > div:nth-of-type(1) > div > div"
+            ]
+          },
+          {
+            "value": "rgb(246, 246, 246)",
+            "count": 4,
+            "area": 1864800,
+            "sources": [
+              "footer > div > div:nth-of-type(1)",
+              "footer > div > div:nth-of-type(2)",
+              "footer > div > div:nth-of-type(3)"
+            ]
+          },
+          {
+            "value": "rgb(28, 105, 212)",
+            "count": 4,
+            "area": 42158,
+            "sources": [
+              "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a"
+            ]
+          },
+          {
+            "value": "rgb(255, 255, 255)",
+            "count": 3,
+            "area": 8834809,
+            "sources": [
+              "body",
+              "footer > div",
+              "body > aside > div:nth-of-type(1) > button"
+            ]
+          }
+        ],
+        "textColors": [
+          {
+            "value": "rgb(38, 38, 38)",
+            "count": 86,
+            "sources": [
+              "main > div:nth-of-type(1) > div:nth-of-type(3) > div > div:nth-of-type(1) > p",
+              "#finden-sie-ihren-bmw",
+              "main > div:nth-of-type(2) > div:nth-of-type(2) > div > ul > li:nth-of-type(1) > div:nth-of-type(2) > h2"
+            ]
+          },
+          {
+            "value": "rgb(255, 255, 255)",
+            "count": 18,
+            "sources": [
+              "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(1) > a > span",
+              "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(2) > button > span:nth-of-type(1)",
+              "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(3) > button > span:nth-of-type(1)"
+            ]
+          },
+          {
+            "value": "rgb(242, 242, 242)",
+            "count": 4,
+            "sources": [
+              "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+              "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+            ]
+          }
+        ],
+        "borderColors": [
+          {
+            "value": "rgb(230, 230, 230)",
+            "count": 2,
+            "sources": [
+              "footer > div > div:nth-of-type(1)",
+              "footer > div > div:nth-of-type(4)"
+            ]
+          },
+          {
+            "value": "rgba(255, 255, 255, 0.46)",
+            "count": 1,
+            "sources": [
+              "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > div > button"
+            ]
+          }
+        ],
+        "customProps": {
+          "--bmw-color-white": {
+            "declared": "#fff",
+            "computed": "#fff"
+          },
+          "--bmw-color-black": {
+            "declared": "#000",
+            "computed": "#000"
+          },
+          "--bmw-grey-900": {
+            "declared": "#262626",
+            "computed": "#262626"
+          },
+          "--bmw-grey-800": {
+            "declared": "#4d4d4d",
+            "computed": "#4d4d4d"
+          },
+          "--bmw-grey-700": {
+            "declared": "#666",
+            "computed": "#666"
+          },
+          "--bmw-grey-600": {
+            "declared": "#8e8e8e",
+            "computed": "#8e8e8e"
+          },
+          "--bmw-grey-500": {
+            "declared": "#bbb",
+            "computed": "#bbb"
+          },
+          "--bmw-grey-300": {
+            "declared": "#e6e6e6",
+            "computed": "#e6e6e6"
+          },
+          "--bmw-grey-200": {
+            "declared": "#f2f2f2",
+            "computed": "#f2f2f2"
+          },
+          "--bmw-grey-100": {
+            "declared": "#f6f6f6",
+            "computed": "#f6f6f6"
+          },
+          "--bmw-blue": {
+            "declared": "#1c69d4",
+            "computed": "#1c69d4"
+          },
+          "--bmw-blue-hover": {
+            "declared": "#0653b6",
+            "computed": "#0653b6"
+          },
+          "--bmw-blue-disabled": {
+            "declared": "#bbd2f3",
+            "computed": "#bbd2f3"
+          },
+          "--bmw-blue-light": {
+            "declared": "#dde8f9",
+            "computed": "#dde8f9"
+          },
+          "--bmw-error": {
+            "declared": "#d20000",
+            "computed": "#d20000"
+          },
+          "--bmw-warning": {
+            "declared": "#ffad1f",
+            "computed": "#ffad1f"
+          },
+          "--bmw-success": {
+            "declared": "#3db014",
+            "computed": "#3db014"
+          },
+          "--bmw-color-text": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-color-heading": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-color-disclaimer": {
+            "declared": "var(--bmw-grey-700)",
+            "computed": "#666"
+          },
+          "--bmw-surface": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-surface-grey": {
+            "declared": "var(--bmw-grey-100)",
+            "computed": "#f6f6f6"
+          },
+          "--bmw-surface-dark": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-border": {
+            "declared": "var(--bmw-grey-300)",
+            "computed": "#e6e6e6"
+          },
+          "--bmw-backdrop": {
+            "declared": "rgb(0 0 0 / 80%)",
+            "computed": "rgb(0 0 0 / 80%)"
+          },
+          "--bmw-link": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-link-hover": {
+            "declared": "var(--bmw-blue)",
+            "computed": "#1c69d4"
+          },
+          "--bmw-link-active": {
+            "declared": "var(--bmw-blue-hover)",
+            "computed": "#0653b6"
+          },
+          "--bmw-link-disabled": {
+            "declared": "var(--bmw-grey-500)",
+            "computed": "#bbb"
+          },
+          "--bmw-cta": {
+            "declared": "var(--bmw-blue)",
+            "computed": "#1c69d4"
+          },
+          "--bmw-cta-hover": {
+            "declared": "var(--bmw-blue-hover)",
+            "computed": "#0653b6"
+          },
+          "--bmw-cta-disabled": {
+            "declared": "var(--bmw-blue-disabled)",
+            "computed": "#bbd2f3"
+          },
+          "--bmw-cta-text": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-nba": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-nba-hover": {
+            "declared": "var(--bmw-grey-800)",
+            "computed": "#4d4d4d"
+          },
+          "--bmw-nba-disabled": {
+            "declared": "var(--bmw-grey-500)",
+            "computed": "#bbb"
+          },
+          "--bmw-nba-text": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-nba-text-disabled": {
+            "declared": "var(--bmw-color-white)",
+            "computed": "#fff"
+          },
+          "--bmw-ol": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-hover": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-text": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-text-hover": {
+            "declared": "var(--bmw-grey-900)",
+            "computed": "#262626"
+          },
+          "--bmw-ol-disabled": {
+            "declared": "var(--bmw-grey-300)",
+            "computed": "#e6e6e6"
+          },
+          "--bmw-ol-text-disabled": {
+            "declared": "var(--bmw-grey-500)",
+            "computed": "#bbb"
+          },
+          "--bmw-ol-border-width": {
+            "declared": "1px",
+            "computed": "1px"
+          },
+          "--bmw-ol-border-width-hover": {
+            "declared": "2px",
+            "computed": "2px"
+          },
+          "--bmw-focus-outside": {
+            "declared": "0 0 0 0.0625rem #fff, 0 0 0 0.3125rem #1c69d4",
+            "computed": "0 0 0 0.0625rem #fff, 0 0 0 0.3125rem #1c69d4"
+          },
+          "--bmw-focus-inside": {
+            "declared": "inset 0 0 0 0.25rem #1c69d4, 0 0 0 0.0625rem #fff",
+            "computed": "inset 0 0 0 0.25rem #1c69d4, 0 0 0 0.0625rem #fff"
+          },
+          "--bmw-focus-background-link": {
+            "declared": "rgb(255 255 255 / 50%)",
+            "computed": "rgb(255 255 255 / 50%)"
+          },
+          "--bmw-font-family": {
+            "declared": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+            "computed": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif"
+          },
+          "--bmw-font-family-icons": {
+            "declared": "\"bmw_next_icons\"",
+            "computed": "\"bmw_next_icons\""
+          },
+          "--bmw-font-weight-light": {
+            "declared": "300",
+            "computed": "300"
+          },
+          "--bmw-font-weight-regular": {
+            "declared": "400",
+            "computed": "400"
+          },
+          "--bmw-font-weight-medium": {
+            "declared": "500",
+            "computed": "500"
+          },
+          "--bmw-font-weight-bold": {
+            "declared": "700",
+            "computed": "700"
+          },
+          "--bmw-font-weight-default": {
+            "declared": "var(--bmw-font-weight-light)",
+            "computed": "300"
+          },
+          "--bmw-font-weight-clickable": {
+            "declared": "var(--bmw-font-weight-medium)",
+            "computed": "500"
+          },
+          "--bmw-headline-1-font-size": {
+            "declared": "3.75rem",
+            "computed": "2.6875rem"
+          },
+          "--bmw-headline-1-line-height": {
+            "declared": "5.25rem",
+            "computed": "3.75rem"
+          },
+          "--bmw-headline-2-font-size": {
+            "declared": "2.8125rem",
+            "computed": "2.1875rem"
+          },
+          "--bmw-headline-2-line-height": {
+            "declared": "3.875rem",
+            "computed": "3.125rem"
+          },
+          "--bmw-headline-3-font-size": {
+            "declared": "2.125rem",
+            "computed": "1.75rem"
+          },
+          "--bmw-headline-3-line-height": {
+            "declared": "3rem",
+            "computed": "2.5rem"
+          },
+          "--bmw-subsection-1-font-size": {
+            "declared": "1.5625rem",
+            "computed": "1.4375rem"
+          },
+          "--bmw-subsection-1-line-height": {
+            "declared": "2.375rem",
+            "computed": "2.25rem"
+          },
+          "--bmw-subsection-2-font-size": {
+            "declared": "1.375rem",
+            "computed": "1.25rem"
+          },
+          "--bmw-subsection-2-line-height": {
+            "declared": "2.125rem",
+            "computed": "1.875rem"
+          },
+          "--bmw-body-1-font-size": {
+            "declared": "1.1875rem",
+            "computed": "1.125rem"
+          },
+          "--bmw-body-1-line-height": {
+            "declared": "1.875rem",
+            "computed": "1.75rem"
+          },
+          "--bmw-body-2-font-size": {
+            "declared": "1rem",
+            "computed": "0.9375rem"
+          },
+          "--bmw-body-2-line-height": {
+            "declared": "1.625rem",
+            "computed": "1.5rem"
+          },
+          "--bmw-body-3-font-size": {
+            "declared": "0.75rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-body-3-line-height": {
+            "declared": "1.125rem",
+            "computed": "1.125rem"
+          },
+          "--bmw-label-1-font-size": {
+            "declared": "0.75rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-label-1-line-height": {
+            "declared": "1rem",
+            "computed": "1rem"
+          },
+          "--bmw-headline-4-font-size": {
+            "declared": "var(--bmw-subsection-1-font-size)",
+            "computed": "1.4375rem"
+          },
+          "--bmw-headline-4-line-height": {
+            "declared": "var(--bmw-subsection-1-line-height)",
+            "computed": "2.25rem"
+          },
+          "--bmw-headline-5-font-size": {
+            "declared": "var(--bmw-subsection-2-font-size)",
+            "computed": "1.25rem"
+          },
+          "--bmw-headline-5-line-height": {
+            "declared": "var(--bmw-subsection-2-line-height)",
+            "computed": "1.875rem"
+          },
+          "--bmw-headline-6-font-size": {
+            "declared": "var(--bmw-body-1-font-size)",
+            "computed": "1.125rem"
+          },
+          "--bmw-headline-6-line-height": {
+            "declared": "var(--bmw-body-1-line-height)",
+            "computed": "1.75rem"
+          },
+          "--bmw-disclaimer-1-font-size": {
+            "declared": "var(--bmw-body-3-font-size)",
+            "computed": "0.75rem"
+          },
+          "--bmw-disclaimer-1-line-height": {
+            "declared": "var(--bmw-body-3-line-height)",
+            "computed": "1.125rem"
+          },
+          "--bmw-disclaimer-2-font-size": {
+            "declared": "var(--bmw-label-1-font-size)",
+            "computed": "0.75rem"
+          },
+          "--bmw-disclaimer-2-line-height": {
+            "declared": "var(--bmw-label-1-line-height)",
+            "computed": "1rem"
+          },
+          "--bmw-disclaimer-opacity": {
+            "declared": "0.7051",
+            "computed": "0.7051"
+          },
+          "--bmw-stage-zone-0-double-row-font-size": {
+            "declared": "6.25rem",
+            "computed": "3.375rem"
+          },
+          "--bmw-stage-zone-0-double-row-line-height": {
+            "declared": "6.375rem",
+            "computed": "3.5rem"
+          },
+          "--bmw-stage-zone-0-single-row-font-size": {
+            "declared": "8.125rem",
+            "computed": "4.625rem"
+          },
+          "--bmw-stage-zone-0-single-row-line-height": {
+            "declared": "8.25rem",
+            "computed": "4.75rem"
+          },
+          "--bmw-stage-zone-1-small-font-size": {
+            "declared": "3.75rem",
+            "computed": "2.6875rem"
+          },
+          "--bmw-stage-zone-1-small-line-height": {
+            "declared": "3.875rem",
+            "computed": "2.8125rem"
+          },
+          "--bmw-stage-zone-1-large-font-size": {
+            "declared": "5rem",
+            "computed": "3rem"
+          },
+          "--bmw-stage-zone-1-large-line-height": {
+            "declared": "5.125rem",
+            "computed": "3.125rem"
+          },
+          "--bmw-stage-sub-headline-font-size": {
+            "declared": "1.375rem",
+            "computed": "1.25rem"
+          },
+          "--bmw-stage-sub-headline-line-height": {
+            "declared": "1.625rem",
+            "computed": "1.5rem"
+          },
+          "--bmw-stage-model-1-font-size": {
+            "declared": "15.75rem",
+            "computed": "13.125rem"
+          },
+          "--bmw-stage-model-1-line-height": {
+            "declared": "14rem",
+            "computed": "11.625rem"
+          },
+          "--bmw-spacing-1": {
+            "declared": "0.125rem",
+            "computed": "0.125rem"
+          },
+          "--bmw-spacing-2": {
+            "declared": "0.5rem",
+            "computed": "0.25rem"
+          },
+          "--bmw-spacing-3": {
+            "declared": "0.75rem",
+            "computed": "0.5rem"
+          },
+          "--bmw-spacing-4": {
+            "declared": "1rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-spacing-5": {
+            "declared": "1.25rem",
+            "computed": "1rem"
+          },
+          "--bmw-spacing-6": {
+            "declared": "1.5rem",
+            "computed": "1.25rem"
+          },
+          "--bmw-spacing-8": {
+            "declared": "2rem",
+            "computed": "1.5rem"
+          },
+          "--bmw-spacing-10": {
+            "declared": "2.5rem",
+            "computed": "2rem"
+          },
+          "--bmw-spacing-12": {
+            "declared": "3rem",
+            "computed": "2.5rem"
+          },
+          "--bmw-spacing-16": {
+            "declared": "4rem",
+            "computed": "3rem"
+          },
+          "--bmw-spacing-20": {
+            "declared": "5rem",
+            "computed": "4rem"
+          },
+          "--bmw-spacing-24": {
+            "declared": "6rem",
+            "computed": "5rem"
+          },
+          "--bmw-spacing-32": {
+            "declared": "8rem",
+            "computed": "6rem"
+          },
+          "--bmw-spacing-40": {
+            "declared": "10rem",
+            "computed": "8rem"
+          },
+          "--bmw-spacing-60": {
+            "declared": "15rem",
+            "computed": "10rem"
+          },
+          "--bmw-page-max-width": {
+            "declared": "120rem",
+            "computed": "120rem"
+          },
+          "--bmw-grid-gutter": {
+            "declared": "0.75rem",
+            "computed": "0.75rem"
+          },
+          "--bmw-grid-margin": {
+            "declared": "5.25rem",
+            "computed": "5.25rem"
+          },
+          "--bmw-grid-full": {
+            "declared": "6rem",
+            "computed": "6rem"
+          },
+          "--bmw-grid-additional-spacing": {
+            "declared": "5rem",
+            "computed": "4rem"
+          },
+          "--bmw-content-max-width": {
+            "declared": "calc(var(--bmw-page-max-width) - 2 * var(--bmw-grid-full))",
+            "computed": "calc(120rem - 2 * 6rem)"
+          },
+          "--bmw-button-height": {
+            "declared": "3.25rem",
+            "computed": "3.25rem"
+          },
+          "--bmw-button-small-height": {
+            "declared": "2.25rem",
+            "computed": "2.25rem"
+          },
+          "--bmw-button-radius": {
+            "declared": "3px",
+            "computed": "3px"
+          },
+          "--nav-height": {
+            "declared": "68px",
+            "computed": "68px"
+          }
+        },
+        "fonts": [
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "300",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "400",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "500",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwtypenextweb-fallback",
+            "weight": "700",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmw_next_icons",
+            "weight": "400",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmw_next_icons",
+            "weight": "400",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "300",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "400",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "500",
+            "style": "normal",
+            "status": "loaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "700",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmwTypeNextWeb",
+            "weight": "300",
+            "style": "normal",
+            "status": "unloaded"
+          },
+          {
+            "family": "bmw_next_icons",
+            "weight": "300",
+            "style": "normal",
+            "status": "unloaded"
+          }
+        ],
+        "logoCandidates": [
+          {
+            "tag": "img",
+            "selector": "#nav > div:nth-of-type(1) > a > img:nth-of-type(1)",
+            "src": "https://of1--bmw--moved-permanently.aem.page/media_16d97c12ce1e80dd479f0e673cff81cafd7cfb263.svg?width=750&format=svg&optimize=medium",
+            "inlineSvg": false,
+            "alt": "",
+            "ariaLabel": "BMW Logo",
+            "class": "nav-logo nav-logo-light",
+            "id": null,
+            "href": "/de/home",
+            "inHomeLink": false,
+            "rect": {
+              "x": 96,
+              "y": 16,
+              "w": 52,
+              "h": 52
+            }
+          }
+        ],
+        "iconFont": {
+          "families": [
+            "bmw_next_icons"
+          ],
+          "glyphs": []
+        },
+        "consent": {
+          "dismissed": null
+        },
+        "finalUrl": "https://of1--bmw--moved-permanently.aem.page/de/home"
+      }
+    }
+  },
+  "aggregate": {
+    "counts": {
+      "pages": 3,
+      "widths": [
+        1440
+      ],
+      "measurements": 3
+    },
+    "colors": [
+      {
+        "hex": "#262626",
+        "values": [
+          "rgb(38, 38, 38)"
+        ],
+        "weight": 302,
+        "bgArea": 1487164,
+        "by": {
+          "text": 255,
+          "link": 11,
+          "background": 3,
+          "heading": 33
+        },
+        "roles": [
+          "text",
+          "heading"
+        ],
+        "sources": [
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > p",
+            "prop": "text"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "main > div:nth-of-type(1) > div:nth-of-type(3) > div > div:nth-of-type(1) > p",
+            "prop": "text"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/3-series",
+            "selector": "main > div:nth-of-type(2) > div > p:nth-of-type(1)",
+            "prop": "text"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "div:nth-of-type(2) > div > ul > li:nth-of-type(1) > div:nth-of-type(2) > div > p > a",
+            "prop": "link"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "#carousel-1-slide-1 > div:nth-of-type(2) > div > p > a",
+            "prop": "link"
+          }
+        ]
+      },
+      {
+        "hex": "#ffffff",
+        "values": [
+          "rgb(255, 255, 255)",
+          "rgb(246, 246, 246)"
+        ],
+        "weight": 73,
+        "bgArea": 27972215,
+        "by": {
+          "text": 36,
+          "background": 23,
+          "button-text": 8,
+          "heading": 6
+        },
+        "roles": [
+          "background"
+        ],
+        "sources": [
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(1) > a > span",
+            "prop": "text"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(1) > a > span",
+            "prop": "text"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/3-series",
+            "selector": "#nav > div:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(1) > a > span",
+            "prop": "text"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "body",
+            "prop": "background"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "footer > div > div:nth-of-type(1)",
+            "prop": "background"
+          }
+        ]
+      },
+      {
+        "hex": "#1c69d4",
+        "values": [
+          "rgb(28, 105, 212)"
+        ],
+        "weight": 16,
+        "bgArea": 77703,
+        "by": {
+          "background": 8,
+          "button-background": 8
+        },
+        "roles": [
+          "primary"
+        ],
+        "sources": [
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+            "prop": "background"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+            "prop": "background"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+            "prop": "button-background"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a",
+            "prop": "button-background"
+          }
+        ]
+      },
+      {
+        "hex": "#f2f2f2",
+        "values": [
+          "rgb(242, 242, 242)",
+          "rgb(230, 230, 230)"
+        ],
+        "weight": 16,
+        "by": {
+          "link": 5,
+          "text": 5,
+          "border": 6
+        },
+        "roles": [
+          "accent",
+          "border"
+        ],
+        "sources": [
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+            "prop": "link"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a",
+            "prop": "text"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "footer > div > div:nth-of-type(1)",
+            "prop": "border"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/3-series",
+            "selector": "footer > div > div:nth-of-type(1)",
+            "prop": "border"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "footer > div > div:nth-of-type(1)",
+            "prop": "border"
+          }
+        ]
+      },
+      {
+        "hex": "#000000",
+        "values": [
+          "rgb(0, 0, 0)"
+        ],
+        "weight": 8,
+        "bgArea": 4797792,
+        "by": {
+          "background": 8
+        },
+        "roles": [
+          "surface"
+        ],
+        "sources": [
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div",
+            "prop": "background"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "main > div:nth-of-type(1) > div:nth-of-type(1) > div > div",
+            "prop": "background"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/3-series",
+            "selector": "main > div:nth-of-type(1) > div > div > div",
+            "prop": "background"
+          }
+        ]
+      },
+      {
+        "hex": "#ffffff75",
+        "values": [
+          "rgba(255, 255, 255, 0.46)"
+        ],
+        "weight": 3,
+        "bgArea": 2121,
+        "by": {
+          "background": 1,
+          "border": 2
+        },
+        "roles": [],
+        "sources": [
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "div:nth-of-type(1) > div > div > div > div > div > div:nth-of-type(1) > div",
+            "prop": "background"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div > div > button",
+            "prop": "border"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "main > div:nth-of-type(1) > div:nth-of-type(2) > div > div > div:nth-of-type(1) > div > button",
+            "prop": "border"
+          }
+        ]
+      },
+      {
+        "hex": "#ffffffd6",
+        "values": [
+          "rgba(255, 255, 255, 0.84)"
+        ],
+        "weight": 3,
+        "by": {
+          "text": 3
+        },
+        "roles": [],
+        "sources": [
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "div > div:nth-of-type(1) > div > div > div > div > div > div:nth-of-type(2)",
+            "prop": "text"
+          }
+        ]
+      }
+    ],
+    "type": {
+      "families": [
+        {
+          "family": "bmwtypenextweb",
+          "count": 75,
+          "headings": 39,
+          "text": 28,
+          "buttons": 8
+        }
+      ],
+      "headingFamily": "bmwtypenextweb",
+      "bodyFamily": "bmwtypenextweb",
+      "sizes": [
+        {
+          "px": 48,
+          "count": 1,
+          "headings": 1,
+          "text": 0,
+          "buttons": 0
+        },
+        {
+          "px": 43,
+          "count": 2,
+          "headings": 2,
+          "text": 0,
+          "buttons": 0
+        },
+        {
+          "px": 35,
+          "count": 8,
+          "headings": 8,
+          "text": 0,
+          "buttons": 0
+        },
+        {
+          "px": 28,
+          "count": 1,
+          "headings": 1,
+          "text": 0,
+          "buttons": 0
+        },
+        {
+          "px": 23,
+          "count": 27,
+          "headings": 27,
+          "text": 0,
+          "buttons": 0
+        },
+        {
+          "px": 20,
+          "count": 2,
+          "headings": 0,
+          "text": 2,
+          "buttons": 0
+        },
+        {
+          "px": 18,
+          "count": 11,
+          "headings": 0,
+          "text": 11,
+          "buttons": 0
+        },
+        {
+          "px": 15,
+          "count": 21,
+          "headings": 0,
+          "text": 13,
+          "buttons": 8
+        },
+        {
+          "px": 12,
+          "count": 2,
+          "headings": 0,
+          "text": 2,
+          "buttons": 0
+        }
+      ],
+      "weights": [
+        {
+          "weight": "300",
+          "count": 63,
+          "headings": 37,
+          "text": 26,
+          "buttons": 0
+        },
+        {
+          "weight": "500",
+          "count": 12,
+          "headings": 2,
+          "text": 2,
+          "buttons": 8
+        }
+      ],
+      "levels": {
+        "h1": {
+          "fontSize": 43,
+          "fontWeight": "500",
+          "count": 1,
+          "score": 53.75
+        },
+        "h2": {
+          "fontSize": 35,
+          "fontWeight": "300",
+          "count": 8,
+          "score": 74.25
+        },
+        "h3": {
+          "fontSize": 23,
+          "fontWeight": "300",
+          "count": 23,
+          "score": 82.73
+        }
+      }
+    },
+    "motifs": {
+      "radius": {
+        "mode": "3px",
+        "areaMode": "3px",
+        "pill": "50%",
+        "values": [
+          {
+            "value": "3px",
+            "count": 22,
+            "area": 198450,
+            "sources": [
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+                "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a"
+              },
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+                "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+              },
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+                "selector": "div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > div > p > a"
+              },
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+                "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a"
+              },
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+                "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+              }
+            ]
+          },
+          {
+            "value": "50%",
+            "count": 13,
+            "area": 21201,
+            "sources": [
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+                "selector": "#nav > div:nth-of-type(1) > a"
+              },
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+                "selector": "div:nth-of-type(1) > div:nth-of-type(1) > div > div > div:nth-of-type(1) > div > div > button"
+              },
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+                "selector": "div > div > div > div > div > div:nth-of-type(1) > div > div:nth-of-type(2)"
+              },
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/3-series",
+                "selector": "#nav > div:nth-of-type(1) > a"
+              },
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/3-series",
+                "selector": "body > aside > div:nth-of-type(1) > button"
+              }
+            ]
+          },
+          {
+            "value": "2px",
+            "count": 1,
+            "area": 2304,
+            "sources": [
+              {
+                "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+                "selector": "main > div:nth-of-type(4) > div:nth-of-type(2) > div > button:nth-of-type(2)"
+              }
+            ]
+          }
+        ]
+      },
+      "shadows": [
+        {
+          "value": "rgb(38, 38, 38) 0px 0px 0px 1px inset",
+          "count": 9,
+          "sources": [
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+              "selector": "#carousel-1-slide-1 > div:nth-of-type(2) > div > p > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+              "selector": "#carousel-1-slide-2 > div:nth-of-type(2) > div > p > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+              "selector": "#carousel-1-slide-3 > div:nth-of-type(2) > div > p > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+              "selector": "div:nth-of-type(2) > div > ul > li:nth-of-type(1) > div:nth-of-type(2) > div > p > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+              "selector": "div:nth-of-type(2) > div > ul > li:nth-of-type(2) > div:nth-of-type(2) > div > p > a"
+            }
+          ]
+        },
+        {
+          "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px inset",
+          "count": 8,
+          "sources": [
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+              "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+              "selector": "div:nth-of-type(2) > div > div > div > div:nth-of-type(2) > div > p > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+              "selector": "div:nth-of-type(3) > div > div > div > div:nth-of-type(2) > div > p > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+              "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+              "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a"
+            }
+          ]
+        },
+        {
+          "value": "rgb(242, 242, 242) 0px 0px 0px 1px inset",
+          "count": 5,
+          "sources": [
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+              "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+              "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+            },
+            {
+              "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+              "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+            }
+          ]
+        }
+      ],
+      "gradients": []
+    },
+    "hover": [
+      {
+        "kind": "button",
+        "from": {
+          "backgroundColor": "rgb(28, 105, 212)"
+        },
+        "to": {
+          "backgroundColor": "rgb(6, 83, 182)"
+        },
+        "count": 2,
+        "sources": [
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(1) > a"
+          }
+        ]
+      },
+      {
+        "kind": "link",
+        "from": {
+          "color": "rgb(242, 242, 242)"
+        },
+        "to": {
+          "color": "rgb(255, 255, 255)"
+        },
+        "count": 2,
+        "sources": [
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/aida/showcase/de/de/home",
+            "selector": "div:nth-of-type(1) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+          },
+          {
+            "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+            "selector": "div:nth-of-type(2) > div > div > div:nth-of-type(2) > div > div > p:nth-of-type(2) > a"
+          }
+        ]
+      }
+    ],
+    "logo": {
+      "source": "img",
+      "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+      "width": 1440,
+      "selector": "#nav > div:nth-of-type(1) > a > img:nth-of-type(1)",
+      "src": "https://of1--bmw--moved-permanently.aem.page/media_16d97c12ce1e80dd479f0e673cff81cafd7cfb263.svg?width=750&format=svg&optimize=medium",
+      "alt": "",
+      "rect": {
+        "x": 96,
+        "y": 16,
+        "w": 52,
+        "h": 52
+      },
+      "inHomeLink": false
+    },
+    "iconFont": {
+      "families": [
+        "bmw_next_icons"
+      ],
+      "glyphs": []
+    }
+  }
+}

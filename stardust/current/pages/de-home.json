@@ -1,0 +1,829 @@
+{
+  "_provenance": {
+    "renderedBy": "playwright",
+    "fetchedAt": "2026-10-12T14:08:54.460Z",
+    "waitMode": "medium",
+    "waitMs": 2500,
+    "httpStatus": 200
+  },
+  "slug": "de-home",
+  "url": "https://of1--bmw--moved-permanently.aem.page/de/home",
+  "renderedBy": "playwright",
+  "fetchedAt": "2026-10-12T14:08:54.460Z",
+  "finalUrl": "https://of1--bmw--moved-permanently.aem.page/de/home",
+  "title": "Offizielle BMW DE Website: Premium Fahrzeuge & Innovation",
+  "description": "Willkommen auf der offiziellen BMW DE Website: Premium Fahrzeugmodelle, exklusive Angebote, innovative Technologien & erstklassige Services entdecken.",
+  "og": {
+    "title": "Offizielle BMW DE Website: Premium Fahrzeuge & Innovation",
+    "description": "Willkommen auf der offiziellen BMW DE Website: Premium Fahrzeugmodelle, exklusive Angebote, innovative Technologien & erstklassige Services entdecken.",
+    "image": "https://of1--bmw--moved-permanently.aem.page/de/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium",
+    "type": null
+  },
+  "headings": [
+    {
+      "tag": "h2",
+      "text": "DER NEUE BMW X5"
+    },
+    {
+      "tag": "h2",
+      "text": "Finden Sie Ihren BMW."
+    },
+    {
+      "tag": "h2",
+      "text": "Verfügbare Neuwagen."
+    },
+    {
+      "tag": "h2",
+      "text": "Verfügbare Gebrauchtwagen."
+    },
+    {
+      "tag": "h2",
+      "text": "Fahrzeug konfigurieren."
+    },
+    {
+      "tag": "h2",
+      "text": "Intelligente Fahrzeugempfehlung."
+    },
+    {
+      "tag": "h2",
+      "text": "Jetzt neu: Der BMW iX3 40."
+    },
+    {
+      "tag": "h2",
+      "text": "Der neue BMW i3 50 xDriveals First Edition."
+    },
+    {
+      "tag": "h2",
+      "text": "Die neue BMW 7er Limousine."
+    },
+    {
+      "tag": "h3",
+      "text": "Ein Herbst voller Fahrfreude."
+    },
+    {
+      "tag": "h3",
+      "text": "Kontakt"
+    },
+    {
+      "tag": "h3",
+      "text": "BMW erleben"
+    },
+    {
+      "tag": "h3",
+      "text": "Service- & Dienstleistungen"
+    },
+    {
+      "tag": "h3",
+      "text": "Auswählen & Kaufen"
+    },
+    {
+      "tag": "h3",
+      "text": "Modelle"
+    },
+    {
+      "tag": "h3",
+      "text": "BMW Elektrofahrzeuge"
+    }
+  ],
+  "body": [
+    "GESCHAFFEN, UM VORAUSZUGEHEN.",
+    "Konfigurieren & Preise",
+    "Jetzt entdecken",
+    "BMW X5 40 xDrive: Energieverbrauch kombiniert: 9,1 l/100 km (WLTP); CO₂-Emissionen kombiniert: 207 g/km (WLTP); CO₂-Klasse(n): Ginformation",
+    "car_front_double Verfügbare Neuwagen. Neuwagen suchen",
+    "car_front_double",
+    "Neuwagen suchen",
+    "pre_owned_car_search Verfügbare Gebrauchtwagen. Gebrauchtwagen suchen",
+    "pre_owned_car_search",
+    "Gebrauchtwagen suchen",
+    "add_car Fahrzeug konfigurieren. Konfigurieren & Preise",
+    "add_car",
+    "Konfigurieren & Preise",
+    "intelligent_car_recommendation Intelligente Fahrzeugempfehlung. Jetzt testen",
+    "intelligent_car_recommendation",
+    "Jetzt testen",
+    "Neue Motorisierung mit kurzer Lieferzeit.",
+    "Ihr schneller Einstieg in die Neue Klasse.",
+    "Konfigurieren & Preise",
+    "Angebot anfordern",
+    "BMW iX3 40: Energieverbrauch kombiniert: 17,3–14,5 kWh/100 km (WLTP); CO₂-Emissionen kombiniert: 0 g/km (WLTP); CO₂-Klasse(n): A; Elektrische Reichweite: 534–637 km (WLTP)information",
+    "Jetzt bestellbar mit bis zu 906 km Reichweite.",
+    "Jetzt entdecken",
+    "Angebot anfordern",
+    "BMW i3 50 xDrive als First Edition: WLTP Energieverbrauch kombiniert: 16,1–13,5 kWh/100 km; WLTP CO₂-Emissionen kombiniert: 0 g/km; CO₂-Klasse: A; WLTP Elektrische Reichweite: 758–906 kminformation",
+    "Ausdruck höchster Hingabe.",
+    "Konfigurieren & Preise",
+    "Jetzt entdecken",
+    "BMW 740 xDrive Limousine: Energieverbrauch kombiniert: 8,4 l/100 km (WLTP); CO₂-Emissionen kombiniert: 192 g/km (WLTP); CO₂-Klasse(n): Ginformation",
+    "Mit Original BMW Zubehör sowie passenden Serviceangeboten starten Sie perfekt vorbereitet in den goldenen Herbst. Entdecken Sie jetzt alles, was Ihren BMW noch besser macht.",
+    "Zum Shop",
+    "BMW Serviceangebote",
+    "BMW iX3 50 xDrive: Energieverbrauch kombiniert: 17,9–15,1 kWh/100 km (WLTP); CO₂-Emissionen kombiniert: 0 g/km (WLTP); Elektrische Reichweite: 678–805 km (WLTP); CO₂-Klasse(n): A"
+  ],
+  "codeBlocks": [],
+  "ctas": [
+    {
+      "label": "Modelle",
+      "href": "/de/neufahrzeuge"
+    },
+    {
+      "label": "Kaufen",
+      "href": null
+    },
+    {
+      "label": "E-Mobilität",
+      "href": null
+    },
+    {
+      "label": "Kunden",
+      "href": null
+    },
+    {
+      "label": "Marke",
+      "href": null
+    },
+    {
+      "label": "My BMW",
+      "href": null
+    },
+    {
+      "label": "Warenkorb",
+      "href": "https://www.bmw.de/de/shop/ls/cart/digital-services"
+    },
+    {
+      "label": "Wunschliste",
+      "href": "https://www.bmw.de/de/shop/ls/wishlist"
+    },
+    {
+      "label": "Händlersuche",
+      "href": "https://www.bmw.de/dlo/de-de/bmw/dealer-locator.html"
+    },
+    {
+      "label": "playpause",
+      "href": null
+    },
+    {
+      "label": "Konfigurieren & Preise",
+      "href": "https://configure.bmw.de/de_DE/configure/G65/61JF"
+    },
+    {
+      "label": "Jetzt entdecken",
+      "href": "/de/neufahrzeuge/x/suv/bmw-x5"
+    },
+    {
+      "label": "information",
+      "href": null
+    },
+    {
+      "label": "Neuwagen suchen",
+      "href": "https://www.bmw.de/de-de/sl/neuwagensuche#/results"
+    },
+    {
+      "label": "Gebrauchtwagen suchen",
+      "href": "https://www.bmw.de/de-de/sl/gebrauchtwagen#/results"
+    },
+    {
+      "label": "Konfigurieren & Preise",
+      "href": "/de/konfigurator"
+    },
+    {
+      "label": "Jetzt testen",
+      "href": "https://www.bmw.de/de/inzahlungnahme/transformer?icp=home-quicklink-to-tf&origin=home-quicklink"
+    },
+    {
+      "label": "Konfigurieren & Preise",
+      "href": "https://configure.bmw.de/de_DE/configure/NA5/11HR/FSFI7,P0C7U,S0230,S0248,S02PA,S02VB,S02VD,S02XH,S0302,S0322,S0337,S03DP,S03M1,S03PE,S0408,S0428,S0459,S0479,S0494,S04FM,S04T2,S04T8,S04U9,S04UR,S0534,S0548,S05AT,S05AV,S05BA,S05DW,S0617,S061B,S0654,S0674,S06AE,S06AF,S06D5,S06NX,S07EW,S0851,S0879,S08R3,S08TF,S0901,S09AD,S09T1,S09T2,S09T2,CTRLLIGHTSON"
+    },
+    {
+      "label": "Angebot anfordern",
+      "href": "https://www.bmw.de/faas/form/de-de/bmw/rfo/angebotsanfrage.html?modelRange=NA5&modelCode=11HR"
+    },
+    {
+      "label": "information",
+      "href": null
+    },
+    {
+      "label": "Jetzt entdecken",
+      "href": "/de/neufahrzeuge/3er/limousine/bmw-i3-limousine"
+    },
+    {
+      "label": "Angebot anfordern",
+      "href": "https://www.bmw.de/faas/form/de-de/bmw/rfo/i3-first-edition/angebotsanfrage.html?midstatic=1a1af901da51a01hbfaam&jrny=home"
+    },
+    {
+      "label": "information",
+      "href": null
+    },
+    {
+      "label": "Konfigurieren & Preise",
+      "href": "https://configure.bmw.de/de_DE/configure/G70/61HZ"
+    },
+    {
+      "label": "Jetzt entdecken",
+      "href": "/de/neufahrzeuge/7er/limousine/bmw-7er-limousine"
+    },
+    {
+      "label": "information",
+      "href": null
+    },
+    {
+      "label": "Zum Shop",
+      "href": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY"
+    },
+    {
+      "label": "BMW Serviceangebote",
+      "href": "/de/bmw-service-hub"
+    },
+    {
+      "label": "Jetzt entdecken",
+      "href": "/de/my-bmw-app/my-bmw-app"
+    },
+    {
+      "label": "Hilfe & Kontakt",
+      "href": "/de/mehr-bmw/kundenbetreuung"
+    },
+    {
+      "label": "Häufige Fragen (FAQ)",
+      "href": "https://www.bmw.de/de/s/?language=de"
+    },
+    {
+      "label": "BMW Partner finden",
+      "href": "https://www.bmw.de/dlo/de-de/bmw/dealer-locator.html"
+    },
+    {
+      "label": "Unfall- und Pannenhilfe",
+      "href": "/de/bmw-service-hub/bmw-service/unfall-pannenhilfe"
+    },
+    {
+      "label": "Angebot anfordern",
+      "href": "https://www.bmw.de/faas/form/de-de/bmw/rfo/angebotsanfrage.html?midstatic=4g0agj01ba51d05hb9aas"
+    },
+    {
+      "label": "BMW Karriere",
+      "href": "https://www.bmwgroup.jobs/de/de.html"
+    },
+    {
+      "label": "BMW.com",
+      "href": "/de/home"
+    },
+    {
+      "label": "BMW Group",
+      "href": "https://www.bmwgroup.com/de.html"
+    },
+    {
+      "label": "Termin vereinbaren",
+      "href": "https://www.bmw.de/de-de/appointments/bmw/service"
+    },
+    {
+      "label": "My BMW App",
+      "href": "https://open.bmwgroup.com/bmw.html"
+    },
+    {
+      "label": "ConnectedDrive Services",
+      "href": "/de/digital-services/bmw-connecteddrive"
+    },
+    {
+      "label": "Gewährleistung und Garantien",
+      "href": "/de/topics/neuwagen/gewaehrleistung"
+    },
+    {
+      "label": "BMW Drivers Guide App",
+      "href": "https://www.bmw.de/de/s/article/BMW-Zubeh%C3%B6r-Betriebsanleitung-tshuu?language=de"
+    },
+    {
+      "label": "Remote Software Upgrades",
+      "href": "/de/digital-services/bmw-connecteddrive"
+    },
+    {
+      "label": "BMW Recycling: Rücknahme von Altfahrzeugen",
+      "href": "https://www.bmw.de/content/dam/bmw/marketDE/bmw_de/BMW_Recycling_und_Ruecknahmestellen_Uebersicht_260212.pdf.asset.1771311194085.pdf"
+    },
+    {
+      "label": "Konfigurator",
+      "href": "/de/konfigurator"
+    },
+    {
+      "label": "Neuwagensuche",
+      "href": "https://www.bmw.de/de-de/sl/neuwagensuche#/results"
+    },
+    {
+      "label": "Gebrauchtwagensuche",
+      "href": "https://www.bmw.de/de-de/sl/gebrauchtwagen"
+    },
+    {
+      "label": "BMW Online Stores",
+      "href": "/de/landingpage/shops"
+    },
+    {
+      "label": "Original BMW Zubehör",
+      "href": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY"
+    },
+    {
+      "label": "Mein BMW Financial Services",
+      "href": "https://meinfs.bmw.de/de/home.html"
+    },
+    {
+      "label": "Finanzierung und Leasing",
+      "href": "/de/topics/service-zubehoer/financial-services/bmw-financial-services"
+    },
+    {
+      "label": "Wunschliste",
+      "href": "https://www.bmw.de/de/shop/ls/wishlist"
+    },
+    {
+      "label": "ConnectedDrive Store",
+      "href": "https://www.bmw.de/de/shop/ls/cp/connected-drive"
+    },
+    {
+      "label": "Leasingbeispiele für Gewerbekunden",
+      "href": "https://www.bmw.de/de_DE/shop-online/bmw-business-offers.html"
+    },
+    {
+      "label": "Leasingbeispiele für Privatkunden",
+      "href": "/de/shop-online/bmw-offers"
+    },
+    {
+      "label": "Fahrzeuge vergleichen",
+      "href": "/de/bmw-modelle-vergleichen"
+    },
+    {
+      "label": "BMW Lifestyle Store",
+      "href": "https://www.bmw.de/de/shop/ls/cp/physical-goods/BF_LIFESTYLE_V2"
+    },
+    {
+      "label": "Inzahlungnahme",
+      "href": "https://www.bmw.de/de/inzahlungnahme/"
+    },
+    {
+      "label": "Probefahrt vereinbaren",
+      "href": "https://www.bmw.de/faas/form/de-de/bmw/tda/test-drive-request.html?midstatic=4g0agj01ba51d05hb9aar"
+    },
+    {
+      "label": "BMW X Modelle",
+      "href": "/de/neufahrzeuge?series=x"
+    },
+    {
+      "label": "BMW 7er",
+      "href": "/de/neufahrzeuge?series=7"
+    },
+    {
+      "label": "BMW 5er",
+      "href": "/de/neufahrzeuge?series=5"
+    },
+    {
+      "label": "BMW 4er",
+      "href": "/de/neufahrzeuge?series=4"
+    },
+    {
+      "label": "BMW 3er",
+      "href": "/de/neufahrzeuge?series=3"
+    },
+    {
+      "label": "BMW 2er",
+      "href": "/de/neufahrzeuge?series=2"
+    },
+    {
+      "label": "BMW 1er",
+      "href": "/de/neufahrzeuge?series=1"
+    },
+    {
+      "label": "BMW M Modelle",
+      "href": "/de/neufahrzeuge?bmwM=yes"
+    },
+    {
+      "label": "BMW Limousinen",
+      "href": "/de/neufahrzeuge?category=li"
+    },
+    {
+      "label": "BMW Concept Cars",
+      "href": "/de/neufahrzeuge?specialCategory=c"
+    },
+    {
+      "label": "BMW Exklusive Automobile",
+      "href": "/de/mehr-bmw/die-exklusiven-bmw-automobile"
+    },
+    {
+      "label": "BMW Behörden- und Sonderschutzfahrzeuge",
+      "href": "/de/neufahrzeuge?specialCategory=p"
+    },
+    {
+      "label": "BMW Elektroautos",
+      "href": "/de/elektroauto"
+    },
+    {
+      "label": "Öffentliches Laden",
+      "href": "/de/elektroauto/public-charging"
+    },
+    {
+      "label": "Zuhause Laden",
+      "href": "/de/elektroauto/home-charging"
+    },
+    {
+      "label": "Reichweite von Elektroautos",
+      "href": "/de/elektroauto/elektroauto-reichweite"
+    },
+    {
+      "label": "Kosten eines Elektroautos",
+      "href": "/de/elektroauto/elektroauto-kosten"
+    },
+    {
+      "label": "BMW Plug-in-Hybrid",
+      "href": "/de/elektroauto/plug-in-hybrid"
+    },
+    {
+      "label": "Barrierefreiheit",
+      "href": "/de/footer/metanavigation/bmw-barrierefreiheit"
+    },
+    {
+      "label": "Impressum",
+      "href": "/de/footer/metanavigation/legal-notice-pool/imprint"
+    },
+    {
+      "label": "Datenschutzrichtlinien",
+      "href": "/de/footer/metanavigation/data-privacy"
+    },
+    {
+      "label": "Rechtlicher Hinweis",
+      "href": "/de/footer/metanavigation/legal-disclaimer-pool/legal-disclaimer"
+    },
+    {
+      "label": "Cookies",
+      "href": "/de/footer/footer-section/cookie-policy"
+    },
+    {
+      "label": "Gesetz über digitale Dienste",
+      "href": "/de/mehr-bmw/digital-services-act"
+    },
+    {
+      "label": "Betrugserkennung & Sicherheit",
+      "href": "/de/footer/metanavigation/bmw-betrugsfaelle"
+    },
+    {
+      "label": "Produktsicherheitsverordnung",
+      "href": "/de/footer/metanavigation/legal-disclaimer-pool/Produktsicherheitsverordnung"
+    },
+    {
+      "label": "EU-Batterieverordnung",
+      "href": "/de/footer/metanavigation/eu-batterieverordnung"
+    },
+    {
+      "label": "Vertrag widerrufen",
+      "href": "https://ipm.bmw.com/lean-ipm/digitalhub_dcdc/rfcn_bmw_de"
+    },
+    {
+      "label": "Sitemap",
+      "href": "/de/publicPools/sitemap/sitemap"
+    },
+    {
+      "label": "speech_bubblesclose",
+      "href": null
+    }
+  ],
+  "links": [
+    "https://of1--bmw--moved-permanently.aem.page/de/home#main",
+    "https://of1--bmw--moved-permanently.aem.page/de/home",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge",
+    "https://www.bmw.de/de/shop/ls/cart/digital-services",
+    "https://www.bmw.de/de/shop/ls/wishlist",
+    "https://www.bmw.de/dlo/de-de/bmw/dealer-locator.html",
+    "https://of1--bmw--moved-permanently.aem.page/de/konfigurator",
+    "https://www.bmw.de/de-de/sl/neuwagensuche/results?filters=%257B%2522IS_INSTALLMENT%2522%253Atrue%252C%2522PRODUCT_CATEGORY_TYPE%2522%253A%255B%2522LEASE%2522%252C%2522LOAN%2522%255D%252C%2522PURCHASE_ONLINE%2522%253A%255Btrue%255D%257D",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/bmw-gebrauchte",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/bmw-gebrauchte/junge-gebrauchte",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/bmw-individual",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/die-exklusiven-bmw-automobile",
+    "https://bmw-rent.de/b2c/select-station-and-time",
+    "https://www.bmw.de/de/bmw-modelle-vergleichen.html/content.q",
+    "https://www.bmw-welt.com/de/freude-am-fahren/fahrzeugberatung.html",
+    "https://www.bmw.de/de-de/mybmw/public/testdrivebooking",
+    "https://www.bmw.de/de/inzahlungnahme/transformer",
+    "https://of1--bmw--moved-permanently.aem.page/de/campaigns/bmw-fuer-geschaeftskunden",
+    "https://of1--bmw--moved-permanently.aem.page/de/topics/faszination-bmw/grosskunden-behoerden/corporate-sales",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/bmw-special-sales",
+    "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY",
+    "https://www.bmw.de/de/shop/ls/cp/connected-drive",
+    "https://www.bmw.de/de/shop/ls/cp/physical-goods/BF_LIFESTYLE_V2",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/teile-und-zubehoer/bmw-zubehoer-hub",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/teile-und-zubehoer/original-bmw-teile",
+    "https://of1--bmw--moved-permanently.aem.page/de/topics/service-zubehoer/bmw-security",
+    "https://of1--bmw--moved-permanently.aem.page/de/topics/service-zubehoer/financial-services/bmw-financial-services",
+    "https://of1--bmw--moved-permanently.aem.page/de/shop-online/bmw-offers",
+    "https://of1--bmw--moved-permanently.aem.page/de/shop-online/bmw-gewerbeangebote",
+    "https://of1--bmw--moved-permanently.aem.page/de/bmw-service-hub",
+    "https://www.bmw.de/forms/angebotsanfrage/angebot-anfordern.html",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/gebrauchte-elektroautos",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/elektroautos-vorteile",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/elektroauto-kosten",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/foerderungen_privatkunden",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/foerderungen",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/plug-in-hybrid",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/home-charging",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/public-charging",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/batterie-technologie",
+    "https://of1--bmw--moved-permanently.aem.page/de/elektroauto/elektroauto-reichweite",
+    "https://meinfs.bmw.de/de/home.html",
+    "https://of1--bmw--moved-permanently.aem.page/de/topics/service-zubehoer/financial-services/bmw-financial-services#BMW_Versicherungen",
+    "https://of1--bmw--moved-permanently.aem.page/de/topics/neuwagen/gewaehrleistung",
+    "https://of1--bmw--moved-permanently.aem.page/de/topics/service-zubehoer/bmw-service/rueckrufe",
+    "https://www.bmw.de/de/inzahlungnahme/?icp=topnav-to-trade-in&origin=topnav",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/kundenbetreuung",
+    "https://www.bmw.de/de/appointments/home",
+    "https://of1--bmw--moved-permanently.aem.page/de/bmw-service-hub#unfall-und-pannenhilfe",
+    "https://of1--bmw--moved-permanently.aem.page/de/fastlane/dealer-locator",
+    "https://of1--bmw--moved-permanently.aem.page/de/my-bmw-app/my-bmw-app",
+    "https://of1--bmw--moved-permanently.aem.page/de/digital-services/bmw-connecteddrive",
+    "https://www.bmwgroup.com/de.html",
+    "https://www.bmw-welt.com/de/index.html",
+    "https://www.bmwgroup.jobs/de/de.html",
+    "https://www.bmwgroup.com/de/nachhaltigkeit.html",
+    "https://www.bmw-welt.com/de/freude-am-fahren/fahrerlebnisse.html",
+    "https://ticketorganizer.eu/organizer/bmw-ticketshop?lang=de&_pes=1",
+    "https://www.bmw-m.com/de/fastlane/motorsport/motorsport.html",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/sport-und-kultur",
+    "https://of1--bmw--moved-permanently.aem.page/de/landingpage/bmw-fahrfreude-gewinnen",
+    "https://www.bmw.de/de/shop/ls/dp/BMW_Personal_Pilot_de",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/concept-cars/bmw-speedtop",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/technology-and-innovation/bmw-heart-of-joy",
+    "https://of1--bmw--moved-permanently.aem.page/de/digital-services/bmw-idrive",
+    "https://of1--bmw--moved-permanently.aem.page/de/campaigns/hvo100-erneuerbarer-diesel",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/bmw-efficientdynamics/pkw-envkv",
+    "https://of1--bmw--moved-permanently.aem.page/de/bmw-alpina",
+    "https://www.bmw.de/de-de/login/bmw/mylogin",
+    "https://www.bmw.de/de-de/login/bmw/myregister",
+    "https://configure.bmw.de/de_DE/configure/G65/61JF",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge/x/suv/bmw-x5",
+    "https://www.bmw.de/de-de/sl/neuwagensuche#/results",
+    "https://www.bmw.de/de-de/sl/gebrauchtwagen#/results",
+    "https://www.bmw.de/de/inzahlungnahme/transformer?icp=home-quicklink-to-tf&origin=home-quicklink",
+    "https://configure.bmw.de/de_DE/configure/NA5/11HR/FSFI7,P0C7U,S0230,S0248,S02PA,S02VB,S02VD,S02XH,S0302,S0322,S0337,S03DP,S03M1,S03PE,S0408,S0428,S0459,S0479,S0494,S04FM,S04T2,S04T8,S04U9,S04UR,S0534,S0548,S05AT,S05AV,S05BA,S05DW,S0617,S061B,S0654,S0674,S06AE,S06AF,S06D5,S06NX,S07EW,S0851,S0879,S08R3,S08TF,S0901,S09AD,S09T1,S09T2,S09T2,CTRLLIGHTSON",
+    "https://www.bmw.de/faas/form/de-de/bmw/rfo/angebotsanfrage.html?modelRange=NA5&modelCode=11HR",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge/3er/limousine/bmw-i3-limousine",
+    "https://www.bmw.de/faas/form/de-de/bmw/rfo/i3-first-edition/angebotsanfrage.html?midstatic=1a1af901da51a01hbfaam&jrny=home",
+    "https://configure.bmw.de/de_DE/configure/G70/61HZ",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge/7er/limousine/bmw-7er-limousine",
+    "https://www.bmw.de/de/s/?language=de",
+    "https://of1--bmw--moved-permanently.aem.page/de/bmw-service-hub/bmw-service/unfall-pannenhilfe",
+    "https://www.bmw.de/faas/form/de-de/bmw/rfo/angebotsanfrage.html?midstatic=4g0agj01ba51d05hb9aas",
+    "https://www.bmw.de/de-de/appointments/bmw/service",
+    "https://open.bmwgroup.com/bmw.html",
+    "https://www.bmw.de/de/s/article/BMW-Zubeh%C3%B6r-Betriebsanleitung-tshuu?language=de",
+    "https://www.bmw.de/content/dam/bmw/marketDE/bmw_de/BMW_Recycling_und_Ruecknahmestellen_Uebersicht_260212.pdf.asset.1771311194085.pdf",
+    "https://www.bmw.de/de-de/sl/gebrauchtwagen",
+    "https://of1--bmw--moved-permanently.aem.page/de/landingpage/shops",
+    "https://www.bmw.de/de_DE/shop-online/bmw-business-offers.html",
+    "https://of1--bmw--moved-permanently.aem.page/de/bmw-modelle-vergleichen",
+    "https://www.bmw.de/de/inzahlungnahme/",
+    "https://www.bmw.de/faas/form/de-de/bmw/tda/test-drive-request.html?midstatic=4g0agj01ba51d05hb9aar",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?series=x",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?series=7",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?series=5",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?series=4",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?series=3",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?series=2",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?series=1",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?bmwM=yes",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?category=li",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?specialCategory=c",
+    "https://of1--bmw--moved-permanently.aem.page/de/neufahrzeuge?specialCategory=p",
+    "https://www.youtube.com/user/BMWDeutschland",
+    "https://www.facebook.com/BMWDeutschland",
+    "https://www.instagram.com/bmwdeutschland/",
+    "https://of1--bmw--moved-permanently.aem.page/de/footer/metanavigation/bmw-barrierefreiheit",
+    "https://of1--bmw--moved-permanently.aem.page/de/footer/metanavigation/legal-notice-pool/imprint",
+    "https://of1--bmw--moved-permanently.aem.page/de/footer/metanavigation/data-privacy",
+    "https://of1--bmw--moved-permanently.aem.page/de/footer/metanavigation/legal-disclaimer-pool/legal-disclaimer",
+    "https://of1--bmw--moved-permanently.aem.page/de/footer/footer-section/cookie-policy",
+    "https://of1--bmw--moved-permanently.aem.page/de/mehr-bmw/digital-services-act",
+    "https://of1--bmw--moved-permanently.aem.page/de/footer/metanavigation/bmw-betrugsfaelle",
+    "https://of1--bmw--moved-permanently.aem.page/de/footer/metanavigation/legal-disclaimer-pool/Produktsicherheitsverordnung",
+    "https://of1--bmw--moved-permanently.aem.page/de/footer/metanavigation/eu-batterieverordnung",
+    "https://ipm.bmw.com/lean-ipm/digitalhub_dcdc/rfcn_bmw_de",
+    "https://of1--bmw--moved-permanently.aem.page/de/publicPools/sitemap/sitemap"
+  ],
+  "media": {
+    "imgs": [
+      {
+        "src": "https://of1--bmw--moved-permanently.aem.page/media_16d97c12ce1e80dd479f0e673cff81cafd7cfb263.svg?width=750&format=svg&optimize=medium",
+        "alt": "",
+        "w": 53,
+        "h": 53
+      },
+      {
+        "src": "https://of1--bmw--moved-permanently.aem.page/media_111b32e9edda01700223cd4f974611665928db179.svg?width=750&format=svg&optimize=medium",
+        "alt": "",
+        "w": 150,
+        "h": 150
+      },
+      {
+        "src": "https://of1--bmw--moved-permanently.aem.page/media_111b32e9edda01700223cd4f974611665928db179.svg?width=750&format=svg&optimize=medium",
+        "alt": "",
+        "w": 150,
+        "h": 150
+      },
+      {
+        "src": "https://bmw.scene7.com/is/image/BMW/g65_ice_home-teaser_dsk_fb?wid=1920&fmt=webp&qlt=80",
+        "alt": "",
+        "w": 1440,
+        "h": 630
+      },
+      {
+        "src": "https://bmw.scene7.com/is/image/BMW/DI26_000417112_1_V1_O_sRGB_BMW-iX3-NA5-BEV_new:3to1?fit=constrain%2C1&wid=1440&fmt=webp&qlt=80",
+        "alt": "BMW iX3",
+        "w": 1440,
+        "h": 482
+      },
+      {
+        "src": "https://bmw.scene7.com/is/image/BMW/fk10558_herofiaf_20260616_3000x3000_v1:3to1?fit=constrain%2C1&wid=1440&fmt=webp&qlt=80",
+        "alt": "Die neue BMW i3 Limousine",
+        "w": 1440,
+        "h": 480
+      },
+      {
+        "src": "https://bmw.scene7.com/is/image/BMW/7-series-sedan-promo-teaser:3to1?fit=constrain%2C1&wid=1440&fmt=webp&qlt=80",
+        "alt": "Die neue BMW 7er Limousine",
+        "w": 1440,
+        "h": 479
+      },
+      {
+        "src": "https://bmw.scene7.com/is/image/BMW/DI26_000410368_1:3to2?fit=constrain%2C1&wid=1279&fmt=webp&qlt=80",
+        "alt": "",
+        "w": 835,
+        "h": 557
+      },
+      {
+        "src": "https://of1--bmw--moved-permanently.aem.page/media_1e9167637b2762390d7d88e66b4fe62984e6613b2.svg?width=2000&format=webply&optimize=medium",
+        "alt": "My BMW App",
+        "w": 51,
+        "h": 32
+      },
+      {
+        "src": "https://of1--bmw--moved-permanently.aem.page/media_106212e34d04d705a2c74a631aaf5c3ec3a626e6d.png?width=2000&format=webply&optimize=medium",
+        "alt": "BMW YouTube",
+        "w": 90,
+        "h": 90
+      },
+      {
+        "src": "https://of1--bmw--moved-permanently.aem.page/media_14b6a35a9c7f02c04582c8a7a19a569a49affcf95.png?width=2000&format=webply&optimize=medium",
+        "alt": "BMW Facebook",
+        "w": 90,
+        "h": 90
+      },
+      {
+        "src": "https://of1--bmw--moved-permanently.aem.page/media_17fe2f6aab6b1797c9d1be4c8931d654a35b42450.png?width=2000&format=webply&optimize=medium",
+        "alt": "BMW Instagram",
+        "w": 90,
+        "h": 90
+      }
+    ],
+    "allImgCount": 14,
+    "cssBackgrounds": [],
+    "modals": [],
+    "videos": [
+      {
+        "src": null,
+        "poster": null,
+        "autoplay": false,
+        "loop": true,
+        "muted": true
+      }
+    ],
+    "iframes": []
+  },
+  "customProps": {
+    "--bmw-color-white": "#fff",
+    "--bmw-color-black": "#000",
+    "--bmw-grey-900": "#262626",
+    "--bmw-grey-800": "#4d4d4d",
+    "--bmw-grey-700": "#666",
+    "--bmw-grey-600": "#8e8e8e",
+    "--bmw-grey-500": "#bbb",
+    "--bmw-grey-300": "#e6e6e6",
+    "--bmw-grey-200": "#f2f2f2",
+    "--bmw-grey-100": "#f6f6f6",
+    "--bmw-blue": "#1c69d4",
+    "--bmw-blue-hover": "#0653b6",
+    "--bmw-blue-disabled": "#bbd2f3",
+    "--bmw-blue-light": "#dde8f9",
+    "--bmw-error": "#d20000",
+    "--bmw-warning": "#ffad1f",
+    "--bmw-success": "#3db014",
+    "--bmw-color-text": "#262626",
+    "--bmw-color-heading": "#262626",
+    "--bmw-color-disclaimer": "#666",
+    "--bmw-surface": "#fff",
+    "--bmw-surface-grey": "#f6f6f6",
+    "--bmw-surface-dark": "#262626",
+    "--bmw-border": "#e6e6e6",
+    "--bmw-backdrop": "rgb(0 0 0 / 80%)",
+    "--bmw-link": "#262626",
+    "--bmw-link-hover": "#1c69d4",
+    "--bmw-link-active": "#0653b6",
+    "--bmw-link-disabled": "#bbb",
+    "--bmw-cta": "#1c69d4",
+    "--bmw-cta-hover": "#0653b6",
+    "--bmw-cta-disabled": "#bbd2f3",
+    "--bmw-cta-text": "#fff",
+    "--bmw-nba": "#262626",
+    "--bmw-nba-hover": "#4d4d4d",
+    "--bmw-nba-disabled": "#bbb",
+    "--bmw-nba-text": "#fff",
+    "--bmw-nba-text-disabled": "#fff",
+    "--bmw-ol": "#262626",
+    "--bmw-ol-hover": "#262626",
+    "--bmw-ol-text": "#262626",
+    "--bmw-ol-text-hover": "#262626",
+    "--bmw-ol-disabled": "#e6e6e6",
+    "--bmw-ol-text-disabled": "#bbb",
+    "--bmw-ol-border-width": "1px",
+    "--bmw-ol-border-width-hover": "2px",
+    "--bmw-focus-outside": "0 0 0 0.0625rem #fff, 0 0 0 0.3125rem #1c69d4",
+    "--bmw-focus-inside": "inset 0 0 0 0.25rem #1c69d4, 0 0 0 0.0625rem #fff",
+    "--bmw-focus-background-link": "rgb(255 255 255 / 50%)",
+    "--bmw-font-family": "bmwtypenextweb, bmwtypenextweb-fallback, arial, helvetica, sans-serif",
+    "--bmw-font-family-icons": "\"bmw_next_icons\"",
+    "--bmw-font-weight-light": "300",
+    "--bmw-font-weight-regular": "400",
+    "--bmw-font-weight-medium": "500",
+    "--bmw-font-weight-bold": "700",
+    "--bmw-font-weight-default": "300",
+    "--bmw-font-weight-clickable": "500",
+    "--bmw-headline-1-font-size": "2.6875rem",
+    "--bmw-headline-1-line-height": "3.75rem",
+    "--bmw-headline-2-font-size": "2.1875rem",
+    "--bmw-headline-2-line-height": "3.125rem",
+    "--bmw-headline-3-font-size": "1.75rem",
+    "--bmw-headline-3-line-height": "2.5rem",
+    "--bmw-subsection-1-font-size": "1.4375rem",
+    "--bmw-subsection-1-line-height": "2.25rem",
+    "--bmw-subsection-2-font-size": "1.25rem",
+    "--bmw-subsection-2-line-height": "1.875rem",
+    "--bmw-body-1-font-size": "1.125rem",
+    "--bmw-body-1-line-height": "1.75rem",
+    "--bmw-body-2-font-size": "0.9375rem",
+    "--bmw-body-2-line-height": "1.5rem",
+    "--bmw-body-3-font-size": "0.75rem",
+    "--bmw-body-3-line-height": "1.125rem",
+    "--bmw-label-1-font-size": "0.75rem",
+    "--bmw-label-1-line-height": "1rem",
+    "--bmw-headline-4-font-size": "1.4375rem",
+    "--bmw-headline-4-line-height": "2.25rem",
+    "--bmw-headline-5-font-size": "1.25rem",
+    "--bmw-headline-5-line-height": "1.875rem",
+    "--bmw-headline-6-font-size": "1.125rem",
+    "--bmw-headline-6-line-height": "1.75rem",
+    "--bmw-disclaimer-1-font-size": "0.75rem",
+    "--bmw-disclaimer-1-line-height": "1.125rem",
+    "--bmw-disclaimer-2-font-size": "0.75rem",
+    "--bmw-disclaimer-2-line-height": "1rem",
+    "--bmw-disclaimer-opacity": "0.7051",
+    "--bmw-stage-zone-0-double-row-font-size": "3.375rem",
+    "--bmw-stage-zone-0-double-row-line-height": "3.5rem",
+    "--bmw-stage-zone-0-single-row-font-size": "4.625rem",
+    "--bmw-stage-zone-0-single-row-line-height": "4.75rem",
+    "--bmw-stage-zone-1-small-font-size": "2.6875rem",
+    "--bmw-stage-zone-1-small-line-height": "2.8125rem",
+    "--bmw-stage-zone-1-large-font-size": "3rem",
+    "--bmw-stage-zone-1-large-line-height": "3.125rem",
+    "--bmw-stage-sub-headline-font-size": "1.25rem",
+    "--bmw-stage-sub-headline-line-height": "1.5rem",
+    "--bmw-stage-model-1-font-size": "13.125rem",
+    "--bmw-stage-model-1-line-height": "11.625rem",
+    "--bmw-spacing-1": "0.125rem",
+    "--bmw-spacing-2": "0.25rem",
+    "--bmw-spacing-3": "0.5rem",
+    "--bmw-spacing-4": "0.75rem",
+    "--bmw-spacing-5": "1rem",
+    "--bmw-spacing-6": "1.25rem",
+    "--bmw-spacing-8": "1.5rem",
+    "--bmw-spacing-10": "2rem",
+    "--bmw-spacing-12": "2.5rem",
+    "--bmw-spacing-16": "3rem",
+    "--bmw-spacing-20": "4rem",
+    "--bmw-spacing-24": "5rem",
+    "--bmw-spacing-32": "6rem",
+    "--bmw-spacing-40": "8rem",
+    "--bmw-spacing-60": "10rem",
+    "--bmw-page-max-width": "120rem",
+    "--bmw-grid-gutter": "0.75rem",
+    "--bmw-grid-margin": "5.25rem",
+    "--bmw-grid-full": "6rem",
+    "--bmw-grid-additional-spacing": "4rem",
+    "--bmw-content-max-width": "calc(120rem - 2 * 6rem)",
+    "--bmw-button-height": "3.25rem",
+    "--bmw-button-small-height": "2.25rem",
+    "--bmw-button-radius": "3px",
+    "--nav-height": "68px"
+  },
+  "_signals": {
+    "filteredInterstitials": 0,
+    "distinctHeadings": 16,
+    "mainTextLen": 1876,
+    "realImageCount": 12,
+    "trackingOnlyMedia": false,
+    "spaShellSuspect": false,
+    "screenshotMode": "fullPage"
+  },
+  "screenshot": "assets/screenshots/de-home.png",
+  "renderedHtml": "pages/de-home.html"
+}

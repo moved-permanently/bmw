@@ -1,0 +1,54 @@
+{
+  "colors": {
+    "primary": "#1c69d4",
+    "primaryHover": "#0653b6",
+    "text": "#262626",
+    "background": "#ffffff",
+    "surface": "#f6f6f6",
+    "surfaceDark": "#000000",
+    "border": "#e6e6e6",
+    "accent": "#f2f2f2"
+  },
+  "typography": {
+    "heading": {
+      "family": "bmwTypeNextWeb, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "300",
+      "style": "normal",
+      "size": "35px",
+      "note": "h1 43px/500, h2 35px/300, h3 23px/300"
+    },
+    "body": {
+      "family": "bmwTypeNextWeb, \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "weight": "300",
+      "style": "normal",
+      "size": "18px"
+    }
+  },
+  "shapes": {
+    "button": {
+      "borderRadius": "3px"
+    },
+    "circle": {
+      "borderRadius": "50%"
+    },
+    "small": {
+      "borderRadius": "2px"
+    }
+  },
+  "spacing": {},
+  "extensions": {
+    "fontSubstitution": "BMW Type Next is a private/licensed typeface (woff2 files shipped in /fonts, family bmwTypeNextWeb). Extraction records it as-is; for any off-site rendering use system fallbacks Helvetica Neue / Helvetica / Arial / sans-serif. No other typeface invented.",
+    "source": "https://of1--bmw--moved-permanently.aem.page/de/home (site itself, 3 pages)",
+    "hover": {
+      "primaryButton": {
+        "from": "#1c69d4",
+        "to": "#0653b6"
+      }
+    },
+    "breakpoints": null,
+    "motifs": {
+      "radius": "3px (buttons), 50% (round controls)",
+      "shadow": "inset 0 0 0 1px #262626 on secondary buttons"
+    }
+  }
+}

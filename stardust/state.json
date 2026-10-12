@@ -1,0 +1,26 @@
+{
+  "site": {
+    "originUrl": "https://of1--bmw--moved-permanently.aem.page",
+    "extractedAt": "2026-10-12T14:23:22Z",
+    "pageCap": 3,
+    "totalDiscovered": 3,
+    "crawled": 3
+  },
+  "pages": [
+    {
+      "slug": "de-home",
+      "status": "extracted",
+      "currentStatePath": "stardust/current/pages/de-home.json"
+    },
+    {
+      "slug": "aida-showcase-de-de-home",
+      "status": "extracted",
+      "currentStatePath": "stardust/current/pages/aida-showcase-de-de-home.json"
+    },
+    {
+      "slug": "aida-showcase-de-de-news-3-series",
+      "status": "extracted",
+      "currentStatePath": "stardust/current/pages/aida-showcase-de-de-news-3-series.json"
+    }
+  ]
+}
