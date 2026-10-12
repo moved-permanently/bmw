@@ -77,7 +77,7 @@ export async function checkWdhValues(session, editor) {
     } catch (e) {
       // no sheet for this market: every value is reported as unknown
     }
-    return { bindings, values: valuesFromSheet(sheet), models: sheet.models || [] };
+    return { bindings, values: valuesFromSheet(sheet) };
   };
 
   let state = await load();
@@ -100,7 +100,7 @@ export async function checkWdhValues(session, editor) {
   };
 
   const show = () => {
-    const { bindings, values, models } = state;
+    const { bindings, values } = state;
     const stale = staleBindings(bindings, market, values);
     markStale(stale);
     panel.classList.toggle('has-drift', stale.length > 0);
@@ -122,7 +122,7 @@ export async function checkWdhValues(session, editor) {
         update.textContent = 'Updating…';
         try {
           // the editor then redraws the page, whose new render shows its own panel
-          await updateEditorValues(link, { market, values, models });
+          await updateEditorValues(link, { market, values });
         } catch (e) {
           update.disabled = false;
           update.textContent = 'Update';

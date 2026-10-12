@@ -3,18 +3,15 @@
  * quick-edit port (captured by captureEditorPort in scripts/wdh-session.js). The messages are the
  * ones adobe/da-nx quick-edit.js uses to edit text in the page frame
  * (adobe/da-live blocks/canvas/ew-editor-wysiwyg/quick-edit-controller.js):
- * - reload -> set-body {body}: the document as editor HTML, outermost text blocks carry
- *   data-prose-index (their position in the document)
+ * - reload -> set-body {body}: the document as page HTML (prose2aem: blocks as divs, metadata
+ *   removed), outermost text blocks carry data-prose-index (their position in the document)
  * - get-editor {cursorOffset} -> set-editor-state {editorState, cursorOffset}: one text block as
  *   ProseMirror JSON
  * - node-update {node, cursorOffset}: replaces that block, as an author edit
  * Replies to the panel's own requests are held back from quick edit (it would open an editor on
  * the block or redraw the page).
  */
-import {
-  parseBinding, bindingHref, textOf, flat,
-} from './aida-wdh.js';
-import { vehicleJsonLd, metaName } from './aida-doc.js';
+import { parseBinding, bindingHref, flat } from './aida-wdh.js';
 
 const linkOf = (node) => node.marks?.find((m) => m.type === 'link');
 const sameMark = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -77,35 +74,18 @@ export function syncNodeBindings(node, market, values) {
 
 const TOKEN_RE = /<(?:p|h[1-6]|ul|ol|pre|blockquote)\b[^>]*?\bdata-prose-index="(\d+)"|<a\b[^>]*?\bhref="([^"]*)"/gi;
 
-function metadataValues(body) {
-  const meta = new Map();
-  [...body.matchAll(/<table\b[\s\S]*?<\/table>/gi)].forEach(([table]) => {
-    const rows = [...table.matchAll(/<tr\b[\s\S]*?<\/tr>/gi)]
-      .map(([row]) => [...row.matchAll(/<t[dh]\b[^>]*>([\s\S]*?)<\/t[dh]>/gi)].map((cell) => cell[1]));
-    if (metaName(textOf(rows[0]?.[0] || '')) !== 'metadata') return;
-    rows.slice(1).forEach(([key, value]) => {
-      if (value === undefined) return;
-      const paragraphs = [...value.matchAll(/<p\b[^>]*?\bdata-prose-index="(\d+)"[^>]*>([\s\S]*?)<\/p>/gi)];
-      if (paragraphs.length !== 1) return;
-      const [, offset, inner] = paragraphs[0];
-      meta.set(metaName(textOf(key)), { offset: Number(offset), text: textOf(inner) });
-    });
-  });
-  return meta;
-}
-
 /**
- * What to update in the editor body: positions of the text blocks holding WDH links (last first,
- * so updating one does not move the next) and the metadata values ({offset, text} by name).
+ * Positions of the text blocks in the editor body that hold WDH links, last first (updating one
+ * does not move the ones before it).
  */
-export function editorTargets(body) {
+export function wdhOffsets(body) {
   const offsets = new Set();
   let current = null;
   [...body.matchAll(TOKEN_RE)].forEach(([, offset, href]) => {
     if (offset !== undefined) current = Number(offset);
     else if (current !== null && parseBinding(href.replace(/&amp;/g, '&'))) offsets.add(current);
   });
-  return { offsets: [...offsets].sort((a, b) => b - a), meta: metadataValues(body) };
+  return [...offsets].sort((a, b) => b - a);
 }
 
 const links = new WeakMap();
@@ -180,33 +160,16 @@ export function createEditorLink(editor, { timeout = 4000 } = {}) {
 }
 
 /**
- * The panel's Update: the same result as Preflight's update (linked values and an existing
- * json-ld metadata value), made as edits in the editor, then the page is redrawn.
+ * The panel's Update: the linked values of the page from WDH, as edits in the editor (Cmd+Z undoes
+ * them), then the page is redrawn. The vehicle JSON-LD is metadata, which the editor body does not
+ * include: "…" → Update WDH values (Preflight) refreshes it.
  * @returns {Promise<number>} number of values changed
  */
-export async function updateEditorValues(editor, { market, values, models = [] }) {
-  const { offsets, meta } = editorTargets(await editor.readDocument());
-  const targets = offsets.map((offset) => ({ offset }));
-  const jsonld = meta.get('json-ld');
-  const vehicle = models.find((m) => m.code === meta.get('wdh-model')?.text)?.jsonld;
-  if (jsonld && vehicle) {
-    try {
-      const text = vehicleJsonLd(jsonld.text, vehicle, {
-        title: meta.get('title')?.text, description: meta.get('description')?.text,
-      });
-      if (text !== jsonld.text) targets.push({ offset: jsonld.offset, text });
-    } catch (e) {
-      // invalid JSON-LD in the page or the sheet: leave it for Preflight to report
-    }
-  }
-  targets.sort((a, b) => b.offset - a.offset);
-  const count = await targets.reduce(async (done, target) => {
+export async function updateEditorValues(editor, { market, values }) {
+  const offsets = wdhOffsets(await editor.readDocument());
+  const count = await offsets.reduce(async (done, offset) => {
     const total = await done;
-    const { node, cursorOffset } = await editor.getNode(target.offset);
-    if (target.text !== undefined) {
-      editor.updateNode({ ...node, content: [{ type: 'text', text: target.text }] }, cursorOffset);
-      return total;
-    }
+    const { node, cursorOffset } = await editor.getNode(offset);
     const { node: next, changes } = syncNodeBindings(node, market, values);
     if (changes.length) editor.updateNode(next, cursorOffset);
     return total + changes.length;

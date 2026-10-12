@@ -5,7 +5,7 @@
 import { textOf } from './aida-wdh.js';
 
 const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-export const metaName = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const metaName = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 // top-level <div> elements of a fragment: [{ start, end, inner }]
 function topDivs(html, from = 0, to = html.length) {
@@ -69,30 +69,18 @@ export function setMetadata(html, name, value) {
   return `${html.slice(0, at)}<div><div>${escape(name)}</div><div>${escape(value)}</div></div>${html.slice(at)}`;
 }
 
-/**
- * The json-ld metadata value for a page's WDH vehicle: the vehicle itself on product pages; on
- * news pages the NewsArticle stays, with the page title and description and the vehicle as about.
- * @param {string} currentJson current json-ld value ('' when there is none)
- * @param {string} vehicleJson vehicle JSON-LD from the WDH models sheet
- * @param {{title?: string, description?: string}} [meta] page metadata
- */
-export function vehicleJsonLd(currentJson, vehicleJson, { title, description } = {}) {
+export function withVehicleJsonLd(html, vehicleJson) {
   const vehicle = JSON.parse(vehicleJson);
+  const currentJson = getMetadata(html, 'json-ld');
   const current = currentJson ? JSON.parse(currentJson) : null;
   const types = [].concat(current?.['@type'] || []);
-  if (!types.includes('NewsArticle')) return vehicleJson;
+  if (!types.includes('NewsArticle')) return setMetadata(html, 'json-ld', vehicleJson);
   const about = { ...vehicle };
   delete about['@context'];
-  return JSON.stringify({
+  return setMetadata(html, 'json-ld', JSON.stringify({
     ...current,
-    headline: title || current.headline,
-    description: description || current.description,
+    headline: getMetadata(html, 'title') || current.headline,
+    description: getMetadata(html, 'description') || current.description,
     about,
-  });
-}
-
-export function withVehicleJsonLd(html, vehicleJson) {
-  return setMetadata(html, 'json-ld', vehicleJsonLd(getMetadata(html, 'json-ld'), vehicleJson, {
-    title: getMetadata(html, 'title'), description: getMetadata(html, 'description'),
   }));
 }
