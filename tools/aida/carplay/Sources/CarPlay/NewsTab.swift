@@ -39,12 +39,24 @@ final class NewsTab {
             return item
         }
         await MainActor.run { template.updateSections([CPListSection(items: items)]) }
+        prefetchSpeech(for: Array(rows.prefix(6)))
+    }
+
+    /// Asks the helper to render the first articles, so "Vorlesen" starts at once. The helper caches, so a later run costs nothing.
+    private func prefetchSpeech(for rows: [NewsRow]) {
+        let client = session.client, tag = session.market.speechTag
+        Task {
+            for row in rows {
+                if let page = try? await client.page(path: row.path) { Speech.shared.prefetch(ArticleViewModel(page: page).speechText, language: tag) }
+            }
+        }
     }
 
     private func openArticle(_ row: NewsRow) async {
         guard let page = try? await session.client.page(path: row.path) else { return }
         let a = ArticleViewModel(page: page)
         let lang = session.language, tag = session.market.speechTag
+        Speech.shared.prefetch(a.speechText, language: tag) // audio is ready by the time "Vorlesen" is pressed
         // The system shows two lines of an item and cuts the rest, so the text goes in as several short items.
         // The text comes first; the key/value facts (three at most) take the last items of the 10.
         let facts: [CPInformationItem] = a.pairs.prefix(3).map { CPInformationItem(title: $0.label, detail: $0.value) }

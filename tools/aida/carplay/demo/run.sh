@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Drives the BMW CarPlay demo on the iOS Simulator. See ../README.md.
 #   run.sh up | drive [minutes] | at <place> | lang <de|fr> | soc <0-100> | refresh | reset | shot <name> | down
+#   run.sh tts | say [text]      (the voice: OpenAI text-to-speech through the local helper, see ../README.md)
 set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
@@ -43,6 +44,43 @@ place() {
 
 carplay_open() { xcrun simctl io "$UDID" enumerate 2>&1 | grep -q "DisplayAdapter" ; }
 
+# Voice: "Vorlesen" asks a local helper (tts-helper.mjs) for OpenAI text-to-speech audio and falls back to the system
+# voice when the helper is not running. The helper keeps the key: it is read from ~/.secrets (which exports
+# OPENAI_API_KEY) or from the environment, handed to the helper process only and never printed.
+TTS_PORT="${TTS_PORT:-8765}"
+TTS_PID="$HERE/.tts-helper.pid"
+TTS_LOG="$HERE/.tts-helper.log"
+tts_health() { curl -fsS --max-time 2 "http://127.0.0.1:$TTS_PORT/health" 2>/dev/null; }
+
+cmd_tts() {
+  command -v node >/dev/null || { echo "voice helper not started: node missing (Node 18 or newer)"; return 0; }
+  if tts_health >/dev/null; then echo "voice helper already running on 127.0.0.1:$TTS_PORT: $(tts_health)"; return 0; fi
+  local key=""
+  if [ -f "$HOME/.secrets" ]; then key="$( set +eu +x; . "$HOME/.secrets" >/dev/null 2>&1; printf '%s' "${OPENAI_API_KEY:-}" )"; fi
+  [ -n "$key" ] || key="${OPENAI_API_KEY:-}"
+  OPENAI_API_KEY="$key" PORT="$TTS_PORT" nohup node "$HERE/tts-helper.mjs" >"$TTS_LOG" 2>&1 </dev/null &
+  echo $! > "$TTS_PID"
+  sleep 1
+  if tts_health >/dev/null; then
+    echo "voice helper running on 127.0.0.1:$TTS_PORT: $(tts_health)"
+    [ -n "$key" ] || echo "  no OPENAI_API_KEY in ~/.secrets or the environment: only texts that were rendered before will use the OpenAI voice"
+  else
+    echo "voice helper did not start (the system voice is used): see $TTS_LOG"
+  fi
+}
+cmd_tts_stop() {
+  [ -f "$TTS_PID" ] && kill "$(cat "$TTS_PID")" 2>/dev/null || true
+  rm -f "$TTS_PID"
+}
+
+# Speaks a text through the app like "Vorlesen" does: SAY_LANG=fr-FR ./demo/run.sh say "Bonjour"
+cmd_say() {
+  local lang="${SAY_LANG:-de-DE}" text="${*:-Willkommen im BMW. Dies ist ein Test der Sprachausgabe.}" dir
+  dir="$(xcrun simctl get_app_container "$UDID" "$BUNDLE" data)"
+  printf '%s\n%s\n' "$lang" "$text" > "$dir/Documents/say.txt"
+  xcrun simctl spawn "$UDID" notifyutil -p "$BUNDLE.say"
+}
+
 cmd_up() {
   ensure_device
   command -v xcodebuild >/dev/null || { echo "xcodebuild missing: install Xcode 26.6"; exit 1; }
@@ -55,6 +93,7 @@ cmd_up() {
   xcrun simctl privacy "$UDID" grant location "$BUNDLE"
   xcrun simctl location "$UDID" set "$(place munich)"
   xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
+  cmd_tts
   xcrun simctl launch "$UDID" "$BUNDLE" >/dev/null
   # Opening the CarPlay window and tapping the icon needs Accessibility for the terminal app.
   if osascript -e 'tell application "System Events" to tell process "Simulator" to click menu item "CarPlay" of menu "External Displays" of menu item "External Displays" of menu "I/O" of menu bar 1' 2>/dev/null; then
@@ -105,13 +144,14 @@ cmd_reset() {
 }
 cmd_shot() { mkdir -p "$SHOTS"; xcrun simctl io "$UDID" screenshot --display external "$SHOTS/${1:-shot}.png"; }
 cmd_down() {
+  cmd_tts_stop
   xcrun simctl location "$UDID" clear || true
   xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
 }
 
 sub="${1:-}"; shift || true
-[ "$sub" = up ] || [ -z "$sub" ] || need_device
+[ "$sub" = up ] || [ "$sub" = tts ] || [ -z "$sub" ] || need_device
 case "$sub" in
-  up|drive|at|lang|soc|refresh|reset|shot|down) "cmd_$sub" "$@" ;;
-  *) sed -n '2,3p' "$0"; exit 1 ;;
+  up|drive|at|lang|soc|refresh|reset|shot|down|tts|say) "cmd_$sub" "$@" ;;
+  *) sed -n '2,4p' "$0"; exit 1 ;;
 esac

@@ -12,25 +12,33 @@ const open = [];
 after(() => { open.forEach((srv) => { srv.close(); srv.closeAllConnections?.(); }); });
 
 // A stand-in for api.openai.com: records every request and answers with fake audio bytes.
-async function upstream(status = 200) {
+async function upstream(status = 200, delay = 0) {
   const calls = [];
+  const load = { active: 0, max: 0 };
   const server = http.createServer((req, res) => {
     let body = '';
     req.on('data', (c) => { body += c; });
     req.on('end', () => {
+      load.active += 1;
+      load.max = Math.max(load.max, load.active);
       calls.push({
         method: req.method, url: req.url, auth: req.headers.authorization, body: body ? JSON.parse(body) : null,
       });
-      if (status !== 200) { res.writeHead(status, { 'content-type': 'application/json' }); res.end('{"error":{"message":"nope"}}'); return; }
-      res.writeHead(200, { 'content-type': 'audio/mpeg' });
-      // the audio is the text it was asked for, so a test can see which chunks came back and in which order
-      const input = body ? JSON.parse(body).input : '';
-      res.end(Buffer.from(input.length < 40 && input.startsWith('Hallo Chiemgau') ? 'ID3-fake-audio' : input));
+      setTimeout(() => {
+        load.active -= 1;
+        if (status !== 200) { res.writeHead(status, { 'content-type': 'application/json' }); res.end('{"error":{"message":"nope"}}'); return; }
+        res.writeHead(200, { 'content-type': 'audio/mpeg' });
+        // the audio is the text it was asked for, so a test can see which chunks came back and in which order
+        const input = body ? JSON.parse(body).input : '';
+        res.end(Buffer.from(input.length < 40 && input.startsWith('Hallo Chiemgau') ? 'ID3-fake-audio' : input));
+      }, delay);
     });
   });
   open.push(server);
   await new Promise((r) => { server.listen(0, '127.0.0.1', r); });
-  return { calls, url: `http://127.0.0.1:${server.address().port}/v1`, close: () => new Promise((r) => { server.close(r); }) };
+  return {
+    calls, load, url: `http://127.0.0.1:${server.address().port}/v1`, close: () => new Promise((r) => { server.close(r); }),
+  };
 }
 
 async function start(up, overrides = {}) {
@@ -133,6 +141,18 @@ test('abbreviations do not end a chunk', async () => {
   const text = 'Die Arena liegt ca. 25 km entfernt, z. B. an der A8. Der Weltcup startet im Januar. Tickets gibt es online.';
   assert.deepEqual(chunks(text, 60), ['Die Arena liegt ca. 25 km entfernt, z. B. an der A8.', 'Der Weltcup startet im Januar. Tickets gibt es online.']);
   assert.deepEqual(chunks('Kurz.', 220), ['Kurz.']);
+});
+
+test('at most six requests to OpenAI run at the same time, however many texts arrive', async () => {
+  const up = await upstream(200, 40);
+  const s = await start(up);
+  const sentence = 'Dies ist ein längerer Satz, der für sich einen eigenen Abschnitt bildet und deshalb nicht verschmilzt. ';
+  const texts = Array.from({ length: 6 }, (_, i) => `Text ${i}. ${sentence.repeat(6)}`);
+  const rs = await Promise.all(texts.map((text) => post(s.base, { text, lang: 'de-DE' })));
+  rs.forEach((r) => assert.equal(r.status, 200));
+  assert.ok(up.calls.length > 12, `${up.calls.length} requests`);
+  assert.ok(up.load.max <= 6, `${up.load.max} at once`);
+  await s.stop(); await up.close();
 });
 
 test('without a key it answers 503 and never calls OpenAI; health says so', async () => {

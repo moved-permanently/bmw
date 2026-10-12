@@ -32,6 +32,8 @@ final class PlacesTab {
             for await vm in group { if let vm { built[vm.row.path] = vm } }
         }
         models = built
+        // The helper renders the stories now (once; later runs find them cached), so "Vorlesen" starts at once.
+        for vm in built.values { Speech.shared.prefetch(vm.speechText, language: "de-DE") }
         await MainActor.run { renderedKey = ""; render() }
     }
 
@@ -76,6 +78,7 @@ final class PlacesTab {
     /// Long text goes into an information template: it wraps, a list row would cut it.
     private func showPage(_ vm: PlaceViewModel, distance: String) {
         let lang = session.language
+        Speech.shared.prefetch(vm.speechText, language: "de-DE") // audio is ready by the time "Vorlesen" is pressed
         // The system shows two lines of an item and cuts the rest: distance and headline first, the text as short items.
         var items = [CPInformationItem(title: L10n.t(.away, lang, distance), detail: vm.headline)]
         let text = vm.speechText.split(separator: "\n").dropFirst().map(String.init).joined(separator: " ")

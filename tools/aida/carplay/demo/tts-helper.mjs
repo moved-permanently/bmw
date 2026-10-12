@@ -20,6 +20,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const LIMIT = 4000; // OpenAI accepts 4096 characters per request
+const MAX_PARALLEL = 6; // requests to OpenAI at the same time
 
 const INSTRUCTIONS = {
   de: 'Sprich akzentfreies Deutsch (Hochdeutsch aus Deutschland) wie eine freundliche, ruhige Sprecherin im Autoradio: weibliche Stimme, natürlicher Rhythmus und natürliche Betonung, klare Aussprache von Namen wie BMW, kurze Pausen am Satzende. Nicht übertrieben, kein Verkaufston.',
@@ -72,6 +73,11 @@ export function createHelper({
 } = {}) {
   mkdirSync(cacheDir, { recursive: true });
   const inflight = new Map();
+  // Opening several pages renders several texts at once, each in parts: keep the number of OpenAI requests in check.
+  let active = 0;
+  const waiting = [];
+  const takeSlot = async () => { if (active >= MAX_PARALLEL) await new Promise((r) => { waiting.push(r); }); active += 1; };
+  const freeSlot = () => { active -= 1; waiting.shift()?.(); };
 
   const keyFor = (input, instructions) => createHash('sha256').update(JSON.stringify([model, voice, instructions, input])).digest('hex');
 
@@ -86,6 +92,10 @@ export function createHelper({
     if (!inflight.has(hash)) {
       const started = Date.now();
       const speak = async (piece) => {
+        await takeSlot();
+        try { return await requestAudio(piece); } finally { freeSlot(); }
+      };
+      const requestAudio = async (piece) => {
         const res = await fetch(`${baseUrl}/audio/speech`, {
           method: 'POST',
           headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },

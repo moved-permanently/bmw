@@ -27,6 +27,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }, "com.adobe.aida.BMWCarPlay.cmd" as CFString, nil, .deliverImmediately)
+        // `.say`: `run.sh say "text"` writes the language tag and the text to Documents/say.txt and posts this. The app
+        // speaks it like "Vorlesen" does, so the voice can be tried without opening a page on the car.
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), nil, { _, _, _, _, _ in
+            DispatchQueue.main.async {
+                guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+                      let text = try? String(contentsOf: dir.appendingPathComponent("say.txt"), encoding: .utf8) else { return }
+                let parts = text.split(separator: "\n", maxSplits: 1).map(String.init)
+                if parts.count == 2 { Speech.shared.speak(parts[1], language: parts[0]) }
+            }
+        }, "com.adobe.aida.BMWCarPlay.say" as CFString, nil, .deliverImmediately)
         return true
     }
 

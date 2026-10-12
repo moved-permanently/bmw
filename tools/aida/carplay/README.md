@@ -46,7 +46,7 @@ Tests: `xcodebuild -project BMWCarPlay.xcodeproj -scheme BMWCarPlay -destination
 
 **Points.** The simulator moves in straight lines between points, so every point must be close to the road. `make-drive.mjs` simplifies the Apple polyline with Douglas-Peucker: the output is never more than 4 m from the Apple polyline, and no segment is longer than 200 m. Result: 1,186 points for the default route (1,512 via Ruhpolding); points are 7 to 40 m apart in tight bends and about 200 m apart on straights. A fixed 20 m step would give over 10,000 points, which the car map cannot follow at drive speed. `node demo/verify-drive.mjs` prints the deviation, spacing and proximity numbers.
 
-**Playback.** `simctl location start --interval` sends one update per interval and moves at most speed x interval per update. A segment shorter than that still takes a whole interval, so the drive lasts (points - 1) x interval no matter what speed is set. `run.sh drive N` therefore sets the interval to N x 60 / (points - 1) and a speed high enough that no segment is split, so each update lands on a point. `drive 2` is 12.7 updates per second, `drive 4` 6.3. The update rate is capped at 20 per second (`MIN_INTERVAL=0.05`), so a drive cannot get shorter than about 75 seconds for the default route. Because the points are dense in bends and sparse on straights, the car looks slower in the city than on the A8.
+**Playback.** `simctl location start --interval` sends one update per interval and moves at most speed x interval per update. A segment shorter than that still takes a whole interval, so the drive lasts (points - 1) x interval no matter what speed is set. `run.sh drive N` therefore sets the interval to N x 60 / (points - 1) and a speed high enough that no segment is split, so each update lands on a point. On the default route `drive 2` is about 10 updates per second and `drive 4` about 5 (via Ruhpolding: 12.7 and 6.3). The update rate is capped at 20 per second (`MIN_INTERVAL=0.05`), so a drive cannot get shorter than about 60 seconds on the default route. Because the points are dense in bends and sparse on straights, the car looks slower in the city than on the A8.
 
 **Refresh the route** (a Mac with network and Apple Maps; MapKit rate-limits to about 50 requests a minute, the tool waits between legs and retries):
 
@@ -59,6 +59,19 @@ node verify-drive.mjs
 ```
 
 Stops are in `apple-route-legs.json`. `make-drive.mjs --default via-ruhpolding` makes the detour the default (also change `DEFAULT_ROUTE` in `run.sh`). `--tolerance` and `--max-segment` change the simplification.
+
+## The voice ("Vorlesen")
+
+The system voices in the simulator are the compact ones (German: Anna) and sound robotic, and the simulator cannot download better ones. So "Vorlesen" gets its audio from OpenAI text-to-speech (model `gpt-4o-mini-tts`, voice `marin`, a female voice told to speak German like a radio presenter) through a small helper on the Mac. The voice is AI-generated. If the helper is not running, or has no key and the text is not cached, the app speaks with the system voice as before; nothing breaks.
+
+- `./demo/run.sh up` starts the helper (`demo/tts-helper.mjs`, port 8765, localhost only). `./demo/run.sh tts` starts it alone, `./demo/run.sh down` stops it. Log: `demo/.tts-helper.log`.
+- The key stays out of the app and the repository. `run.sh` takes `OPENAI_API_KEY` from `~/.secrets` (which exports it) or from the environment and hands it to the helper process only. It is never printed.
+- Each text is rendered once and cached in `demo/.tts-cache/` (not committed), so a rehearsal makes tomorrow's demo instant and works without network for those texts. A long text is split at sentence ends and rendered in parts at the same time (an article takes about 4 seconds instead of 9).
+- When the car screen loads the places and the news, the app asks the helper to render every place story and the market's first six articles in the background (a dozen texts, rendered once). Opening a page asks again, which costs nothing when the text is cached. So "Vorlesen" usually starts at once; a text nobody has rendered yet waits up to a few seconds. At most six requests run at the same time.
+- Try the voice without a page: `./demo/run.sh say "Guten Tag, willkommen im BMW."` (French: `SAY_LANG=fr-FR ./demo/run.sh say "Bonjour"`).
+- Other voice or model: `OPENAI_TTS_VOICE=coral ./demo/run.sh tts` after `./demo/run.sh down` (try `marin`, `coral`, `shimmer`, `nova`, `sage`, `ballad`). The cache is per voice and model.
+- `curl -s http://127.0.0.1:8765/health` shows whether the helper has a key, the voice and how many texts are cached. Cost is about 1.5 cents per minute of audio, and each text is paid once.
+- Tests: `npm test` runs `test/aida/carplay-tts-helper.test.js` (against a stand-in for OpenAI, no key needed); the app side is in `Tests/SpeechTests.swift`.
 
 ## How it works
 
