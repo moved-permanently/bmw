@@ -42,7 +42,10 @@ export function sizedImageUrl(url, width) {
     }
     return u.href;
   }
-  if (u.origin === window.location.origin && u.pathname.includes('/media_')) {
+  // EDS media: same origin, or the aem.page/aem.live/of1.live host a generated page (OF1 proxy)
+  // references with an absolute URL while the document itself is served from the proxy host.
+  const edsHost = /\.(aem\.(page|live)|of1\.live)$/.test(u.hostname);
+  if ((u.origin === window.location.origin || edsHost) && u.pathname.includes('/media_')) {
     if (width) u.searchParams.set('width', width);
     u.searchParams.set('format', 'webply');
     u.searchParams.set('optimize', 'medium');
