@@ -23,6 +23,7 @@ final class CarController {
         interface.setRootTemplate(tabBar, animated: false, completion: carplayLog)
         session.onEnter = { [weak self] p in self?.places.alert(for: p) }
         session.onLink = { [weak self] l in self?.handle(l) }
+        session.onMove = { [weak self] in self?.places.moved() }
         observer = NotificationCenter.default.addObserver(forName: .vehicleChanged, object: session.state, queue: .main) { [weak self] _ in
             self?.vehicleChanged()
         }
@@ -32,7 +33,7 @@ final class CarController {
 
     func stop() {
         if let o = observer { NotificationCenter.default.removeObserver(o) }
-        session.onEnter = nil; session.onLink = nil
+        session.onEnter = nil; session.onLink = nil; session.onMove = nil
     }
 
     private func key() -> String { "\(session.market.folder)|\(session.state.language)" }

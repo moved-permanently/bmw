@@ -7,6 +7,8 @@ final class PlacesTab {
     let template: CPPointOfInterestTemplate
     private let session = Session.shared
     private var models: [String: PlaceViewModel] = [:]   // by path
+    private var images: [String: UIImage] = [:]
+    private var renderedAt: (lat: Double, lon: Double)?
 
     init(interface: CPInterfaceController) {
         self.interface = interface
@@ -29,12 +31,20 @@ final class PlacesTab {
             for await vm in group { if let vm { built[vm.row.path] = vm } }
         }
         models = built
-        var images: [String: UIImage] = [:]
-        for (p, vm) in built { if let img = await session.client.image(Img.scene7(vm.image, width: 120)) { images[p] = img } }
-        await MainActor.run { render(images: images) }
+        var imgs: [String: UIImage] = [:]
+        for (p, vm) in built { if let img = await session.client.image(Img.scene7(vm.image, width: 120)) { imgs[p] = img } }
+        images = imgs
+        await MainActor.run { render() }
     }
 
-    private func render(images: [String: UIImage]) {
+    /// Called when the car moves: re-sort and refresh the distances once it has moved about 1 km.
+    func moved() {
+        if let r = renderedAt, Geo.distanceKm(lat1: r.lat, lon1: r.lon, lat2: session.lat, lon2: session.lon) < 1 { return }
+        render()
+    }
+
+    func render() {
+        renderedAt = (session.lat, session.lon)
         let lang = session.language
         template.tabTitle = L10n.t(.tabPlaces, lang)
         let sorted = Geo.sorted(session.places, lat: session.lat, lon: session.lon)
@@ -44,7 +54,7 @@ final class PlacesTab {
             let away = L10n.t(.away, lang, String(format: "%.0f km", km))
             let item = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: row.lat, longitude: row.lon)))
             item.name = row.name
-            let poi = CPPointOfInterest(location: item, title: row.name, subtitle: vm.headline, summary: vm.lead,
+            let poi = CPPointOfInterest(location: item, title: row.name, subtitle: "\(away) · \(vm.headline)", summary: vm.lead,
                                         detailTitle: vm.headline, detailSubtitle: away, detailSummary: vm.lead,
                                         pinImage: images[row.path])
             poi.primaryButton = CPTextButton(title: L10n.t(.read, lang), textStyle: .confirm) { [weak self] _ in self?.speak(vm) }

@@ -27,6 +27,7 @@ final class Session: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     var places: [PlaceRow] = PlacesSeed.rows
     var onEnter: ((PlaceRow) -> Void)?
+    var onMove: (() -> Void)?
     var onLink: ((DeepLink) -> Void)?
 
     override init() {
@@ -93,6 +94,7 @@ final class Session: NSObject, ObservableObject, CLLocationManagerDelegate {
         self.lat = lat; self.lon = lon; hasFix = true
         // Without a car screen the alert cannot show, so do not use up the entry either.
         if let handler = onEnter, let p = proximity.update(places: places, lat: lat, lon: lon).first { handler(p) }
+        onMove?()
         geocodeIfNeeded(lat: lat, lon: lon)
     }
 
