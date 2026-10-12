@@ -133,12 +133,11 @@ test('picker drops the preflight sentence and the table caption', () => {
   assert.doesNotMatch(source, /Linked technical values|<caption/);
 });
 
-test('picker title is smaller and the model dropdown is wider', () => {
-  const css = read('tools/aida/wdh-picker/wdh-picker.css');
-  const h1 = css.match(/\.wdh-picker h1\s*\{[^}]*font-size:\s*(\d+)px/);
-  assert.ok(h1 && Number(h1[1]) < 32, 'title below the 32px default');
-  const select = css.match(/\.wdh-picker #wdh-model\s*\{[^}]*min-width:\s*(\d+)px/);
-  assert.ok(select && Number(select[1]) >= 300, 'model picker at least 300px wide');
+test('picker title is smaller and the model dropdown spans the panel', () => {
+  const panel = read('tools/aida/aida-panel.css');
+  assert.match(panel, /\.aida-panel h1\s*\{[^}]*font-size:\s*var\(--s2-component-l-bold-font-size\)/, '16px panel title');
+  assert.match(panel, /\.aida-panel \.spectrum-Picker\s*\{[^}]*inline-size:\s*100%/, 'full-width picker');
+  assert.match(read('tools/aida/wdh-picker/wdh-picker.html'), /<main class="[^"]*\baida-panel\b/);
 });
 
 test('property row headers align with the left-aligned column heading', () => {

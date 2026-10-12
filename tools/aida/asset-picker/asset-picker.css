@@ -1,34 +1,12 @@
 /* stylelint-disable selector-class-pattern -- official Spectrum component names */
-.asset-picker {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-}
-
-.asset-picker h1 {
-  margin: 0 0 4px;
-  font-size: var(--spectrum-font-size-500);
-}
-
-.asset-picker h2 {
-  margin: 14px 0 4px;
-  font-size: var(--spectrum-font-size-300);
-}
-
-.asset-picker .asset-note {
-  margin: 4px 0 12px;
-  color: var(--spectrum-neutral-subdued-content-color-default);
-  font-size: var(--spectrum-font-size-100);
-}
-
 .asset-picker details label {
-  margin-top: 10px;
+  margin-top: var(--s2-spacing-100);
 }
 
 .asset-picker label:not(.spectrum-Checkbox) {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--s2-spacing-75);
 }
 
 .asset-picker .spectrum-Picker,
@@ -38,36 +16,37 @@
 }
 
 .asset-picker .asset-search {
-  margin-top: 16px;
+  margin-top: var(--s2-spacing-100);
 }
 
 .asset-picker .asset-facets,
 .asset-picker .asset-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin: 12px 0;
+  gap: var(--s2-spacing-200) var(--s2-spacing-100);
+  margin: var(--s2-spacing-200) 0;
 }
 
 .asset-picker .asset-results-heading,
 .asset-picker .asset-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--s2-spacing-100);
   align-items: center;
   justify-content: space-between;
 }
 
 .asset-picker #asset-count {
-  color: var(--spectrum-neutral-subdued-content-color-default);
-  font-size: var(--spectrum-font-size-100);
+  margin: 0;
+  color: var(--s2-gray-600);
+  font-size: var(--s2-component-s-regular-font-size);
 }
 
 .asset-picker .asset-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin: 4px 0 16px;
+  gap: var(--s2-spacing-100);
+  margin: var(--s2-spacing-200) 0;
   padding: 0;
   list-style: none;
 }
@@ -102,7 +81,7 @@
   flex: 1;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: var(--s2-spacing-75);
 }
 
 .asset-picker .asset-card-title {
@@ -120,10 +99,10 @@
   display: grid;
   min-height: 160px;
   place-items: center;
-  margin: 12px 0 0;
-  border: 1px solid var(--spectrum-gray-300);
-  border-radius: var(--spectrum-corner-radius-100);
-  background: repeating-conic-gradient(var(--spectrum-gray-100) 0% 25%, var(--spectrum-gray-50) 0% 50%) 0 0 / 16px 16px;
+  margin: var(--s2-spacing-200) 0 0;
+  border: 1px solid var(--s2-gray-200);
+  border-radius: var(--s2-corner-radius-500);
+  background: repeating-conic-gradient(var(--s2-gray-100) 0% 25%, var(--s2-gray-50) 0% 50%) 0 0 / 16px 16px;
 }
 
 .asset-picker .asset-preview img {
@@ -136,50 +115,51 @@
 
 .asset-picker #asset-preview-status,
 .asset-picker #asset-message {
-  min-height: 18px;
-  margin: 6px 0 12px;
-  font-size: var(--spectrum-font-size-100);
+  min-height: 16px;
+  margin: var(--s2-spacing-75) 0 var(--s2-spacing-200);
+  font-size: var(--s2-component-s-regular-font-size);
 }
 
 .asset-picker fieldset {
-  padding: 12px;
-  margin: 12px 0;
-  border: 1px solid var(--spectrum-gray-300);
-  border-radius: var(--spectrum-corner-radius-100);
+  padding: var(--s2-spacing-200);
+  margin: var(--s2-spacing-200) 0;
+  border: 1px solid var(--s2-gray-200);
+  border-radius: var(--s2-corner-radius-500);
 }
 
 .asset-picker legend {
-  padding: 0 5px;
-  font-weight: var(--spectrum-bold-font-weight);
+  padding: 0 var(--s2-spacing-75);
+  color: var(--s2-gray-900);
+  font-weight: var(--s2-component-m-bold-font-weight);
 }
 
 .asset-picker .asset-check {
-  margin: 12px 0;
+  margin: var(--s2-spacing-200) 0;
 }
 
 .asset-picker details {
-  margin: 16px 0;
+  margin: var(--s2-spacing-300) 0;
 }
 
 .asset-picker #asset-sources {
-  padding-left: 20px;
+  padding-left: var(--s2-spacing-300);
   overflow-wrap: anywhere;
-  font-size: var(--spectrum-font-size-100);
+  font-size: var(--s2-component-s-regular-font-size);
 }
 
 .asset-picker summary {
-  color: var(--spectrum-neutral-subdued-content-color-default);
-  font-size: var(--spectrum-font-size-100);
+  color: var(--s2-gray-700);
+  font-size: var(--s2-component-s-regular-font-size);
   cursor: pointer;
 }
 
 .asset-picker .asset-actions {
   justify-content: flex-start;
-  padding: 12px 0;
+  padding: var(--s2-spacing-200) 0;
 }
 
 .asset-picker .asset-error {
-  color: var(--spectrum-negative-content-color-default);
+  color: var(--s2-red-900);
 }
 
 @media (width >= 650px) {

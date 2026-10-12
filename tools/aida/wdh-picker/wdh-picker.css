@@ -1,46 +1,29 @@
 /* stylelint-disable selector-class-pattern -- official Spectrum component names */
-.wdh-picker {
-  max-width: 1000px;
-  margin: auto;
-}
-
-.wdh-picker h1 {
-  font-size: 24px;
-}
-
-.wdh-picker #wdh-model {
-  min-width: 360px;
-  max-width: 100%;
-}
-
 .wdh-picker .wdh-table-scroll {
   overflow-x: auto;
 }
 
-.wdh-picker .spectrum-Table-cell:first-child {
-  min-width: 140px;
-}
-
 .wdh-picker th[scope="row"] {
   text-align: left;
+  font-weight: normal;
+  color: var(--s2-gray-700);
 }
 
 .wdh-picker .spectrum-Table-cell:nth-child(2) {
-  min-width: 180px;
   overflow-wrap: anywhere;
+}
+
+.wdh-picker .spectrum-Table-cell:last-child,
+.wdh-picker .spectrum-Table-headCell:last-child {
+  inline-size: 32px;
+  text-align: right;
 }
 
 .wdh-picker .wdh-display {
   display: block;
+  color: var(--s2-gray-900);
 }
 
 .wdh-picker .wdh-source {
-  margin-top: 8px;
-}
-
-.wdh-picker .spectrum-Button--iconOnly {
-  inline-size: 32px;
-  block-size: 32px;
-  padding: 0;
-  justify-content: center;
+  margin-top: var(--s2-spacing-75);
 }

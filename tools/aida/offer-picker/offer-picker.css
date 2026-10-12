@@ -5,15 +5,17 @@
 }
 
 .offer-item {
-  padding: 12px 0;
-  border-top: 1px solid var(--spectrum-gray-300);
+  padding: var(--s2-spacing-200) 0;
+  border-top: 1px solid var(--s2-gray-200);
 }
 
 .offer-item .offer-title {
-  margin: 0 0 4px;
-  font-weight: 700;
+  margin: 0 0 var(--s2-spacing-50);
+  color: var(--s2-gray-900);
+  font-weight: var(--s2-component-m-bold-font-weight);
 }
 
 .offer-item .offer-meta {
-  margin: 0 0 8px;
+  margin: 0 0 var(--s2-spacing-100);
+  color: var(--s2-gray-700);
 }

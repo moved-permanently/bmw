@@ -1,0 +1,287 @@
+/* stylelint-disable selector-class-pattern -- official Spectrum component names */
+
+/*
+ * Experience Workspace look for the library and prepare plugins: tokens, font and component
+ * sizes from the DA style guide (da.live/nx2/styles), density from the EW versions panel.
+ * Spectrum markup stays; this layer restyles it inside .aida-panel.
+ */
+body:has(> .aida-panel) {
+  background: var(--s2-gray-25);
+  color: var(--s2-gray-800);
+  font-family: var(--s2-font-family);
+  font-size: var(--s2-component-m-regular-font-size);
+  line-height: var(--s2-component-m-regular-line-height);
+}
+
+.aida-panel {
+  max-width: none;
+  margin: 0;
+  padding: var(--s2-spacing-200);
+  font-family: var(--s2-font-family);
+}
+
+.aida-panel h1 {
+  margin: 0 0 var(--s2-spacing-75);
+  color: var(--s2-gray-900);
+  font-size: var(--s2-component-l-bold-font-size);
+  font-weight: var(--s2-component-l-bold-font-weight);
+  line-height: var(--s2-component-l-bold-line-height);
+}
+
+.aida-panel h2 {
+  margin: var(--s2-spacing-300) 0 var(--s2-spacing-75);
+  color: var(--s2-gray-900);
+  font-size: var(--s2-component-m-bold-font-size);
+  font-weight: var(--s2-component-m-bold-font-weight);
+  line-height: var(--s2-component-m-bold-line-height);
+}
+
+.aida-panel .aida-muted,
+.aida-panel .asset-note {
+  margin: 0 0 var(--s2-spacing-200);
+  color: var(--s2-gray-600);
+  font-size: var(--s2-component-s-regular-font-size);
+  line-height: var(--s2-component-s-regular-line-height);
+}
+
+.aida-panel a {
+  color: var(--s2-blue-900);
+}
+
+.aida-panel .aida-error {
+  color: var(--s2-red-900);
+}
+
+.aida-panel .aida-note {
+  background: var(--s2-green-100);
+  border-radius: var(--s2-corner-radius-500);
+}
+
+/* field labels */
+.aida-panel .spectrum-FieldLabel,
+.aida-panel label:not(.spectrum-Checkbox) {
+  color: var(--s2-gray-700);
+  font-size: var(--s2-component-s-regular-font-size);
+  line-height: var(--s2-component-s-regular-line-height);
+}
+
+.aida-panel .spectrum-FieldLabel {
+  padding-bottom: var(--s2-spacing-75);
+}
+
+/* text fields and pickers: nx-input */
+.aida-panel .spectrum-Textfield {
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.aida-panel .spectrum-Textfield-input,
+.aida-panel .spectrum-Picker {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  height: 32px;
+  padding: 0 var(--s2-spacing-200);
+  border: 2px solid var(--s2-gray-300);
+  border-radius: var(--s2-corner-radius-500);
+  background-color: var(--s2-gray-25);
+  color: var(--s2-gray-900);
+  font-family: var(--s2-font-family);
+  font-size: var(--s2-component-m-regular-font-size);
+  line-height: var(--s2-component-m-regular-line-height);
+}
+
+.aida-panel textarea.spectrum-Textfield-input {
+  height: auto;
+  min-height: 64px;
+  padding: var(--s2-spacing-100) var(--s2-spacing-200);
+}
+
+.aida-panel .spectrum-Picker {
+  padding-right: 32px;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--s2-gray-700) 50%), linear-gradient(135deg, var(--s2-gray-700) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 50%, calc(100% - 12px) 50%;
+  background-size: 4px 4px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.aida-panel .spectrum-Textfield-input::placeholder {
+  color: var(--s2-gray-600);
+}
+
+.aida-panel .spectrum-Textfield-input:hover,
+.aida-panel .spectrum-Picker:hover {
+  border-color: var(--s2-gray-400);
+}
+
+.aida-panel .spectrum-Textfield-input:focus,
+.aida-panel .spectrum-Picker:focus {
+  border-color: var(--s2-gray-900);
+  outline: none;
+}
+
+.aida-panel .spectrum-Picker:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* buttons: nx-btn-accent and nx-action-btn */
+.aida-panel .spectrum-Button.spectrum-Button {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  height: 32px;
+  padding: 0 var(--s2-spacing-300);
+  border: none;
+  border-radius: var(--s2-corner-radius-800);
+  font-family: var(--s2-font-family);
+  font-size: var(--s2-component-m-bold-font-size);
+  font-weight: var(--s2-component-m-bold-font-weight);
+  transition: transform 0.125s ease-out, background-color 0.125s ease-out;
+}
+
+.aida-panel .spectrum-Button .spectrum-Button-label {
+  align-self: center;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: var(--s2-component-m-bold-line-height);
+}
+
+.aida-panel .spectrum-Button.spectrum-Button--accent {
+  background: var(--s2-blue-900);
+  color: var(--s2-gray-25);
+}
+
+.aida-panel .spectrum-Button.spectrum-Button--accent:hover:not(:disabled) {
+  background: var(--s2-blue-1000);
+}
+
+.aida-panel .spectrum-Button.spectrum-Button--secondary {
+  border-radius: var(--s2-corner-radius-400);
+  background: var(--s2-gray-100);
+  color: var(--s2-gray-800);
+  font-weight: var(--s2-component-m-medium-font-weight);
+}
+
+.aida-panel .spectrum-Button.spectrum-Button--secondary:hover:not(:disabled) {
+  background: var(--s2-gray-200);
+  color: var(--s2-gray-900);
+}
+
+.aida-panel .spectrum-Button.spectrum-Button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.aida-panel .spectrum-Button.spectrum-Button--iconOnly {
+  inline-size: 32px;
+  padding: 0;
+  justify-content: center;
+}
+
+.aida-panel .spectrum-Button.spectrum-Button:focus-visible,
+.aida-panel :focus-visible {
+  outline: 2px solid var(--s2-blue-800);
+  outline-offset: 2px;
+}
+
+.aida-panel .spectrum-Button.spectrum-Button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* badges: compact tags */
+.aida-panel .spectrum-Badge {
+  min-block-size: 0;
+  padding: var(--s2-spacing-50) var(--s2-spacing-100);
+  border-radius: var(--s2-corner-radius-300);
+  background: var(--s2-gray-100);
+  color: var(--s2-gray-800);
+  font-size: var(--s2-component-xs-medium-font-size);
+  line-height: var(--s2-component-xs-medium-line-height);
+}
+
+.aida-panel .spectrum-Badge .spectrum-Badge-label {
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.aida-panel .spectrum-Badge.spectrum-Badge--positive {
+  background: var(--s2-green-100);
+  color: var(--s2-green-1100);
+}
+
+.aida-panel .spectrum-Badge.spectrum-Badge--notice {
+  background: var(--s2-orange-100);
+  color: var(--s2-orange-1100);
+}
+
+.aida-panel .spectrum-Badge.spectrum-Badge--negative {
+  background: var(--s2-red-100);
+  color: var(--s2-red-1100);
+}
+
+/* tables: list rows like the versions panel */
+.aida-panel .spectrum-Table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: var(--s2-component-m-regular-font-size);
+}
+
+.aida-panel .spectrum-Table .spectrum-Table-headCell,
+.aida-panel .spectrum-Table .spectrum-Table-cell {
+  padding: var(--s2-spacing-100);
+  border: none;
+  border-block-end: 1px solid var(--s2-gray-200);
+  border-radius: 0;
+  background: transparent;
+  vertical-align: top;
+}
+
+.aida-panel .spectrum-Table .spectrum-Table-headCell {
+  color: var(--s2-gray-700);
+  font-size: var(--s2-component-s-regular-font-size);
+  font-weight: var(--s2-component-s-bold-font-weight);
+  line-height: var(--s2-component-s-regular-line-height);
+}
+
+.aida-panel .spectrum-Table .spectrum-Table-headCell:first-child,
+.aida-panel .spectrum-Table .spectrum-Table-cell:first-child {
+  padding-inline-start: 0;
+}
+
+.aida-panel .spectrum-Table .spectrum-Table-headCell:last-child,
+.aida-panel .spectrum-Table .spectrum-Table-cell:last-child {
+  padding-inline-end: 0;
+}
+
+.aida-panel .spectrum-Table-body .spectrum-Table-row:hover {
+  background: var(--s2-gray-75);
+}
+
+/* cards */
+.aida-panel .spectrum-Card {
+  border: 1px solid var(--s2-gray-200);
+  border-radius: var(--s2-corner-radius-500);
+  background: var(--s2-gray-25);
+  overflow: hidden;
+}
+
+.aida-panel .spectrum-Card:hover {
+  border-color: var(--s2-gray-400);
+}
+
+.aida-panel .spectrum-Card .spectrum-Card-body {
+  padding: var(--s2-spacing-100) var(--s2-spacing-200) var(--s2-spacing-200);
+}
+
+/* checkboxes */
+.aida-panel .spectrum-Checkbox .spectrum-Checkbox-label {
+  color: var(--s2-gray-800);
+  font-size: var(--s2-component-m-regular-font-size);
+}
