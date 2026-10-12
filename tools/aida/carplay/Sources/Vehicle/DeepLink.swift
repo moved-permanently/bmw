@@ -3,6 +3,7 @@ import Foundation
 enum DeepLink: Equatable {
     case vehicle(VehiclePatch)
     case refresh
+    case reset
     case tab(Int)
     case open(String)
 
@@ -22,6 +23,7 @@ enum DeepLink: Equatable {
             }
             return .vehicle(p)
         case "refresh": return .refresh
+        case "reset": return .reset
         case "tab": return q("index").flatMap(Int.init).map(DeepLink.tab)
         case "open": return q("path").map(DeepLink.open)
         default: return nil

@@ -15,6 +15,7 @@ final class DeepLinkTests: XCTestCase {
     }
     func testRefreshTabOpen() {
         XCTAssertEqual(parse("bmwcarplay://refresh"), .refresh)
+        XCTAssertEqual(parse("bmwcarplay://reset"), .reset)
         XCTAssertEqual(parse("bmwcarplay://tab?index=1"), .tab(1))
         XCTAssertEqual(parse("bmwcarplay://open?path=/aida/showcase/de/de/news/cannes"), .open("/aida/showcase/de/de/news/cannes"))
     }

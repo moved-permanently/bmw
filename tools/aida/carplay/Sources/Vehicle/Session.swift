@@ -71,6 +71,7 @@ final class Session: NSObject, ObservableObject, CLLocationManagerDelegate {
     func handle(_ link: DeepLink) {
         switch link {
         case let .vehicle(p): state.apply(p)
+        case .reset: reset()
         case .refresh, .tab, .open: onLink?(link)
         }
     }

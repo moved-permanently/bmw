@@ -42,14 +42,14 @@ final class CarTab {
             return
         }
         var sections: [CPListSection] = []
-        let hero = CPListItem(text: vm.headline ?? vm.title, detailText: vm.lead)
-        heroItem = hero
-        sections.append(CPListSection(items: [hero]))
         if let now = vm.rangeNow(soc: session.state.soc, locale: session.market.locale) {
             let item = CPListItem(text: now.value,
                                   detailText: L10n.t(.atCharge, lang, session.state.soc) + " · WLTP " + now.wltp)
             sections.append(CPListSection(items: [item], header: L10n.t(.rangeNow, lang), sectionIndexTitle: nil))
         }
+        let hero = CPListItem(text: vm.headline ?? vm.title, detailText: vm.lead)
+        heroItem = hero
+        sections.append(CPListSection(items: [hero]))
         var kpiItems = vm.kpis.map { CPListItem(text: $0.label, detailText: $0.value) }
         let all = CPListItem(text: L10n.t(.allValues, lang), detailText: nil)
         all.accessoryType = .disclosureIndicator

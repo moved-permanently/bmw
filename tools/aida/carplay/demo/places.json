@@ -1,0 +1,64 @@
+{
+  "total": 7,
+  "offset": 0,
+  "limit": 7,
+  "data": [
+    {
+      "name": "BMW Park",
+      "path": "/de/mehr-bmw/sport-und-events/bmw-basketball/bmw-park",
+      "lat": "48.126031",
+      "lon": "11.5253539",
+      "radiusKm": "10",
+      "note": "Demo-Datensatz"
+    },
+    {
+      "name": "BMW Open, MTTC Iphitos",
+      "path": "/de/mehr-bmw/sport-und-events/tennis",
+      "lat": "48.1845529",
+      "lon": "11.6148381",
+      "radiusKm": "10",
+      "note": "Demo-Datensatz"
+    },
+    {
+      "name": "BMW Golf Cup, Eichenried",
+      "path": "/de/topics/faszination-bmw/events/bmw-golfsport/golf-cup",
+      "lat": "48.2709359",
+      "lon": "11.7711523",
+      "radiusKm": "10",
+      "note": "Demo-Datensatz"
+    },
+    {
+      "name": "Chiemgau Arena, Ruhpolding",
+      "path": "/de/topics/faszination-bmw/events/wintersport/bmw-ibu-weltcup-biathlon",
+      "lat": "47.7150044",
+      "lon": "12.6478618",
+      "radiusKm": "25",
+      "note": "Demo-Datensatz"
+    },
+    {
+      "name": "VIP Experience, Veltins-Arena",
+      "path": "/de/topics/fascination-bmw/events/vip-experience",
+      "lat": "51.5545938",
+      "lon": "7.0676001",
+      "radiusKm": "15",
+      "note": "Demo-Datensatz"
+    },
+    {
+      "name": "BMW Berlin-Marathon",
+      "path": "/de/mehr-bmw/sport-und-events/laufsport",
+      "lat": "52.5163",
+      "lon": "13.3777",
+      "radiusKm": "15",
+      "note": "Demo-Datensatz"
+    },
+    {
+      "name": "Nürburgring",
+      "path": "/de/mehr-bmw/grosskunden-behoerden/businesskunden/businessclass/ausgabe1-2024/nuerburgring",
+      "lat": "50.35261",
+      "lon": "6.9830017",
+      "radiusKm": "25",
+      "note": "Demo-Datensatz"
+    }
+  ],
+  ":type": "sheet"
+}

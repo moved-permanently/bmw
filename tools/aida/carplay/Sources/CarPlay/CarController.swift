@@ -54,7 +54,7 @@ final class CarController {
             let ts = [places.template, car.template, news.template]
             if ts.indices.contains(i) { tabBar.select(ts[i]) }
         case let .open(path): Task { await car.open(path: path) }
-        case .vehicle: break
+        case .vehicle, .reset: break
         }
     }
 }
