@@ -1,0 +1,428 @@
+{
+  "metadata": {
+    "title": {
+      "text": "BMW Park"
+    },
+    "canonical": {
+      "href": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/bmw-basketball/bmw-park"
+    },
+    "meta": [
+      {
+        "tag": "description",
+        "text": "Der BMW Park: Der Hotspot für Basketball-Events und Fan-Erlebnisse. Entdecken Sie eine einzigartige Atmosphäre für Sportbegeisterte."
+      },
+      {
+        "tag": "og:title",
+        "text": "BMW Park"
+      },
+      {
+        "tag": "og:description",
+        "text": "Der BMW Park: Der Hotspot für Basketball-Events und Fan-Erlebnisse. Entdecken Sie eine einzigartige Atmosphäre für Sportbegeisterte."
+      },
+      {
+        "tag": "og:url",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/bmw-basketball/bmw-park"
+      },
+      {
+        "tag": "og:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/bmw-basketball/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "og:image:secure_url",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/bmw-basketball/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "twitter:card",
+        "text": "summary_large_image"
+      },
+      {
+        "tag": "twitter:title",
+        "text": "BMW Park"
+      },
+      {
+        "tag": "twitter:description",
+        "text": "Der BMW Park: Der Hotspot für Basketball-Events und Fan-Erlebnisse. Entdecken Sie eine einzigartige Atmosphäre für Sportbegeisterte."
+      },
+      {
+        "tag": "twitter:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/bmw-basketball/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "robots",
+        "text": "index,follow"
+      },
+      {
+        "tag": "header-style",
+        "text": "transparent"
+      },
+      {
+        "tag": "viewport",
+        "text": "width=device-width, initial-scale=1"
+      }
+    ],
+    "preconnect": {
+      "href": "https://bmw.scene7.com"
+    },
+    "script": {
+      "attrs": {
+        "nonce": "G5QCvmPwVGjP6qiP9hzdrF8Y",
+        "src": "/scripts/scripts.js",
+        "type": "module"
+      },
+      "text": ""
+    },
+    "stylesheet": {
+      "href": "/styles/styles.css"
+    }
+  },
+  "content": [
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "hero-teaser",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/BMW-Park:16to7",
+                        "text": "Image without alt text"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/BMW-Park:3to4",
+                        "text": "Image without alt text"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/BMW-Park:4to3",
+                        "text": "Image without alt text"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 1,
+                    "text": "WE PLAY. TOGETHER."
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "bottom"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "link-list",
+            "content": [
+              [
+                [
+                  {
+                    "type": "list",
+                    "ordered": false,
+                    "items": [
+                      {
+                        "type": "link",
+                        "href": "/de/mehr-bmw/sport-und-events/bmw-basketball",
+                        "text": "BMW Basketball"
+                      },
+                      {
+                        "type": "link",
+                        "href": "/de/mehr-bmw/sport-und-events/bmw-basketball/urban-culture",
+                        "text": "Mehr Subkultur"
+                      },
+                      {
+                        "type": "link",
+                        "href": "/de/mehr-bmw/sport-und-events/bmw-basketball/we-care",
+                        "text": "Mehr Gemeinwohl"
+                      },
+                      {
+                        "type": "link",
+                        "href": "/de/mehr-bmw/sport-und-events/bmw-basketball/innovation",
+                        "text": "Mehr Spielfreude"
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "horizontal",
+              "overflow"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "heading",
+            "level": 2,
+            "text": "Mehr BMW Park."
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Legendäre Sporthalle für legendäre Sportmomente: als Austragungsort für die Basketballwettkämpfe der Olympischen Spiele 1972 gebaut und später in Rudi-Sedlmayer-Sporthalle umbenannt, hat hier nicht nur Weltklasse-Sport stattgefunden."
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Herzstück der Arena ist natürlich der neue LED-Glassfloor, aber wir bieten den Fans auch rund um die Presenter Box viel Spielfreude abseits des Spielfelds: Zum Beispiel ein Selfie mit den Bayernstars in der virtuellen Fotobox. Oder das Zusammenstellen des Lieblings BMWs am Car Configurator. Dazu kommen Specials an ausgewählten Spieltagen oder digitale Highlights."
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Also: vorbeikommen und überraschen lassen!"
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "We Power Joy. Together."
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "carousel",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/20240920_FCBB-Chemnitz_X3234:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/20240920_FCBB-Chemnitz_X3348:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/20240920_FCBB-Chemnitz_X3461:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/20240920_FCBB-Chemnitz_X3447:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/20240920_FCBB-Chemnitz_X4580:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/20240920_FCBB-Chemnitz_X5080:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/20230929_FCBB-MBC_1460:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/240109_BMW_FCBB_2:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/240109_BMW_FCBB_399_2:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/240109_BMW_FCBB_607:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/20230929_FCBB-MBC_0305_1:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ]
+            ],
+            "options": [
+              "space-above-regular"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "heading",
+            "level": 2,
+            "text": "Die Presenter Box: Alles für ein einzigartiges Erlebnis."
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "columns",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/20230929_FCBB-MBC_1479:3to2",
+                        "text": "Image without alt text"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "heading",
+                    "level": 4,
+                    "text": "AR Photo Booth."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Lust auf ein Selfie mit Stars des FC Bayern Basketball? Augumented Reality macht es möglich: Im AR Photo Booth können Fans virtuell mit den Spielern posen und coole, lustige und einzigartige Fotos machen. Die Bilder können einfach auf das eigene Smartphone geladen – oder mit der Welt geteilt werden: auf Social Media, auf dem Videowürfel im BMW Park oder als Teil einer Kunst-Collage im Raum."
+                  }
+                ],
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/20230929_FCBB-MBC_1870:3to2",
+                        "text": "Image without alt text"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "heading",
+                    "level": 4,
+                    "text": "Specials."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Der Besuch eines Spiels im BMW Park ist etwas ganz Besonderes. Und damit es auch abseits des Spiels immer spannend ist, gibt es an ausgewählten Tagen rund um die Presenter Box kleine Specials für die Fans. Das kann zum Beispiel Popcorn für alle sein – oder etwas ganz anderes..."
+                  }
+                ],
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/240109_BMW_FCBB_409:3to2",
+                        "text": "Image without alt text"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "heading",
+                    "level": 4,
+                    "text": "BMW Car Configurator."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Einsteigen in den BMW der Träume: Hier können Fans sich ihren vollelektrischen BMW individuell konfigurieren – von der Lackierung bis zur Felge. Spielerisch und interaktiv."
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "layout-thirds",
+              "stack-md"
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+}

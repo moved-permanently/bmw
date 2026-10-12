@@ -1,0 +1,248 @@
+{
+  "metadata": {
+    "title": {
+      "text": "BMW Golf Cup International"
+    },
+    "canonical": {
+      "href": "https://main--bmw--moved-permanently.aem.page/de/topics/faszination-bmw/events/bmw-golfsport/golf-cup"
+    },
+    "meta": [
+      {
+        "tag": "description",
+        "text": "Der BMW Golf Cup: Das größte internationale Amateur-Golfturnier. Teilnehmen und unvergessliche Momente auf dem Grün erleben."
+      },
+      {
+        "tag": "og:title",
+        "text": "BMW Golf Cup International"
+      },
+      {
+        "tag": "og:description",
+        "text": "Der BMW Golf Cup: Das größte internationale Amateur-Golfturnier. Teilnehmen und unvergessliche Momente auf dem Grün erleben."
+      },
+      {
+        "tag": "og:url",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/topics/faszination-bmw/events/bmw-golfsport/golf-cup"
+      },
+      {
+        "tag": "og:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/topics/faszination-bmw/events/bmw-golfsport/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "og:image:secure_url",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/topics/faszination-bmw/events/bmw-golfsport/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "og:image:alt",
+        "text": "Image without alt text"
+      },
+      {
+        "tag": "twitter:card",
+        "text": "summary_large_image"
+      },
+      {
+        "tag": "twitter:title",
+        "text": "BMW Golf Cup International"
+      },
+      {
+        "tag": "twitter:description",
+        "text": "Der BMW Golf Cup: Das größte internationale Amateur-Golfturnier. Teilnehmen und unvergessliche Momente auf dem Grün erleben."
+      },
+      {
+        "tag": "twitter:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/topics/faszination-bmw/events/bmw-golfsport/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "robots",
+        "text": "index,follow"
+      },
+      {
+        "tag": "header-style",
+        "text": "transparent"
+      },
+      {
+        "tag": "viewport",
+        "text": "width=device-width, initial-scale=1"
+      }
+    ],
+    "preconnect": {
+      "href": "https://bmw.scene7.com"
+    },
+    "script": {
+      "attrs": {
+        "nonce": "kD6yrjypa83MEqsOMn9WUT/F",
+        "src": "/scripts/scripts.js",
+        "type": "module"
+      },
+      "text": ""
+    },
+    "stylesheet": {
+      "href": "/styles/styles.css"
+    }
+  },
+  "content": [
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "hero-teaser",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/GolfClubInt_HeroTeaser_1680x756:16to7",
+                        "text": "BMW Golf Cup International"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/GolfClubInt_HeroTeaser_1680x756:3to4",
+                        "text": "BMW Golf Cup International"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/GolfClubInt_HeroTeaser_1680x756:4to3",
+                        "text": "BMW Golf Cup International"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 1,
+                    "text": "BMW Golf Cup."
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "middle",
+              "text-width-five-twelfths",
+              "gradient-left"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "paragraph",
+            "text": "Er ist die größte internationale Turnierserie für Golfamateure und kann auf eine fast 40-jährige Geschichte zurückblicken. Der Ursprung liegt im Jahr 1982, beim BMW Invitation Tournament in England, aus dem sich dieser Wettbewerb der Superlative entwickelt hat."
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Ein Profi bei einem Major-Turnier zu sein – es gibt wohl kaum einen Golfbegeisterten, der sich noch nicht die Frage gestellt hat, wie sich das wohl anfühlt. Der BMW Golf Cup bietet Amateurgolferinnen und -golfern die Chance, genau dies zu erleben. Im Rahmen der weltweit überaus populären Turnierserie bringt BMW Golfer aus aller Welt zusammen und ermöglicht ihnen ein „Once-in-a-Lifetime“-Erlebnis. Am Ende des globalen Wettbewerbs steht das Weltfinale, eine unvergessliche Woche an einem Sehnsuchtsort wie Südafrika, Thailand, Argentinien, Singapur, Mexiko, Australien oder Dubai."
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "columns",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://www.bmw.de/de/topics/faszination-bmw/events/bmw-golfsport/golf-cup/_jcr_content/root/maincontent/contentblueprint_189/container_710465336/contentblueprint/contentblueprint_143/container/image.coreimg.jpeg/1740145019445/golfclubint-content01-980x521.jpeg",
+                    "text": "Image without alt text"
+                  }
+                ],
+                [
+                  {
+                    "type": "link",
+                    "href": "https://www.bmw.de/de/topics/faszination-bmw/events/bmw-golfsport/golf-cup/_jcr_content/root/maincontent/contentblueprint_189/container_710465336/contentblueprint/contentblueprint_143/container_copy_251020711/image.coreimg.jpeg/1740144994259/golfclubint-content03-980x521.jpeg",
+                    "text": "Image without alt text"
+                  }
+                ],
+                [
+                  {
+                    "type": "link",
+                    "href": "https://www.bmw.de/de/topics/faszination-bmw/events/bmw-golfsport/golf-cup/_jcr_content/root/maincontent/contentblueprint_189/container_710465336/contentblueprint/contentblueprint_143/container_copy_608914397/image.coreimg.jpeg/1740145015426/golfclubint-content02-980x521.jpeg",
+                    "text": "Image without alt text"
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "layout-thirds",
+              "stack-md",
+              "space-regular"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "paragraph",
+            "text": "In Deutschland können sich Amateurgolferinnen und -golfer in diesen vier Kategorien für das Weltfinale qualifizieren:"
+          }
+        ],
+        [
+          {
+            "type": "list",
+            "ordered": false,
+            "items": [
+              {
+                "type": "text",
+                "text": "Herren Klasse A (bis Vorgabe -12,4)"
+              },
+              {
+                "type": "text",
+                "text": "Herren Klasse B (Vorgabe -12,5 bis -28,4)"
+              },
+              {
+                "type": "text",
+                "text": "Damen (bis Vorgabe -28,4)"
+              },
+              {
+                "type": "text",
+                "text": "Sonderwertung C (gemischtgeschlechtlich, Vorgabe -28,5 bis -45,0), Teilnahme am Weltfinale außer Konkurrenz"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Seit mehr als 30 Jahren ist die Popularität des BMW Golf Cup in Deutschland ungebrochen. Dies liegt nicht zuletzt daran, dass die bereits von den BMW Handelsorganisationen sowie von BMW Deutschland organisierten Qualifikationsturniere jene Klasse und das besondere Ambiente haben, welche auch das Weltfinale zum einmaligen Erlebnis machen."
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "link",
+                "href": "https://www.bmw-golfsport.com/de/topics/turniere/bmw-golf-cup/deutschland.html",
+                "text": "Weitere Infos zum BMW Golf Cup Deutschland"
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+}

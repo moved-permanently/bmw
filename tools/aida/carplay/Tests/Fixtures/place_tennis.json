@@ -1,0 +1,309 @@
+{
+  "metadata": {
+    "title": {
+      "text": "BMW Open (ATP 500)"
+    },
+    "canonical": {
+      "href": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/tennis"
+    },
+    "meta": [
+      {
+        "tag": "description",
+        "text": "BMW und Tennis: Partnerschaften, Events und exklusive Einblicke in die Welt des Tennissports. Erleben Sie BMWs Engagement auf und neben dem Platz!"
+      },
+      {
+        "tag": "og:title",
+        "text": "BMW Open (ATP 500)"
+      },
+      {
+        "tag": "og:description",
+        "text": "BMW und Tennis: Partnerschaften, Events und exklusive Einblicke in die Welt des Tennissports. Erleben Sie BMWs Engagement auf und neben dem Platz!"
+      },
+      {
+        "tag": "og:url",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/tennis"
+      },
+      {
+        "tag": "og:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "og:image:secure_url",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "twitter:card",
+        "text": "summary_large_image"
+      },
+      {
+        "tag": "twitter:title",
+        "text": "BMW Open (ATP 500)"
+      },
+      {
+        "tag": "twitter:description",
+        "text": "BMW und Tennis: Partnerschaften, Events und exklusive Einblicke in die Welt des Tennissports. Erleben Sie BMWs Engagement auf und neben dem Platz!"
+      },
+      {
+        "tag": "twitter:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/mehr-bmw/sport-und-events/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "robots",
+        "text": "index,follow"
+      },
+      {
+        "tag": "header-style",
+        "text": "transparent"
+      },
+      {
+        "tag": "viewport",
+        "text": "width=device-width, initial-scale=1"
+      }
+    ],
+    "preconnect": {
+      "href": "https://bmw.scene7.com"
+    },
+    "script": {
+      "attrs": {
+        "nonce": "whJVSibiVNQZ2O6vWfn6xlEp",
+        "src": "/scripts/scripts.js",
+        "type": "module"
+      },
+      "text": ""
+    },
+    "stylesheet": {
+      "href": "/styles/styles.css"
+    }
+  },
+  "content": [
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "hero-teaser",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/P90547677-jan-lennard-struff:16to7",
+                        "text": "Image without alt text"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/P90547677-jan-lennard-struff:3to4",
+                        "text": "Image without alt text"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/P90547677-jan-lennard-struff:4to3",
+                        "text": "Image without alt text"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 1,
+                    "text": "BMW TENNISSPORT."
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "middle",
+              "text-width-seven-twelfths",
+              "gradient-left"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "heading",
+            "level": 2,
+            "text": "BMW Open (ATP 500)"
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Seit 38 Jahren engagiert sich BMW für Weltklasse-Tennis am Standort München im Rahmen der BMW Open, einem der beliebtesten ATP-Turniere weltweit. Seien Sie live dabei, wenn das erste deutsche ATP-Turnier des Jahres in München ausgetragen wird und internationale wie nationale Weltklassespieler um Weltranglistenpunkte, um ein Rekordpreisgeld und selbstverständlich um das „BMW Winner´s Car“ kämpfen. Mit Alexander Zverev (GER) und Holger Rune (DEN) stehen bereits zwei absolute Topstars fest, in deren Vita München einen besonderen Platz einnimmt. So konnten Olympiasieger Alexander Zverev 2017 und 2018 sowie der Däne Holger Rune 2022 und 2023 das Sandplatzturnier jeweils gewinnen. Neben Weltklasse-Tennis erwartet Sie ein abwechslungsreiches Unterhaltungsprogramm auch abseits der Courts. Das besondere, familienfreundliche Flair im MTTC Iphitos München, wird vom 12. bis zum 20. April wieder für viel Begeisterung sorgen."
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "em",
+                "content": [
+                  {
+                    "type": "link",
+                    "href": "https://www.bmwopen.de/",
+                    "text": "Mehr zu den BMW Open erfahren"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "media",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/Aftermovie_2024",
+                        "text": "Weekend Recap BMW BERLIN MARATHON 2023"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/content/BMW/Aftermovie_2024-AVS.m3u8",
+                        "text": "Weekend Recap BMW BERLIN MARATHON 2023"
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "loop",
+              "ratio-16-9"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "carousel",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/AH2_3814_Wewx2Ygt:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/AH3_1233_WPp2SBoD:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/SW2_4123:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/SW2_4774:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/SW2_5399:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/SW2_9731:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/BMW_Open_Center_Court:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/SW2_3934:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                []
+              ]
+            ],
+            "options": [
+              "space-above-regular"
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+}
