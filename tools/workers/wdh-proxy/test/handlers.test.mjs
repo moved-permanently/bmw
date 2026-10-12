@@ -23,13 +23,13 @@ function fakeElement(tagName, attrs) {
   };
 }
 
-test('link handler: <a> becomes <span class="wdh-value" data-wdh="{raw href}"> with no other attributes', () => {
+test('link handler: <a> becomes <span class="wdh-value"> without data-wdh or other attributes', () => {
   const el = fakeElement('a', {
-    href: '/aida/data/wdh-de.json#61HG.x&amp;y', title: 'WDH', target: '_blank', class: 'button', id: 'k',
+    href: '/aida/data/wdh-de.json#61HG.x&amp;y', title: 'WDH', target: '_blank', class: 'button', id: 'k', 'data-wdh': 'authored',
   });
   wdhLinkHandler.element(el);
   assert.equal(el.tagName, 'span');
-  assert.deepEqual([...el.map.entries()], [['class', 'wdh-value'], ['data-wdh', '/aida/data/wdh-de.json#61HG.x&amp;y']]);
+  assert.deepEqual([...el.map.entries()], [['class', 'wdh-value']]);
   assert.ok(!el.calls.some(([op]) => op === 'unwrap' || op === 'remove-element'), 'the link content must be kept');
 });
 

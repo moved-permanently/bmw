@@ -1,9 +1,9 @@
 /*
  * wdh-proxy tests: the real worker in workerd (Miniflare, real HTMLRewriter); the EDS origin is an
  * in-process stub (Miniflare outboundService), so no network is used.
- * Contract under test = scripts/scripts.js decorateWdhValues(main): every
+ * WDH links keep their text but drop source attributes: every
  * a[href*="/data/wdh-"][href*="#"] in <main> becomes
- * <span class="wdh-value" data-wdh="{href attribute}">{a.textContent}</span>.
+ * <span class="wdh-value">{a.textContent}</span>.
  */
 import {
   test, before, after, beforeEach,
@@ -31,9 +31,9 @@ const PAGE = '<!DOCTYPE html><html><head><title>BMW i5</title></head><body>'
 const PAGE_DECORATED = '<!DOCTYPE html><html><head><title>BMW i5</title></head><body>'
   + '<header><a href="/aida/data/wdh-de.json#61HG.head">header link</a></header>'
   + '<main><div>'
-  + '<p>Leistung: <span class="wdh-value" data-wdh="/aida/data/wdh-de.json#61HG.power">250 kW (340 PS)</span>.</p>'
-  + '<p><span class="wdh-value" data-wdh="/aida/data/wdh-de.json#61HG.x&amp;y">x &amp; y</span></p>'
-  + '<p><span class="wdh-value" data-wdh="https://other.example/aida/data/wdh-fr.json#61HG.range">513 km</span></p>'
+  + '<p>Leistung: <span class="wdh-value">250 kW (340 PS)</span>.</p>'
+  + '<p><span class="wdh-value">x &amp; y</span></p>'
+  + '<p><span class="wdh-value">513 km</span></p>'
   + '<p><a href="/aida/data/wdh-de.json">sheet</a> <a href="/de/home#top">home</a> '
   + '<a href="/data/wdh-notes.html">notes</a> <a href="#data/wdh-">frag</a> <a href="./i5.plain.html">rel</a></p>'
   + '</div></main>'
@@ -42,7 +42,7 @@ const PAGE_DECORATED = '<!DOCTYPE html><html><head><title>BMW i5</title></head><
 const FRAGMENT = '<div><p>Reichweite <a href="/aida/data/wdh-de.json#61HG.electricRange">513–627 km</a> '
   + 'und <a href="/de/home">home</a></p></div>';
 const FRAGMENT_DECORATED = '<div><p>Reichweite '
-  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#61HG.electricRange">513–627 km</span> '
+  + '<span class="wdh-value">513–627 km</span> '
   + 'und <a href="/de/home">home</a></p></div>';
 
 const WDH_LINK = '<a href="/aida/data/wdh-de.json#61HG.power">250 kW</a>';
@@ -51,29 +51,29 @@ const WDH_LINK = '<a href="/aida/data/wdh-de.json#61HG.power">250 kW</a>';
 const NESTED = '<html><body><main><p><a href="/aida/data/wdh-de.json#n1"><em>a<strong>b</strong></em> c<br>'
   + '<img src="/x.png" alt="x"><sub>2</sub><!-- c --> &lt;d&gt;</a></p></main></body></html>';
 const NESTED_DECORATED = '<html><body><main><p>'
-  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#n1">ab c2 &lt;d&gt;</span></p></main></body></html>';
+  + '<span class="wdh-value">ab c2 &lt;d&gt;</span></p></main></body></html>';
 
 // streamed in tiny chunks: splits inside the start tag, the attribute value, the entity and the
 // multi-byte characters (₂, –)
 const CHUNKED = '<html><body><main><p>CO₂: <a href="/aida/data/wdh-de.json#61HG.x&amp;y" title="t">0 g/km '
   + '– <strong>A</strong></a> und <a href="/de/home">home</a></p></main></body></html>';
 const CHUNKED_DECORATED = '<html><body><main><p>CO₂: '
-  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#61HG.x&amp;y">0 g/km – A</span> '
+  + '<span class="wdh-value">0 g/km – A</span> '
   + 'und <a href="/de/home">home</a></p></main></body></html>';
 
 // > 64 KB of link text: many text chunks inside one decorated link
 const LONG_TEXT = 'x'.repeat(70000);
 const LONG = `<html><body><main><a href="/aida/data/wdh-de.json#long">${LONG_TEXT}<b>B</b>${LONG_TEXT}</a></main></body></html>`;
-const LONG_DECORATED = '<html><body><main><span class="wdh-value" data-wdh="/aida/data/wdh-de.json#long">'
+const LONG_DECORATED = '<html><body><main><span class="wdh-value">'
   + `${LONG_TEXT}B${LONG_TEXT}</span></main></body></html>`;
 
 // HTML is case-insensitive and allows unquoted / single-quoted values; the browser matches them all
 const CASING = '<html><body><MAIN><p><A HREF="/aida/data/wdh-de.json#u" TITLE="t">upper</A> '
   + '<a href=/aida/data/wdh-de.json#unq>unquoted</a> <a href=\'/aida/data/wdh-de.json#sq\'>single</a></p></MAIN></body></html>';
 const CASING_DECORATED = '<html><body><MAIN><p>'
-  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#u">upper</span> '
-  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#unq">unquoted</span> '
-  + '<span class="wdh-value" data-wdh="/aida/data/wdh-de.json#sq">single</span></p></MAIN></body></html>';
+  + '<span class="wdh-value">upper</span> '
+  + '<span class="wdh-value">unquoted</span> '
+  + '<span class="wdh-value">single</span></p></MAIN></body></html>';
 
 /** Body that arrives in 1–7 byte chunks with a pause between them. */
 function trickle(text) {
@@ -162,7 +162,7 @@ before(() => { mf = worker({ ORIGIN_HOSTNAME: ORIGIN }); });
 after(async () => { await Promise.all(instances.map((i) => i.dispose())); });
 beforeEach(() => { calls = []; upstream = defaultUpstream; });
 
-test('HTML page: WDH value links in <main> become wdh-value spans exactly like decorateWdhValues', async () => {
+test('HTML page: WDH value links in <main> become wdh-value spans without data-wdh', async () => {
   const res = await get('/aida/de/de/i5');
   assert.equal(res.status, 200);
   assert.equal(await res.text(), PAGE_DECORATED);
@@ -224,7 +224,7 @@ test('non-HTML bodies (JSON, JS, CSS, Markdown, binary) pass through byte-for-by
 test('HTML error pages keep their status and are decorated', async () => {
   const res = await get('/missing');
   assert.equal(res.status, 404);
-  assert.equal(await res.text(), '<html><body><main><span class="wdh-value" data-wdh="/aida/data/wdh-de.json#61HG.power">250 kW</span></main></body></html>');
+  assert.equal(await res.text(), '<html><body><main><span class="wdh-value">250 kW</span></main></body></html>');
 });
 
 test('redirects pass through unfollowed; the visitor query is carried over like the origin does', async () => {
