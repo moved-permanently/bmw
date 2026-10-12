@@ -24,9 +24,11 @@ final class CarMapViewController: UIViewController, MKMapViewDelegate {
         map.overrideUserInterfaceStyle = .dark
         view.addSubview(map)
         marker.layer.cornerRadius = 11
-        marker.backgroundColor = UIColor(red: 0.2, green: 0.6, blue: 1, alpha: 1)
+        marker.backgroundColor = BMWStyle.blue
         marker.layer.borderColor = UIColor.white.cgColor
         marker.layer.borderWidth = 3
+        marker.layer.shadowColor = BMWStyle.blue.cgColor
+        marker.layer.shadowOpacity = 0.7; marker.layer.shadowRadius = 8; marker.layer.shadowOffset = .zero
         view.addSubview(marker)
         view.addSubview(panel)
         centre(animated: false)
@@ -38,7 +40,9 @@ final class CarMapViewController: UIViewController, MKMapViewDelegate {
         let free = view.safeAreaLayoutGuide.layoutFrame
         NSLog("BMWCarPlay car map bounds=%@ safe=%@", NSCoder.string(for: view.bounds), NSCoder.string(for: free))
         dot = MapLayout.dotPoint(safe: free, bounds: view.bounds)
-        panel.frame = MapLayout.panelFrame(safe: free, bounds: view.bounds)
+        var pf = MapLayout.panelFrame(safe: free, bounds: view.bounds)
+        pf.size.height = min(pf.height, PlacesPanelView.height(rows: max(panelRows.count, 1)))   // as tall as its rows
+        panel.frame = pf
         panel.set(title: L10n.t(.tabPlaces, session.language), rows: panelRows)
         map.frame = MapLayout.mapFrame(bounds: view.bounds, dot: dot)
         marker.center = dot
@@ -60,7 +64,7 @@ final class CarMapViewController: UIViewController, MKMapViewDelegate {
     func setPanel(_ rows: [PanelRow]) {
         panelRows = rows
         guard isViewLoaded else { return }
-        panel.set(title: L10n.t(.tabPlaces, session.language), rows: rows)
+        view.setNeedsLayout()
     }
 
     func zoom(by factor: Double) {
@@ -84,7 +88,7 @@ final class CarMapViewController: UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
         let v = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "place")
-        v.markerTintColor = UIColor(red: 0.11, green: 0.41, blue: 0.82, alpha: 1)
+        v.markerTintColor = BMWStyle.blue
         v.glyphImage = UIImage(systemName: "mappin")
         v.displayPriority = .required
         return v

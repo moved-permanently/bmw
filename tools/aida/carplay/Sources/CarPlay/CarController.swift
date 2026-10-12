@@ -8,10 +8,8 @@ final class CarController {
     let car: CarTab, places: PlacesTab, news: NewsTab
     let mapController: CarMapViewController
     private var mapTemplate: CPMapTemplate!
-    private var tabBar: CPTabBarTemplate!
     private var observer: NSObjectProtocol?
     private var lastKey = ""
-    private var tabOpen = false
 
     init(interface: CPInterfaceController, mapController: CarMapViewController) {
         self.interface = interface
@@ -23,14 +21,17 @@ final class CarController {
 
     func start() {
         NSLog("BMWCarPlay maximumTabCount=%d", CPTabBarTemplate.maximumTabCount)
-        tabBar = CPTabBarTemplate(templates: [places.template, car.template, news.template])
-        // Navigation apps start on the map template; the lists live in a tab bar one level up.
+        // Navigation apps start on the map template, and a tab bar cannot be pushed on top of it (it raises).
+        // The three lists are pushed one level above the map, from buttons in its navigation bar.
         mapTemplate = CPMapTemplate()
         mapTemplate.mapButtons = [
             CPMapButton { [weak self] _ in self?.mapController.zoom(by: 0.5) }.with(image: "plus"),
             CPMapButton { [weak self] _ in self?.mapController.zoom(by: 2) }.with(image: "minus"),
         ]
-        mapTemplate.leadingNavigationBarButtons = [CPBarButton(title: "BMW") { [weak self] _ in self?.openTabs(0) }]
+        // The bar and its buttons stay on screen: hidden by default, they only show after a tap on the map.
+        mapTemplate.automaticallyHidesNavigationBar = false
+        mapTemplate.hidesButtonsWithNavigationBar = false
+        refreshTitles()
         interface.setRootTemplate(mapTemplate, animated: false, completion: carplayLog)
         places.onRows = { [weak self] rows in self?.mapController.setPanel(rows) }
         session.onEnter = { [weak self] p in self?.places.alert(for: p) }
@@ -51,7 +52,7 @@ final class CarController {
     private func key() -> String { "\(session.market.folder)|\(session.state.language)" }
 
     private func vehicleChanged() {
-        if key() != lastKey { lastKey = key(); Task { await reloadAll() } } else { car.render() }
+        if key() != lastKey { lastKey = key(); refreshTitles(); Task { await reloadAll() } } else { car.render() }
     }
 
     func reloadAll() async {
@@ -61,23 +62,42 @@ final class CarController {
         session.skippedBlocks = car.skipped
     }
 
-    /// Shows the tab bar over the map, on tab `index`. A second call replaces what is on top.
-    func openTabs(_ index: Int) {
-        let ts = [places.template, car.template, news.template]
+    /// Bar buttons in the language of the car. Two on the leading side, one on the trailing side (two at most each).
+    func refreshTitles() {
+        let lang = session.language
+        mapTemplate.leadingNavigationBarButtons = [
+            CPBarButton(title: L10n.t(.tabPlaces, lang)) { [weak self] _ in self?.open(0) },
+            CPBarButton(title: L10n.t(.tabCar, lang)) { [weak self] _ in self?.open(1) },
+        ]
+        mapTemplate.trailingNavigationBarButtons = [
+            CPBarButton(title: L10n.t(.tabNews, lang)) { [weak self] _ in self?.open(2) },
+        ]
+    }
+
+    /// Pushes one list above the map. Back to the map first: the same instance cannot be pushed twice,
+    /// and a second push while one is showing would stack lists.
+    func open(_ index: Int) {
+        let ts: [CPTemplate] = [places.template, car.template, news.template]
+        if index < 0 { interface.popToRootTemplate(animated: true, completion: carplayLog); return }
         guard ts.indices.contains(index) else { return }
-        if tabOpen { tabBar.select(ts[index]); return }
-        tabOpen = true
-        interface.pushTemplate(tabBar, animated: true) { [weak self] ok, error in
-            carplayLog(ok, error)
-            if ok { self?.tabBar.select(ts[index]) } else { self?.tabOpen = false }
+        NSLog("BMWCarPlay open %d, stack %d", index, interface.templates.count)
+        let push = { [weak self] in
+            self?.interface.pushTemplate(ts[index], animated: true) { ok, err in NSLog("BMWCarPlay pushed %d ok=%d", index, ok ? 1 : 0); carplayLog(ok, err) }
         }
+        if interface.templates.count > 1 {
+            interface.popToRootTemplate(animated: false) { ok, error in
+                NSLog("BMWCarPlay popped ok=%d", ok ? 1 : 0)
+                if let error { NSLog("BMWCarPlay pop failed: %@", "\(error)") }
+                push()
+            }
+        } else { push() }
     }
 
     func handle(_ link: DeepLink) {
         switch link {
         case .refresh: Task { await reloadAll() }
         case let .tab(i):
-            openTabs(i)
+            open(i)
         case let .open(path): Task { await car.open(path: path) }
         case .vehicle, .reset: break
         }

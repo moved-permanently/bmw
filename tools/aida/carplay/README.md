@@ -65,3 +65,8 @@ The app declares `com.apple.developer.carplay-maps`, draws its own `MKMapView` i
 fixed spot (`MapLayout`). The Orte list is a normal list template behind the "BMW" button.
 The iOS 26.5 simulator runtime crashes on any `CPMapTemplate` (missing `vehicleSupportsDestinationSharing`); run this branch on
 the iOS 18.6 runtime (`xcodebuild -downloadPlatform iOS -buildVersion 18.6`). The deployment target is 18.0.
+
+### Driving the car screen from a shell (iOS 18)
+
+`simctl openurl bmwcarplay://…` asks "Open in BMW?" on the phone every time. Use Darwin notifications instead:
+`xcrun simctl spawn <udid> notifyutil -p com.adobe.aida.BMWCarPlay.tab0` (Orte), `.tab1` (Mein BMW), `.tab2` (News), `.map` (back to the map).

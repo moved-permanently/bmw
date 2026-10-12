@@ -21,4 +21,9 @@ class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
         controller?.stop()
         controller = nil
     }
+
+    /// iOS 18 delivers a bmwcarplay:// link to the scene on top, which is the car scene while it is showing.
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        for ctx in URLContexts { if let l = DeepLink.parse(ctx.url) { Session.shared.handle(l) } }
+    }
 }

@@ -8,7 +8,7 @@ enum MapLayout {
     /// edge of the safe area (where the system puts its map buttons), and in the middle of the screen vertically:
     /// the bars at the top come and go and must not move it.
     static func panelFrame(safe: CGRect, bounds: CGRect, panelShare: CGFloat = 0.4, top: CGFloat = 44, margin: CGFloat = 6) -> CGRect {
-        CGRect(x: safe.minX, y: top, width: safe.width * panelShare - margin, height: bounds.maxY - top - margin)
+        CGRect(x: safe.minX + margin, y: top, width: safe.width * panelShare - 2 * margin, height: bounds.maxY - top - margin)
     }
 
     static func dotPoint(safe: CGRect, bounds: CGRect, panelShare: CGFloat = 0.4) -> CGPoint {

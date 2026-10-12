@@ -55,7 +55,7 @@ final class PlacesTab {
         renderedKey = key
         onRows?(rows.map { r in
             let short = TextFit.shortPlaceName(r.row.name)
-            return PanelRow(title: short.title, subtitle: TextFit.placeSubtitle(distance: r.dist, extra: short.place ?? r.vm.headline, max: 26))
+            return PanelRow(title: short.title, distance: r.dist, detail: TextFit.trim(short.place ?? r.vm.headline, max: 16))
         })
         let items: [CPListItem] = rows.map { r in
             // Short name, then the distance first and the place (or the page headline).
