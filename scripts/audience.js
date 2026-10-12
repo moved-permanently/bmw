@@ -128,6 +128,7 @@ export function resolveAudience({
 export function applyAudience(main) {
   const sections = [...main.querySelectorAll('.section[data-audience]')];
   if (!sections.length) return null;
+  resolveMarkerDefaults(main);
   const resolution = resolveAudience();
   sections.forEach((section) => {
     section.hidden = section.dataset.audience.toLowerCase() !== resolution.audience;
@@ -135,4 +136,25 @@ export function applyAudience(main) {
   document.body.dataset.audience = resolution.audience;
   window.bmwAudience = resolution;
   return resolution;
+}
+
+const MARKER = /\{\{\s*generate\s*:[^}]*\}\}(?:\s*\{\{\s*default\s*:\s*([^}]*)\}\})?/gi;
+
+/**
+ * When no OF1 proxy is in front of the page (for example the plain aem.page host), the authored
+ * {{generate: ...}}{{default: ...}} markers are still in the text. Replace them with the authored
+ * default so a visitor never sees raw braces. No-op when the proxy already resolved them.
+ * @param {Element} root
+ */
+export function resolveMarkerDefaults(root) {
+  if (!root.textContent.includes('{{')) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) {
+    if (walker.currentNode.nodeValue.includes('{{')) nodes.push(walker.currentNode);
+  }
+  nodes.forEach((node) => {
+    node.nodeValue = node.nodeValue.replace(MARKER, (m, def) => (def || '').trim());
+  });
+  root.querySelectorAll('[id^="generate-"]').forEach((n) => n.removeAttribute('id'));
 }
