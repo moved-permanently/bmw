@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>One story, two experiences</title>
+    <link rel="stylesheet" href="./phone-story.css">
+    <script src="./phone-story.js" type="module"></script>
+  </head>
+  <body>
+    <main class="phone-story">
+      <header class="masthead">
+        <a class="brand" href="../showcase/index.html"><img src="../showcase/adobe-logo.svg" width="99" height="24" alt="Adobe"><span aria-hidden="true">×</span><img src="../showcase/bmw-logo.svg" width="38" height="38" alt="BMW"></a>
+        <span class="app-label">Content delivery / independent app</span>
+        <button id="reset" class="quiet-button" type="button">Reset this demo</button>
+      </header>
+      <div class="layout">
+        <section class="walkthrough" aria-labelledby="app-title">
+          <p class="eyebrow">Author once. Read differently.</p>
+          <h1 id="app-title">One story.<br>Two experiences.</h1>
+          <p class="lead">An AEM news page and a separate phone design. Both use the same authored story, image and vehicle facts.</p>
+          <nav class="steps" aria-label="Demo steps">
+            <a href="#source" data-step="source">1 <span>The source</span></a>
+            <a href="#app" data-step="app">2 <span>The app</span></a>
+            <a href="#edit" data-step="edit">3 <span>Make a change</span></a>
+            <a href="#refresh" data-step="refresh">4 <span>See it here</span></a>
+            <a href="#architecture" data-step="architecture">5 <span>How it works</span></a>
+          </nav>
+          <article class="step-card" aria-live="polite">
+            <p id="step-number" class="eyebrow"></p>
+            <h2 id="step-title"></h2>
+            <p id="step-copy"></p>
+            <ol id="step-instructions"></ol>
+            <div class="source-actions">
+              <a id="editor-link" target="_blank" rel="noopener noreferrer">Edit the source ↗</a>
+              <a id="website-link" target="_blank" rel="noopener noreferrer">Open the website ↗</a>
+            </div>
+            <p class="presenter-note" id="step-note"></p>
+          </article>
+          <div class="step-controls"><button id="previous" class="quiet-button" type="button">Previous</button><button id="next" type="button">Next: the app</button></div>
+          <details class="source-details">
+            <summary>Inspect the delivered content</summary>
+            <p>The app reads these public preview formats. It does not read the editor's unsaved draft.</p>
+            <a id="markdown-link" target="_blank" rel="noopener noreferrer">Markdown ↗</a>
+            <a id="fragment-link" target="_blank" rel="noopener noreferrer">HTML fragment ↗</a>
+            <code>/aida/showcase/en/news/i5-film-v2</code>
+          </details>
+        </section>
+        <section class="experience" aria-label="Independent phone experience">
+          <div class="phone">
+            <div class="phone-top"><span class="curve">CURVE<span>.</span></span><span class="edition">Electric / Journal</span></div>
+            <div class="phone-scroll">
+              <article id="story" hidden>
+                <figure class="hero"><img id="story-image" alt="" referrerpolicy="no-referrer"><figcaption id="image-note" hidden>Authored image unavailable</figcaption></figure>
+                <div class="story-copy">
+                  <div class="story-heading"><span class="eyebrow">BMW / News</span><span id="changed" hidden>Content updated</span></div>
+                  <h2 id="story-title"></h2>
+                  <p id="story-teaser" class="teaser"></p>
+                  <div class="fact-panel"><p class="fact-heading">At a glance <span>WDH reference</span></p><dl id="facts"></dl></div>
+                  <p id="legal" class="legal" hidden></p>
+                  <a id="read-story" class="read-source" target="_blank" rel="noopener noreferrer">Read the original story ↗</a>
+                </div>
+              </article>
+              <div id="empty" class="empty"><span class="empty-mark" aria-hidden="true">C.</span><p class="eyebrow">Independent reading</p><h2>A story,<br>ready to arrive.</h2><p>Click Refresh content to read the BMW story from AEM preview.</p></div>
+            </div>
+            <div class="phone-bottom"><span>Independent reading</span><span>01 / NEWS</span></div>
+          </div>
+          <div class="refresh-panel">
+            <button id="refresh" type="button"><span>Refresh content</span></button>
+            <p id="status" class="status" role="status" aria-live="polite">Not fetched · Refresh to load</p>
+            <p id="last-fetched" class="last-fetched"></p>
+            <p id="fetch-error" class="fetch-error" hidden></p>
+            <div id="change-summary" class="change-summary" hidden><h3>What changed since the last refresh</h3><ul id="changes"></ul></div>
+          </div>
+        </section>
+      </div>
+      <footer class="page-footer"><p>Public demonstration content. CURVE is a custom reading experience, not the My BMW App.</p><p>This app does not publish or edit content. Updates appear after Preview and an explicit refresh; there is no background synchronization.</p></footer>
+    </main>
+  </body>
+</html>
