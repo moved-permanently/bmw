@@ -9,6 +9,7 @@ final class PlacesTab {
     private var models: [String: PlaceViewModel] = [:]   // by path
     private var images: [String: UIImage] = [:]
     private var renderedAt: (lat: Double, lon: Double)?
+    private var renderedOrder: [String] = []
 
     init(interface: CPInterfaceController) {
         self.interface = interface
@@ -37,14 +38,18 @@ final class PlacesTab {
         await MainActor.run { render() }
     }
 
-    /// Called when the car moves: re-sort and refresh the distances once it has moved about 1 km.
+    /// Called when the car moves. Setting the points of interest resets the map's location tracking,
+    /// so refresh only when the order changes or the car has moved about 5 km.
     func moved() {
-        if let r = renderedAt, Geo.distanceKm(lat1: r.lat, lon1: r.lon, lat2: session.lat, lon2: session.lon) < 1 { return }
-        render()
+        guard let r = renderedAt else { return }
+        let now = Geo.sorted(session.places, lat: session.lat, lon: session.lon).map(\.path)
+        let moved = Geo.distanceKm(lat1: r.lat, lon1: r.lon, lat2: session.lat, lon2: session.lon)
+        if now != renderedOrder || moved >= 5 { render() }
     }
 
     func render() {
         renderedAt = (session.lat, session.lon)
+        renderedOrder = Geo.sorted(session.places, lat: session.lat, lon: session.lon).map(\.path)
         let lang = session.language
         template.tabTitle = L10n.t(.tabPlaces, lang)
         let sorted = Geo.sorted(session.places, lat: session.lat, lon: session.lon)
