@@ -40,16 +40,17 @@ test('local layout styles do not redraw Spectrum inputs or buttons with custom b
   assert.doesNotMatch(picker, /\.asset-picker input\[type="search"\],/);
 });
 
-test('native radar has actionable navigation, a timestamp disclaimer and no HTML interpolation', async () => {
+test('native radar keeps app navigation and page actions without explanatory copy', async () => {
   const html = await read('radar/radar.html');
   const js = await read('radar/radar.js');
-  assert.match(html, /href="\/tools\/aida\/showcase\/index\.html"/);
+  assert.doesNotMatch(html, /showcase|governance/i);
   assert.match(html, /href="https:\/\/ewdemo--da-live--adobe\.aem\.live\/apps\/loc#\/moved-permanently\/bmw"/);
-  assert.match(html, /href="\/governance"/);
+  assert.match(html, /\/apps\/snapshots#/);
   assert.doesNotMatch(html, /#workflow/);
   assert.match(html, /publish-requests-inbox/);
-  assert.match(html, /timestamps[^<]*recency/i);
-  assert.match(html, /review[^<]*publish requests/i);
+  assert.doesNotMatch(html, /radar-disclaimer|Edit timestamps show/);
+  assert.doesNotMatch(js, /source pages ×|open comment threads|WDH badges identify|createCaption|integrated showcase/i);
+  assert.match(js, /status\.hidden = true/);
   assert.match(js, /publish-workflow-requests\.json/);
   assert.match(js, /\.da\/comments\//);
   assert.match(js, /spectrum-Table/);
