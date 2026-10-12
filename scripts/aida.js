@@ -89,7 +89,7 @@ export async function checkWdhValues(session, editor) {
   panel.className = 'wdh-check';
   panel.innerHTML = `<button type="button" class="wdh-check-reload" aria-label="Check again" title="Check again">${RELOAD_ICON}</button>
     <button type="button" class="wdh-check-close" aria-label="Close">×</button>
-    <p class="wdh-check-title">WDH check · preview only</p>
+    <p class="wdh-check-title">WDH check</p>
     <div class="wdh-check-body"></div>`;
   const body = panel.querySelector('.wdh-check-body');
   const note = (text) => {

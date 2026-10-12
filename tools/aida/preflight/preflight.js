@@ -66,10 +66,6 @@ function render(main, state, onSync) {
   head.className = 'aida-muted';
   head.textContent = `${state.path} · market ${state.market.toUpperCase()}${state.page?.fallback ? ` (no WDH export for ${state.page.locale})` : ''} · ${failed ? `${failed} of ${results.length} checks need attention` : 'all local checks passed'}`;
   main.append(head);
-  const limitation = document.createElement('p');
-  limitation.className = 'aida-muted';
-  limitation.textContent = 'Deterministic content checks only — not editorial approval, legal sign-off or release evidence.';
-  main.append(limitation);
 
   results.forEach((r) => {
     const item = document.createElement('section');
