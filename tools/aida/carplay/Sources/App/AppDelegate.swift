@@ -8,11 +8,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// com.adobe.aida.BMWCarPlay.tab0` (tab1, tab2) opens a list on the car, `.map` goes back to the map.
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        for (name, index) in [("tab0", 0), ("tab1", 1), ("tab2", 2), ("map", -1)] {
+        for (name, index) in [("tab0", 0), ("tab1", 1), ("tab2", 2), ("map", -1), ("news0", 10), ("news1", 11), ("news2", 12), ("news3", 13)] {
             let full = "com.adobe.aida.BMWCarPlay.\(name)" as CFString
             CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), nil, { _, _, name, _, _ in
                 let n = (name?.rawValue as String?) ?? ""
-                let i = n.hasSuffix(".map") ? -1 : Int(n.suffix(1)) ?? -1
+                let i = n.hasSuffix(".map") ? -1 : n.contains(".news") ? 10 + (Int(n.suffix(1)) ?? 0) : Int(n.suffix(1)) ?? -1
                 DispatchQueue.main.async { Session.shared.handle(.tab(i)) }
             }, full, nil, .deliverImmediately)
             _ = index

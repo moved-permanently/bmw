@@ -69,4 +69,4 @@ the iOS 18.6 runtime (`xcodebuild -downloadPlatform iOS -buildVersion 18.6`). Th
 ### Driving the car screen from a shell (iOS 18)
 
 `simctl openurl bmwcarplay://…` asks "Open in BMW?" on the phone every time. Use Darwin notifications instead:
-`xcrun simctl spawn <udid> notifyutil -p com.adobe.aida.BMWCarPlay.tab0` (Orte), `.tab1` (Mein BMW), `.tab2` (News), `.map` (back to the map).
+`xcrun simctl spawn <udid> notifyutil -p com.adobe.aida.BMWCarPlay.tab0` (Orte), `.tab1` (Mein BMW), `.tab2` (News), `.news0`–`.news3` (article n), `.map` (back to the map).

@@ -14,6 +14,11 @@ final class NewsTab {
         template.trailingNavigationBarButtons = [CPBarButton(title: "↻") { _ in Session.shared.handle(.refresh) }]
     }
 
+    /// For scripts: opens article number `index`.
+    func open(at index: Int) async {
+        if let rows = try? await session.client.newsIndex(market: session.market), rows.indices.contains(index) { await openArticle(rows[index]) }
+    }
+
     func reload() async {
         let lang = session.language
         await MainActor.run { template.tabTitle = L10n.t(.tabNews, lang) }
@@ -40,9 +45,12 @@ final class NewsTab {
         guard let page = try? await session.client.page(path: row.path) else { return }
         let a = ArticleViewModel(page: page)
         let lang = session.language, tag = session.market.speechTag
-        var items: [CPInformationItem] = []
-        if !a.teaser.isEmpty { items.append(CPInformationItem(title: nil, detail: String(a.teaser.prefix(300)))) }
-        items += a.pairs.prefix(8).map { CPInformationItem(title: $0.label, detail: $0.value) }
+        // The system shows two lines of an item and cuts the rest, so the text goes in as several short items.
+        // The text comes first; the key/value facts (three at most) take the last items of the 10.
+        let facts: [CPInformationItem] = a.pairs.prefix(3).map { CPInformationItem(title: $0.label, detail: $0.value) }
+        let text = a.body.isEmpty ? a.teaser : a.body
+        var items = TextFit.chunks(text, size: TextBudget.infoLine, limit: text.isEmpty ? 0 : 10 - facts.count).map { CPInformationItem(title: nil, detail: $0) }
+        items += facts
         let actions = [
             CPTextButton(title: L10n.t(.read, lang), textStyle: .confirm) { _ in Speech.shared.speak(a.speechText, language: tag) },
             CPTextButton(title: L10n.t(.stop, lang), textStyle: .normal) { _ in Speech.shared.stop() },

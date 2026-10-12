@@ -81,6 +81,8 @@ struct ArticleViewModel {
     var teaser: String
     var pairs: [(label: String, value: String)]
     var speechText: String
+    /// Running text of the page without the title and the key/value list, for the article screen.
+    var body: String
 
     init(page: Page) {
         let hn = heroNodes(heroBlock(page)).flatMap(\.descendants)
@@ -95,15 +97,17 @@ struct ArticleViewModel {
         } }
         pairs = p.map { (label: $0.0, value: $0.1) }
         var parts = [title]
+        var prose: [String] = []
         for n in top {
             switch n {
-            case let .paragraph(c): parts.append(c.map(\.plainText).joined())
+            case let .paragraph(c): let t = c.map(\.plainText).joined(); parts.append(t); prose.append(t)
             case let .heading(_, t): parts.append(t)
             case let .list(_, items): parts += items.map { $0.flatMap(\.flat).map(\.plainText).joined(separator: ": ") }
             default: break
             }
         }
         speechText = parts.filter { !$0.isEmpty }.joined(separator: "\n")
+        body = prose.filter { !$0.isEmpty }.joined(separator: " ")
     }
 }
 

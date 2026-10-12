@@ -76,11 +76,11 @@ final class PlacesTab {
     /// Long text goes into an information template: it wraps, a list row would cut it.
     private func showPage(_ vm: PlaceViewModel, distance: String) {
         let lang = session.language
-        var items = [CPInformationItem(title: L10n.t(.away, lang, distance) + " · " + vm.headline, detail: TextFit.trim(vm.lead, max: TextBudget.infoItem))]
-        for line in vm.speechText.split(separator: "\n").dropFirst() where items.count < 5 {
-            let text = TextFit.trim(String(line), max: TextBudget.infoItem)
-            if text != items[0].detail, text != vm.lead { items.append(CPInformationItem(title: nil, detail: text)) }
-        }
+        // The system shows two lines of an item and cuts the rest: distance and headline first, the text as short items.
+        var items = [CPInformationItem(title: L10n.t(.away, lang, distance), detail: vm.headline)]
+        let text = vm.speechText.split(separator: "\n").dropFirst().map(String.init).joined(separator: " ")
+        items += TextFit.chunks(text.isEmpty ? vm.lead : text, size: TextBudget.infoLine, limit: 10 - items.count)
+            .map { CPInformationItem(title: nil, detail: $0) }
         let actions = [
             CPTextButton(title: L10n.t(.read, lang), textStyle: .confirm) { [weak self] _ in self?.speak(vm) },
             CPTextButton(title: L10n.t(.stop, lang), textStyle: .normal) { _ in Speech.shared.stop() },

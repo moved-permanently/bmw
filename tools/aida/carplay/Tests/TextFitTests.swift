@@ -92,4 +92,21 @@ final class TextFitTests: XCTestCase {
             XCTAssertTrue(sub.hasPrefix(d), name)
         }
     }
+
+    func testChunksCutAtWordsAndFitTheSize() {
+        let text = "Eine gemeinsame Cannes-Geschichte für die BMW-Briefing-Demo. Dieser redaktionelle Demo-Datensatz zeigt wie Text auf dem Fahrzeugdisplay umbricht."
+        let c = TextFit.chunks(text, size: 40, limit: 10)
+        XCTAssertTrue(c.allSatisfy { $0.count <= 40 }, "\(c)")
+        XCTAssertEqual(c.joined(separator: " "), text)
+    }
+    func testChunksEndInEllipsisWhenCutByTheLimit() {
+        let text = String(repeating: "wort ", count: 60)
+        let c = TextFit.chunks(text, size: 30, limit: 3)
+        XCTAssertEqual(c.count, 3)
+        XCTAssertTrue(c.last!.hasSuffix("…"))
+        XCTAssertTrue(c.allSatisfy { $0.count <= 30 })
+    }
+    func testShortTextIsOneChunkWithoutEllipsis() {
+        XCTAssertEqual(TextFit.chunks("Kurzer Text", size: 40, limit: 5), ["Kurzer Text"])
+    }
 }

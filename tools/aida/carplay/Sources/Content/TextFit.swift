@@ -16,6 +16,8 @@ enum TextBudget {
     /// Detail card and push pages have more room and wrap.
     static let poiCardSummary = 120
     static let infoItem = 220
+    /// Characters per line on an information page (about 46 at 800 px); an item shows two lines.
+    static let infoLine = 84
 }
 
 enum TextFit {
@@ -77,5 +79,30 @@ enum TextFit {
         guard let extra, room >= 4 else { return distance }
         let t = trim(extra, max: room)
         return t.isEmpty ? distance : distance + sep + t
+    }
+
+    /// Splits running text into pieces of at most `size` characters, cut at word boundaries, at most `limit` pieces.
+    /// The last piece ends in "…" when text is left over. CarPlay shows two lines of an information item and then
+    /// cuts, so several short items read as one text where one long item loses most of it.
+    static func chunks(_ text: String, size: Int, limit: Int) -> [String] {
+        let words = text.split(whereSeparator: { $0.isWhitespace }).map(String.init)
+        var out: [String] = [], cur = ""
+        var i = 0
+        while i < words.count {
+            let w = words[i]
+            if cur.isEmpty { cur = w; i += 1; continue }
+            if cur.count + 1 + w.count <= size { cur += " " + w; i += 1 } else {
+                out.append(cur); cur = ""
+                if out.count == limit { break }
+            }
+        }
+        if out.count < limit, !cur.isEmpty { out.append(cur); cur = "" }
+        if i < words.count || !cur.isEmpty, !out.isEmpty {
+            // Text is left over: the last piece ends in an ellipsis.
+            var last = out.removeLast()
+            if last.count >= size { last = String(last.prefix(size - 1)) }
+            out.append(last.trimmingCharacters(in: .whitespaces) + "…")
+        }
+        return out
     }
 }

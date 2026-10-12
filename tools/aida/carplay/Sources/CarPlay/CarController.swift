@@ -78,6 +78,7 @@ final class CarController {
     /// and a second push while one is showing would stack lists.
     func open(_ index: Int) {
         let ts: [CPTemplate] = [places.template, car.template, news.template]
+        if index >= 10 { Task { await news.open(at: index - 10) }; return }   // script hook: news article number n
         if index < 0 { interface.popToRootTemplate(animated: true, completion: carplayLog); return }
         guard ts.indices.contains(index) else { return }
         NSLog("BMWCarPlay open %d, stack %d", index, interface.templates.count)
