@@ -34,7 +34,8 @@ test('architecture explains language reuse, market ownership and the limits of t
   assert.match(copy, /French.*France.*Belgium/i);
   assert.match(copy, /local.*(introduction|CTA|call to action)/i);
   assert.match(copy, /Austria.*German.*Belgium.*French.*data/i);
-  assert.match(copy, /four markets.*64.*planning/i);
+  assert.match(copy, /four markets/i);
+  assert.doesNotMatch(copy, /64|planning slots|walkthrough/i);
   assert.match(copy, /brands.*separate.*sites/i);
 });
 
@@ -54,9 +55,9 @@ test('architecture names working connections and says what still needs connectin
   assert.match(copy, /WDH.*supplied exports.*live.*connection/i);
   assert.match(copy, /OTMM.*not connected/i);
   assert.match(copy, /Salesforce.*not connected/i);
-  assert.match(copy, /translation.*prepared.*text/i);
-  assert.match(copy, /saved locally in your browser/i);
-  assert.match(copy, /do not change.*linked pages/i);
+  assert.match(copy, /Translate app/);
+  assert.match(copy, /market review.*legal review/i);
+  assert.doesNotMatch(copy, /prepared (German|text)|saved locally|in your browser|sample values|walkthrough/i);
 });
 
 test('architecture replaces raw contracts with prose and is used by the architecture route', () => {

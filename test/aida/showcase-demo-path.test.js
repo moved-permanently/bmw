@@ -14,7 +14,7 @@ const BANNED = /edge delivery|rehears|fixture|synthetic|substitut|simulat|\bfake
 const BANNED_CASE = /\bEDS\b|\bDA\b/;
 const visible = [
   'tools/aida/showcase/index.html', 'tools/aida/showcase/app.js', 'tools/aida/showcase/view.js',
-  'tools/aida/showcase/model.js', 'tools/aida/showcase/connectors.js', 'tools/aida/showcase/script.js',
+  'tools/aida/showcase/connectors.js', 'tools/aida/showcase/script.js',
   'tools/aida/radar/radar.html', 'tools/aida/radar/radar.js',
   'tools/aida/preflight/preflight.html', 'tools/aida/preflight/preflight.js',
   'tools/aida/wdh-picker/wdh-picker.html', 'tools/aida/wdh-picker/wdh-picker.js',
@@ -46,7 +46,7 @@ test('the chapters tell the full RfP story of Briefings I and III', () => {
 
 test('show links open known BMW demo surfaces or a tab of this app', () => {
   const editor = new URL(DA_EDITOR).host;
-  const hosts = [editor, 'main--bmw--moved-permanently.aem.page', 'main--bmw--moved-permanently.aem.live', 'da-sc.adobeaem.workers.dev'];
+  const hosts = [editor, 'main--bmw--moved-permanently.aem.page', 'main--bmw--moved-permanently.aem.live', 'da-sc.adobeaem.workers.dev', 'www.aem.live'];
   const ids = view.tabs.map(([id]) => id);
   chapters.flatMap((c) => c.show).forEach(({ label, href }) => {
     assert.ok(label, href);
@@ -119,10 +119,8 @@ test('nothing BMW sees uses internal codenames or rehearsal jargon', () => {
 });
 
 test('the demo path shows Experience Workspace itself, not the click-through workflow tabs', () => {
-  const workflow = ['quality', 'review', 'translate', 'rollout', 'status', 'release'];
-  const links = chapters.filter((c) => workflow.includes(c.id))
-    .flatMap((c) => c.show.map((s) => ({ id: c.id, href: s.href })));
-  links.forEach(({ id, href }) => assert.doesNotMatch(href, /^#(workflow|translate|rollout|radar)\b/, `${id}: ${href}`));
+  const links = chapters.flatMap((c) => c.show.map((s) => ({ id: c.id, href: s.href })));
+  links.forEach(({ id, href }) => assert.doesNotMatch(href, /^#(overview|workflow|translate|rollout|radar)\b/, `${id}: ${href}`));
   const of = (id) => chapters.find((c) => c.id === id).show.map((s) => s.href);
   assert.ok(of('review').includes(`${DA_EDITOR}/canvas#/moved-permanently/bmw/aida/showcase/en/news/i5-launch`));
   assert.ok(of('review').includes(`${DA_EDITOR}/apps/snapshots#/moved-permanently/bmw`));
@@ -130,4 +128,10 @@ test('the demo path shows Experience Workspace itself, not the click-through wor
   assert.ok(of('rollout').some((h) => h.includes('/app/adobe-rnd/aem-apps/tools/apps/publish-requests-inbox/publish-requests-inbox?org=moved-permanently&site=bmw')));
   assert.ok(of('status').some((h) => h.includes('/tools/aida/radar/radar')));
   assert.ok(of('status').includes(`${DA_EDITOR}/#/moved-permanently/bmw/aida/showcase/fr/be/news`));
+});
+
+test('insights point to AEM operational telemetry and show no sample numbers', () => {
+  const insights = chapters.find((c) => c.id === 'insights');
+  assert.ok(insights.show.some((s) => s.href === 'https://www.aem.live/docs/operational-telemetry'));
+  assert.doesNotMatch(insights.tell.join(' '), /sample/i);
 });

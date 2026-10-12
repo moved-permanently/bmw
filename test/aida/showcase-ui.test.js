@@ -2,7 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import * as view from '../../tools/aida/showcase/view.js';
-import { createDemo } from '../../tools/aida/showcase/model.js';
 import { DA_EDITOR } from '../../tools/aida/editor.js';
 
 const { escape, links, tabs } = view;
@@ -10,7 +9,7 @@ const { escape, links, tabs } = view;
 const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), 'utf8');
 
 test('showcase has one coherent route for every RfP demo activity', () => {
-  assert.deepEqual(tabs.map(([id]) => id), ['path', 'overview', 'workflow', 'translate', 'rollout', 'radar', 'architecture', 'assets', 'delivery']);
+  assert.deepEqual(tabs.map(([id]) => id), ['path', 'architecture', 'assets', 'delivery']);
 });
 
 test('public links connect DA authoring, preview, live and open representations', () => {
@@ -63,42 +62,19 @@ test('showcase header carries the real Adobe and BMW logos instead of a text sta
   assert.match(bmwSvg, /viewBox="0 0 340\.16 340\.16"/);
 });
 
-test('playground persists only its own versioned rehearsal state and never publishes implicitly', () => {
+test('the showcase keeps no click-through workflow of its own and never publishes', () => {
   const app = read('tools/aida/showcase/app.js');
-  assert.match(app, /bmw-aida-showcase-v4/);
-  assert.doesNotMatch(app, /localStorage\.clear\(/);
-  assert.doesNotMatch(app, /admin\.hlx\.page|api\.aem\.live|Bearer/);
-  assert.match(app, /Storage unavailable/);
-});
-
-test('reviewers can preview the exact rehearsal revision without mistaking a static published fixture for it', () => {
-  const app = read('tools/aida/showcase/app.js');
-  assert.match(app, /Preview this revision/);
-  assert.match(app, /revision-preview/);
-  assert.match(app, /doc\.fields\.title/);
-  assert.match(app, /doc\.fields\.body/);
-});
-
-test('radar deep links select only a known market context and never imply authentication', () => {
-  assert.equal(typeof view.marketFromSearch, 'function');
-  assert.equal(view.marketFromSearch('?market=be'), 'be');
-  assert.equal(view.marketFromSearch('?market=unknown'), null);
-  assert.equal(view.marketFromSearch('?actor=publisher'), null);
-});
-
-test('architecture preserves all named independent organizations and separates environments from them', () => {
-  const { architecture } = createDemo();
-  assert.ok(architecture);
-  const names = architecture.organizations.map((org) => org.name);
-  ['BMW', 'MINI', 'Motorrad', 'M', 'Alpina', 'Rolls-Royce', 'Alphabet', 'BMW Group / Jobs', 'BMW Welt', 'BMW BKK', 'BMW Golfsport'].forEach((name) => assert.ok(names.includes(name)));
-  assert.equal(new Set(architecture.organizations.map((org) => org.space)).size, names.length);
-  assert.ok(architecture.organizations.every((org) => org.shareCapabilities && !org.shareContent));
-  assert.deepEqual(architecture.environments, ['DEV', 'TEST', 'STAGE', 'LIVE']);
+  const page = read('tools/aida/showcase/index.html');
+  assert.doesNotMatch(app, /localStorage|transition\(|createDemo|admin\.hlx\.page|api\.aem\.live|Bearer/);
+  assert.doesNotMatch(page, /id="reset"|Reset demo/);
+  assert.match(page, /class="showcase-brand" href="#path\/0"/);
+  ['overview', 'marketFromSearch'].forEach((name) => assert.equal(view[name], undefined, name));
+  assert.throws(() => read('tools/aida/showcase/model.js'), /ENOENT/);
 });
 
 test('customer-visible showcase copy never explains demo mechanics', () => {
   const internal = /this browser|each browser|in this demo|this demo (shows|uses|scheduler)|in this app|in memory|stands? in for|in place of OTMM|modeled in|\(demo\)|demo (role|inbox|model|provider|release|clock|market|translation|state|data|only)|demo-published|fictitious|measured locally|in this session|not BMW analytics|BMW i5 demo|numbers in this demo/i;
-  ['index.html', 'app.js', 'view.js', 'model.js', 'connectors.js', 'script.js'].forEach((file) => {
+  ['index.html', 'app.js', 'view.js', 'connectors.js', 'script.js'].forEach((file) => {
     const source = read(`tools/aida/showcase/${file}`);
     const hit = source.match(internal);
     assert.equal(hit, null, `${file}: ${hit?.[0]}`);
