@@ -7,7 +7,7 @@ import {
 import {
   tabs, defaultTab, demoPath, chapterFromHash, escape, json, links,
   button, link, field, select, heading, badge, card,
-  overview, assetView, deliveryView, marketFromSearch,
+  overview, architectureView, assetView, deliveryView, marketFromSearch,
 } from './view.js';
 
 const KEY = 'bmw-aida-showcase-v4';
@@ -43,7 +43,6 @@ function apply(action) {
 
 const documentOf = () => (state.market === 'hq' ? state.hq : state.markets[state.market]);
 const actions = (html) => `<div class="showcase-actions">${html}</div>`;
-const list = (items) => `<ul class="showcase-list">${items.map((item) => `<li>${escape(item)}</li>`).join('')}</ul>`;
 const toolbar = () => `<div class="showcase-toolbar">${select('Role', 'actor', state.personas.map((p) => [p.id, p.label]), state.actor)}${select('Document context', 'market', ['hq', ...Object.keys(state.markets)].map((m) => [m, m === 'hq' ? 'HQ · English source' : `${m.toUpperCase()} · market copy`]), state.market)}<span class="showcase-clock">Release clock: ${escape(state.clock)}<br>Embargo: ${escape(state.embargo)}</span></div>`;
 const quality = () => checks(state, state.market).map((c) => `<li>${badge(c.pass ? 'Pass' : 'Blocked', c.pass ? 'pass' : 'fail')} <strong>${escape(c.label)}</strong><small> ${escape(c.message)}</small></li>`).join('');
 const timeline = (events) => `<ol class="showcase-timeline">${events.slice(-10).reverse().map((e) => `<li><strong>${escape(e.type || 'Message')}</strong> · ${escape(e.actor || e.mention || e.team || '')}<small>${escape(e.at)} · revision ${escape(e.revision || '—')} · ${escape(e.market || '')}</small>${e.message ? `<p>${escape(e.message)}</p>` : ''}</li>`).join('') || '<li>No activity yet. Start the workflow.</li>'}</ol>`;
@@ -80,20 +79,13 @@ function radar() {
       card('HQ feedback and task handoff', `<p>Visits and conversions below are sample values. Task export is a JSON handoff to a task tool such as Workfront.</p><div class="showcase-actions">${button('Generate sample insight', 'METRIC')}${button('Export tasks', 'EXPORT_TASKS')}</div><pre class="showcase-code">${escape(json(state.metrics))}</pre>`)}`;
 }
 
-function architecture() {
-  return `${heading('Briefing III · architecture', 'Share capabilities. Preserve contexts.', 'Brands, languages, regions, markets, importers and dealers are independent dimensions. Environment promotion is a separate technical axis—not the parent of the content model.')
-  }<div class="showcase-grid">${card('Content and domain entities', list(['Car: stable WDH product code, typed facts, variants and feature references', 'Topic: editorial narrative and product/news relationships', 'News: article source plus contextual teaser text', 'Asset reference: provider identity, delivery URL, rights metadata boundary']))}${card('Ownership and reuse', list(['Shared schemas, connectors and editor capabilities', 'Brand-specific components and content spaces; no implicit cross-brand content pool', 'Language sources; translate localizable properties only', 'Market/importer/dealer instances with controlled local ownership']))}${card('Technical environments', list(['DEV: branch code and local test content', 'TEST: tested branch preview', 'STAGE: reviewed content snapshots / release policy', 'LIVE: published content and main code', 'Promotion and identity policy are set up with BMW']))}</div>`
-    + `<div class="showcase-two" style="margin-top:24px">${card('Context contract', `<pre class="showcase-code">${escape(json(state.contexts))}</pre>`)}${card('Connector contracts', list(['WDH extract → market sheet → stored HTML facts → optional bounded refresh', 'OTMM → reference/crop/format extension (public BMW catalogue until connected)', 'Salesforce/API → market offer record (sample offer data)', 'Documents → Experience Workspace → AEM HTML, fragments and Markdown', 'BMW AI (bring your own) → glossary/style/memory → human corrections', 'Notifications/tasks/analytics → inbox, task export, KPIs']))}</div>${
-      card('A production path, without a platform rewrite', '<p>Connect each integration with an authenticated adapter, authoritative metadata and audit storage. Validate protected preview/media, real identities and publisher separation. Keep the content contracts, authoring extensions and delivery blocks.</p>')}`;
-}
-
 const views = {
   overview,
   workflow,
   translate,
   rollout,
   radar,
-  architecture,
+  architecture: architectureView,
   assets: assetView,
   delivery: deliveryView,
 };
