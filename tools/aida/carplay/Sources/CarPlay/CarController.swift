@@ -32,6 +32,7 @@ final class CarController {
         ]
         mapTemplate.leadingNavigationBarButtons = [CPBarButton(title: "BMW") { [weak self] _ in self?.openTabs(0) }]
         interface.setRootTemplate(mapTemplate, animated: false, completion: carplayLog)
+        places.onRows = { [weak self] rows in self?.mapController.setPanel(rows) }
         session.onEnter = { [weak self] p in self?.places.alert(for: p) }
         session.onLink = { [weak self] l in self?.handle(l) }
         session.onMove = { [weak self] in self?.places.moved(); self?.mapController.centre(animated: true) }

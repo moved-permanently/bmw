@@ -5,9 +5,15 @@ final class MapLayoutTests: XCTestCase {
     let bounds = CGRect(x: 0, y: 0, width: 800, height: 480)
 
     func testDotIsMiddleOfFreeArea() {
-        // side panel took 300 pt on the left, buttons 80 pt on the right
-        let free = CGRect(x: 300, y: 60, width: 420, height: 420)   // top bar shrinks the safe area
-        XCTAssertEqual(MapLayout.dotPoint(free: free, bounds: bounds), CGPoint(x: 510, y: 240))
+        // the car dock took 100 pt on the left; the panel takes 40 % of the rest: 100 + 280 = 380, right edge 800
+        let safe = CGRect(x: 100, y: 60, width: 700, height: 420)   // top bar shrinks the safe area
+        XCTAssertEqual(MapLayout.dotPoint(safe: safe, bounds: bounds), CGPoint(x: 590, y: 240))
+    }
+    func testPanelIsLeftFortyPercent() {
+        let safe = CGRect(x: 100, y: 0, width: 700, height: 480)
+        let p = MapLayout.panelFrame(safe: safe, bounds: bounds, margin: 0)
+        XCTAssertEqual(p.minX, 100); XCTAssertEqual(p.width, 280)
+        XCTAssertLessThan(p.maxX, MapLayout.dotPoint(safe: safe, bounds: bounds).x)
     }
     func testMapCentreIsTheDot() {
         let dot = CGPoint(x: 510, y: 240)

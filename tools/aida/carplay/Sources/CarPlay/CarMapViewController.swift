@@ -9,6 +9,8 @@ final class CarMapViewController: UIViewController, MKMapViewDelegate {
     private var annotations: [String: MKPointAnnotation] = [:]
     private var latitudinalMeters: CLLocationDistance = 3000
     private(set) var dot = CGPoint.zero
+    private let panel = PlacesPanelView()
+    private var panelRows: [PanelRow] = []
     private let marker = UIView(frame: CGRect(x: 0, y: 0, width: 22, height: 22))
 
     override func viewDidLoad() {
@@ -26,6 +28,7 @@ final class CarMapViewController: UIViewController, MKMapViewDelegate {
         marker.layer.borderColor = UIColor.white.cgColor
         marker.layer.borderWidth = 3
         view.addSubview(marker)
+        view.addSubview(panel)
         centre(animated: false)
         reloadPlaces()
     }
@@ -34,7 +37,9 @@ final class CarMapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLayoutSubviews()
         let free = view.safeAreaLayoutGuide.layoutFrame
         NSLog("BMWCarPlay car map bounds=%@ safe=%@", NSCoder.string(for: view.bounds), NSCoder.string(for: free))
-        dot = MapLayout.dotPoint(free: free, bounds: view.bounds)
+        dot = MapLayout.dotPoint(safe: free, bounds: view.bounds)
+        panel.frame = MapLayout.panelFrame(safe: free, bounds: view.bounds)
+        panel.set(title: L10n.t(.tabPlaces, session.language), rows: panelRows)
         map.frame = MapLayout.mapFrame(bounds: view.bounds, dot: dot)
         marker.center = dot
         view.bringSubviewToFront(marker)
@@ -49,6 +54,13 @@ final class CarMapViewController: UIViewController, MKMapViewDelegate {
         let c = CLLocationCoordinate2D(latitude: session.lat, longitude: session.lon)
         let region = MKCoordinateRegion(center: c, latitudinalMeters: latitudinalMeters, longitudinalMeters: latitudinalMeters)
         map.setRegion(region, animated: false)
+    }
+
+    /// The nearest places, already formatted. Called on every change of a visible distance.
+    func setPanel(_ rows: [PanelRow]) {
+        panelRows = rows
+        guard isViewLoaded else { return }
+        panel.set(title: L10n.t(.tabPlaces, session.language), rows: rows)
     }
 
     func zoom(by factor: Double) {

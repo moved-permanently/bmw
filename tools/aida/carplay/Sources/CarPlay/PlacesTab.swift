@@ -8,6 +8,8 @@ final class PlacesTab {
     private let session = Session.shared
     private var models: [String: PlaceViewModel] = [:]   // by path
     private var renderedKey = ""
+    /// Receives the same rows as the list, for the panel drawn next to the map.
+    var onRows: (([PanelRow]) -> Void)?
 
     init(interface: CPInterfaceController) {
         self.interface = interface
@@ -51,6 +53,10 @@ final class PlacesTab {
         let key = lang + "|" + rows.map { "\($0.row.path)=\($0.dist)" }.joined(separator: ";")
         guard key != renderedKey else { return }
         renderedKey = key
+        onRows?(rows.map { r in
+            let short = TextFit.shortPlaceName(r.row.name)
+            return PanelRow(title: short.title, subtitle: TextFit.placeSubtitle(distance: r.dist, extra: short.place ?? r.vm.headline, max: 26))
+        })
         let items: [CPListItem] = rows.map { r in
             // Short name, then the distance first and the place (or the page headline).
             let short = TextFit.shortPlaceName(r.row.name)
