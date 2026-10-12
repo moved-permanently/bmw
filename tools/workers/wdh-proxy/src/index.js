@@ -5,7 +5,7 @@
  *
  * HTML responses get the WDH value-link decoration of scripts/scripts.js decorateWdhValues()
  * applied server-side: every a[href*="/data/wdh-"][href*="#"] becomes
- * <span class="wdh-value" data-wdh="{href attribute}">{the link's text}</span> (inner markup and
+ * <span class="wdh-value">{the link's text}</span> (inner markup and
  * comments dropped, other attributes dropped). Pages: inside <main> (as decorateMain(main));
  * .plain.html fragments: the whole document (blocks/fragment.js runs decorateMain on it).
  * The browser decorator stays as the fallback; on decorated HTML it finds no links.
@@ -56,14 +56,12 @@ function upstreamUrl(requestUrl, origin) {
 /** WDH links to decorate: inside <main> for pages, the whole fragment for .plain.html. */
 export const wdhSelector = (pathname) => (pathname.endsWith('.plain.html') ? WDH_LINK : `main ${WDH_LINK}`);
 
-/** The link itself: <span class="wdh-value" data-wdh="{href attribute}">, nothing else. */
+/** The link itself: <span class="wdh-value">, nothing else. */
 export const wdhLinkHandler = {
   element(el) {
-    const href = el.getAttribute('href');
     [...el.attributes].forEach(([name]) => el.removeAttribute(name));
     el.tagName = 'span';
     el.setAttribute('class', 'wdh-value');
-    el.setAttribute('data-wdh', href);
   },
   comments(comment) { comment.remove(); },
 };
@@ -73,7 +71,7 @@ export const wdhInnerHandler = {
   element(el) { el.removeAndKeepContent(); },
 };
 
-/** The decorateWdhValues() equivalent for one HTML response. */
+/** Decorate WDH links without source attributes for one HTML response. */
 function decorateWdhLinks(response, pathname) {
   const selector = wdhSelector(pathname);
   return new HTMLRewriter()

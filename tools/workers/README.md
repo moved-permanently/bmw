@@ -172,8 +172,8 @@ devDependency.
 
 **What it does:**
 - **Decoration:** every `a[href*="/data/wdh-"][href*="#"]` becomes
-  `<span class="wdh-value" data-wdh="{href attribute}">{the link's text}</span>`. This is the same output as
-  the browser decorator: inner markup and comments are dropped, and so are all other attributes.
+  `<span class="wdh-value">{the link's text}</span>`. Inner markup, comments and source attributes are
+  dropped, including `data-wdh`. The `wdh-value` class is kept for styling.
   - Full pages: only inside `<main>`, like `decorateMain(main)`.
   - `.plain.html` served as `text/html`: the whole fragment, like `blocks/fragment` → `decorateMain`. This
     also applies to fragments that the browser does not run through `decorateMain`, such as nav, footer,
@@ -185,7 +185,7 @@ devDependency.
   - On worker-served HTML the browser decorator finds no matching links and does nothing. As a result,
     `wdhBindings` stays empty there.
   - The preview-only `aida.js` drift check only runs on `*.aem.page`, `*.preview.da.live` and `localhost`.
-    The rendered `.wdh-value` spans themselves are the same.
+    Unlike the browser decorator, the worker does not add `data-wdh` to the spans.
 - **Behaviour depends on the format:**
   - Only `text/html` bodies are rewritten (this includes HTML error pages, which keep their status).
   - JSON, JS, CSS, Markdown (`.md` is `text/markdown`, with `[text](/…/wdh-…#…)` link syntax), media and any
