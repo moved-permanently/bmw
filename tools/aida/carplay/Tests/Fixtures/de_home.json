@@ -1,0 +1,799 @@
+{
+  "metadata": {
+    "title": {
+      "text": "Offizielle BMW DE Website: Premium Fahrzeuge & Innovation"
+    },
+    "canonical": {
+      "href": "https://main--bmw--moved-permanently.aem.page/de/home"
+    },
+    "meta": [
+      {
+        "tag": "description",
+        "text": "Willkommen auf der offiziellen BMW DE Website: Premium Fahrzeugmodelle, exklusive Angebote, innovative Technologien & erstklassige Services entdecken."
+      },
+      {
+        "tag": "og:title",
+        "text": "Offizielle BMW DE Website: Premium Fahrzeuge & Innovation"
+      },
+      {
+        "tag": "og:description",
+        "text": "Willkommen auf der offiziellen BMW DE Website: Premium Fahrzeugmodelle, exklusive Angebote, innovative Technologien & erstklassige Services entdecken."
+      },
+      {
+        "tag": "og:url",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/home"
+      },
+      {
+        "tag": "og:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "og:image:secure_url",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "twitter:card",
+        "text": "summary_large_image"
+      },
+      {
+        "tag": "twitter:title",
+        "text": "Offizielle BMW DE Website: Premium Fahrzeuge & Innovation"
+      },
+      {
+        "tag": "twitter:description",
+        "text": "Willkommen auf der offiziellen BMW DE Website: Premium Fahrzeugmodelle, exklusive Angebote, innovative Technologien & erstklassige Services entdecken."
+      },
+      {
+        "tag": "twitter:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/de/Image%20without%20alt%20text?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "robots",
+        "text": "index,follow"
+      },
+      {
+        "tag": "header-style",
+        "text": "transparent"
+      },
+      {
+        "tag": "viewport",
+        "text": "width=device-width, initial-scale=1"
+      }
+    ],
+    "preconnect": {
+      "href": "https://bmw.scene7.com"
+    },
+    "script": {
+      "attrs": {
+        "nonce": "7MSDZYy+W5I7s9hO/WjCBNgK",
+        "src": "/scripts/scripts.js",
+        "type": "module"
+      },
+      "text": ""
+    },
+    "stylesheet": {
+      "href": "/styles/styles.css"
+    }
+  },
+  "content": [
+    {
+      "section": [
+        [
+          {
+            "type": "heading",
+            "level": 1,
+            "text": "Willkommen bei BMW – Freude am Fahren"
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "hero-stage",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/g65_ice_home-teaser_dsk_fb",
+                        "text": "Der neue BMW X5"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/g65_ice_home-teaser_mob_fb",
+                        "text": "Der neue BMW X5"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/content/BMW/g65_ice_home-teaser_dsk_sl-AVS.m3u8",
+                        "text": "Der neue BMW X5"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/content/BMW/g65_ice_home-teaser_mob_sl-AVS.m3u8",
+                        "text": "Der neue BMW X5 (mobil)"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "DER NEUE BMW X5"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "GESCHAFFEN, UM VORAUSZUGEHEN."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "strong",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://configure.bmw.de/de_DE/configure/G65/61JF",
+                            "text": "Konfigurieren & Preise"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/de/neufahrzeuge/x/suv/bmw-x5",
+                            "text": "Jetzt entdecken"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "loop"
+            ]
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "disclaimer",
+            "content": [
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "BMW X5 40 xDrive: Energieverbrauch kombiniert: 9,1 l/100 km (WLTP); CO₂-Emissionen kombiniert: 207 g/km (WLTP); CO₂-Klasse(n): G"
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "info",
+              "space-tight-l"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "heading",
+            "level": 2,
+            "text": "Finden Sie Ihren BMW."
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "cards-quicklink",
+            "content": [
+              [
+                [
+                  {
+                    "tag": "span"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "VerfügbareNeuwagen."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://www.bmw.de/de-de/sl/neuwagensuche#/results",
+                            "text": "Neuwagen suchen"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "tag": "span"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "VerfügbareGebrauchtwagen."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://www.bmw.de/de-de/sl/gebrauchtwagen#/results",
+                            "text": "Gebrauchtwagen suchen"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "tag": "span"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "Fahrzeugkonfigurieren."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/de/konfigurator",
+                            "text": "Konfigurieren & Preise"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "tag": "span"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "IntelligenteFahrzeugempfehlung."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://www.bmw.de/de/inzahlungnahme/transformer?icp=home-quicklink-to-tf&origin=home-quicklink",
+                            "text": "Jetzt testen"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "space-below-regular"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "hero-teaser",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/DI26_000417112_1_V1_O_sRGB_BMW-iX3-NA5-BEV_new:3to1",
+                        "text": "BMW iX3"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/DI26_000417112_1_V1_O_sRGB_BMW-iX3-NA5-BEV:1to1",
+                        "text": "BMW iX3"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/DI26_000417112_1_V1_O_sRGB_BMW-iX3-NA5-BEV_new:3to2",
+                        "text": "BMW iX3"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "Jetzt neu: Der BMW iX3 40."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Neue Motorisierung mit kurzer Lieferzeit."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Ihr schneller Einstieg in die Neue Klasse."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "strong",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://configure.bmw.de/de_DE/configure/NA5/11HR/FSFI7,P0C7U,S0230,S0248,S02PA,S02VB,S02VD,S02XH,S0302,S0322,S0337,S03DP,S03M1,S03PE,S0408,S0428,S0459,S0479,S0494,S04FM,S04T2,S04T8,S04U9,S04UR,S0534,S0548,S05AT,S05AV,S05BA,S05DW,S0617,S061B,S0654,S0674,S06AE,S06AF,S06D5,S06NX,S07EW,S0851,S0879,S08R3,S08TF,S0901,S09AD,S09T1,S09T2,S09T2,CTRLLIGHTSON",
+                            "text": "Konfigurieren & Preise"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://www.bmw.de/faas/form/de-de/bmw/rfo/angebotsanfrage.html?modelRange=NA5&modelCode=11HR",
+                            "text": "Angebot anfordern"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "bottom",
+              "text-width-five-sixths",
+              "cta-above-related-m",
+              "cta-stack-md",
+              "subline-above-tight-l",
+              "gradient-oblique"
+            ]
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "disclaimer",
+            "content": [
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "BMW iX3 40: Energieverbrauch kombiniert: 17,3–14,5 kWh/100 km (WLTP); CO₂-Emissionen kombiniert: 0 g/km (WLTP); CO₂-Klasse(n): A; Elektrische Reichweite: 534–637 km (WLTP)"
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "info",
+              "space-above-tight-l"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "hero-teaser",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/fk10558_herofiaf_20260616_3000x3000_v1:3to1",
+                        "text": "Die neue BMW i3 Limousine"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/fk10558_herofiaf_20260616_3000x3000_v1:1to1",
+                        "text": "Die neue BMW i3 Limousine"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/fk10558_herofiaf_20260616_3000x3000_v1:3to2",
+                        "text": "Die neue BMW i3 Limousine"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "Der neue BMW i3 50 xDriveals First Edition."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Jetzt bestellbar mit bis zu 906 km Reichweite."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "strong",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/de/neufahrzeuge/3er/limousine/bmw-i3-limousine",
+                            "text": "Jetzt entdecken"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://www.bmw.de/faas/form/de-de/bmw/rfo/i3-first-edition/angebotsanfrage.html?midstatic=1a1af901da51a01hbfaam&jrny=home",
+                            "text": "Angebot anfordern"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "bottom",
+              "text-width-five-sixths",
+              "cta-above-related-m",
+              "cta-stack-md",
+              "subline-above-tight-l",
+              "gradient-oblique"
+            ]
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "disclaimer",
+            "content": [
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "BMW i3 50 xDrive als First Edition: WLTP Energieverbrauch kombiniert: 16,1–13,5 kWh/100 km; WLTP CO₂-Emissionen kombiniert: 0 g/km; CO₂-Klasse: A; WLTP Elektrische Reichweite: 758–906 km"
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "Die tatsächlichen Werte sind abhängig von unterschiedlichen Faktoren, z. B. Beladung, Fahrstil, Strecke, Witterung, Nebenverbraucher (u. a. Klimatisierung), Bereifung, Alterungszustand der Batterie."
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "space-above-tight-l"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "hero-teaser",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/7-series-sedan-promo-teaser:3to1",
+                        "text": "Die neue BMW 7er Limousine"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/7-series-sedan-promo-teaser:1to1",
+                        "text": "Die neue BMW 7er Limousine"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/7-series-sedan-promo-teaser:3to2",
+                        "text": "Die neue BMW 7er Limousine"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "Die neue BMW 7er Limousine."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Ausdruck höchster Hingabe."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "strong",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://configure.bmw.de/de_DE/configure/G70/61HZ",
+                            "text": "Konfigurieren & Preise"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/de/neufahrzeuge/7er/limousine/bmw-7er-limousine",
+                            "text": "Jetzt entdecken"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "bottom",
+              "text-width-five-sixths",
+              "text-below-feature-l",
+              "cta-below-feature-s",
+              "cta-above-related-s",
+              "cta-stack-md",
+              "subline-above-tight-xs",
+              "gradient-oblique"
+            ]
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "disclaimer",
+            "content": [
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "BMW 740 xDrive Limousine: Energieverbrauch kombiniert: 8,4 l/100 km (WLTP); CO₂-Emissionen kombiniert: 192 g/km (WLTP); CO₂-Klasse(n): G"
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "Die tatsächlichen Werte sind abhängig von unterschiedlichen Faktoren, z. B. Beladung, Fahrstil, Strecke, Witterung, Nebenverbraucher (u. a. Klimatisierung), Bereifung, Alterungszustand der Batterie."
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "space-above-tight-l"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "columns",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/DI26_000410368_1:3to2",
+                    "text": "Image without alt text"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "Ein Herbst voller Fahrfreude."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Mit Original BMW Zubehör sowie passenden Serviceangeboten starten Sie perfekt vorbereitet in den goldenen Herbst. Entdecken Sie jetzt alles, was Ihren BMW noch besser macht."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://www.bmw.de/de/shop/ls/cp/physical-goods/de-BF_ACCESSORY",
+                        "text": "Zum Shop"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "/de/bmw-service-hub",
+                        "text": "BMW Serviceangebote"
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "layout-wide-narrow",
+              "stack-md",
+              "middle",
+              "inset-second-start"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "disclaimer",
+            "content": [
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "BMW iX3 50 xDrive: Energieverbrauch kombiniert: 17,9–15,1 kWh/100 km (WLTP); CO₂-Emissionen kombiniert: 0 g/km (WLTP); Elektrische Reichweite: 678–805 km (WLTP); CO₂-Klasse(n): A"
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "space-below-tight-m"
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+}

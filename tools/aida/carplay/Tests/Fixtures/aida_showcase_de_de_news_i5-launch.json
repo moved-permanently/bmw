@@ -1,0 +1,257 @@
+{
+  "metadata": {
+    "title": {
+      "text": "Der BMW i5. 100% elektrisch."
+    },
+    "canonical": {
+      "href": "https://main--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/i5-launch"
+    },
+    "meta": [
+      {
+        "tag": "description",
+        "text": "Entdecken Sie den BMW i5 eDrive40 anhand des bereitgestellten Fahrzeugdatensatzes."
+      },
+      {
+        "tag": "og:title",
+        "text": "Der BMW i5. 100% elektrisch."
+      },
+      {
+        "tag": "og:description",
+        "text": "Entdecken Sie den BMW i5 eDrive40 anhand des bereitgestellten Fahrzeugdatensatzes."
+      },
+      {
+        "tag": "og:url",
+        "text": "https://main--bmw--moved-permanently.aem.page/aida/showcase/de/de/news/i5-launch"
+      },
+      {
+        "tag": "og:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/default-meta-image.png?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "og:image:secure_url",
+        "text": "https://main--bmw--moved-permanently.aem.page/default-meta-image.png?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "twitter:card",
+        "text": "summary_large_image"
+      },
+      {
+        "tag": "twitter:title",
+        "text": "Der BMW i5. 100% elektrisch."
+      },
+      {
+        "tag": "twitter:description",
+        "text": "Entdecken Sie den BMW i5 eDrive40 anhand des bereitgestellten Fahrzeugdatensatzes."
+      },
+      {
+        "tag": "twitter:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/default-meta-image.png?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "aida-context",
+        "text": "de/de"
+      },
+      {
+        "tag": "aida-demo",
+        "text": "true"
+      },
+      {
+        "tag": "wdh-model",
+        "text": "61HG"
+      },
+      {
+        "tag": "viewport",
+        "text": "width=device-width, initial-scale=1"
+      }
+    ],
+    "script": {
+      "attrs": {
+        "nonce": "ta6eaJ53bBZ6R+lX2XDDPXj/",
+        "src": "/scripts/scripts.js",
+        "type": "module"
+      },
+      "text": ""
+    },
+    "preconnect": {
+      "href": "https://bmw.scene7.com"
+    },
+    "stylesheet": {
+      "href": "/styles/styles.css"
+    }
+  },
+  "content": [
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "hero-stage",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/P001_SL_G60-8135_Ext_Dsk_v001",
+                    "text": "BMW i5 exterior"
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 1,
+                    "text": "Der BMW i5. 100% elektrisch."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Entdecken Sie den BMW i5 eDrive40 anhand des bereitgestellten Fahrzeugdatensatzes."
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "small"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "paragraph",
+            "text": "Entdecken Sie den BMW i5 eDrive40 anhand des bereitgestellten Fahrzeugdatensatzes. Reichweite, Laden und Verbrauch werden auf Startseite, Modellseite und Themenseite wiederverwendet."
+          }
+        ],
+        [
+          {
+            "type": "list",
+            "ordered": false,
+            "items": [
+              [
+                {
+                  "type": "paragraph",
+                  "text": "Max. Reichweite WLTP"
+                },
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "link",
+                      "href": "/aida/showcase/data/wdh-de.json#61HG.electricRange",
+                      "text": "513–627 km"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "paragraph",
+                  "text": "Energieverbrauch elektrisch, kombiniert"
+                },
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "link",
+                      "href": "/aida/showcase/data/wdh-de.json#61HG.electricConsumption",
+                      "text": "17,9 kWh/100 km"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "type": "paragraph",
+                  "text": "Reichweite (WLTP) nach 10 Minuten Laden"
+                },
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "link",
+                      "href": "/aida/showcase/data/wdh-de.json#61HG.additionalRangeDC",
+                      "text": "157–211 km"
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "content": [
+              "BMW i5 eDrive40: Energieverbrauch elektrisch, kombiniert: ",
+              {
+                "type": "link",
+                "href": "/aida/showcase/data/wdh-de.json#61HG.electricConsumption",
+                "text": "17,9 kWh/100 km"
+              },
+              " (WLTP); CO₂-Emissionen kombiniert: ",
+              {
+                "type": "link",
+                "href": "/aida/showcase/data/wdh-de.json#61HG.co2",
+                "text": "0 g/km"
+              },
+              " (WLTP); CO₂-Klasse: ",
+              {
+                "type": "link",
+                "href": "/aida/showcase/data/wdh-de.json#61HG.co2Class",
+                "text": "A"
+              },
+              "; Max. Reichweite WLTP: ",
+              {
+                "type": "link",
+                "href": "/aida/showcase/data/wdh-de.json#61HG.electricRange",
+                "text": "513–627 km"
+              },
+              ". ",
+              {
+                "type": "link",
+                "href": "/aida/showcase/data/wdh-de.json#61HG.wltp",
+                "text": "BMW i5 eDrive40 Limousine: Energieverbrauch elektrisch, kombiniert: 17,9 kWh/100 km (WLTP); CO₂-Emissionen kombiniert: 0 g/km (WLTP); CO₂-Klasse: A; Max. Reichweite WLTP: 513–627 km (WLTP)"
+              },
+              ". WLTP-Demowerte aus dem bereitgestellten Auszug. Verfügbarkeit, Ausstattung, Angebote und Homologation müssen marktspezifisch geprüft werden."
+            ]
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "strong",
+                "content": [
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/de/de/i5",
+                    "text": "Jetzt entdecken"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Quelle: von BMW bereitgestellter WDH-Auszug"
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Demo-Datensatz · BMW RfP III · bereitgestellter WDH-Auszug und beispielhafter Briefing-Inhalt, kein Live-Angebot."
+          }
+        ]
+      ]
+    },
+    {
+      "section": []
+    }
+  ]
+}

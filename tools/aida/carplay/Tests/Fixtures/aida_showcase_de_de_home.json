@@ -1,0 +1,614 @@
+{
+  "metadata": {
+    "title": {
+      "text": "Der i5"
+    },
+    "canonical": {
+      "href": "https://main--bmw--moved-permanently.aem.page/aida/showcase/de/de/home"
+    },
+    "meta": [
+      {
+        "tag": "description",
+        "text": "Der BMW i5. 100% elektrisch."
+      },
+      {
+        "tag": "og:title",
+        "text": "Der i5"
+      },
+      {
+        "tag": "og:description",
+        "text": "Der BMW i5. 100% elektrisch."
+      },
+      {
+        "tag": "og:url",
+        "text": "https://main--bmw--moved-permanently.aem.page/aida/showcase/de/de/home"
+      },
+      {
+        "tag": "og:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/default-meta-image.png?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "og:image:secure_url",
+        "text": "https://main--bmw--moved-permanently.aem.page/default-meta-image.png?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "twitter:card",
+        "text": "summary_large_image"
+      },
+      {
+        "tag": "twitter:title",
+        "text": "Der i5"
+      },
+      {
+        "tag": "twitter:description",
+        "text": "Der BMW i5. 100% elektrisch."
+      },
+      {
+        "tag": "twitter:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/default-meta-image.png?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "aida-context",
+        "text": "de/de"
+      },
+      {
+        "tag": "aida-demo",
+        "text": "true"
+      },
+      {
+        "tag": "viewport",
+        "text": "width=device-width, initial-scale=1"
+      }
+    ],
+    "script": {
+      "attrs": {
+        "nonce": "miEjCdcu/91RLaEx288voOdN",
+        "src": "/scripts/scripts.js",
+        "type": "module"
+      },
+      "text": ""
+    },
+    "preconnect": {
+      "href": "https://bmw.scene7.com"
+    },
+    "stylesheet": {
+      "href": "/styles/styles.css"
+    }
+  },
+  "content": [
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "hero-teaser",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/P001_SL_G60-8135_Ext_Dsk_v001",
+                        "text": "BMW i5 exterior"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/content/BMW/P001_SL_G60-8135_Ext_Dsk_v001",
+                        "text": "BMW i5 film"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 1,
+                    "text": "Der i5"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Der BMW i5. 100% elektrisch."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "strong",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://configure.bmw.de/de_DE/configure/G60E/61HG",
+                            "text": "Konfigurieren & Preise"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/de/de/i5",
+                            "text": "Jetzt entdecken"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "no-autoplay",
+              "middle",
+              "text-width-five-twelfths",
+              "gradient-left",
+              "ratio-16-7",
+              "mobile-ratio-3-4"
+            ]
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "disclaimer",
+            "content": [
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "BMW i5 eDrive40: Energieverbrauch elektrisch, kombiniert: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-de.json#61HG.electricConsumption",
+                    "text": "17,9 kWh/100 km"
+                  },
+                  {
+                    "type": "text",
+                    "text": " (WLTP); CO₂-Emissionen kombiniert: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-de.json#61HG.co2",
+                    "text": "0 g/km"
+                  },
+                  {
+                    "type": "text",
+                    "text": " (WLTP); CO₂-Klasse: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-de.json#61HG.co2Class",
+                    "text": "A"
+                  },
+                  {
+                    "type": "text",
+                    "text": "; Max. Reichweite WLTP: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-de.json#61HG.electricRange",
+                    "text": "513–627 km"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-de.json#61HG.wltp",
+                    "text": "BMW i5 eDrive40 Limousine: Energieverbrauch elektrisch, kombiniert: 17,9 kWh/100 km (WLTP); CO₂-Emissionen kombiniert: 0 g/km (WLTP); CO₂-Klasse: A; Max. Reichweite WLTP: 513–627 km (WLTP)"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". WLTP-Demowerte aus dem bereitgestellten Auszug. Verfügbarkeit, Ausstattung, Angebote und Homologation müssen marktspezifisch geprüft werden."
+                  }
+                ]
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "columns",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/na5_stage_1920_1024_fb",
+                        "text": "BMW iX3 exterior"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/content/BMW/na5_stage_1920_1024_sl",
+                        "text": "BMW ix3 film"
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "Der neue BMW iX3 50 xDrive"
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      "Max. Reichweite WLTP: ",
+                      {
+                        "type": "link",
+                        "href": "/aida/showcase/data/wdh-de.json#31HR.electricRange",
+                        "text": "805 km"
+                      },
+                      "."
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "strong",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/de/de/e-mobility",
+                            "text": "Jetzt entdecken"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "layout-wide-narrow",
+              "middle",
+              "inset-second-start",
+              "video-controls"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "columns",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/g60_bev_charging-options_1_home-charging:3to2",
+                    "text": "BMW i5 charging at home"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "BMW Charging."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Sorgenfreies Laden, einfach, jederzeit und überall. Dank flexibler Lademöglichkeiten und innovativer Ladetechnologien fahren Sie im Alltag und auf Reisen jederzeit sorgenfrei. Ob unterwegs möglichst schnell oder bequem zuhause. Finden Sie die Ladelösungen, die genau zu Ihrem Leben passen."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "strong",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/de/de/e-mobility",
+                            "text": "Mehr erfahren"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "layout-wide-narrow",
+              "middle",
+              "inset-second-start"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "heading",
+            "level": 2,
+            "text": "Finden Sie Ihren BMW"
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "carousel",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/na5_stage_1920_1024_fb",
+                    "text": "BMW iX3 exterior"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "BMW in Cannes"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Eine gemeinsame Cannes-Geschichte für die BMW-Briefing-Demo. Dieser redaktionelle Demo-Datensatz zeigt die Wiederverwendung auf der Startseite. Das Fahrzeugbild ist eine Illustration und keine Eventaufnahme."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/de/de/news/cannes",
+                            "text": "Mehr erfahren"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/g90_stage_dsk_fb_3840_1680",
+                    "text": "BMW M5 exterior"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "BMW Concept M"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Eine redaktionelle Konzeptgeschichte für alle Demo-Kontexte. Dieser Demo-Datensatz zeigt den verpflichtenden Concept-M-Teaser. Das Foto zeigt einen BMW M5, kein behauptetes Konzeptfahrzeug."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/de/de/news/concept-m",
+                            "text": "Mehr erfahren"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/na5_stage_1920_1024_fb",
+                    "text": "BMW iX3 exterior"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "BMW X"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Entdecken Sie die BMW X Familie mit dem elektrischen BMW iX3."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/de/de/e-mobility",
+                            "text": "Mehr erfahren"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/alpina_cutdown_interior_1920_1024_fb",
+                    "text": "Illustrative BMW ALPINA interior, not the BMW Group odor laboratory"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "Wie die BMW Group Nachhaltigkeit bis in den Fahrzeuginnenraum denkt."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Geruch ist nur ein Teil dessen, was einen Fahrzeuginnenraum ausmacht. Auch Materialauswahl und Innenraumemissionen prägen, wie gesund und angenehm die Atmosphäre im Auto ist. Warum Wohlbefinden heute Teil der Produktnachhaltigkeit ist – und welche Rolle das BMW Group Geruchslabor dabei spielt – zeigt ein Blick hinter die Kulissen."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/de/de/news/interior",
+                            "text": "Mehr erfahren"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/g20_ice_stage-50-years:16to7",
+                    "text": "BMW 3 Series exterior"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "50 Jahre BMW 3er – sieben Generationen Fahrfreude."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "50 Jahre, sieben Generationen, ein Versprechen: Fahrfreude pur. Seit seinem Debüt 1975 treibt der BMW 3er seine Evolution voran – ein BMW der Alltag und Adrenalin perfekt verbindet. Design, Motoren und Innovationen zünden immer wieder neu. Eine Zeitreise durch ein halbes Jahrhundert Automobilgeschichte. Baureihe für Baureihe."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/de/de/news/3-series",
+                            "text": "Mehr erfahren"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "slides-triples"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "columns",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/g60_bev_electric-driving-performance_dsk_fb_en",
+                    "text": "BMW i5 electric driving"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "Bereit für den Sommer"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "15% Rabatt auf BMW ConnectedDrive Upgrades. Beispielhaftes DE-Briefing-Angebot, aktuell nicht einlösbar."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "strong",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://www.bmw.de/de/shop/ls/cp/connected-drive",
+                            "text": "Jetzt 15% sparen"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "layout-wide-narrow",
+              "middle",
+              "inset-second-start"
+            ]
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Demo-Datensatz · BMW RfP III · bereitgestellter WDH-Auszug und beispielhafter Briefing-Inhalt, kein Live-Angebot."
+          }
+        ]
+      ]
+    },
+    {
+      "section": []
+    }
+  ]
+}

@@ -1,0 +1,868 @@
+{
+  "metadata": {
+    "title": {
+      "text": "La nouvelle BMW i5"
+    },
+    "canonical": {
+      "href": "https://main--bmw--moved-permanently.aem.page/aida/showcase/fr/fr/i5"
+    },
+    "meta": [
+      {
+        "tag": "description",
+        "text": "La BMW i5. 100 % électrique."
+      },
+      {
+        "tag": "og:title",
+        "text": "La nouvelle BMW i5"
+      },
+      {
+        "tag": "og:description",
+        "text": "La BMW i5. 100 % électrique."
+      },
+      {
+        "tag": "og:url",
+        "text": "https://main--bmw--moved-permanently.aem.page/aida/showcase/fr/fr/i5"
+      },
+      {
+        "tag": "og:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/default-meta-image.png?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "og:image:secure_url",
+        "text": "https://main--bmw--moved-permanently.aem.page/default-meta-image.png?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "twitter:card",
+        "text": "summary_large_image"
+      },
+      {
+        "tag": "twitter:title",
+        "text": "La nouvelle BMW i5"
+      },
+      {
+        "tag": "twitter:description",
+        "text": "La BMW i5. 100 % électrique."
+      },
+      {
+        "tag": "twitter:image",
+        "text": "https://main--bmw--moved-permanently.aem.page/default-meta-image.png?width=1200&format=pjpg&optimize=medium"
+      },
+      {
+        "tag": "aida-context",
+        "text": "fr/fr"
+      },
+      {
+        "tag": "aida-demo",
+        "text": "true"
+      },
+      {
+        "tag": "wdh-model",
+        "text": "61HG"
+      },
+      {
+        "tag": "viewport",
+        "text": "width=device-width, initial-scale=1"
+      }
+    ],
+    "script": {
+      "attrs": {
+        "nonce": "7k1PXg7WsjqzQrLsEG85EK2u",
+        "src": "/scripts/scripts.js",
+        "type": "module"
+      },
+      "text": ""
+    },
+    "preconnect": {
+      "href": "https://bmw.scene7.com"
+    },
+    "stylesheet": {
+      "href": "/styles/styles.css"
+    }
+  },
+  "content": [
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "hero-teaser",
+            "content": [
+              [
+                [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/image/BMW/P001_SL_G60-8135_Ext_Dsk_v001",
+                        "text": "BMW i5 exterior"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "link",
+                        "href": "https://bmw.scene7.com/is/content/BMW/P001_SL_G60-8135_Ext_Dsk_v001",
+                        "text": "BMW i5 film"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 1,
+                    "text": "La nouvelle BMW i5"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "La BMW i5. 100 % électrique."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      "À partir de ",
+                      {
+                        "type": "link",
+                        "href": "/aida/showcase/data/wdh-fr.json#61HG.fromPrice",
+                        "text": "76 250 €"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      "Leasing à partir de ",
+                      {
+                        "type": "link",
+                        "href": "/aida/showcase/data/wdh-fr.json#61HG.leasePrice",
+                        "text": "599 €/month"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Loyer illustratif du briefing, pas une offre en cours."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "strong",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://configure.bmw.fr/fr_FR/configure/G60E/61HG",
+                            "text": "Configurer et tarifs"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/fr/fr/news/i5-launch",
+                            "text": "En savoir plus"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "no-autoplay",
+              "middle",
+              "text-width-five-twelfths",
+              "gradient-left",
+              "ratio-16-7",
+              "mobile-ratio-3-4"
+            ]
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "disclaimer",
+            "content": [
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "BMW i5 eDrive40: Consommation électrique combinée: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.electricConsumption",
+                    "text": "14,7–17,8 kWh/100 km"
+                  },
+                  {
+                    "type": "text",
+                    "text": " (WLTP); Émissions de CO₂ combinées: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.co2",
+                    "text": "0 g/km"
+                  },
+                  {
+                    "type": "text",
+                    "text": " (WLTP); Classe de CO₂: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.co2Class",
+                    "text": "A"
+                  },
+                  {
+                    "type": "text",
+                    "text": "; Autonomie maximale WLTP: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.electricRange",
+                    "text": "518–627 km"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.wltp",
+                    "text": "BMW i5 eDrive40 Berline: Consommation électrique combinée: 14,7–17,8 kWh/100 km (WLTP); Émissions de CO₂ combinées: 0 g/km (WLTP); Classe de CO₂: A; Autonomie maximale WLTP: 518–627 km (WLTP)"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". Valeurs WLTP de démonstration issues de l’extrait fourni. La disponibilité, les équipements, les offres et l’homologation nécessitent une vérification par marché."
+                  }
+                ]
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "heading",
+            "level": 2,
+            "text": "Chiffres clés"
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "car-kpis",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.electricRange",
+                    "text": "518–627 km"
+                  }
+                ],
+                [
+                  {
+                    "type": "text",
+                    "text": "Autonomie maximale WLTP"
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.electricConsumption",
+                    "text": "14,7–17,8 kWh/100 km"
+                  }
+                ],
+                [
+                  {
+                    "type": "text",
+                    "text": "Consommation électrique combinée"
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.additionalRangeDC",
+                    "text": "157–211 km"
+                  }
+                ],
+                [
+                  {
+                    "type": "text",
+                    "text": "Autonomie (WLTP) après 10 minutes de recharge"
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "disclaimer",
+            "content": [
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "BMW i5 eDrive40: Consommation électrique combinée: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.electricConsumption",
+                    "text": "14,7–17,8 kWh/100 km"
+                  },
+                  {
+                    "type": "text",
+                    "text": " (WLTP); Émissions de CO₂ combinées: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.co2",
+                    "text": "0 g/km"
+                  },
+                  {
+                    "type": "text",
+                    "text": " (WLTP); Classe de CO₂: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.co2Class",
+                    "text": "A"
+                  },
+                  {
+                    "type": "text",
+                    "text": "; Autonomie maximale WLTP: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.electricRange",
+                    "text": "518–627 km"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.wltp",
+                    "text": "BMW i5 eDrive40 Berline: Consommation électrique combinée: 14,7–17,8 kWh/100 km (WLTP); Émissions de CO₂ combinées: 0 g/km (WLTP); Classe de CO₂: A; Autonomie maximale WLTP: 518–627 km (WLTP)"
+                  },
+                  {
+                    "type": "text",
+                    "text": ". Valeurs WLTP de démonstration issues de l’extrait fourni. La disponibilité, les équipements, les offres et l’homologation nécessitent une vérification par marché."
+                  }
+                ]
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "heading",
+            "level": 2,
+            "text": "Tout sur la conduite électrique."
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "carousel",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/g60_bev_charging-options_1_home-charging:3to2",
+                    "text": "BMW i5 charging at home"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "BMW Charging."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Rechargez sereinement, simplement, à tout moment et partout. Grâce aux solutions flexibles et aux technologies de recharge innovantes, roulez sereinement au quotidien et en voyage. Trouvez la solution qui s’adapte à votre vie, en route ou chez vous."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      "Autonomie (WLTP) après 10 minutes de recharge: ",
+                      {
+                        "type": "link",
+                        "href": "/aida/showcase/data/wdh-fr.json#61HG.additionalRangeDC",
+                        "text": "157–211 km"
+                      },
+                      "."
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/fr/fr/e-mobility",
+                            "text": "En savoir plus"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/g60_bev_electric-driving-performance_dsk_fb_en",
+                    "text": "BMW i5 electric driving"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "Autonomie électrique"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Avec l’autonomie de nos voitures électriques, les destinations lointaines sont accessibles. Le planificateur d’itinéraire vous montre les possibilités de recharge en route."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/fr/fr/e-mobility",
+                            "text": "En savoir plus"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/P001_SL_G60-8135_Ext_Dsk_v001",
+                    "text": "BMW i5 exterior"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "100 % électrique."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Dynamique, confortable et sans émissions locales. Nos véhicules électriques disposent de technologies de propulsion modernes."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/fr/fr/e-mobility",
+                            "text": "En savoir plus"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "slides-triples"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "columns",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/alpina_cutdown_interior_1920_1024_fb",
+                    "text": "Illustrative BMW ALPINA interior, not the BMW Group odor laboratory"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "Comment BMW Group pense la durabilité jusque dans l’habitacle."
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "L’odeur n’est qu’une partie de ce qui définit un habitacle. Le choix des matériaux et les émissions intérieures influencent également le bien-être à bord."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "/aida/showcase/fr/fr/news/interior",
+                            "text": "En savoir plus"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "layout-wide-narrow",
+              "middle",
+              "inset-second-start"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "heading",
+            "level": 2,
+            "text": "Découvrez d’autres modèles électrifiés"
+          }
+        ],
+        [
+          {
+            "type": "block",
+            "name": "carousel",
+            "content": [
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/na5_stage_1920_1024_fb",
+                    "text": "BMW iX3 exterior"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "BMW iX3 50 xDrive"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "100 % électrique."
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      "À partir de ",
+                      {
+                        "type": "link",
+                        "href": "/aida/showcase/data/wdh-fr.json#31HR.fromPrice",
+                        "text": "70 900 €"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      "Leasing à partir de ",
+                      {
+                        "type": "link",
+                        "href": "/aida/showcase/data/wdh-fr.json#31HR.leasePrice",
+                        "text": "926 €/month"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Loyer illustratif du briefing, pas une offre en cours."
+                  },
+                  {
+                    "type": "list",
+                    "ordered": false,
+                    "items": [
+                      [
+                        {
+                          "type": "paragraph",
+                          "text": "Autonomie maximale WLTP"
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "link",
+                              "href": "/aida/showcase/data/wdh-fr.json#31HR.electricRange",
+                              "text": "805 km"
+                            }
+                          ]
+                        }
+                      ],
+                      [
+                        {
+                          "type": "paragraph",
+                          "text": "Accélération, 0–100 km/h"
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "link",
+                              "href": "/aida/showcase/data/wdh-fr.json#31HR.acceleration",
+                              "text": "4,9 s"
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://www.bmw.de/de/neufahrzeuge/x/ix3/bmw-ix3.html",
+                            "text": "Découvrir"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "link",
+                    "href": "https://bmw.scene7.com/is/image/BMW/g90_stage_dsk_fb_3840_1680",
+                    "text": "BMW M5 exterior"
+                  }
+                ],
+                [
+                  {
+                    "type": "heading",
+                    "level": 3,
+                    "text": "BMW M5"
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Hybride rechargeable"
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      "À partir de ",
+                      {
+                        "type": "link",
+                        "href": "/aida/showcase/data/wdh-fr.json#81FK.fromPrice",
+                        "text": "162 900 €"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      "Leasing à partir de ",
+                      {
+                        "type": "link",
+                        "href": "/aida/showcase/data/wdh-fr.json#81FK.leasePrice",
+                        "text": "1 899 €/month"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "text": "Loyer illustratif du briefing, pas une offre en cours."
+                  },
+                  {
+                    "type": "list",
+                    "ordered": false,
+                    "items": [
+                      [
+                        {
+                          "type": "paragraph",
+                          "text": "Puissance"
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "link",
+                              "href": "/aida/showcase/data/wdh-fr.json#81FK.power",
+                              "text": "535 kW (727 ch)"
+                            }
+                          ]
+                        }
+                      ],
+                      [
+                        {
+                          "type": "paragraph",
+                          "text": "Accélération, 0–100 km/h"
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "link",
+                              "href": "/aida/showcase/data/wdh-fr.json#81FK.acceleration",
+                              "text": "3,5 s"
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "em",
+                        "content": [
+                          {
+                            "type": "link",
+                            "href": "https://www.bmw.de/de/neufahrzeuge/m/m5-series/bmw-m5-limousine.html",
+                            "text": "Découvrir"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            ],
+            "options": [
+              "cards",
+              "slides-pairs"
+            ]
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "L’iX3 utilise l’extrait DE comme données de démonstration de repli ; aucun extrait iX3 FR valide n’a été fourni."
+          }
+        ]
+      ]
+    },
+    {
+      "section": [
+        [
+          {
+            "type": "block",
+            "name": "card-list",
+            "content": [
+              [
+                [
+                  {
+                    "type": "heading",
+                    "level": 2,
+                    "text": "Équipements intégrés"
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "Driving Assistant Professional"
+                  }
+                ],
+                [
+                  {
+                    "type": "text",
+                    "text": "Le Driving Assistant Professional en option vous aide à rester dans votre voie et à garder vos distances. Limite illustrative du briefing: "
+                  },
+                  {
+                    "type": "link",
+                    "href": "/aida/showcase/data/wdh-fr.json#61HG.drivingAssistantSpeed",
+                    "text": "210 km/h"
+                  },
+                  {
+                    "type": "text",
+                    "text": "."
+                  }
+                ]
+              ],
+              [
+                [
+                  {
+                    "type": "text",
+                    "text": "Parking Assistant Plus."
+                  }
+                ],
+                [
+                  {
+                    "type": "text",
+                    "text": "Gardez un œil sur votre BMW i5 même à distance avec le Parking Assistant Plus en option. La disponibilité et les fonctionnalités nécessitent une vérification par marché."
+                  }
+                ]
+              ]
+            ]
+          }
+        ],
+        [
+          {
+            "type": "paragraph",
+            "text": "Données de démonstration · BMW RfP III · extrait WDH fourni et contenu exemplaire du briefing, pas une offre en cours."
+          }
+        ]
+      ]
+    },
+    {
+      "section": []
+    }
+  ]
+}

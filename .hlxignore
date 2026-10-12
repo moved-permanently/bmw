@@ -21,3 +21,4 @@ tools/semantic-styles/*
 docs/*
 tools/ew-native/*
 tools/aida/icon-picker/*.py
+tools/aida/carplay/*
