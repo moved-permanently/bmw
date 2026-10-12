@@ -4,7 +4,7 @@
 
 A repeatable BMW launch journey connects news creation, quality gates, review/rejection, full-page translation fixtures, translation memory corrections, four market rollouts, structural/property conflict resolution, source-bound approval, a frozen dry-run release, and a status/action radar.
 
-Editor and DA app links (canvas, document view, forms, Translate, Media Library, Snapshots, Schemas, Scheduler, Rollout radar) open the da-live branch the demo is pinned to: `DA_EDITOR` in [`tools/aida/editor.js`](../editor.js), currently `pocasset`, the same branch as the site config's `editor.path` row. To unpin, set it to `https://da.live` and update the Translate link in `radar/radar.html`.
+Editor and DA app links (canvas, document view, forms, Translate, Media Library, Snapshots, Schemas, Scheduler, Rollout radar) open the da-live branch the demo is pinned to: `DA_EDITOR` in [`tools/aida/editor.js`](../editor.js), currently `ewdemo` (the editor with Request Publish and the live comparison), the same branch as the `editor.path` rows of the site and org config. To unpin, set it to `https://da.live` and update the Translate link in `radar/radar.html`.
 
 ## Real and substituted boundaries
 

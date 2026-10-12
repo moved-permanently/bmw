@@ -1,6 +1,6 @@
 import connect from '../da.js';
 import {
-  topology, dependencies, buildGrid, TIMESTAMP_LABELS, pageActions,
+  topology, dependencies, buildGrid, TIMESTAMP_LABELS, pageActions, reviewState, commentCounts,
 } from './grid.js';
 import {
   findBindings, staleBindings, valuesFromSheet, marketForPath,
@@ -47,24 +47,76 @@ async function checkDrift(da, cells) {
   }
 }
 
+const link = (href, text) => {
+  const a = document.createElement('a');
+  a.className = 'spectrum-Link';
+  a.href = href;
+  a.textContent = text;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  return a;
+};
+
+const badge = (text, variant) => {
+  const el = document.createElement('span');
+  el.className = `radar-state spectrum-Badge spectrum-Badge--sizeS spectrum-Badge--${variant}`;
+  const label = document.createElement('span');
+  label.className = 'spectrum-Badge-label';
+  label.textContent = text;
+  el.append(label);
+  return el;
+};
+
 function appendActions(el, routes, missing = false) {
   const actions = document.createElement('div');
   actions.className = 'radar-actions';
-  const entries = missing ? [['translate', 'Create in Translate'], ['workflow', 'Workflow demo']]
-    : [['edit', 'Edit'], ['preview', 'Preview'], ['preflight', 'Preflight'], ['workflow', 'Workflow demo']];
-  entries.forEach(([key, label]) => {
-    const link = document.createElement('a');
-    link.className = 'spectrum-Link';
-    link.href = routes[key];
-    link.textContent = label;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    actions.append(link);
-  });
-  const evidence = document.createElement('small');
-  evidence.className = 'radar-evidence';
-  evidence.textContent = 'No approval/release evidence available';
-  el.append(actions, evidence);
+  const entries = missing ? [['translate', 'Create in Translate']]
+    : [['edit', 'Edit'], ['preview', 'Preview'], ['preflight', 'Preflight'], ['files', 'Status in Files']];
+  entries.forEach(([key, label]) => actions.append(link(routes[key], label)));
+  const workflow = document.createElement('div');
+  workflow.className = 'radar-workflow';
+  el.append(actions, workflow);
+  return workflow;
+}
+
+/** Comment files of one page: .da/comments/<document id>/<comment id>.json */
+async function pageComments(da, path) {
+  const head = await da.actions.daFetch(`https://admin.da.live/source/${da.org}/${da.site}${path}.html`, { method: 'HEAD' });
+  const id = head.ok && head.headers.get('x-da-id');
+  if (!id) return [];
+  const files = await da.list(`/.da/comments/${id}`);
+  const comments = await Promise.all(files.filter((f) => f.ext === 'json')
+    .map((f) => da.read(`/.da/comments/${id}/${f.name}.json`).then(JSON.parse).catch(() => null)));
+  return comments.filter(Boolean);
+}
+
+/** Review step from the publish requests and open comment threads, per page; returns totals. */
+async function showWorkflow(da, pages) {
+  const [requests, config] = await Promise.all([
+    da.rows('/.da/publish-workflow-requests.json'),
+    da.actions.daFetch(`https://admin.da.live/config/${da.org}/${da.site}/`).then((r) => (r.ok ? r.json() : {})),
+  ]);
+  const settings = config['publish-workflow-settings']?.data || [];
+  const totals = { review: 0, open: 0 };
+  const queue = [...pages];
+  const worker = async () => {
+    while (queue.length) {
+      const { path, el, routes } = queue.shift();
+      const review = reviewState(requests, settings, path);
+      // eslint-disable-next-line no-await-in-loop
+      const { open } = commentCounts(await pageComments(da, path).catch(() => []));
+      if (review) {
+        totals.review += 1;
+        el.append(badge(`In review: ${review.title}`, 'informative'), link(routes.review, 'Review'));
+      }
+      if (open) {
+        totals.open += open;
+        el.append(badge(`${open} open comment${open === 1 ? '' : 's'}`, 'yellow'));
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: 6 }, worker));
+  return totals;
 }
 
 /** Compact language -> market view (structure from the translation config only). */
@@ -121,6 +173,7 @@ function renderDependencies(main, { source, languages }) {
     const body = table.createTBody();
     body.className = 'spectrum-Table-body';
     const drift = [];
+    const workflow = [];
     grid.forEach((row) => {
       const tr = body.insertRow();
       tr.className = 'spectrum-Table-row';
@@ -131,7 +184,10 @@ function renderDependencies(main, { source, languages }) {
       title.className = 'radar-path';
       title.textContent = row.rel;
       th.append(title);
-      appendActions(th, pageActions({ ...da, path: `${source.location}${row.rel}`, ref }));
+      const sourcePath = `${source.location}${row.rel}`;
+      const sourceRoutes = pageActions({ ...da, path: sourcePath, ref });
+      const sourceEl = appendActions(th, sourceRoutes);
+      workflow.push({ path: sourcePath, el: sourceEl, routes: sourceRoutes });
       tr.append(th);
       row.cells.forEach((cell) => {
         const td = tr.insertCell();
@@ -144,14 +200,18 @@ function renderDependencies(main, { source, languages }) {
         label.textContent = TIMESTAMP_LABELS[cell.status];
         chip.append(label);
         td.append(chip);
-        appendActions(td, pageActions({ ...da, path: cell.path, ref }), cell.status === 'missing');
-        if (cell.status !== 'missing') drift.push({ cell, el: td });
+        const routes = pageActions({ ...da, path: cell.path, ref });
+        const el = appendActions(td, routes, cell.status === 'missing');
+        if (cell.status !== 'missing') {
+          drift.push({ cell, el: td });
+          workflow.push({ path: cell.path, el, routes });
+        }
       });
     });
     const total = grid.length * targets.length;
     const recent = grid.flatMap((r) => r.cells).filter((c) => c.status === 'current').length;
     const summary = `${grid.length} source pages × ${targets.length} languages and markets: ${recent} of ${total} edited since source.`;
-    status.textContent = `${summary} Checking WDH values…`;
+    status.textContent = `${summary} Reading review state, comments and WDH values…`;
     const scroll = document.createElement('div');
     scroll.className = 'radar-table-scroll';
     scroll.tabIndex = 0;
@@ -159,8 +219,8 @@ function renderDependencies(main, { source, languages }) {
     scroll.setAttribute('aria-label', 'Rollout edit timestamps and page actions');
     scroll.append(table);
     main.append(scroll);
-    await checkDrift(da, drift);
-    status.textContent = `${summary} WDH badges identify tech values that differ from the current WDH export.`;
+    const [totals] = await Promise.all([showWorkflow(da, workflow), checkDrift(da, drift)]);
+    status.textContent = `${summary} ${totals.review} in review, ${totals.open} open comment threads. WDH badges identify tech values that differ from the current WDH export.`;
   } catch (e) {
     status.className = 'aida-error';
     status.textContent = `The radar could not load: ${e.message}`;

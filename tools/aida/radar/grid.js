@@ -1,4 +1,4 @@
-import { DA_EDITOR } from '../editor.js';
+import { DA_EDITOR, DEMO_BRANCH } from '../editor.js';
 
 /*
  * Rollout radar model: which language and market copies of each source page exist, and whether the
@@ -69,13 +69,40 @@ export function pageActions({
   const query = new URLSearchParams({
     path: decoded, org, site, ref,
   });
+  const inbox = new URLSearchParams({
+    org, site, path: decoded, env: 'ci', ref: DEMO_BRANCH, nx: DEMO_BRANCH,
+  });
   return {
-    edit: `${DA_EDITOR}/edit#/${org}/${site}${encoded}`,
+    edit: `${DA_EDITOR}/canvas#/${org}/${site}${encoded}`,
     preview: `https://${ref}--${site}--${org}.aem.page${encoded}`,
     preflight: `/tools/aida/preflight/preflight.html?${query}`,
-    workflow: `/tools/aida/showcase/index.html?${new URLSearchParams({ path: decoded })}#workflow`,
+    review: `${DA_EDITOR}/app/adobe-rnd/aem-apps/tools/apps/publish-requests-inbox/publish-requests-inbox?${inbox}`,
+    files: `${DA_EDITOR}/#/${org}/${site}${encoded.slice(0, encoded.lastIndexOf('/'))}`,
+    snapshots: `${DA_EDITOR}/apps/snapshots#/${org}/${site}`,
     translate: `${DA_EDITOR}/apps/loc#/${org}/${site}`,
   };
+}
+
+/**
+ * Review state of a page from the publish requests sheet (/.da/publish-workflow-requests.json):
+ * the step a pending request waits on (one past the highest approved step in its `step` log of
+ * `email:step:date` entries) and that step's title from publish-workflow-settings.
+ */
+export function reviewState(rows, settings, path) {
+  const row = rows.find((r) => r.path === path && r.status === 'pending');
+  if (!row) return null;
+  const approved = split(row.step).map((entry) => parseInt(entry.split(':')[1], 10))
+    .filter((n) => Number.isInteger(n) && n > 0);
+  const step = Math.max(0, ...approved) + 1;
+  const title = settings.find((s) => s.key === `workflow.step.${step}.title`)?.value || `Step ${step}`;
+  return { step, title, requester: row.requester };
+}
+
+/** Editor comment threads of a page: roots (threadId null) that are open or resolved. */
+export function commentCounts(comments) {
+  const roots = comments.filter((c) => c.threadId == null);
+  const resolved = roots.filter((c) => c.resolved).length;
+  return { open: roots.length - resolved, resolved };
 }
 
 export function buildGrid(sourcePages, targets, modified) {

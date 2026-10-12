@@ -6,6 +6,7 @@
  * names to show; the market-offer block reads the values from the WDH market sheet at render time.
  * Not AEM Content Fragments; no references, workflow or ownership governance (DA SC limits).
  */
+import { DA_EDITOR } from '../aida/editor.js';
 
 const SITE = '/moved-permanently/bmw';
 export const FOLDERS = ['/aida/structured/news', '/aida/structured/offers'];
@@ -80,7 +81,7 @@ export function schemaDocument(schema) {
 
 /** editor.path rows: documents in the demo folders open in the native form editor. */
 export function editorRoutes() {
-  return FOLDERS.map((f) => ({ key: 'editor.path', value: `${SITE}${f}=https://da.live/form#` }));
+  return FOLDERS.map((f) => ({ key: 'editor.path', value: `${SITE}${f}=${DA_EDITOR}/form#` }));
 }
 
 const DEMO = 'Demo record: public BMW information and BMW RfP briefing copy, not a live offer.';

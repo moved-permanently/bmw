@@ -50,7 +50,8 @@ test('native radar has actionable navigation, a timestamp disclaimer and no HTML
   assert.match(html, /publish-requests-inbox/);
   assert.match(html, /timestamps[^<]*recency/i);
   assert.match(html, /review[^<]*publish requests/i);
-  assert.match(js, /No approval\/release evidence available/);
+  assert.match(js, /publish-workflow-requests\.json/);
+  assert.match(js, /\.da\/comments\//);
   assert.match(js, /spectrum-Table/);
   assert.doesNotMatch(js, /\.innerHTML\s*=/);
   assert.match(js, /window\.parent === window/);

@@ -35,10 +35,15 @@
   margin: 10px 0;
 }
 
-.radar .radar-evidence {
-  display: block;
-  font-weight: var(--spectrum-regular-font-weight);
-  color: var(--spectrum-neutral-subdued-content-color-default);
+.radar .radar-workflow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.radar .radar-workflow:empty {
+  display: none;
 }
 
 .radar .radar-drift {
