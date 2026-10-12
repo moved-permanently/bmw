@@ -11,6 +11,12 @@
     ]
   },
   "contentIngestion": {
-    "indexPath": "/sitemap.json"
+    "enabled": true,
+    "indexPath": "/of1/index.json",
+    "includePaths": [
+      "/de/**",
+      "/of1/knowledge/**"
+    ],
+    "maxChunkTokens": 400
   }
 }
