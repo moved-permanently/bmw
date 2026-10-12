@@ -22,7 +22,7 @@ Then, once per Simulator session, choose **I/O > External Displays > CarPlay** a
 
 | Demo moment | Command |
 |---|---|
-| 1. The road tells the story: a 4-minute drive Munich, Iphitos, BMW Park, Ruhpolding, Salzburg | `./demo/run.sh drive 4` |
+| 1. The road tells the story: a 4-minute drive Munich, Iphitos, BMW Park, the Chiemgau Arena alert, Salzburg | `./demo/run.sh drive 4` |
 | 2. The market follows the car, the language stays yours | the drive crosses at Walserberg (`de/de` to `de/at`); `./demo/run.sh at salzburg` jumps there; `./demo/run.sh lang fr` switches language |
 | 3. Range you have now | `./demo/run.sh soc 30` |
 | 4. Edit in Experience Workspace, refresh in the car | edit `/aida/showcase/de/de/i5`, Preview, then `./demo/run.sh refresh` (html2json may lag up to 60 s) |
@@ -40,11 +40,11 @@ Tests: `xcodebuild -project BMWCarPlay.xcodeproj -scheme BMWCarPlay -destination
 
 `./demo/run.sh drive [minutes]` plays a Munich to Salzburg drive on the simulated phone: BMW Headquarters, MTTC Iphitos, BMW Park, then the A8 east to the Walserberg border and Salzburg Mirabellplatz.
 
-**Two routes.** The default goes **via Ruhpolding**: Apple Maps routes from BMW Park to the Chiemgau Arena, Ruhpolding, which leaves the A8 near Traunstein/Siegsdorf (about 47.83, 12.55), runs through Ruhpolding and rejoins the A8 near Siegsdorf. This detour is deliberate: the Chiemgau Arena is one of the seeded places (radius 25 km) and the drive passes right at it. It adds 30.6 km (about 31 minutes at Apple's expected travel times) to the 172 km direct route. `ROUTE=direct ./demo/run.sh drive 2` stays on the A8. The Ruhpolding alert fires on both: the A8 passes 12.3 km from the arena, inside its 25 km radius, and the alert first fires about 104 km into the route (A8 near Bernau am Chiemsee) either way. The detour only adds the drive through Ruhpolding itself.
+**Two routes.** The default is the **direct** A8 route, 172 km. `ROUTE=via-ruhpolding ./demo/run.sh drive 2` adds a detour: Apple Maps routes from BMW Park to the Chiemgau Arena, Ruhpolding, which leaves the A8 near Traunstein/Siegsdorf (about 47.83, 12.55), runs through Ruhpolding and rejoins the A8 near Siegsdorf. It adds 30.6 km (about 31 minutes at Apple's expected travel times). It is opt-in because it adds no alert: the Chiemgau Arena is a seeded place with a 25 km radius, the A8 passes 12.3 km from it, and the alert first fires about 104 km into the route (A8 near Bernau am Chiemsee) on both routes. The detour only adds the drive through Ruhpolding itself.
 
 **Road geometry.** Apple Maps (MapKit `MKDirections`, automobile), one request per leg, cached in `demo/apple-route.json` (full-resolution `MKRoute.polyline` points). `make-drive.mjs` needs no network or Apple Maps access. Where a leg ends at a stop, Apple adds an access road or parking loop; `make-drive.mjs` cuts these out-and-back spurs (up to 400 m around a stop) so the track stays on the through road.
 
-**Points.** The simulator moves in straight lines between points, so every point must be close to the road. `make-drive.mjs` simplifies the Apple polyline with Douglas-Peucker: the output is never more than 4 m from the Apple polyline, and no segment is longer than 200 m. Result: 1,512 points for the default route (1,186 direct); points are 7 to 40 m apart in tight bends and about 200 m apart on straights. A fixed 20 m step would give over 10,000 points, which the car map cannot follow at drive speed. `node demo/verify-drive.mjs` prints the deviation, spacing and proximity numbers.
+**Points.** The simulator moves in straight lines between points, so every point must be close to the road. `make-drive.mjs` simplifies the Apple polyline with Douglas-Peucker: the output is never more than 4 m from the Apple polyline, and no segment is longer than 200 m. Result: 1,186 points for the default route (1,512 via Ruhpolding); points are 7 to 40 m apart in tight bends and about 200 m apart on straights. A fixed 20 m step would give over 10,000 points, which the car map cannot follow at drive speed. `node demo/verify-drive.mjs` prints the deviation, spacing and proximity numbers.
 
 **Playback.** `simctl location start --interval` sends one update per interval and moves at most speed x interval per update. A segment shorter than that still takes a whole interval, so the drive lasts (points - 1) x interval no matter what speed is set. `run.sh drive N` therefore sets the interval to N x 60 / (points - 1) and a speed high enough that no segment is split, so each update lands on a point. `drive 2` is 12.7 updates per second, `drive 4` 6.3. The update rate is capped at 20 per second (`MIN_INTERVAL=0.05`), so a drive cannot get shorter than about 75 seconds for the default route. Because the points are dense in bends and sparse on straights, the car looks slower in the city than on the A8.
 
@@ -58,7 +58,7 @@ node make-drive.mjs                                       # regenerates the .txt
 node verify-drive.mjs
 ```
 
-Stops are in `apple-route-legs.json`. `make-drive.mjs --default direct` makes the direct route the default (also change `DEFAULT_ROUTE` in `run.sh`). `--tolerance` and `--max-segment` change the simplification.
+Stops are in `apple-route-legs.json`. `make-drive.mjs --default via-ruhpolding` makes the detour the default (also change `DEFAULT_ROUTE` in `run.sh`). `--tolerance` and `--max-segment` change the simplification.
 
 ## How it works
 

@@ -66,8 +66,8 @@ cmd_up() {
 }
 
 # Route files: drive-munich-salzburg.txt is the default route, drive-munich-salzburg-<route>.txt the other one
-# (make-drive.mjs writes both). ROUTE=direct ./demo/run.sh drive 2 plays the direct A8 route.
-DEFAULT_ROUTE=via-ruhpolding   # keep in sync with DEFAULT_ROUTE in make-drive.mjs
+# (make-drive.mjs writes both). ROUTE=via-ruhpolding ./demo/run.sh drive 2 plays the detour to Ruhpolding.
+DEFAULT_ROUTE=direct   # keep in sync with DEFAULT_ROUTE in make-drive.mjs
 MIN_INTERVAL="${MIN_INTERVAL:-0.05}"   # seconds between location updates; 0.05 = 20 per second at most
 
 # simctl plays the waypoints as straight lines. With --interval it sends one update per interval and moves at most

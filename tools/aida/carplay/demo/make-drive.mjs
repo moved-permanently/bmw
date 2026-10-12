@@ -7,7 +7,7 @@
 //
 // Two routes are written, both from the same cache:
 //   drive-munich-salzburg.txt/.gpx          DEFAULT_ROUTE (below)
-//   drive-munich-salzburg-direct.txt/.gpx   the direct A8 route, only when the default is the Ruhpolding one (and vice versa)
+//   drive-munich-salzburg-via-ruhpolding.txt/.gpx   the other route (-direct when the default is via-ruhpolding)
 // `via-ruhpolding` leaves the A8 for the Chiemgau Arena, Ruhpolding, and returns to the A8. `direct` stays on the A8.
 //
 // Points are simplified with Douglas-Peucker: no point of the Apple polyline is farther than TOLERANCE_M from the
@@ -25,7 +25,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const opt = (n, d) => (args.includes(n) ? args[args.indexOf(n) + 1] : d);
 
-const DEFAULT_ROUTE = opt('--default', 'via-ruhpolding'); // 'via-ruhpolding' or 'direct'
+const DEFAULT_ROUTE = opt('--default', 'direct'); // 'via-ruhpolding' or 'direct'
 const TOLERANCE_M = Number(opt('--tolerance', 4));        // max distance of the Apple polyline from the output track
 const MAX_SEGMENT_M = Number(opt('--max-segment', 200));  // longest straight segment in the output
 const minutes = Number(opt('--minutes', 0));              // scales the GPX timestamps to this duration (0 = real speed)
