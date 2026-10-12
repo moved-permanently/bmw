@@ -102,7 +102,7 @@ test('picker requests document-language labels and shows property and source con
   assert.match(source, /sourceLabel/);
   assert.match(source, /spectrum-Badge/);
   assert.match(source, /link\.textContent = v\.display;/, 'Insertion must remain the value, not its label');
-  assert.match(source, /setAttribute\('aria-label', `\$\{insertLabel\} \$\{v\.label\}`\)/);
+  assert.match(source, /setAttribute\('aria-label', `Insert \$\{v\.label\}`\)/);
 });
 
 test('connector sheets without source kinds show no source badge and no badge explanation', () => {
@@ -112,13 +112,33 @@ test('connector sheets without source kinds show no source badge and no badge ex
   assert.match(source, /\.some\(\(v\) => v\.sourceLabel\)/, 'Badge explanation only when badges are shown');
 });
 
-test('localized property names, source badges and insert buttons declare their language', () => {
+test('localized property names and source badges declare their language', () => {
   const source = read('tools/aida/wdh-picker/wdh-picker.js');
   assert.match(source, /tr\.children\[0\]\.lang = lang;/);
   assert.match(source, /querySelector\('\.wdh-source'\)\.lang = lang;/);
-  assert.match(source, /button\.lang = lang;/);
-  assert.match(source, /de: 'Einfügen'/);
-  assert.match(source, /fr: 'Insérer'/);
+});
+
+test('insert buttons are an English, icon-only plus in a circle', () => {
+  const source = read('tools/aida/wdh-picker/wdh-picker.js');
+  assert.doesNotMatch(source, /Einfügen|Insérer|insertLabel|button\.lang/);
+  assert.match(source, /spectrum-Button--iconOnly/);
+  assert.match(source, /<svg class="spectrum-Icon"[^>]*aria-hidden="true"/);
+  assert.doesNotMatch(source, /spectrum-Button-label/, 'No visible button text');
+  assert.match(source, /button\.title = 'Insert';/);
+});
+
+test('picker drops the preflight sentence and the table caption', () => {
+  const source = read('tools/aida/wdh-picker/wdh-picker.js');
+  assert.doesNotMatch(source, /Preflight checks/);
+  assert.doesNotMatch(source, /Linked technical values|<caption/);
+});
+
+test('picker title is smaller and the model dropdown is wider', () => {
+  const css = read('tools/aida/wdh-picker/wdh-picker.css');
+  const h1 = css.match(/\.wdh-picker h1\s*\{[^}]*font-size:\s*(\d+)px/);
+  assert.ok(h1 && Number(h1[1]) < 32, 'title below the 32px default');
+  const select = css.match(/\.wdh-picker #wdh-model\s*\{[^}]*min-width:\s*(\d+)px/);
+  assert.ok(select && Number(select[1]) >= 300, 'model picker at least 300px wide');
 });
 
 test('property row headers align with the left-aligned column heading', () => {

@@ -4,14 +4,17 @@
   margin: auto;
 }
 
-.wdh-picker .wdh-table-scroll {
-  overflow-x: auto;
+.wdh-picker h1 {
+  font-size: 24px;
 }
 
-.wdh-picker caption {
-  text-align: left;
-  margin-bottom: 12px;
-  color: var(--spectrum-neutral-subdued-content-color-default);
+.wdh-picker #wdh-model {
+  min-width: 360px;
+  max-width: 100%;
+}
+
+.wdh-picker .wdh-table-scroll {
+  overflow-x: auto;
 }
 
 .wdh-picker .spectrum-Table-cell:first-child {
@@ -33,4 +36,11 @@
 
 .wdh-picker .wdh-source {
   margin-top: 8px;
+}
+
+.wdh-picker .spectrum-Button--iconOnly {
+  inline-size: 32px;
+  block-size: 32px;
+  padding: 0;
+  justify-content: center;
 }

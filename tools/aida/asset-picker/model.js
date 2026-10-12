@@ -18,11 +18,7 @@ export function countryForContext(context = {}) {
 }
 
 export function assetContextMessage(context = {}) {
-  const country = countryForContext(context);
-  if (country) {
-    const name = new Intl.DisplayNames(['en'], { type: 'region' }).of(country.toUpperCase());
-    return `${name} preselected from this document. Unlocalized images are included.`;
-  }
+  if (countryForContext(context)) return '';
   let path;
   try { path = new URL(context.path || '', 'https://example.invalid').pathname; } catch { path = ''; }
   const language = path.match(/^\/aida\/(?:showcase\/)?(en|de|fr)(?:\/|$)/)?.[1];

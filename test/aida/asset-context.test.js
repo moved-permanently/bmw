@@ -1,16 +1,18 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
 import { assetContextMessage } from '../../tools/aida/asset-picker/model.js';
 
-test('market documents identify the preselected country without losing unlocalized assets', () => {
-  assert.equal(
-    assetContextMessage({ path: '/aida/showcase/fr/be/news/i5' }),
-    'Belgium preselected from this document. Unlocalized images are included.',
-  );
-  assert.equal(
-    assetContextMessage({ path: '/aida/showcase/fr/fr/i5' }),
-    'France preselected from this document. Unlocalized images are included.',
-  );
+const read = (path) => readFileSync(new URL(`../../tools/aida/asset-picker/${path}`, import.meta.url), 'utf8');
+
+test('market documents show no context message; the country picker already shows the preselection', () => {
+  assert.equal(assetContextMessage({ path: '/aida/showcase/fr/be/news/i5' }), '');
+  assert.equal(assetContextMessage({ path: '/aida/showcase/fr/fr/i5' }), '');
+  assert.match(read('asset-picker.js'), /find\('context'\)\.hidden = !/, 'An empty context note is hidden');
+});
+
+test('the header drops the demo catalogue disclaimer', () => {
+  assert.doesNotMatch(read('asset-picker.html'), /Published demo catalogue|DAM permissions/);
 });
 
 test('source-language documents ask for a target country rather than report failed detection', () => {
