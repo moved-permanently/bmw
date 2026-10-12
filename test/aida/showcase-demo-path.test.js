@@ -46,7 +46,7 @@ test('the chapters tell the full RfP story of Briefings I and III', () => {
 
 test('show links open known BMW demo surfaces or a tab of this app', () => {
   const editor = new URL(DA_EDITOR).host;
-  const hosts = [editor, 'main--bmw--moved-permanently.aem.page', 'main--bmw--moved-permanently.aem.live', 'da-sc.adobeaem.workers.dev', 'wdh-proxy.aem-poc-lab.workers.dev', 'www.aem.live'];
+  const hosts = [editor, 'main--bmw--moved-permanently.aem.page', 'main--bmw--moved-permanently.aem.live', 'i5-launch-news--main--bmw--moved-permanently.aem.reviews', 'da-sc.adobeaem.workers.dev', 'wdh-proxy.aem-poc-lab.workers.dev', 'www.aem.live'];
   const ids = view.tabs.map(([id]) => id);
   chapters.flatMap((c) => c.show).forEach(({ label, href }) => {
     assert.ok(label, href);
@@ -159,7 +159,7 @@ test('the demo path shows Experience Workspace itself, not the click-through wor
   links.forEach(({ id, href }) => assert.doesNotMatch(href, /^#(overview|workflow|translate|rollout|radar)\b/, `${id}: ${href}`));
   const of = (id) => chapters.find((c) => c.id === id).show.map((s) => s.href);
   assert.ok(of('review').includes(`${DA_EDITOR}/canvas#/moved-permanently/bmw/aida/showcase/en/news/i5-launch`));
-  assert.ok(of('review').includes(`${DA_EDITOR}/apps/snapshots#/moved-permanently/bmw`));
+  assert.ok(of('review').includes(`${DA_EDITOR}/apps/snapshots?nx=ewdemo&snapshot=i5-launch-news#/moved-permanently/bmw`));
   assert.ok(of('rollout').includes(`${DA_EDITOR}/canvas#/moved-permanently/bmw/aida/showcase/fr/be/news/i5-launch`));
   assert.ok(of('rollout').some((h) => h.includes('/app/adobe-rnd/aem-apps/tools/apps/publish-requests-inbox/publish-requests-inbox?org=moved-permanently&site=bmw')));
   assert.ok(of('status').some((h) => h.includes('/tools/aida/radar/radar')));
