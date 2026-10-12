@@ -6,12 +6,16 @@ final class CarController {
     let interface: CPInterfaceController
     let session = Session.shared
     let car: CarTab, places: PlacesTab, news: NewsTab
+    let mapController: CarMapViewController
+    private var mapTemplate: CPMapTemplate!
     private var tabBar: CPTabBarTemplate!
     private var observer: NSObjectProtocol?
     private var lastKey = ""
+    private var tabOpen = false
 
-    init(interface: CPInterfaceController) {
+    init(interface: CPInterfaceController, mapController: CarMapViewController) {
         self.interface = interface
+        self.mapController = mapController
         car = CarTab(interface: interface)
         places = PlacesTab(interface: interface)
         news = NewsTab(interface: interface)
@@ -20,10 +24,17 @@ final class CarController {
     func start() {
         NSLog("BMWCarPlay maximumTabCount=%d", CPTabBarTemplate.maximumTabCount)
         tabBar = CPTabBarTemplate(templates: [places.template, car.template, news.template])
-        interface.setRootTemplate(tabBar, animated: false, completion: carplayLog)
+        // Navigation apps start on the map template; the lists live in a tab bar one level up.
+        mapTemplate = CPMapTemplate()
+        mapTemplate.mapButtons = [
+            CPMapButton { [weak self] _ in self?.mapController.zoom(by: 0.5) }.with(image: "plus"),
+            CPMapButton { [weak self] _ in self?.mapController.zoom(by: 2) }.with(image: "minus"),
+        ]
+        mapTemplate.leadingNavigationBarButtons = [CPBarButton(title: "BMW") { [weak self] _ in self?.openTabs(0) }]
+        interface.setRootTemplate(mapTemplate, animated: false, completion: carplayLog)
         session.onEnter = { [weak self] p in self?.places.alert(for: p) }
         session.onLink = { [weak self] l in self?.handle(l) }
-        session.onMove = { [weak self] in self?.places.moved() }
+        session.onMove = { [weak self] in self?.places.moved(); self?.mapController.centre(animated: true) }
         observer = NotificationCenter.default.addObserver(forName: .vehicleChanged, object: session.state, queue: .main) { [weak self] _ in
             self?.vehicleChanged()
         }
@@ -45,15 +56,27 @@ final class CarController {
     func reloadAll() async {
         async let a: () = car.reload(), b: () = news.reload(), c: () = places.reload()
         _ = await (a, b, c)
+        await MainActor.run { mapController.reloadPlaces() }
         session.skippedBlocks = car.skipped
+    }
+
+    /// Shows the tab bar over the map, on tab `index`. A second call replaces what is on top.
+    func openTabs(_ index: Int) {
+        let ts = [places.template, car.template, news.template]
+        guard ts.indices.contains(index) else { return }
+        if tabOpen { tabBar.select(ts[index]); return }
+        tabOpen = true
+        interface.pushTemplate(tabBar, animated: true) { [weak self] ok, error in
+            carplayLog(ok, error)
+            if ok { self?.tabBar.select(ts[index]) } else { self?.tabOpen = false }
+        }
     }
 
     func handle(_ link: DeepLink) {
         switch link {
         case .refresh: Task { await reloadAll() }
         case let .tab(i):
-            let ts = [places.template, car.template, news.template]
-            if ts.indices.contains(i) { tabBar.select(ts[i]) }
+            openTabs(i)
         case let .open(path): Task { await car.open(path: path) }
         case .vehicle, .reset: break
         }
@@ -78,4 +101,8 @@ func refreshButton(lang: String, action: @escaping () -> Void) -> CPBarButton {
 /// CarPlay raises an exception when a presentation fails and nobody is listening, so every call logs instead.
 func carplayLog(_ ok: Bool, _ error: Error?) {
     if let error { NSLog("BMWCarPlay template call failed: %@", "\(error)") }
+}
+
+extension CPMapButton {
+    func with(image name: String) -> CPMapButton { image = UIImage(systemName: name); return self }
 }
