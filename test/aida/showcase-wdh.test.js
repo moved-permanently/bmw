@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import * as wdh from '../../scripts/aida-wdh.js';
+import { showWdhCheck } from '../../scripts/wdh-session.js';
 
 test('showcase paths resolve explicit market context without silently losing the prefix', () => {
   assert.equal(wdh.marketForPath('/aida/showcase/fr/be/i5')?.market, 'fr');
@@ -30,6 +31,6 @@ test('preflight and WDH picker use the matching connector data root for the curr
 
 test('showcase delivery does not add the legacy automatic preview WDH fetch', () => {
   const runtime = readFileSync(new URL('../../scripts/scripts.js', import.meta.url), 'utf8');
-  assert.match(runtime, /const showcasePage =/);
-  assert.match(runtime, /wdhSession\.bindings\.length && !showcasePage/);
+  assert.match(runtime, /wdhSession\.bindings\.length && showWdhCheck\(window\.location\)/);
+  assert.equal(showWdhCheck({ hostname: 'main--bmw--moved-permanently.aem.page', pathname: '/aida/showcase/fr/be/i5' }), false);
 });

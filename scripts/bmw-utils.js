@@ -1106,13 +1106,15 @@ const sheetCache = new Map();
  * {data: [...]} with all rows (further pages are loaded when `total` exceeds the first page);
  * multi-sheets as {<name>: [...rows]} for every name in `:names`.
  * @param {string} path site path of the sheet ("/de/data/x.json")
+ * @param {{reload?: boolean}} [options] reload: load it again past the cache (WDH panel ↻)
  * @returns {Promise<{data?: object[], [name: string]: object[]}>}
  */
-export function fetchSheet(path) {
+export function fetchSheet(path, { reload = false } = {}) {
+  if (reload) sheetCache.delete(path);
   if (!sheetCache.has(path)) {
     const load = async () => {
       const get = async (url) => {
-        const resp = await fetch(url);
+        const resp = await fetch(url, reload ? { cache: 'reload' } : undefined);
         if (!resp.ok) throw new Error(`${path}: ${resp.status}`);
         return resp.json();
       };

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   parseBinding, bindingHref, marketForPath, valuesFromSheet, findBindings, syncBindings, autoBind,
-  textOf, staleBindings, wdhUpdateAction, wdhUpdateTarget,
+  textOf, staleBindings,
 } from '../../scripts/aida-wdh.js';
 
 const WLTP = 'BMW i5 eDrive40 Limousine: Energieverbrauch kombiniert: 17,9 kWh/100 km (WLTP); CO₂-Emissionen kombiniert: 0 g/km (WLTP); CO₂-Klasse(n): A; Elektrische Reichweite: 513–627 km (WLTP)';
@@ -190,47 +190,4 @@ test('staleBindings reports outdated values, foreign markets and unknown keys', 
       href: '/aida/data/wdh-fr.json#99XX.power', key: '99XX.power', text: '1 kW', expected: null, reason: 'unknown',
     },
   ]);
-});
-
-const EDITOR = {
-  hostname: 'main--bmw--moved-permanently.preview.da.live',
-  pathname: '/aida/fr/be/i5',
-  search: '?rum=off&consent=disabled&quick-edit=on&controller=parent',
-};
-const STALE = [
-  { key: '61HG.power', expected: '250 kW (340 ch)' },
-  { key: '61HG.name', expected: 'BMW i5 eDrive40 Berline' },
-  { key: '99XX.power', expected: null },
-];
-const APP = 'https://da.live/app/moved-permanently/bmw/tools/aida/preflight/preflight';
-
-test('the editor overlay offers to update the fixable values through the Preflight app', () => {
-  assert.deepEqual(wdhUpdateAction(STALE, EDITOR), {
-    count: 2,
-    url: `${APP}?update=%2Faida%2Ffr%2Fbe%2Fi5`,
-  });
-  const branch = { ...EDITOR, hostname: 'wdhupd--bmw--moved-permanently.preview.da.live' };
-  assert.equal(wdhUpdateAction(STALE, branch).url, `${APP}?update=%2Faida%2Ffr%2Fbe%2Fi5&ref=wdhupd`);
-});
-
-test('the overlay update is only offered while editing and when a value can be fixed', () => {
-  assert.equal(wdhUpdateAction(STALE, { ...EDITOR, hostname: 'main--bmw--moved-permanently.aem.page', search: '' }), null);
-  assert.equal(wdhUpdateAction(STALE, { ...EDITOR, hostname: 'localhost' }), null);
-  assert.equal(wdhUpdateAction([STALE[2]], EDITOR), null);
-  assert.equal(wdhUpdateAction([], EDITOR), null);
-});
-
-test('Preflight takes the page to update from the menu context or from the overlay link', () => {
-  assert.equal(wdhUpdateTarget('', '/aida/fr/be/i5.html'), null);
-  assert.deepEqual(wdhUpdateTarget('?update', '/aida/fr/be/i5.html'), { path: '/aida/fr/be/i5.html', fromLink: false });
-  assert.deepEqual(
-    wdhUpdateTarget('?update=%2Faida%2Ffr%2Fbe%2Fi5&ref=wdhupd', 'tools/aida/preflight/preflight'),
-    { path: '/aida/fr/be/i5', fromLink: true },
-  );
-});
-
-test('Preflight ignores an update link that does not name a page of this site', () => {
-  assert.equal(wdhUpdateTarget('?update=%2F..%2Fother%2Fsite%2Fpage', 'x'), null);
-  assert.equal(wdhUpdateTarget('?update=https%3A%2F%2Fevil.example%2Fpage', 'x'), null);
-  assert.equal(wdhUpdateTarget('?update=aida%2Ffr%2Fbe%2Fi5', 'x'), null);
 });

@@ -13,7 +13,7 @@ import {
   getMetadata,
 } from './aem.js';
 import { decorateBmwSections } from './bmw-sections.js';
-import { createWdhSession } from './wdh-session.js';
+import { createWdhSession, captureEditorPort, showWdhCheck } from './wdh-session.js';
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
   const innerTT = window.trustedTypes.createPolicy('tt-inner', {
@@ -409,6 +409,8 @@ function decorateButtons(main) {
 }
 
 const wdhSession = createWdhSession();
+// Experience Workspace: keep the quick-edit port for the WDH panel (before quick edit loads)
+const wdhEditor = captureEditorPort();
 
 /**
  * WDH tech values are authored as links to their market sheet row
@@ -519,9 +521,8 @@ async function loadLazy(doc) {
 
   import('./bmw-consent.js').then((m) => m.default());
   import('./bmw-sidebar.js').then((m) => m.default());
-  const showcasePage = /^\/(?:drafts\/)?aida\/showcase\//.test(window.location.pathname);
-  if (wdhSession.bindings.length && !showcasePage && /(\.aem\.page|\.preview\.da\.live|^localhost)$/.test(window.location.hostname)) {
-    import('./aida.js').then((m) => m.checkWdhValues(wdhSession));
+  if (wdhSession.bindings.length && showWdhCheck(window.location)) {
+    import('./aida.js').then((m) => m.checkWdhValues(wdhSession, wdhEditor));
   }
 }
 
