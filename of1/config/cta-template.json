@@ -1,0 +1,13 @@
+{
+  "html": "<div style=\"background:#262626;color:#ffffff;padding:3.5rem 2rem;text-align:center;margin:0;font-family:bmwTypeNextWeb, 'Helvetica Neue', Helvetica, Arial, sans-serif;\"><h2 style=\"color:#ffffff;font-family:bmwTypeNextWeb, 'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:2.0625rem;font-weight:300;line-height:2.875rem;margin:0 0 1rem;\">{{title}}</h2><p style=\"color:#e6e6e6;font-family:bmwTypeNextWeb, 'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:1.125rem;font-weight:300;line-height:1.75rem;margin:0 auto 2rem;max-width:42rem;\">{{description}}</p><a href=\"{{href}}\" style=\"display:inline-block;background:#1c69d4;color:#ffffff;font-family:bmwTypeNextWeb, 'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:1rem;font-weight:500;padding:0.875rem 2rem;border-radius:3px;text-decoration:none;text-transform:none;\">{{buttonText}}</a></div>",
+  "slots": [
+    "title",
+    "description",
+    "buttonText"
+  ],
+  "fallback": {
+    "title": "Finden Sie Ihr passendes Elektroauto",
+    "description": "Entdecken Sie unsere elektrischen Modelle und aktuellen Angebote, und vereinbaren Sie gern eine Probefahrt.",
+    "buttonText": "OF1 fragen"
+  }
+}
