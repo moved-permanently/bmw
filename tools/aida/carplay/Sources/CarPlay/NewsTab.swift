@@ -51,6 +51,6 @@ final class NewsTab {
             CPTextButton(title: L10n.t(.stop, lang), textStyle: .normal) { _ in Speech.shared.stop() },
         ]
         let t = CPInformationTemplate(title: a.title, layout: .leading, items: Array(items.prefix(10)), actions: actions)
-        await MainActor.run { interface.pushTemplate(t, animated: true, completion: nil) }
+        await MainActor.run { interface.pushTemplate(t, animated: true, completion: carplayLog) }
     }
 }

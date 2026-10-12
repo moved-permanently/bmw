@@ -50,10 +50,12 @@ cmd_up() {
 
 cmd_drive() {
   local minutes="${1:-4}" meters speed
-  meters=$(( $(wc -l < "$HERE/drive-munich-salzburg.txt") * 41 ))   # ~41 m between points
+  # one waypoint every 500 m (make-drive.mjs); an update at each waypoint
+  meters=$(( ($(wc -l < "$HERE/drive-munich-salzburg.txt") - 1) * 500 ))
   speed=$(( meters / (minutes * 60) ))
-  xcrun simctl location "$UDID" start --speed="$speed" --interval=1 - < "$HERE/drive-munich-salzburg.txt"
-  echo "driving Munich to Salzburg in about $minutes min (${speed} m/s)"
+  xcrun simctl location "$UDID" clear || true
+  xcrun simctl location "$UDID" start --speed="$speed" --distance=500 - < "$HERE/drive-munich-salzburg.txt"
+  echo "driving Munich to Salzburg: $((meters / 1000)) km in about $minutes min (${speed} m/s)"
 }
 
 cmd_at()      { xcrun simctl location "$UDID" set "$(place "$1")"; }

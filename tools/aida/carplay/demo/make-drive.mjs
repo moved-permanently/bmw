@@ -30,13 +30,27 @@ const km = (a, b) => {
   return 12742 * Math.asin(Math.sqrt(h));
 };
 
+// simctl issues one update per waypoint segment, so the .txt carries one waypoint every STEP_M metres
+// and run.sh asks for an update every STEP_M metres (--distance). Dense points would crawl.
+const STEP_M = 500;
+const resample = (pts) => {
+  const out = [pts[0]]; let acc = 0;
+  for (let i = 1; i < pts.length; i += 1) {
+    acc += km(pts[i - 1], pts[i]) * 1000;
+    if (acc >= STEP_M) { out.push(pts[i]); acc = 0; }
+  }
+  if (out.at(-1) !== pts.at(-1)) out.push(pts.at(-1));
+  return out;
+};
+
 let points; let header;
 if (opt('--from')) {
   const gpx = readFileSync(opt('--from'), 'utf8');
   points = [...gpx.matchAll(/<trkpt lat="([-\d.]+)" lon="([-\d.]+)"/g)].map((m) => [Number(m[1]), Number(m[2])]);
   header = `recorded track ${opt('--from')}`;
-  writeFileSync(join(HERE, 'drive-munich-salzburg.txt'), `${points.map((p) => p.join(',')).join('\n')}\n`);
-  console.log(`wrote ${points.length} points to drive-munich-salzburg.txt`);
+  const sim = resample(points);
+  writeFileSync(join(HERE, 'drive-munich-salzburg.txt'), `${sim.map((p) => p.join(',')).join('\n')}\n`);
+  console.log(`wrote ${sim.length} points to drive-munich-salzburg.txt`);
   process.exit(0);
 }
 
@@ -82,5 +96,6 @@ ${trkpts.join('\n')}
   </trkseg></trk>
 </gpx>
 `);
-writeFileSync(join(HERE, 'drive-munich-salzburg.txt'), `${points.map((p) => `${p[0].toFixed(6)},${p[1].toFixed(6)}`).join('\n')}\n`);
-console.log(`${points.length} points, ${total.toFixed(0)} km, ${header}`);
+const simPts = resample(points);
+writeFileSync(join(HERE, 'drive-munich-salzburg.txt'), `${simPts.map((p) => `${p[0].toFixed(6)},${p[1].toFixed(6)}`).join('\n')}\n`);
+console.log(`${points.length} GPX points, ${simPts.length} simulator waypoints, ${total.toFixed(0)} km, ${header}`);

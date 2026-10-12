@@ -72,7 +72,7 @@ final class CarTab {
         }
         if let d = vm.disclaimer { items.append(CPInformationItem(title: L10n.t(.legal, lang), detail: String(d.prefix(300)))) }
         let t = CPInformationTemplate(title: vm.title, layout: .leading, items: Array(items.prefix(10)), actions: [])
-        interface.pushTemplate(t, animated: true, completion: nil)
+        interface.pushTemplate(t, animated: true, completion: carplayLog)
     }
 
     /// bmwcarplay://open?path=… pushes any showcase page as a list.
@@ -81,6 +81,6 @@ final class CarTab {
         let a = ArticleViewModel(page: page)
         let items = ([a.teaser] + a.pairs.map { "\($0.label): \($0.value)" }).filter { !$0.isEmpty }.map { CPListItem(text: $0, detailText: nil) }
         let t = CPListTemplate(title: a.title, sections: [CPListSection(items: items)])
-        await MainActor.run { interface.pushTemplate(t, animated: true, completion: nil) }
+        await MainActor.run { interface.pushTemplate(t, animated: true, completion: carplayLog) }
     }
 }

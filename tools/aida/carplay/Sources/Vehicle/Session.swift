@@ -91,7 +91,8 @@ final class Session: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func update(lat: Double, lon: Double) {
         self.lat = lat; self.lon = lon; hasFix = true
-        for p in proximity.update(places: places, lat: lat, lon: lon).prefix(1) { onEnter?(p) }
+        // Without a car screen the alert cannot show, so do not use up the entry either.
+        if let handler = onEnter, let p = proximity.update(places: places, lat: lat, lon: lon).first { handler(p) }
         geocodeIfNeeded(lat: lat, lon: lon)
     }
 

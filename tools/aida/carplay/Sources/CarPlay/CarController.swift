@@ -20,7 +20,7 @@ final class CarController {
     func start() {
         NSLog("BMWCarPlay maximumTabCount=%d", CPTabBarTemplate.maximumTabCount)
         tabBar = CPTabBarTemplate(templates: [places.template, car.template, news.template])
-        interface.setRootTemplate(tabBar, animated: false, completion: nil)
+        interface.setRootTemplate(tabBar, animated: false, completion: carplayLog)
         session.onEnter = { [weak self] p in self?.places.alert(for: p) }
         session.onLink = { [weak self] l in self?.handle(l) }
         observer = NotificationCenter.default.addObserver(forName: .vehicleChanged, object: session.state, queue: .main) { [weak self] _ in
@@ -72,4 +72,9 @@ enum Img {
 
 func refreshButton(lang: String, action: @escaping () -> Void) -> CPBarButton {
     CPBarButton(title: "↻") { _ in action() }
+}
+
+/// CarPlay raises an exception when a presentation fails and nobody is listening, so every call logs instead.
+func carplayLog(_ ok: Bool, _ error: Error?) {
+    if let error { NSLog("BMWCarPlay template call failed: %@", "\(error)") }
 }

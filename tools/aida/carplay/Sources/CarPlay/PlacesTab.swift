@@ -63,7 +63,7 @@ final class PlacesTab {
         var items = [CPListItem(text: vm.headline, detailText: vm.lead)]
         for line in vm.speechText.split(separator: "\n").dropFirst().prefix(6) { items.append(CPListItem(text: String(line), detailText: nil)) }
         let t = CPListTemplate(title: vm.name, sections: [CPListSection(items: items)])
-        interface.pushTemplate(t, animated: true, completion: nil)
+        interface.pushTemplate(t, animated: true, completion: carplayLog)
     }
 
     func alert(for row: PlaceRow) {
@@ -73,18 +73,20 @@ final class PlacesTab {
             if vm == nil, let page = try? await session.client.page(path: row.path) { vm = PlaceViewModel(row: row, page: page) }
             let headline = vm?.headline ?? row.name
             await MainActor.run {
+                // One template at a time: a second presentation raises inside CarPlay.
+                guard interface.presentedTemplate == nil else { return }
                 let read = CPAlertAction(title: L10n.t(.read, lang), style: .default) { [weak self] _ in
-                    self?.interface.dismissTemplate(animated: true, completion: nil)
+                    self?.interface.dismissTemplate(animated: true, completion: carplayLog)
                     if let vm { self?.speak(vm) }
                 }
                 let later = CPAlertAction(title: L10n.t(.later, lang), style: .cancel) { [weak self] _ in
-                    self?.interface.dismissTemplate(animated: true, completion: nil)
+                    self?.interface.dismissTemplate(animated: true, completion: carplayLog)
                 }
                 let a = CPAlertTemplate(titleVariants: ["\(row.name): \(headline)", row.name], actions: [read, later])
-                interface.presentTemplate(a, animated: true, completion: nil)
-                // The alert must not block the tabs for good; drop it after 20 s if nobody answered.
-                DispatchQueue.main.asyncAfter(deadline: .now() + 20) { [weak self] in
-                    if self?.interface.presentedTemplate === a { self?.interface.dismissTemplate(animated: true, completion: nil) }
+                interface.presentTemplate(a, animated: true, completion: carplayLog)
+                // The alert must not block the tabs for good; drop it after 12 s if nobody answered.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 12) { [weak self] in
+                    if self?.interface.presentedTemplate === a { self?.interface.dismissTemplate(animated: true, completion: carplayLog) }
                 }
             }
         }

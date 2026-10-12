@@ -8,7 +8,7 @@
       "path": "/de/mehr-bmw/sport-und-events/bmw-basketball/bmw-park",
       "lat": "48.126031",
       "lon": "11.5253539",
-      "radiusKm": "10",
+      "radiusKm": "3",
       "note": "Demo-Datensatz"
     },
     {
@@ -16,7 +16,7 @@
       "path": "/de/mehr-bmw/sport-und-events/tennis",
       "lat": "48.1845529",
       "lon": "11.6148381",
-      "radiusKm": "10",
+      "radiusKm": "3",
       "note": "Demo-Datensatz"
     },
     {
@@ -24,7 +24,7 @@
       "path": "/de/topics/faszination-bmw/events/bmw-golfsport/golf-cup",
       "lat": "48.2709359",
       "lon": "11.7711523",
-      "radiusKm": "10",
+      "radiusKm": "5",
       "note": "Demo-Datensatz"
     },
     {
