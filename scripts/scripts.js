@@ -13,6 +13,7 @@ import {
   getMetadata,
 } from './aem.js';
 import { decorateBmwSections } from './bmw-sections.js';
+import { applyAudience } from './audience.js';
 import { createWdhSession, captureEditorPort, showWdhCheck } from './wdh-session.js';
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
@@ -486,6 +487,8 @@ async function loadEager(doc) {
   wdhSession.start();
   if (main) {
     decorateMain(main);
+    // generative home (/de/home-gen): keep only the sections authored for the matched audience
+    applyAudience(main);
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
@@ -521,6 +524,7 @@ async function loadLazy(doc) {
 
   import('./bmw-consent.js').then((m) => m.default());
   import('./bmw-sidebar.js').then((m) => m.default());
+  if (window.bmwAudience) import('./of1-why.js').then((m) => m.default(window.bmwAudience));
   if (wdhSession.bindings.length && showWdhCheck(window.location)) {
     import('./aida.js').then((m) => m.checkWdhValues(wdhSession, wdhEditor));
   }
