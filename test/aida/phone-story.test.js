@@ -1,8 +1,15 @@
-/* global globalThis */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { parseStory, createChannel, SOURCE_URL } from '../../tools/aida/phone-story/consumer.js';
+import {
+  parseStory, createChannel, SOURCE_URL, publicReadURL,
+} from '../../tools/aida/phone-story/consumer.js';
+
+test('DA-hosted frames use the existing public CORS proxy, never author credentials', () => {
+  const url = `${SOURCE_URL}.md`;
+  assert.equal(publicReadURL(url, new URL(SOURCE_URL).origin), url);
+  assert.equal(publicReadURL(url, 'https://main--bmw--moved-permanently.preview.da.live'), `https://da-etc.adobeaem.workers.dev/cors?url=${encodeURIComponent(url)}`);
+});
 
 const html = (title = 'An electric story') => `<div class="hero-stage"><a href="https://bmw.scene7.com/is/image/BMW/photo">BMW exterior</a><h1>${title}</h1><p>Authored introduction.</p></div><p><a href="/aida/showcase/data/wdh-de.json#61HG.electricRange">513–627 km</a></p><p><a href="/aida/showcase/data/wdh-de.json#61HG.wltp">WLTP statement.</a></p>`;
 const response = (text, ok = true) => ({ ok, status: ok ? 200 : 503, text: async () => text });
@@ -31,10 +38,12 @@ test('does not accept unsafe images or facts from another origin', () => {
 
 test('no fetch until explicit refresh; exactly the two public formats, without credentials', async () => {
   const calls = [];
-  const channel = createChannel({ fetcher: async (url, options) => {
-    calls.push({ url, options });
-    return response(url.includes('.plain.html') ? html() : '# An electric story');
-  } });
+  const channel = createChannel({
+    fetcher: async (url, options) => {
+      calls.push({ url, options });
+      return response(url.includes('.plain.html') ? html() : '# An electric story');
+    },
+  });
   assert.equal(calls.length, 0);
   assert.equal(channel.state.status, 'unfetched');
   await channel.refresh();
@@ -63,7 +72,7 @@ test('a failed refresh keeps the last successful content and its timestamp, labe
   let failed = false;
   const channel = createChannel({ fetcher: async (url) => response(url.includes('.plain.html') ? html() : '# An electric story', !failed), clock: () => new Date('2026-10-12T10:00:00Z') });
   await channel.refresh();
-  const item = channel.state.item;
+  const { item } = channel.state;
   failed = true;
   await channel.refresh();
   assert.equal(channel.state.status, 'stale');
