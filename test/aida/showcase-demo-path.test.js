@@ -171,3 +171,26 @@ test('insights point to AEM operational telemetry and show no sample numbers', (
   assert.ok(insights.show.some((s) => s.href === 'https://www.aem.live/docs/operational-telemetry'));
   assert.doesNotMatch(insights.tell.join(' '), /sample/i);
 });
+
+test('the delivery chapter (#path/11) links the car screen\'s news and places and where authors edit them', () => {
+  const index = chapters.findIndex((c) => c.id === 'delivery');
+  assert.equal(index, 11, 'the chapter keeps its number, so #path/11 stays the delivery chapter');
+  const delivery = chapters[index];
+  const hrefs = delivery.show.map((s) => s.href);
+  const preview = 'https://main--bmw--moved-permanently.aem.page';
+  assert.ok(hrefs.includes(`${preview}/aida/showcase/news-index.json`));
+  assert.ok(hrefs.includes(`${preview}/aida/showcase/data/places.json`));
+  assert.ok(hrefs.includes(`${DA_EDITOR}/sheet#/moved-permanently/bmw/aida/showcase/data/places`));
+  assert.ok(hrefs.includes(`${DA_EDITOR}/canvas#/moved-permanently/bmw/aida/showcase/de/de/news/cannes`));
+  assert.ok(hrefs.includes(`${DA_EDITOR}/canvas#/moved-permanently/bmw/de/mehr-bmw/sport-und-events/bmw-basketball/bmw-park`));
+  assert.match(delivery.tell.join(' '), /car screen/i);
+  assert.match(delivery.recap, /car screen/i);
+  const html = view.demoPath(chapters, index, RFP);
+  assert.ok(html.includes('href="https://main--bmw--moved-permanently.aem.page/aida/showcase/data/places.json"'));
+});
+
+test('the car app reads the same news and places sheets the delivery chapter links', () => {
+  const client = read('tools/aida/carplay/Sources/Content/ContentClient.swift');
+  assert.ok(client.includes('/aida/showcase/news-index.json'));
+  assert.ok(client.includes('/aida/showcase/data/places.json'));
+});

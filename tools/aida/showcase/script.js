@@ -227,8 +227,8 @@ export const chapters = [
     rfp: ['III Delivery', 'III Modeling'],
     tell: [
       'Pages arrive as complete HTML: fast, readable for search engines and AI agents.',
-      'The same content is available as Markdown, as an HTML fragment and, for structured content, as JSON.',
-      'A single data refresh can update changing values without turning the site into an application.',
+      'The same content is available as Markdown, as an HTML fragment and, for structured content, as JSON. The news list and the list of places are JSON sheets that authors edit in the editor.',
+      'The BMW car screen reads those pages: it lists the news and the nearest places, and reads a place’s story aloud when you drive past. Edit one in the editor, preview it, refresh the car.',
     ],
     show: [
       { label: 'Car page', href: page('/aida/showcase/en/i5') },
@@ -236,8 +236,13 @@ export const chapters = [
       { label: 'As HTML fragment', href: page('/aida/showcase/en/i5.plain.html') },
       { label: 'Market offer as JSON', href: `https://da-sc.adobeaem.workers.dev/preview/${SITE}/aida/structured/offers/bmw-i5-launch-fr` },
       { label: 'Data refresh', href: '#delivery' },
+      { label: 'News list the car reads (JSON)', href: page('/aida/showcase/news-index.json') },
+      { label: 'Edit a news article (Cannes)', href: canvas('/aida/showcase/de/de/news/cannes') },
+      { label: 'Places list the car reads (JSON)', href: page('/aida/showcase/data/places.json') },
+      { label: 'Edit the places list', href: `${DA_EDITOR}/sheet#/${SITE}/aida/showcase/data/places` },
+      { label: 'Edit a place page (BMW Park)', href: canvas('/de/mehr-bmw/sport-und-events/bmw-basketball/bmw-park') },
     ],
-    recap: 'Compose once, deliver as HTML, Markdown, fragments or JSON.',
+    recap: 'Compose once, deliver as HTML, Markdown, fragments or JSON, and to the car screen.',
   },
   {
     id: 'insights',
