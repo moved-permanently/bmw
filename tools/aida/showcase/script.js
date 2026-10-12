@@ -4,7 +4,6 @@ const PREVIEW = 'https://main--bmw--moved-permanently.aem.page';
 const LIVE = 'https://main--bmw--moved-permanently.aem.live';
 const SITE = 'moved-permanently/bmw';
 const canvas = (path) => `${DA_EDITOR}/canvas#/${SITE}${path}`;
-const source = (path) => `${DA_EDITOR}/edit#/${SITE}${path}`;
 const app = (name) => `${DA_EDITOR}/apps/${name}#/${SITE}`;
 const page = (path) => `${PREVIEW}${path}`;
 
@@ -53,7 +52,6 @@ export const chapters = [
     ],
     show: [
       { label: 'Visual editing: BMW i5 (Germany)', href: canvas('/aida/de/de/i5') },
-      { label: 'Document view: BMW i5', href: source('/aida/de/de/i5') },
       { label: 'Preview: BMW i5', href: page('/aida/de/de/i5') },
     ],
     recap: 'WYSIWYG for marketers, clean structure underneath, collaboration and versions built in.',
