@@ -17,6 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }, full, nil, .deliverImmediately)
             _ = index
         }
+        // `.cmd`: the demo script writes a bmwcarplay:// URL to Documents/cmd.txt and posts this, with no "Open in BMW?" prompt.
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), nil, { _, _, _, _, _ in
+            DispatchQueue.main.async {
+                guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+                      let text = try? String(contentsOf: dir.appendingPathComponent("cmd.txt"), encoding: .utf8) else { return }
+                for line in text.split(separator: "\n") {
+                    if let u = URL(string: line.trimmingCharacters(in: .whitespaces)), let l = DeepLink.parse(u) { Session.shared.handle(l) }
+                }
+            }
+        }, "com.adobe.aida.BMWCarPlay.cmd" as CFString, nil, .deliverImmediately)
         return true
     }
 

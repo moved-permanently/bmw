@@ -11,7 +11,7 @@ Nothing was written for the car except one sheet, `/aida/showcase/data/places.js
 
 ## Run it
 
-Prerequisites: Xcode 26.6 (iOS 26.5 simulator runtime) and an iPhone 17 simulator. No other tools; the Xcode project is checked in.
+Prerequisites: Xcode 26.6 and the iOS 18.6 simulator runtime (`xcodebuild -downloadPlatform iOS -buildVersion 18.6`, about 9 GB). `run.sh up` creates the "BMW CarPlay 18.6" simulator (iPhone 16 Pro) if it is missing. The iOS 26.5 runtime is not used: it crashes on any CarPlay map template, so the map would not show. No other tools; the Xcode project is checked in.
 
 ```sh
 cd tools/aida/carplay
@@ -30,11 +30,11 @@ Then, once per Simulator session, choose **I/O > External Displays > CarPlay** a
 
 Other: `./demo/run.sh at munich|iphitos|bmw-park|ruhpolding|salzburg`, `./demo/run.sh shot <name>` (car screen to `demo/shots/`), `./demo/run.sh down`.
 
-Deep links drive the app without tapping: `bmwcarplay://vehicle?soc=15&odo=29800&market=fr/fr&lang=fr` (`market=auto` clears the override), `bmwcarplay://refresh`, `bmwcarplay://reset`, `bmwcarplay://tab?index=1`, `bmwcarplay://open?path=/aida/showcase/de/de/news/cannes`. Use `xcrun simctl openurl <udid> '<url>'`.
+Deep links drive the app without tapping: `bmwcarplay://vehicle?soc=15&odo=29800&market=fr/fr&lang=fr` (`market=auto` clears the override), `bmwcarplay://refresh`, `bmwcarplay://reset`, `bmwcarplay://tab?index=1`, `bmwcarplay://open?path=/aida/showcase/de/de/news/cannes`. `run.sh` sends them without a prompt: it writes the URL to the app's `Documents/cmd.txt` and posts the notification `com.adobe.aida.BMWCarPlay.cmd`. `xcrun simctl openurl <udid> '<url>'` also works, but iOS 18 asks "Open in BMW?" on the phone each time.
 
-The Xcode way: open `BMWCarPlay.xcodeproj`, scheme BMWCarPlay, iPhone 17, Run; I/O > External Displays > CarPlay; Features > Location > Custom Location, or run `xcrun simctl location <udid> start --speed=1000 --interval=1 - < demo/drive-munich-salzburg.txt`. `demo/drive-munich-salzburg.gpx` carries timestamps for Xcode's location simulation.
+The Xcode way: open `BMWCarPlay.xcodeproj`, scheme BMWCarPlay, the "BMW CarPlay 18.6" simulator, Run; I/O > External Displays > CarPlay; Features > Location > Custom Location, or run `xcrun simctl location <udid> start --speed=1000 --interval=1 - < demo/drive-munich-salzburg.txt`. `demo/drive-munich-salzburg.gpx` carries timestamps for Xcode's location simulation.
 
-Tests: `xcodebuild -project BMWCarPlay.xcodeproj -scheme BMWCarPlay -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build test`.
+Tests: `xcodebuild -project BMWCarPlay.xcodeproj -scheme BMWCarPlay -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build test` (any simulator works for the tests).
 
 ## How it works
 

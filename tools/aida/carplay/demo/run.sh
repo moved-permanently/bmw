@@ -5,14 +5,30 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(dirname "$HERE")"
-DEVICE_NAME="${DEVICE_NAME:-iPhone 17}"
+# iOS 18.6, not 26.5: the 26.5 simulator runtime crashes on any map template (see README).
+DEVICE_NAME="${DEVICE_NAME:-BMW CarPlay 18.6}"
+RUNTIME=com.apple.CoreSimulator.SimRuntime.iOS-18-6
 BUNDLE=com.adobe.aida.BMWCarPlay
 SHOTS="$HERE/shots"
 
-UDID="${UDID:-$(xcrun simctl list devices available | grep -E "^\s+$DEVICE_NAME \(" | head -1 | sed -E 's/.*\(([0-9A-F-]{36})\).*/\1/')}"
-[ -n "$UDID" ] || { echo "no simulator named '$DEVICE_NAME' (set DEVICE_NAME or UDID)"; exit 1; }
+find_udid() { xcrun simctl list devices available | grep -E "^\s+$DEVICE_NAME \(" | head -1 | sed -E 's/.*\(([0-9A-F-]{36})\).*/\1/'; }
+UDID="${UDID:-$(find_udid)}"
 
-url() { xcrun simctl openurl "$UDID" "bmwcarplay://$1"; }
+# `up` creates the simulator when it is missing; every other command needs it to exist.
+ensure_device() {
+  [ -n "$UDID" ] && return
+  xcrun simctl list runtimes | grep -q "iOS 18.6" || { echo "iOS 18.6 simulator runtime missing: xcodebuild -downloadPlatform iOS -buildVersion 18.6"; exit 1; }
+  UDID="$(xcrun simctl create "$DEVICE_NAME" com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro "$RUNTIME")"
+  echo "created simulator '$DEVICE_NAME' ($UDID)"
+}
+need_device() { [ -n "$UDID" ] || { echo "no simulator named '$DEVICE_NAME': run ./demo/run.sh up first (or set DEVICE_NAME or UDID)"; exit 1; }; }
+
+# iOS 18 asks "Open in BMW?" on the phone for every simctl openurl, so the link goes through a file and a notification.
+url() {
+  local dir; dir="$(xcrun simctl get_app_container "$UDID" "$BUNDLE" data)"
+  printf '%s\n' "bmwcarplay://$1" > "$dir/Documents/cmd.txt"
+  xcrun simctl spawn "$UDID" notifyutil -p "$BUNDLE.cmd"
+}
 
 place() {
   case "$1" in
@@ -28,6 +44,7 @@ place() {
 carplay_open() { xcrun simctl io "$UDID" enumerate 2>&1 | grep -q "DisplayAdapter" ; }
 
 cmd_up() {
+  ensure_device
   command -v xcodebuild >/dev/null || { echo "xcodebuild missing: install Xcode 26.6"; exit 1; }
   (cd "$ROOT" && xcodebuild -project BMWCarPlay.xcodeproj -scheme BMWCarPlay \
      -destination "platform=iOS Simulator,id=$UDID" -derivedDataPath build build | grep -E "error:|BUILD" || true)
@@ -74,6 +91,7 @@ cmd_down() {
 }
 
 sub="${1:-}"; shift || true
+[ "$sub" = up ] || [ -z "$sub" ] || need_device
 case "$sub" in
   up|drive|at|lang|soc|refresh|reset|shot|down) "cmd_$sub" "$@" ;;
   *) sed -n '2,3p' "$0"; exit 1 ;;
