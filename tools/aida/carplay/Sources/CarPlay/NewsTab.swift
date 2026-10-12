@@ -24,15 +24,12 @@ final class NewsTab {
             return
         }
         let items: [CPListItem] = rows.prefix(max(1, min(CPListTemplate.maximumItemCount, 12))).map { row in
-            let item = CPListItem(text: row.title, detailText: row.description)
+            // No thumbnail: it costs about 105 px of text width. Full text is on the article page.
+            let title = TextFit.trim(row.title, max: TextBudget.listTitle)
+            let item = CPListItem(text: title, detailText: TextFit.distinct(row.description, from: row.title))
             item.accessoryType = .disclosureIndicator
             item.handler = { [weak self] _, done in
                 Task { await self?.openArticle(row); done() }
-            }
-            Task {
-                if let img = await self.session.client.image(Img.scene7(row.image.flatMap(URL.init(string:)), width: 160)) {
-                    await MainActor.run { item.setImage(img) }
-                }
             }
             return item
         }

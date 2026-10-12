@@ -8,7 +8,6 @@ final class CarTab {
     private(set) var vm: CarViewModel?
     private var stale = false
     private var failed = false
-    private var heroItem: CPListItem?
     private(set) var skipped = 0
 
     init(interface: CPInterfaceController) {
@@ -29,9 +28,6 @@ final class CarTab {
             vm = CarViewModel(page: r.page); stale = r.stale; failed = false
         } catch { failed = true; NSLog("BMWCarPlay car load failed: %@", "\(error)") }
         await MainActor.run { skipped = vm?.skippedBlocks ?? 0; render() }
-        if let url = Img.scene7(vm?.heroImage, width: 160), let img = await session.client.image(url) {
-            await MainActor.run { heroItem?.setImage(img) }
-        }
     }
 
     func render() {
@@ -42,22 +38,26 @@ final class CarTab {
             return
         }
         var sections: [CPListSection] = []
+        // Text density: no hero row (it repeated the page title), no image, value first, long lines trimmed.
         if let now = vm.rangeNow(soc: session.state.soc, locale: session.market.locale) {
-            let item = CPListItem(text: now.value,
-                                  detailText: L10n.t(.atCharge, lang, session.state.soc) + " · WLTP " + now.wltp)
+            // The WLTP value is the first row of the technical data, so the detail only carries the charge.
+            let item = CPListItem(text: now.value, detailText: L10n.t(.atCharge, lang, session.state.soc))
             sections.append(CPListSection(items: [item], header: L10n.t(.rangeNow, lang), sectionIndexTitle: nil))
         }
-        let hero = CPListItem(text: vm.headline ?? vm.title, detailText: vm.lead)
-        heroItem = hero
-        sections.append(CPListSection(items: [hero]))
-        var kpiItems = vm.kpis.map { CPListItem(text: $0.label, detailText: $0.value) }
+        var kpiItems = vm.kpis.map {
+            CPListItem(text: TextFit.trim($0.value, max: TextBudget.listTitle),
+                       detailText: TextFit.trim($0.label, max: TextBudget.listDetail))
+        }
         let all = CPListItem(text: L10n.t(.allValues, lang), detailText: nil)
         all.accessoryType = .disclosureIndicator
         all.handler = { [weak self] _, done in self?.pushValues(); done() }
         kpiItems.append(all)
         sections.append(CPListSection(items: kpiItems, header: L10n.t(.techData, lang), sectionIndexTitle: nil))
         if !vm.models.isEmpty {
-            let items = vm.models.map { CPListItem(text: $0.name, detailText: $0.priceLine) }
+            let items = vm.models.map {
+                CPListItem(text: TextFit.trim($0.name, max: TextBudget.listTitle),
+                           detailText: $0.priceLine.map { TextFit.trim($0, max: TextBudget.listDetail) })
+            }
             sections.append(CPListSection(items: items, header: L10n.t(.moreModels, lang), sectionIndexTitle: nil))
         }
         template.updateSections(sections)

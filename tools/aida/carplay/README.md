@@ -46,6 +46,10 @@ Tests: `xcodebuild -project BMWCarPlay.xcodeproj -scheme BMWCarPlay -destination
 
 Language is a personal setting (phone locale or the cockpit); the market (`de/de`, `de/at`, `fr/fr`, `fr/be`) comes from the car's position via reverse geocoding, or from the cockpit override.
 
+## Text on the car screen
+
+CarPlay draws list text in a fixed style and cuts it with "…"; apps have no font or line-limit control. So the content is shortened in `Sources/Content/TextFit.swift`, with the character budgets in `TextBudget`: the Orte row is the short name plus "distance · place" (distance always first), News and Mein BMW rows have no images, value comes before label, and long text lives on the detail card or in information templates. If a row still shows "…" on the Simulator, lower the budget.
+
 ## Limits
 
 - Simulator only. A real CarPlay app needs Apple's entitlement for its category; the Simulator build uses `com.apple.developer.carplay-charging` for the template set it allows.

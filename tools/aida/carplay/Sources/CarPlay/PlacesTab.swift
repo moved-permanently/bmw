@@ -56,11 +56,17 @@ final class PlacesTab {
         let pois: [CPPointOfInterest] = sorted.compactMap { row in
             guard let vm = models[row.path] else { return nil }
             let km = Geo.distance(row, lat: session.lat, lon: session.lon)
-            let away = L10n.t(.away, lang, String(format: "%.0f km", km))
+            let dist = TextFit.distance(km: km, locale: session.market.locale)
+            let away = L10n.t(.away, lang, dist)
             let item = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: row.lat, longitude: row.lon)))
             item.name = row.name
-            let poi = CPPointOfInterest(location: item, title: row.name, subtitle: "\(away) · \(vm.headline)", summary: vm.lead,
-                                        detailTitle: vm.headline, detailSubtitle: away, detailSummary: vm.lead,
+            // List row: short name, then the distance first and the place (or the page headline). The card has more room.
+            let short = TextFit.shortPlaceName(row.name)
+            let subtitle = TextFit.placeSubtitle(distance: dist, extra: short.place ?? vm.headline)
+            let summary = TextBudget.poiRowShowsSummary ? TextFit.trim(vm.headline, max: TextBudget.poiSubtitle) : nil
+            let poi = CPPointOfInterest(location: item, title: short.title, subtitle: subtitle, summary: summary,
+                                        detailTitle: row.name, detailSubtitle: "\(away) · \(vm.headline)",
+                                        detailSummary: TextFit.trim(vm.lead, max: TextBudget.poiCardSummary),
                                         pinImage: images[row.path])
             poi.primaryButton = CPTextButton(title: L10n.t(.read, lang), textStyle: .confirm) { [weak self] _ in self?.speak(vm) }
             poi.secondaryButton = CPTextButton(title: L10n.t(.more, lang), textStyle: .normal) { [weak self] _ in self?.showPage(vm) }
@@ -74,10 +80,19 @@ final class PlacesTab {
         Speech.shared.speak(vm.speechText, language: "de-DE")
     }
 
+    /// Long text goes into an information template: it wraps, a list row would cut it.
     private func showPage(_ vm: PlaceViewModel) {
-        var items = [CPListItem(text: vm.headline, detailText: vm.lead)]
-        for line in vm.speechText.split(separator: "\n").dropFirst().prefix(6) { items.append(CPListItem(text: String(line), detailText: nil)) }
-        let t = CPListTemplate(title: vm.name, sections: [CPListSection(items: items)])
+        let lang = session.language
+        var items = [CPInformationItem(title: vm.headline, detail: TextFit.trim(vm.lead, max: TextBudget.infoItem))]
+        for line in vm.speechText.split(separator: "\n").dropFirst() where items.count < 5 {
+            let text = TextFit.trim(String(line), max: TextBudget.infoItem)
+            if text != items[0].detail, text != vm.lead { items.append(CPInformationItem(title: nil, detail: text)) }
+        }
+        let actions = [
+            CPTextButton(title: L10n.t(.read, lang), textStyle: .confirm) { [weak self] _ in self?.speak(vm) },
+            CPTextButton(title: L10n.t(.stop, lang), textStyle: .normal) { _ in Speech.shared.stop() },
+        ]
+        let t = CPInformationTemplate(title: vm.name, layout: .leading, items: items, actions: actions)
         interface.pushTemplate(t, animated: true, completion: carplayLog)
     }
 
