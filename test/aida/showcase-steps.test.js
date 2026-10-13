@@ -79,6 +79,17 @@ test('the story names the buttons on screen', () => {
   assert.match(all('release'), /\*\*Approve & publish\*\*/);
 });
 
+test('the Translate options step says which locale chips stay on, so Belgium gets the French page', () => {
+  const translate = chapters.find((c) => c.id === 'translate').steps.join(' ');
+  // One dropdown per language picks Translate, Rollout or Skip; the locale chips under it pick
+  // the markets that receive that language's page afterwards. The config preselects fr/be.
+  assert.match(translate, /\*\*All languages & locales\*\* to \*\*Translate\*\*/);
+  assert.match(translate, /locale chips as they are/);
+  assert.match(translate, /`aida\/showcase\/fr\/be`/);
+  assert.match(translate, /Languages 2, Locales 1/);
+  assert.doesNotMatch(translate, /market selected for rollout/);
+});
+
 test('Request Publish opens from the right-hand panel, where the editor can save and compare; the ⋯ dialog cannot', () => {
   const rollout = chapters.find((c) => c.id === 'rollout').steps.join(' ');
   assert.match(rollout, /right-hand panel[^.]*\*\*Request Publish\*\*/);
