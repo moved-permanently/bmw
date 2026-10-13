@@ -39,7 +39,7 @@ test('every chapter is show-tell-show: links to show, at most three points to te
   });
 });
 
-test('the chapters tell the full RfP story of Briefings I and III', () => {
+test('the chapters cover the remaining RfP references of Briefings I and III', () => {
   const covered = new Set(chapters.flatMap((c) => c.rfp));
   Object.keys(RFP).forEach((ref) => assert.ok(covered.has(ref), `${ref} is not covered`));
 });
@@ -81,7 +81,7 @@ test('chapters name their RfP references in full', () => {
   chapters[1].rfp.forEach((r) => assert.ok(html.includes(view.escape(RFP[r])), r));
 });
 
-test('chapter 1 is the agenda: it claims no RfP step itself and links every Briefing I step to the chapters that show it', () => {
+test('chapter 1 is the agenda: it claims no RfP step itself and links the remaining Briefing I steps to their chapters', () => {
   const [intro] = chapters;
   assert.deepEqual(intro.rfp, []);
   const steps = Object.keys(RFP).filter((r) => r.startsWith('I '));
@@ -100,7 +100,7 @@ test('chapter 1 is the agenda: it claims no RfP step itself and links every Brie
   });
 });
 
-test('the agenda lists every Briefing I and III section and all its demo chapters, excluding the recap', () => {
+test('the agenda lists the remaining Briefing I and III sections and all their demo chapters', () => {
   const [intro] = chapters;
   assert.deepEqual(intro.agenda.map((a) => a.rfp), Object.keys(RFP));
   const html = view.demoPath(chapters, 0, RFP);
@@ -166,10 +166,25 @@ test('the demo path shows Experience Workspace itself, not the click-through wor
   assert.ok(of('status').includes(`${DA_EDITOR}/#/moved-permanently/bmw/aida/showcase/fr/be/news`));
 });
 
-test('insights point to AEM operational telemetry and show no sample numbers', () => {
-  const insights = chapters.find((c) => c.id === 'insights');
-  assert.ok(insights.show.some((s) => s.href === 'https://www.aem.live/docs/operational-telemetry'));
-  assert.doesNotMatch(insights.tell.join(' '), /sample/i);
+test('the demo path ends at chapter 12, with no Insights, Architecture or Recap chapter', () => {
+  assert.deepEqual(chapters.map((c) => c.id), [
+    'journey', 'edit', 'model', 'data', 'assets', 'quality',
+    'review', 'translate', 'rollout', 'status', 'release', 'delivery',
+  ]);
+  const html = view.demoPath(chapters, 11, RFP);
+  assert.match(html, /Chapter 12 of 12/);
+  assert.doesNotMatch(html, /href="#path\/(12|13|14)"/);
+  assert.equal(view.chapterFromHash('#path/14', chapters.length), 11);
+});
+
+test('Sidekick is hidden only by the showcase app stylesheet, including its project picker', () => {
+  const html = read('tools/aida/showcase/index.html');
+  assert.match(html, /<body class="[^"]*\bshowcase-app\b/);
+  const css = read('tools/aida/showcase/showcase.css');
+  ['aem-sidekick', 'hlx-sidekick', 'aem-config-picker'].forEach((tag) => {
+    assert.match(css, new RegExp(`\\.showcase-app ${tag}[\\s\\S]*?\\{\\s*display: none !important;\\s*\\}`));
+  });
+  assert.doesNotMatch(read('styles/styles.css'), /aem-sidekick|hlx-sidekick|aem-config-picker/);
 });
 
 test('the delivery chapter (#path/11) links the car screen\'s news and places and where authors edit them', () => {
