@@ -203,8 +203,9 @@ test('EW pages without source links show a collapsed warning for known model val
   assert.match(panel.querySelector('.wdh-check-status').getAttribute('aria-label'), /2 unlinked values/);
   const body = panel.querySelector('.wdh-check-body');
   assert.equal(body.hidden, true);
-  assert.match(body.querySelector('.wdh-check-note').textContent, /no source links/);
-  assert.doesNotMatch(body.querySelector('.wdh-check-summary').textContent, /All .* match/);
+  assert.equal(body.querySelector('.wdh-check-note'), null, 'no explanatory sentence below the warning summary');
+  assert.equal(body.querySelector('.wdh-check-summary').textContent, '2 unlinked values found (DE)');
+  assert.equal(body.querySelector('ul').children.length, 2, 'keep the unlinked-value list');
   assert.equal(body.querySelector('.wdh-check-update'), null, 'warning never offers an inferred update');
   assert.equal(panel.classList.contains('has-drift'), false, 'unlinked values are not proven outdated');
   assert.equal(body.querySelector('ul').children[0].classList.contains('is-unlinked'), true, 'unlinked text must not use stale-value strikethrough');
