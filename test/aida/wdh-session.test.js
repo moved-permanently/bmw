@@ -68,3 +68,32 @@ test('the WDH panel shows on preview hosts, not on showcase pages or block libra
   assert.equal(at('main--bmw--moved-permanently.preview.da.live', '/aida/showcase/fr/be/i5'), false);
   assert.equal(at('main--bmw--moved-permanently.preview.da.live', '/drafts/aida/showcase/fr/be/i5'), false);
 });
+
+const LAYOUT_SEARCH = '?rum=off&consent=disabled&quick-edit=on&controller=parent';
+
+test('showcase pages show the WDH panel in the EW Layout frame', () => {
+  const hosts = ['main--bmw--moved-permanently.preview.da.live', 'main--bmw--moved-permanently.aem.page', 'localhost'];
+  const paths = ['/aida/showcase/de/de/i5', '/aida/showcase/fr/be/i5', '/drafts/aida/showcase/fr/be/i5'];
+  hosts.forEach((hostname) => paths.forEach((pathname) => {
+    assert.equal(showWdhCheck({ hostname, pathname, search: LAYOUT_SEARCH }), true, `${hostname}${pathname}`);
+  }));
+});
+
+test('showcase previews outside EW keep the WDH panel hidden', () => {
+  const hostname = 'main--bmw--moved-permanently.preview.da.live';
+  ['', '?quick-edit=on', '?controller=bootstrap'].forEach((search) => {
+    assert.equal(showWdhCheck({ hostname, pathname: '/aida/showcase/de/de/i5', search }), false);
+  });
+});
+
+test('the EW query does not enable the WDH panel in library documents or on live hosts', () => {
+  const hostname = 'main--bmw--moved-permanently.preview.da.live';
+  ['/library/blocks/model-offer', '/library/templates/model-page'].forEach((pathname) => {
+    assert.equal(showWdhCheck({ hostname, pathname, search: LAYOUT_SEARCH }), false);
+  });
+  assert.equal(showWdhCheck({
+    hostname: 'main--bmw--moved-permanently.aem.live',
+    pathname: '/aida/showcase/de/de/i5',
+    search: LAYOUT_SEARCH,
+  }), false);
+});
