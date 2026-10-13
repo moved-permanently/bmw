@@ -192,8 +192,8 @@ export const chapters = [
     ],
     steps: [
       `Open [Translate](${TRANSLATE}) and click **Create new project**. Title: \`i5-launch-news\`. URLs: \`${PREVIEW}${HQ_NEWS}\`.`,
-      'Click **Validate sources**, then **Confirm options**. Set **All languages & locales** to **Translate**: German and French get translated, and Belgium is the market selected for rollout.',
-      'Click **Start project**, then **Translate all**.',
+      'Click **Validate sources**, then **Confirm options**. Set **All languages & locales** to **Translate** and leave the locale chips as they are: only `aida/showcase/fr/be` is on.',
+      'The counters read Languages 2, Locales 1: German and French get translated, and Belgium gets the French page when it is rolled out. Click **Start project**, then **Translate all**.',
       `When both languages are done, open [the German news](${canvas('/aida/showcase/de/news/i5-launch')}) and [the French news](${canvas('/aida/showcase/fr/news/i5-launch')}): the text is translated, BMW terms such as eDrive40 are not.`,
     ],
     recap: 'AI translation at scale, with BMW’s glossary, style and human feedback.',
