@@ -33,12 +33,14 @@ export function createWdhSession() {
 
 /**
  * Where the WDH check panel shows: preview hosts (aem.page, the Experience Workspace frame on
- * preview.da.live, local aem up), not on showcase pages and not on block library documents
- * (/library/…, previewed in the block library).
- * @param {{hostname: string, pathname: string}} location
+ * preview.da.live, local aem up). Showcase pages show it only in EW Layout; block library
+ * documents (/library/…) never show it.
+ * @param {{hostname: string, pathname: string, search?: string}} location
  */
-export function showWdhCheck({ hostname, pathname }) {
-  if (/^\/(?:drafts\/)?aida\/showcase\//.test(pathname) || pathname.startsWith('/library/')) return false;
+export function showWdhCheck({ hostname, pathname, search = '' }) {
+  if (pathname.startsWith('/library/')) return false;
+  if (/^\/(?:drafts\/)?aida\/showcase\//.test(pathname)
+    && new URLSearchParams(search).get('controller') !== 'parent') return false;
   return /(\.aem\.page|\.preview\.da\.live|^localhost)$/.test(hostname);
 }
 
