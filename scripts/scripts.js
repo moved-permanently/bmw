@@ -531,7 +531,9 @@ async function loadLazy(doc) {
  * without impacting the user experience.
  */
 function loadDelayed() {
-  // load anything that can be postponed to the latest here
+  window.setTimeout(() => {
+    import('./bmw-showcase-notice.js').then((m) => m.default());
+  }, 3500);
 }
 
 async function loadPage() {

@@ -1,0 +1,44 @@
+.bmw-showcase-notice {
+  position: fixed;
+  inset: 0;
+  box-sizing: border-box;
+  width: min(42rem, calc(100% - 2rem));
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 2rem;
+  overflow: auto;
+  border: 0;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 4px 32px rgb(0 0 0 / 25%);
+  color: #262626;
+  font-family: var(--bmw-font-family, arial, helvetica, sans-serif);
+  font-size: 1rem;
+  line-height: 1.625;
+}
+
+.bmw-showcase-notice::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+.bmw-showcase-notice h2 {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1.25;
+}
+
+.bmw-showcase-notice p {
+  margin: 0 0 1.5rem;
+}
+
+.bmw-showcase-notice button {
+  width: 100%;
+  margin: 0;
+}
+
+@media (width <= 480px) {
+  .bmw-showcase-notice {
+    padding: 1.5rem;
+  }
+}

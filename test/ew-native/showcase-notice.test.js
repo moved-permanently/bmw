@@ -6,7 +6,9 @@ import { readFile } from 'node:fs/promises';
 const STORAGE_KEY = 'bmw-showcase-acknowledged';
 let caseId = 0;
 
-function setup(t, { pathname = '/de/home', search = '', acknowledged = false, framed = false } = {}) {
+function setup(t, {
+  pathname = '/de/home', search = '', acknowledged = false, framed = false,
+} = {}) {
   const elements = [];
   const links = [];
   const storage = new Map(acknowledged ? [[STORAGE_KEY, 'true']] : []);
