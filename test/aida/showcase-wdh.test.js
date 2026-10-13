@@ -31,6 +31,6 @@ test('preflight and WDH picker use the matching connector data root for the curr
 
 test('showcase delivery does not add the legacy automatic preview WDH fetch', () => {
   const runtime = readFileSync(new URL('../../scripts/scripts.js', import.meta.url), 'utf8');
-  assert.match(runtime, /wdhSession\.bindings\.length && showWdhCheck\(window\.location\)/);
+  assert.match(runtime, /\(wdhSession\.bindings\.length \|\| inEditor\) && showWdhCheck\(window\.location\)/);
   assert.equal(showWdhCheck({ hostname: 'main--bmw--moved-permanently.aem.page', pathname: '/aida/showcase/fr/be/i5' }), false);
 });

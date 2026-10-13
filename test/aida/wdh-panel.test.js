@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 import {
   parseBinding, marketForPath, valuesFromSheet, staleBindings, dataRootForPath, findBindings,
+  findUnboundValues,
 } from '../../scripts/aida-wdh.js';
 
 const STORAGE_KEY = 'bmw-wdh-check-collapsed';
@@ -69,6 +70,7 @@ function setup({
     staleBindings,
     dataRootForPath,
     findBindings,
+    findUnboundValues,
     loadCSS: async () => {},
     fetchSheet: async () => sheet,
     window: {
@@ -204,6 +206,8 @@ test('EW pages without source links show a collapsed warning for known model val
   assert.match(body.querySelector('.wdh-check-note').textContent, /no source links/);
   assert.doesNotMatch(body.querySelector('.wdh-check-summary').textContent, /All .* match/);
   assert.equal(body.querySelector('.wdh-check-update'), null, 'warning never offers an inferred update');
+  assert.equal(panel.classList.contains('has-drift'), false, 'unlinked values are not proven outdated');
+  assert.equal(body.querySelector('ul').children[0].classList.contains('is-unlinked'), true, 'unlinked text must not use stale-value strikethrough');
   assert.equal(session.html, original, 'checking does not bind or rewrite content');
 });
 
@@ -211,7 +215,7 @@ test('mixed linked and unlinked values cannot produce a green match indicator', 
   const { render } = setup({ html: '<p>627 km</p>', model: '61HG' });
   const panel = await render();
   assert.equal(panel.querySelector('.wdh-check-status').textContent, '⚠️');
-  assert.match(panel.querySelector('.wdh-check-summary').textContent, /1 linked values match.*1 unlinked values/);
+  assert.match(panel.querySelector('.wdh-check-body').querySelector('.wdh-check-summary').textContent, /1 linked values match.*1 unlinked values/);
 });
 
 test('a page without a named model or a WDH value has no panel', async () => {
