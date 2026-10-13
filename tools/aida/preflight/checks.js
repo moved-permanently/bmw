@@ -3,7 +3,7 @@
  * Used by the Preflight plugin (preflight.js); pure functions, covered by tests.
  */
 import {
-  findBindings, staleBindings, autoBind, textOf, parseBinding, withoutMetadata,
+  findBindings, staleBindings, findUnboundValues, textOf, parseBinding, withoutMetadata,
 } from '../../../scripts/aida-wdh.js';
 import { getMetadata } from '../../../scripts/aida-doc.js';
 
@@ -40,14 +40,6 @@ const contentText = (html) => textOf(withoutMetadata(html).replace(FOOTNOTES, ''
 const fieldValues = (values, field) => [...values.entries()]
   .filter(([key, v]) => key.endsWith(`.${field}`) && v.display);
 
-// models the page is about: its wdh-model, else every model whose name appears on the page
-function pageModels(html, values) {
-  const code = getMetadata(html, 'wdh-model');
-  if (code) return [code];
-  const text = contentText(html);
-  return fieldValues(values, 'name').filter(([, v]) => text.includes(v.display)).map(([key]) => key.split('.')[0]);
-}
-
 function wdhCheck(html, market, values) {
   const bindings = findBindings(html);
   const stale = staleBindings(bindings, market, values);
@@ -59,9 +51,9 @@ function wdhCheck(html, market, values) {
       fixable: stale.filter((s) => s.expected).length,
     };
   }
-  const codes = pageModels(html, values);
-  const unbound = codes.flatMap((code) => autoBind(html, market, values, code).bound);
+  const unbound = findUnboundValues(html, market, values, getMetadata(html, 'wdh-model'));
   if (unbound.length) {
+    const codes = [...new Set(unbound.map((binding) => binding.key.split('.')[0]))];
     return {
       status: 'warn',
       summary: `${unbound.length} hard-coded values of ${codes.join(', ')} could be bound to WDH`,

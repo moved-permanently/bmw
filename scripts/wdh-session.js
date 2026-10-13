@@ -10,10 +10,14 @@
 export function createWdhSession() {
   let generation = 0;
   let bindings = [];
+  let html = '';
+  let model = '';
   return {
-    start() {
+    start(source = '', code = '') {
       generation += 1;
       bindings = [];
+      html = source;
+      model = code;
       return generation;
     },
     add(binding) {
@@ -21,6 +25,12 @@ export function createWdhSession() {
     },
     get bindings() {
       return bindings;
+    },
+    get html() {
+      return html;
+    },
+    get model() {
+      return model;
     },
     get generation() {
       return generation;

@@ -483,7 +483,7 @@ async function loadEager(doc) {
   applyPagePrimaryColor();
   const main = doc.querySelector('main');
   // a new render (quick edit calls loadPage again): collect this render's WDH bindings only
-  wdhSession.start();
+  wdhSession.start(main?.innerHTML || '', getMetadata('wdh-model'));
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
@@ -521,7 +521,8 @@ async function loadLazy(doc) {
 
   import('./bmw-consent.js').then((m) => m.default());
   import('./bmw-sidebar.js').then((m) => m.default());
-  if (wdhSession.bindings.length && showWdhCheck(window.location)) {
+  const inEditor = new URLSearchParams(window.location.search).get('controller') === 'parent';
+  if ((wdhSession.bindings.length || inEditor) && showWdhCheck(window.location)) {
     import('./aida.js').then((m) => m.checkWdhValues(wdhSession, wdhEditor));
   }
 }

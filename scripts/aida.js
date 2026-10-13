@@ -1,5 +1,6 @@
 import {
   parseBinding, marketForPath, valuesFromSheet, staleBindings, dataRootForPath, findBindings,
+  findUnboundValues,
 } from './aida-wdh.js';
 import { fetchSheet } from './bmw-utils.js';
 import { loadCSS } from './aem.js';
@@ -12,6 +13,7 @@ const REASONS = {
   value: 'differs from WDH',
   market: 'taken from another market',
   unknown: 'not in WDH',
+  unbound: 'not linked to WDH',
 };
 
 // three quarters of a circle with an arrow (check again)
@@ -37,11 +39,17 @@ function listOf(stale) {
   const list = document.createElement('ul');
   unique.forEach((s) => {
     const li = document.createElement('li');
-    li.innerHTML = '<code></code> <span class="wdh-check-from"></span> → <strong></strong> <em></em>';
+    if (s.reason === 'unbound') li.classList.add('is-unlinked');
+    li.innerHTML = s.reason === 'unbound'
+      ? '<code></code> <span class="wdh-check-from"></span> <em></em>'
+      : '<code></code> <span class="wdh-check-from"></span> → <strong></strong> <em></em>';
     li.querySelector('code').textContent = s.key;
     li.querySelector('.wdh-check-from').textContent = short(s.text);
-    li.querySelector('strong').textContent = short(s.expected) ?? '–';
-    li.title = `${s.text} → ${s.expected ?? '–'}`;
+    if (s.reason === 'unbound') li.title = `Unlinked: ${s.text}`;
+    else {
+      li.querySelector('strong').textContent = short(s.expected) ?? '–';
+      li.title = `${s.text} → ${s.expected ?? '–'}`;
+    }
     li.querySelector('em').textContent = REASONS[s.reason];
     list.append(li);
   });
@@ -60,29 +68,31 @@ function listOf(stale) {
 // eslint-disable-next-line import/prefer-default-export
 export async function checkWdhValues(session, editor) {
   const { generation } = session;
-  if (!parsed(session.bindings).length) return;
+  if (!parsed(session.bindings).length && !session.html) return;
   const { pathname } = window.location;
-  const market = marketForPath(pathname)?.market || parsed(session.bindings)[0].market;
+  const market = marketForPath(pathname)?.market || parsed(session.bindings)[0]?.market;
+  if (!market) return;
   const sheetPath = `${dataRootForPath(pathname)}/wdh-${market}.json`;
   const link = editor?.port ? createEditorLink(editor) : null;
   const MARKET = market.toUpperCase();
 
   // the document as it is now: from the editor when there is one, else this render's values
   const load = async ({ reload = false } = {}) => {
-    const bindings = parsed(reload && link?.ready
-      ? findBindings(await link.readDocument())
-      : session.bindings);
+    const html = reload && link?.ready ? await link.readDocument() : session.html || '';
+    const bindings = parsed(reload && link?.ready ? findBindings(html) : session.bindings);
     let sheet = {};
     try {
       sheet = await fetchSheet(sheetPath, { reload });
     } catch (e) {
       // no sheet for this market: every value is reported as unknown
     }
-    return { bindings, values: valuesFromSheet(sheet) };
+    const values = valuesFromSheet(sheet);
+    return { bindings, values, unbound: findUnboundValues(html, market, values, session.model) };
   };
 
   let state = await load();
   if (!session.isCurrent(generation)) return;
+  if (!state.bindings.length && !state.unbound.length) return;
   await loadCSS(`${window.hlx.codeBasePath}/styles/aida.css`);
   if (!session.isCurrent(generation)) return;
 
@@ -126,17 +136,21 @@ export async function checkWdhValues(session, editor) {
   };
 
   const show = () => {
-    const { bindings, values } = state;
+    const { bindings, values, unbound } = state;
     const stale = staleBindings(bindings, market, values);
     markStale(stale);
     panel.classList.toggle('has-drift', stale.length > 0);
+    panel.classList.toggle('has-unlinked', unbound.length > 0);
     const summary = document.createElement('p');
     summary.className = 'wdh-check-summary';
-    if (!bindings.length) summary.textContent = 'No WDH values on this page';
+    if (!bindings.length && unbound.length) summary.textContent = `${unbound.length} unlinked values found (${MARKET})`;
+    else if (!bindings.length) summary.textContent = 'No WDH values on this page';
     else if (stale.length) summary.textContent = `${stale.length} of ${bindings.length} values need an update (${MARKET})`;
+    else if (unbound.length) summary.textContent = `${bindings.length} linked values match WDH (${MARKET}); ${unbound.length} unlinked values`;
     else summary.textContent = `All ${bindings.length} values match WDH (${MARKET})`;
-    status.textContent = stale.length || !bindings.length ? '⚠️' : '✅';
-    status.setAttribute('aria-label', summary.textContent);
+    status.textContent = stale.length || unbound.length || !bindings.length ? '⚠️' : '✅';
+    status.setAttribute('aria-label', stale.length && unbound.length
+      ? `${summary.textContent}; ${unbound.length} unlinked values` : summary.textContent);
     body.replaceChildren(summary);
     const fixable = stale.filter((s) => s.expected).length;
     if (fixable && link?.ready && link.canWrite) {
@@ -160,6 +174,12 @@ export async function checkWdhValues(session, editor) {
       body.append(update);
     }
     if (stale.length) body.append(listOf(stale));
+    if (unbound.length) {
+      const warning = document.createElement('p');
+      warning.className = 'wdh-check-note wdh-check-unlinked';
+      warning.textContent = 'These values match text in WDH but have no source links. They cannot be checked for updates.';
+      body.append(warning, listOf(unbound));
+    }
   };
 
   panel.querySelector('.wdh-check-reload').addEventListener('click', async () => {

@@ -219,13 +219,13 @@ test('mixed linked and unlinked values cannot produce a green match indicator', 
 });
 
 test('unlinked figures with non-breaking spaces still warn instead of turning green', async () => {
-  for (const html of ['<p>627&nbsp;km</p>', '<p>627\u00a0km</p>']) {
+  await Promise.all(['<p>627&nbsp;km</p>', '<p>627\u00a0km</p>'].map(async (html) => {
     const { render, session } = setup({ html, model: '61HG' });
     const panel = await render();
     assert.equal(panel.querySelector('.wdh-check-status').textContent, '⚠️');
     assert.match(panel.querySelector('.wdh-check-status').getAttribute('aria-label'), /1 unlinked values/);
     assert.equal(session.html, html, 'normalization is for detection only, never a document rewrite');
-  }
+  }));
 });
 
 test('a page without a named model or a WDH value has no panel', async () => {

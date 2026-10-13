@@ -24,6 +24,10 @@
   border-left-color: #e22718;
 }
 
+.wdh-check.has-unlinked:not(.has-drift) {
+  border-left-color: #9b6800;
+}
+
 .wdh-check p {
   margin: 0 0 4px;
 }
@@ -52,6 +56,10 @@
 
 .wdh-check-from {
   text-decoration: line-through;
+}
+
+.wdh-check .is-unlinked .wdh-check-from {
+  text-decoration: none;
 }
 
 .wdh-check em {
@@ -118,4 +126,8 @@
 
 .wdh-check-note {
   color: #e22718;
+}
+
+.wdh-check .wdh-check-unlinked {
+  color: inherit;
 }

@@ -215,6 +215,19 @@ export function autoBind(html, market, values, code) {
   return { html: out, bound };
 }
 
+export function findUnboundValues(html, market, values, code = '') {
+  const text = textOf(withoutMetadata(html).replace(/<sup\b[^>]*>[\s\S]*?<\/sup>/gi, ''));
+  const codes = code ? [code] : [...values.entries()]
+    .filter(([key, value]) => key.endsWith('.name') && value.display && text.includes(flat(value.display)))
+    .map(([key]) => key.split('.')[0]);
+  const normalized = parts(html || '').map((part) => (part.tag ? part.part : escape(textOf(part.part)))).join('');
+  const normalizedValues = new Map([...values].map(([key, value]) => [key, {
+    ...value, display: flat(value.display || ''),
+  }]));
+  return codes.flatMap((model) => autoBind(normalized, market, normalizedValues, model).bound)
+    .map((binding) => ({ ...binding, text: textOf(binding.text), reason: 'unbound' }));
+}
+
 export function staleBindings(bindings, market, values) {
   return bindings.map(({
     href, key, text, ...binding
