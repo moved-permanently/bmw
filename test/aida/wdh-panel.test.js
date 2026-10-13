@@ -218,6 +218,16 @@ test('mixed linked and unlinked values cannot produce a green match indicator', 
   assert.match(panel.querySelector('.wdh-check-body').querySelector('.wdh-check-summary').textContent, /1 linked values match.*1 unlinked values/);
 });
 
+test('unlinked figures with non-breaking spaces still warn instead of turning green', async () => {
+  for (const html of ['<p>627&nbsp;km</p>', '<p>627\u00a0km</p>']) {
+    const { render, session } = setup({ html, model: '61HG' });
+    const panel = await render();
+    assert.equal(panel.querySelector('.wdh-check-status').textContent, '⚠️');
+    assert.match(panel.querySelector('.wdh-check-status').getAttribute('aria-label'), /1 unlinked values/);
+    assert.equal(session.html, html, 'normalization is for detection only, never a document rewrite');
+  }
+});
+
 test('a page without a named model or a WDH value has no panel', async () => {
   const { render } = setup({ linked: false, html: '<h1>General news</h1><p>627 km</p>' });
   assert.equal(await render(), undefined, 'a number alone is not a WDH reference');
