@@ -41,14 +41,26 @@ test('a check started for an earlier render is superseded by a newer render', ()
   assert.equal(session.generation, second);
 });
 
+test('a render keeps its undecorated source and model, then resets both on the next page', () => {
+  const session = createWdhSession();
+  session.start('<p>627 km</p>', '61HG');
+  assert.equal(session.html, '<p>627 km</p>');
+  assert.equal(session.model, '61HG');
+  session.start();
+  assert.equal(session.html, '');
+  assert.equal(session.model, '');
+});
+
 test('runtime wiring: every loadPage starts a session before decorating, the check panel is single-instance', () => {
   const scripts = read('scripts/scripts.js');
   const eager = scripts.slice(scripts.indexOf('async function loadEager'), scripts.indexOf('async function loadLazy'));
-  assert.ok(eager.indexOf('wdhSession.start()') > -1 && eager.indexOf('wdhSession.start()') < eager.indexOf('decorateMain(main)'), 'loadEager starts a new WDH session before decorateMain');
+  assert.ok(eager.indexOf('wdhSession.start(') > -1 && eager.indexOf('wdhSession.start(') < eager.indexOf('decorateMain(main)'), 'loadEager starts a new WDH session before decorateMain');
+  assert.match(eager, /wdhSession\.start\(main\?\.innerHTML/, 'capture the authored source before blocks rewrite it');
   assert.doesNotMatch(scripts, /const wdhBindings = \[\]/, 'no module-level array that grows across renders');
   assert.match(scripts, /wdhSession\.add\(/);
   assert.match(scripts, /checkWdhValues\(wdhSession, wdhEditor\)/);
   assert.match(scripts, /showWdhCheck\(window\.location\)/, 'the panel shows where showWdhCheck allows it');
+  assert.doesNotMatch(scripts, /if \(wdhSession\.bindings\.length && showWdhCheck/, 'EW pages with only unlinked values also run the check');
   assert.ok(scripts.indexOf('captureEditorPort()') > -1 && scripts.indexOf('captureEditorPort()') < scripts.indexOf('\nloadPage();'), 'the editor port is captured before quick edit loads (appended after loadPage())');
   const aida = read('scripts/aida.js');
   assert.match(aida, /isCurrent\(generation\)/, 'a superseded render does not render its panel');

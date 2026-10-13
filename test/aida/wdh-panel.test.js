@@ -55,7 +55,9 @@ function element(tag) {
   return el;
 }
 
-function setup({ saved, text = '627 km', blocked = false } = {}) {
+function setup({
+  saved, text = '627 km', blocked = false, html = '', model = '', linked = true,
+} = {}) {
   const panels = [];
   const storage = new Map(saved === undefined ? [] : [[STORAGE_KEY, saved]]);
   const sheet = { values: [{ key: '61HG.electricRange', value: '627', unit: 'km' }] };
@@ -92,10 +94,14 @@ function setup({ saved, text = '627 km', blocked = false } = {}) {
   const session = {
     generation: 1,
     isCurrent: () => true,
-    bindings: [{ href: '/aida/showcase/data/wdh-de.json#61HG.electricRange', text }],
+    html,
+    model,
+    bindings: linked ? [{ href: '/aida/showcase/data/wdh-de.json#61HG.electricRange', text }] : [],
   };
   const render = async () => { await check(session); return panels.at(-1); };
-  return { render, storage, sheet };
+  return {
+    render, storage, sheet, session,
+  };
 }
 
 function toggleOf(panel) {
@@ -179,4 +185,48 @@ test('unrecognized stored values leave the panel expanded', async () => {
   const panel = await render();
   assert.equal(toggleOf(panel).getAttribute('aria-expanded'), 'true');
   assert.equal(panel.querySelector('.wdh-check-body').hidden, false);
+});
+
+test('EW pages without source links show a collapsed warning for known model values', async () => {
+  const { render, sheet, session } = setup({
+    linked: false,
+    saved: 'true',
+    html: '<h1>BMW i5 eDrive40 Limousine</h1><p>627 km</p>',
+  });
+  sheet.values.push({ key: '61HG.name', value: 'BMW i5 eDrive40 Limousine', unit: '' });
+  const original = session.html;
+  const panel = await render();
+  assert.ok(panel, 'unlinked model figures must not silently hide the panel');
+  assert.equal(panel.querySelector('.wdh-check-status').textContent, '⚠️');
+  assert.match(panel.querySelector('.wdh-check-status').getAttribute('aria-label'), /2 unlinked values/);
+  const body = panel.querySelector('.wdh-check-body');
+  assert.equal(body.hidden, true);
+  assert.match(body.querySelector('.wdh-check-note').textContent, /no source links/);
+  assert.doesNotMatch(body.querySelector('.wdh-check-summary').textContent, /All .* match/);
+  assert.equal(body.querySelector('.wdh-check-update'), null, 'warning never offers an inferred update');
+  assert.equal(session.html, original, 'checking does not bind or rewrite content');
+});
+
+test('mixed linked and unlinked values cannot produce a green match indicator', async () => {
+  const { render } = setup({ html: '<p>627 km</p>', model: '61HG' });
+  const panel = await render();
+  assert.equal(panel.querySelector('.wdh-check-status').textContent, '⚠️');
+  assert.match(panel.querySelector('.wdh-check-summary').textContent, /1 linked values match.*1 unlinked values/);
+});
+
+test('a page without a named model or a WDH value has no panel', async () => {
+  const { render } = setup({ linked: false, html: '<h1>General news</h1><p>627 km</p>' });
+  assert.equal(await render(), undefined, 'a number alone is not a WDH reference');
+});
+
+test('checking again re-reads unlinked values without expanding the panel', async () => {
+  const { render, session } = setup({
+    saved: 'true', model: '61HG', html: '<p>627 km</p>',
+  });
+  const panel = await render();
+  assert.equal(panel.querySelector('.wdh-check-status').textContent, '⚠️');
+  session.html = '<p><a href="/aida/showcase/data/wdh-de.json#61HG.electricRange">627 km</a></p>';
+  await panel.querySelector('.wdh-check-reload').listeners.click();
+  assert.equal(panel.querySelector('.wdh-check-status').textContent, '✅');
+  assert.equal(panel.querySelector('.wdh-check-body').hidden, true);
 });
