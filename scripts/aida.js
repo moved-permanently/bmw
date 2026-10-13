@@ -174,12 +174,7 @@ export async function checkWdhValues(session, editor) {
       body.append(update);
     }
     if (stale.length) body.append(listOf(stale));
-    if (unbound.length) {
-      const warning = document.createElement('p');
-      warning.className = 'wdh-check-note wdh-check-unlinked';
-      warning.textContent = 'These values match text in WDH but have no source links. They cannot be checked for updates.';
-      body.append(warning, listOf(unbound));
-    }
+    if (unbound.length) body.append(listOf(unbound));
   };
 
   panel.querySelector('.wdh-check-reload').addEventListener('click', async () => {
