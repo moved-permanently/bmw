@@ -79,6 +79,12 @@ test('the story names the buttons on screen', () => {
   assert.match(all('release'), /\*\*Approve & publish\*\*/);
 });
 
+test('Request Publish opens from the right-hand panel, where the editor can save and compare; the ⋯ dialog cannot', () => {
+  const rollout = chapters.find((c) => c.id === 'rollout').steps.join(' ');
+  assert.match(rollout, /right-hand panel[^.]*\*\*Request Publish\*\*/);
+  assert.doesNotMatch(rollout, /⋯[^.]*\*\*Request Publish\*\*/);
+});
+
 test('the Show card renders the steps as an expandable, numbered list with links, labels and escaped text', () => {
   const i = chapters.findIndex((c) => c.id === 'review');
   const html = view.demoPath(chapters, i, RFP);
