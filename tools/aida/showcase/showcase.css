@@ -1,5 +1,11 @@
 /* stylelint-disable no-descending-specificity -- Independent page sections intentionally use different selector scopes. */
 /* stylelint-disable selector-class-pattern -- Adobe Spectrum uses its official component class names. */
+.showcase-app aem-sidekick,
+.showcase-app hlx-sidekick,
+.showcase-app aem-config-picker {
+  display: none !important;
+}
+
 .showcase-shell {
   max-width: 1440px;
   margin: auto;

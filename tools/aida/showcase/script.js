@@ -26,7 +26,6 @@ export const RFP = {
   'I 2': 'Briefing I · 2 Stakeholder review',
   'I 3': 'Briefing I · 3 Push & translate',
   'I 4': 'Briefing I · 4 Market review / adapt / publish',
-  'I 5': 'Briefing I · 5 KPI / data insights',
   'III Architecture': 'Briefing III · Content architecture',
   'III Workflows': 'Briefing III · Workflows & quality gates',
   'III AI translation': 'Briefing III · AI / automation',
@@ -45,7 +44,7 @@ export const chapters = [
     rfp: [],
     tell: [
       'We follow one story through Briefing I: HQ creates the BMW i5 launch once, and stakeholders review it before the embargo.',
-      'AI translates it, markets adapt and publish it, and status and insights come back to HQ. The agenda links both briefings to the chapters below.',
+      'AI translates it, markets adapt and publish it, and status comes back to HQ. The agenda links both briefings to the chapters below.',
       'The starting point: bmw.de, migrated and running on AEM, authored in Experience Workspace.',
     ],
     show: [
@@ -58,18 +57,17 @@ export const chapters = [
       { rfp: 'I 2', chapters: ['review'] },
       { rfp: 'I 3', chapters: ['data', 'translate', 'rollout', 'status'] },
       { rfp: 'I 4', chapters: ['review', 'rollout', 'status', 'release'] },
-      { rfp: 'I 5', chapters: ['insights'] },
-      { rfp: 'III Architecture', chapters: ['release', 'architecture'] },
+      { rfp: 'III Architecture', chapters: ['release'] },
       { rfp: 'III Workflows', chapters: ['review', 'status', 'release'] },
       { rfp: 'III AI translation', chapters: ['quality', 'translate'] },
       { rfp: 'III Connectors', chapters: ['data', 'assets'] },
       { rfp: 'III Modeling', chapters: ['model', 'assets', 'delivery'] },
       { rfp: 'III Composition', chapters: ['edit', 'model'] },
       { rfp: 'III Localization', chapters: ['translate', 'rollout'] },
-      { rfp: 'III Governance', chapters: ['quality', 'status', 'insights'] },
+      { rfp: 'III Governance', chapters: ['quality', 'status'] },
       { rfp: 'III Delivery', chapters: ['delivery'] },
     ],
-    recap: 'Both briefings mapped to the demo chapters, from content modeling to delivery and insights.',
+    recap: 'Both briefings mapped to the demo chapters, from content modeling to delivery.',
   },
   {
     id: 'edit',
@@ -293,47 +291,5 @@ export const chapters = [
       { label: 'Edit a place page (BMW Park)', href: canvas('/de/mehr-bmw/sport-und-events/bmw-basketball/bmw-park') },
     ],
     recap: 'Compose once, deliver as HTML, Markdown, fragments or JSON, and to the car screen.',
-  },
-  {
-    id: 'insights',
-    title: 'Insights back to HQ',
-    rfp: ['I 5', 'III Governance'],
-    tell: [
-      'AEM operational telemetry measures real visits and Core Web Vitals of every page out of the box.',
-      'The same data can be broken down per market, next to the rollout status HQ already sees.',
-      'Analytics and task tools such as Workfront connect at the same points.',
-    ],
-    show: [
-      { label: 'How AEM operational telemetry works', href: 'https://www.aem.live/docs/operational-telemetry' },
-    ],
-    recap: 'From publishing to learning: real usage per page and market goes back to HQ.',
-  },
-  {
-    id: 'architecture',
-    title: 'Architecture for BMW Group',
-    rfp: ['III Architecture'],
-    tell: [
-      'Authors bring vehicle facts, media and offers into pages in Experience Workspace. AEM publishes the pages; site code is managed separately in GitHub.',
-      'German serves Germany and Austria; French serves France and Belgium. Each market can adapt its pages. Other brands would have separate sites and content.',
-      'The architecture view explains the working connections and what still needs connecting: WDH feeds, OTMM, Salesforce, translation AI and shared review services.',
-    ],
-    show: [
-      { label: 'Architecture', href: '#architecture' },
-    ],
-    recap: 'Source systems provide facts and media. Authors build pages. AEM publishes them.',
-  },
-  {
-    id: 'recap',
-    title: 'Recap',
-    rfp: ['I 1a', 'I 1b', 'I 2', 'I 3', 'I 4', 'I 5', 'III Architecture'],
-    tell: [
-      'Collaboration, versions and rollback, localization, governance, AI and rollout: all shown on BMW content.',
-      'Native AEM capabilities are product; BMW-specific apps such as the radar, Preflight and the pickers are extensions that Adobe or any partner can build.',
-      'Next: connect BMW identity, WDH, DAM, translation AI, analytics and Workfront.',
-    ],
-    show: [
-      { label: 'Back to the start', href: '#path/0' },
-    ],
-    recap: 'One connected content operating system for BMW, on AEM.',
   },
 ];
