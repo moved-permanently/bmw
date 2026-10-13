@@ -6,6 +6,7 @@ import { loadCSS } from './aem.js';
 import { createEditorLink, updateEditorValues } from './wdh-editor.js';
 
 const short = (text) => (text && text.length > 70 ? `${text.slice(0, 67)}…` : text);
+const COLLAPSED_KEY = 'bmw-wdh-check-collapsed';
 
 const REASONS = {
   value: 'differs from WDH',
@@ -89,10 +90,35 @@ export async function checkWdhValues(session, editor) {
   panel.className = 'wdh-check';
   panel.innerHTML = `<button type="button" class="wdh-check-reload" aria-label="Check again" title="Check again">${RELOAD_ICON}</button>
     <button type="button" class="wdh-check-close" aria-label="Close">×</button>
-    <p class="wdh-check-title">WDH check</p>
+    <button type="button" class="wdh-check-toggle"></button>
+    <p class="wdh-check-title"><span class="wdh-check-status" role="img"></span> WDH check</p>
     <div class="wdh-check-body"></div>`;
   const body = panel.querySelector('.wdh-check-body');
+  const status = panel.querySelector('.wdh-check-status');
+  const toggle = panel.querySelector('.wdh-check-toggle');
+  let collapsed = false;
+  try {
+    collapsed = window.localStorage.getItem(COLLAPSED_KEY) === 'true';
+  } catch { /* storage may be blocked in the preview frame */ }
+  const showCollapsed = () => {
+    panel.classList.toggle('is-collapsed', collapsed);
+    body.hidden = collapsed;
+    toggle.textContent = collapsed ? '+' : '−';
+    toggle.setAttribute('aria-expanded', String(!collapsed));
+    toggle.setAttribute('aria-label', `${collapsed ? 'Expand' : 'Collapse'} WDH check`);
+    toggle.title = `${collapsed ? 'Expand' : 'Collapse'} WDH check`;
+  };
+  showCollapsed();
+  toggle.addEventListener('click', () => {
+    collapsed = !collapsed;
+    showCollapsed();
+    try {
+      window.localStorage.setItem(COLLAPSED_KEY, String(collapsed));
+    } catch { /* the toggle still works without storage */ }
+  });
   const note = (text) => {
+    status.textContent = '⚠️';
+    status.setAttribute('aria-label', text);
     const p = document.createElement('p');
     p.className = 'wdh-check-note';
     p.textContent = text;
@@ -109,6 +135,8 @@ export async function checkWdhValues(session, editor) {
     if (!bindings.length) summary.textContent = 'No WDH values on this page';
     else if (stale.length) summary.textContent = `${stale.length} of ${bindings.length} values need an update (${MARKET})`;
     else summary.textContent = `All ${bindings.length} values match WDH (${MARKET})`;
+    status.textContent = stale.length || !bindings.length ? '⚠️' : '✅';
+    status.setAttribute('aria-label', summary.textContent);
     body.replaceChildren(summary);
     const fixable = stale.filter((s) => s.expected).length;
     if (fixable && link?.ready && link.canWrite) {

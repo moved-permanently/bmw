@@ -14,8 +14,13 @@ const source = readFileSync(new URL('../../scripts/aida.js', import.meta.url), '
 
 function element(tag) {
   const el = {
-    tagName: tag.toUpperCase(), className: '', children: [], attributes: {}, listeners: {},
-    hidden: false, textContent: '',
+    tagName: tag.toUpperCase(),
+    className: '',
+    children: [],
+    attributes: {},
+    listeners: {},
+    hidden: false,
+    textContent: '',
     set innerHTML(html) {
       this.children = [...html.matchAll(/<(button|p|div|span|code|strong|em)\b([^>]*)>/g)].map(([, name, attrs]) => {
         const child = element(name);
@@ -56,7 +61,12 @@ function setup({ saved, text = '627 km', blocked = false } = {}) {
   const sheet = { values: [{ key: '61HG.electricRange', value: '627', unit: 'km' }] };
   const check = runInNewContext(`${source}\ncheckWdhValues;`, {
     URLSearchParams,
-    parseBinding, marketForPath, valuesFromSheet, staleBindings, dataRootForPath, findBindings,
+    parseBinding,
+    marketForPath,
+    valuesFromSheet,
+    staleBindings,
+    dataRootForPath,
+    findBindings,
     loadCSS: async () => {},
     fetchSheet: async () => sheet,
     window: {
@@ -80,7 +90,8 @@ function setup({ saved, text = '627 km', blocked = false } = {}) {
     },
   });
   const session = {
-    generation: 1, isCurrent: () => true,
+    generation: 1,
+    isCurrent: () => true,
     bindings: [{ href: '/aida/showcase/data/wdh-de.json#61HG.electricRange', text }],
   };
   const render = async () => { await check(session); return panels.at(-1); };
