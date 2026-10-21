@@ -208,6 +208,22 @@ test('embedded header and footer: built from the content aem-embed passes in, sa
   assert.equal(blue, '#1c69d4', ':host gets the :root custom properties');
 });
 
+test('embedded: clicks inside the shadow root do not count as outside clicks', async () => {
+  const { page } = await open(`${hostOrigin}/`);
+  await waitInEmbed(page, 0, '.nav-panel-heading');
+  await page.locator('aem-embed').nth(0).locator('.nav-drop', { hasText: 'Kaufen' }).click();
+  await page.locator('aem-embed').nth(0).locator('.nav-flyout.is-open .nav-flyout-body').click({ position: { x: 5, y: 5 } });
+  const flyoutOpen = await inEmbed(page, 0, (root) => !!root.querySelector('.nav-flyout.is-open'));
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  const dropdown = page.locator('aem-embed').nth(1).locator('.drivetrain-switch-dropdown-button');
+  await dropdown.click();
+  const listOpen = await inEmbed(page, 1, (root) => !root.querySelector('.drivetrain-switch-dropdown-list').hidden);
+  await page.close();
+  assert.equal(flyoutOpen, true, 'header flyout stays open');
+  assert.equal(listOpen, true, 'drivetrain dropdown opens');
+});
+
 test('embedded main: nested blocks and fragments load from the site into the shadow root', async () => {
   const { page } = await open(`${hostOrigin}/`);
   await waitInEmbed(page, 1, '.download-link', 2).catch(() => {});
