@@ -534,7 +534,8 @@ function setupBehaviour(block, parts) {
   document.addEventListener('click', (e) => {
     if (!DESKTOP.matches) return;
     if (!layer.classList.contains('is-open')) return;
-    if (e.target.closest('.nav-flyout-wrapper') || e.target.closest('.nav-drop')) return;
+    // composedPath: inside an aem-embed shadow root, e.target is the <aem-embed> element
+    if (e.composedPath().some((n) => n.matches?.('.nav-flyout-wrapper, .nav-drop'))) return;
     closeFlyouts();
     updateState();
   });

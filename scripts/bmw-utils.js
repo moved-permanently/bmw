@@ -752,9 +752,10 @@ const normText = (s) => (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
  * The found section gets the id so plain hash links and :target work afterwards.
  * @param {string} hash "#id" or "id"
  * @param {string} [hint] heading text of the target section
+ * @param {Document|ShadowRoot} [root] where to look (the aem-embed shadow root when embedded)
  * @returns {Element|null}
  */
-export function findAnchorTarget(hash, hint = '') {
+export function findAnchorTarget(hash, hint = '', root = document) {
   let id = (hash || '').replace(/^#/, '');
   try {
     id = decodeURIComponent(id).trim();
@@ -762,9 +763,9 @@ export function findAnchorTarget(hash, hint = '') {
     id = id.trim();
   }
   if (!id) return null;
-  const byId = document.getElementById(id);
+  const byId = root.getElementById(id);
   if (byId) return byId;
-  const main = document.querySelector('main');
+  const main = root.querySelector('main');
   if (!main) return null;
   const esc = window.CSS && CSS.escape ? CSS.escape(id) : id.replace(/"/g, '\\"');
   let target = main.querySelector(`.section[data-id="${esc}"], .section[data-anchor="${esc}"]`);

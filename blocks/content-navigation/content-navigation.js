@@ -145,7 +145,7 @@ export default function decorate(block) {
   const targets = new Map();
   const targetOf = (a) => {
     if (!targets.has(a) || !targets.get(a) || !targets.get(a).isConnected) {
-      targets.set(a, findAnchorTarget(a.getAttribute('href'), a.dataset.hint));
+      targets.set(a, findAnchorTarget(a.getAttribute('href'), a.dataset.hint, block.getRootNode()));
     }
     return targets.get(a);
   };

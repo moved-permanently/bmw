@@ -99,7 +99,8 @@ function bindListeners() {
   listenersBound = true;
   document.addEventListener('click', (e) => {
     if (!open) return;
-    if (open.tooltip.contains(e.target) || open.button.contains(e.target)) return;
+    const path = e.composedPath();
+    if (path.includes(open.tooltip) || path.includes(open.button)) return;
     closeTooltip({ focus: false });
   });
   document.addEventListener('keydown', (e) => {
@@ -167,10 +168,11 @@ function decorateAnchorLinks(text) {
     a.classList.add('disclaimer-link');
     a.addEventListener('click', (e) => {
       const hash = a.getAttribute('href');
-      let target = findAnchorTarget(hash);
+      const root = a.getRootNode();
+      let target = findAnchorTarget(hash, '', root);
       if (!target && hash === '#bottom') {
         // the legal notes are the last content section of model pages
-        const sections = [...document.querySelectorAll('main > .section:not(.layer)')];
+        const sections = [...root.querySelectorAll('main > .section:not(.layer)')];
         target = sections[sections.length - 1];
         if (target && !target.id) target.id = 'bottom';
       }

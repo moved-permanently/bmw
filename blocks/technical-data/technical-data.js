@@ -214,7 +214,7 @@ function buildDropdown(label, onSelect) {
     if (e.key === 'Escape') { close(); button.focus(); }
     if ((e.key === 'Enter' || e.key === ' ') && i >= 0) { e.preventDefault(); opts[i].click(); }
   });
-  document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
+  document.addEventListener('click', (e) => { if (!e.composedPath().includes(wrap)) close(); });
   wrap.append(lab, button, list);
   return {
     element: wrap,

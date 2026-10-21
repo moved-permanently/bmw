@@ -140,7 +140,7 @@ function buildDropdown(options) {
     if (e.target.closest('.is-selected')) close();
   });
   document.addEventListener('click', (e) => {
-    if (!wrap.contains(e.target)) close();
+    if (!e.composedPath().includes(wrap)) close();
   });
   wrap.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
