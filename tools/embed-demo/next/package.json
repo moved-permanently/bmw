@@ -1,0 +1,14 @@
+{
+  "name": "bmw-embed-next-demo",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3040",
+    "build": "next build",
+    "start": "next start --port 3040"
+  },
+  "dependencies": {
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}

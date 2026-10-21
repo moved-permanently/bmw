@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BMW blocks in a plain host page (aem-embed)</title>
+  <link rel="icon" href="data:,">
+  <script src="/scripts/aem-embed.js" type="module"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #f4f4f4;
+    }
+
+    .host-bar {
+      padding: 0.5rem 1rem;
+      background: #1b1b1b;
+      color: #fff;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="host-bar">Host page on its own origin. Everything below comes from the EDS site via &lt;aem-embed&gt;.</div>
+  <aem-embed type="header" url="https://embed--bmw--moved-permanently.aem.page/nav"></aem-embed>
+  <main>
+    <aem-embed url="https://embed--bmw--moved-permanently.aem.page/de/neufahrzeuge/bmw-i/i5/bmw-i5-ueberblick"></aem-embed>
+  </main>
+  <aem-embed type="footer" url="https://embed--bmw--moved-permanently.aem.page/footer"></aem-embed>
+  <script>
+    // ?origin=http://localhost:3000 points the embeds at another EDS origin (local aem up)
+    const origin = new URLSearchParams(window.location.search).get('origin');
+    if (origin) {
+      document.querySelectorAll('aem-embed[url]').forEach((el) => {
+        const url = new URL(el.getAttribute('url'));
+        el.setAttribute('url', `${origin}${url.pathname}`);
+      });
+    }
+  </script>
+</body>
+</html>

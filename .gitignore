@@ -39,3 +39,6 @@ tools/aida/carplay/demo/.tts-cache/
 tools/aida/carplay/demo/.tts-helper.*
 *.xcuserstate
 xcuserdata/
+tools/embed-demo/next/node_modules/
+tools/embed-demo/next/.next/
+tools/embed-demo/next/next-env.d.ts
