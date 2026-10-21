@@ -1,5 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { fetchSheet } from '../../scripts/bmw-utils.js';
+import { siteUrl } from '../../scripts/embed.js';
 
 /*
  * BMW global navigation.
@@ -75,8 +76,8 @@ function decorateIconTokens(root) {
 async function fetchNavFragment() {
   const paths = ['/nav.plain.html', '/content/nav.plain.html'];
   if (window.location.pathname.startsWith('/content/')) paths.reverse();
-  let resp = await fetch(paths[0]);
-  if (!resp.ok) resp = await fetch(paths[1]);
+  let resp = await fetch(siteUrl(paths[0]));
+  if (!resp.ok) resp = await fetch(siteUrl(paths[1]));
   if (!resp.ok) return null;
   // parse inertly so fragment-relative images are not requested against the page URL
   const doc = new DOMParser().parseFromString(await resp.text(), 'text/html');
@@ -88,6 +89,23 @@ async function fetchNavFragment() {
   });
   root.querySelectorAll('source[srcset]').forEach((s) => {
     s.srcset = new URL(s.getAttribute('srcset'), base).href;
+  });
+  return root;
+}
+
+/**
+ * Nav content already in the block (aem-embed type="header" puts the decorated nav document into
+ * a <nav> in the first cell): one plain <div> per section, like the fetched fragment.
+ */
+function navFromBlock(block) {
+  const nav = block.querySelector('nav');
+  if (!nav || !nav.children.length) return null;
+  const root = document.createElement('div');
+  [...nav.children].forEach((section) => {
+    const div = document.createElement('div');
+    const parts = section.classList.contains('section') ? [...section.children] : [section];
+    parts.forEach((part) => div.append(...part.childNodes));
+    root.append(div);
   });
   return root;
 }
@@ -263,14 +281,17 @@ function buildPrimary(section, layerWrapper) {
 
 function buildButtons(container) {
   const group = el('div', { class: 'nav-panel-buttons' });
-  [...container.querySelectorAll(':scope > p')].forEach((p) => {
+  // decorated content (aem-embed): scripts.js grouped the button paragraphs in .button-group
+  [...container.querySelectorAll(':scope > p, :scope > .button-group > p')].forEach((p) => {
     const a = p.querySelector('a');
     if (!a || p.textContent.trim() !== a.textContent.trim()) return;
-    const primary = !!(p.querySelector('strong') && p.querySelector('em'));
+    // em + strong, or .accent when scripts.js decorateButtons already unwrapped them
+    const primary = a.classList.contains('accent') || !!(p.querySelector('strong') && p.querySelector('em'));
     a.className = `nav-button ${primary ? 'nav-button-primary' : 'nav-button-secondary'}`;
     group.append(a);
     p.remove();
   });
+  container.querySelectorAll(':scope > .button-group:empty').forEach((g) => g.remove());
   return group;
 }
 
@@ -545,7 +566,7 @@ function setupBehaviour(block, parts) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  const fragment = await fetchNavFragment();
+  const fragment = navFromBlock(block) || await fetchNavFragment();
   block.textContent = '';
   if (!fragment) return;
 
@@ -568,7 +589,7 @@ export default async function decorate(block) {
   const style = headerStyle();
   const wrapper = el('div', { class: `nav-wrapper nav-${style}` }, ...buildSkipLinks(brandSec), nav);
   block.append(wrapper);
-  block.closest('header')?.classList.add(`header-${style}`);
+  block.closest('header')?.classList.add('header-wrapper', `header-${style}`);
 
   setupBehaviour(block, {
     wrapper, nav, layer, sections,

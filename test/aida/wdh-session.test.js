@@ -61,7 +61,7 @@ test('runtime wiring: every loadPage starts a session before decorating, the che
   assert.match(scripts, /checkWdhValues\(wdhSession, wdhEditor\)/);
   assert.match(scripts, /showWdhCheck\(window\.location\)/, 'the panel shows where showWdhCheck allows it');
   assert.doesNotMatch(scripts, /if \(wdhSession\.bindings\.length && showWdhCheck/, 'EW pages with only unlinked values also run the check');
-  assert.ok(scripts.indexOf('captureEditorPort()') > -1 && scripts.indexOf('captureEditorPort()') < scripts.indexOf('\nloadPage();'), 'the editor port is captured before quick edit loads (appended after loadPage())');
+  assert.ok(scripts.indexOf('captureEditorPort()') > -1 && scripts.indexOf('captureEditorPort()') < scripts.lastIndexOf('loadPage();'), 'the editor port is captured before quick edit loads (appended after loadPage())');
   const aida = read('scripts/aida.js');
   assert.match(aida, /isCurrent\(generation\)/, 'a superseded render does not render its panel');
   assert.match(aida, /<p class="wdh-check-title">[^\n]*WDH check<\/p>/, 'the panel title is "WDH check", optionally with a status icon');

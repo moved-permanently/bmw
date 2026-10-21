@@ -1,4 +1,4 @@
-import { loadBlock } from '../../scripts/aem.js';
+import { loadNestedBlock } from '../../scripts/embed.js';
 import {
   getImageRefs,
   getVideoRefs,
@@ -96,7 +96,7 @@ function decorateVideoCell(cell, block) {
   const video = nestedBlock('video', opts, [[[...cell.childNodes]]]);
   cell.replaceChildren(video);
   cell.classList.add('columns-video-col');
-  return loadBlock(video);
+  return loadNestedBlock(video);
 }
 
 /**
@@ -124,7 +124,7 @@ function decorateLeadingVideo(cell, block) {
   const media = lead.filter((el) => el.isConnected);
   const video = nestedBlock('video', opts, [[media]]);
   cell.prepend(video);
-  return loadBlock(video);
+  return loadNestedBlock(video);
 }
 
 /** Option link-lists: each (heading +) list of a text cell → a nested Link List block with the
@@ -146,7 +146,7 @@ function decorateLinkLists(cell, block) {
     const list = nestedBlock('link-list', opts, []);
     nodes[0].before(list);
     list.append(blockRow([nodes]));
-    loads.push(loadBlock(list));
+    loads.push(loadNestedBlock(list));
     pending = [];
   });
   return loads;
@@ -183,7 +183,7 @@ function decorateDownloads(cell, block) {
     group.append(blockRow(meta ? [link, meta] : [link]));
     el.remove();
   });
-  return loads.map((d) => loadBlock(d));
+  return loads.map((d) => loadNestedBlock(d));
 }
 
 /** A cell whose only content is one or more images (picture/img or image links). */

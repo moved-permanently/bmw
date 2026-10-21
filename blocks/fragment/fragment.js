@@ -12,6 +12,7 @@ import {
 import {
   loadSections,
 } from '../../scripts/aem.js';
+import { isEmbedded, loadNestedBlock, siteUrl } from '../../scripts/embed.js';
 
 /**
  * Loads a fragment.
@@ -20,22 +21,31 @@ import {
  */
 export async function loadFragment(path) {
   if (path && path.startsWith('/') && !path.startsWith('//')) {
-    const resp = await fetch(`${path}.plain.html`);
+    const resp = await fetch(siteUrl(`${path}.plain.html`));
     if (resp.ok) {
       const main = document.createElement('main');
       main.innerHTML = await resp.text();
 
       // reset base path for media to fragment base
+      const base = new URL(siteUrl(path), window.location);
       const resetAttributeBase = (tag, attr) => {
         main.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((elem) => {
-          elem[attr] = new URL(elem.getAttribute(attr), new URL(path, window.location)).href;
+          elem[attr] = new URL(elem.getAttribute(attr), base).href;
         });
       };
       resetAttributeBase('img', 'src');
       resetAttributeBase('source', 'srcset');
 
       decorateMain(main);
-      await loadSections(main);
+      if (isEmbedded()) {
+        await Promise.all([...main.querySelectorAll('div.block')].map(loadNestedBlock));
+        main.querySelectorAll('div.section').forEach((section) => {
+          section.dataset.sectionStatus = 'loaded';
+          section.style.display = null;
+        });
+      } else {
+        await loadSections(main);
+      }
       return main;
     }
   }

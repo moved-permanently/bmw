@@ -14,6 +14,7 @@
  */
 
 import { getMetadata } from '../../scripts/aem.js';
+import { siteUrl } from '../../scripts/embed.js';
 
 const NEW_TAB_MARKER = '#_blank';
 const ACCORDION_QUERY = '(width < 768px)';
@@ -28,8 +29,8 @@ const HEADINGS = 'h2, h3, h4, h5, h6';
 async function fetchFooterFragment() {
   const paths = ['/footer.plain.html', '/content/footer.plain.html'];
   if (window.location.pathname.startsWith('/content/')) paths.reverse();
-  let resp = await fetch(paths[0]);
-  if (!resp.ok) resp = await fetch(paths[1]);
+  let resp = await fetch(siteUrl(paths[0]));
+  if (!resp.ok) resp = await fetch(siteUrl(paths[1]));
   if (!resp.ok) return null;
   // parse inertly: innerHTML on a live-document element would already request the
   // fragment-relative images (images/x.png) against the page URL -> 404s
@@ -207,7 +208,11 @@ export default async function decorate(block) {
     if (footer) footer.hidden = true;
     return;
   }
-  const fragment = await fetchFooterFragment();
+  // aem-embed type="footer" passes the (decorated) footer document in a <nav> in the first cell
+  const nav = block.querySelector('nav');
+  nav?.remove();
+  const fragment = nav?.children.length
+    ? { root: nav, base: new URL(siteUrl('/'), window.location.href) } : await fetchFooterFragment();
   block.textContent = '';
   if (!fragment) return;
   const { root, base } = fragment;

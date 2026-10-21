@@ -110,11 +110,32 @@ after(async () => {
   host?.close();
 });
 
+/** Header and footer as rendered under root (document or an aem-embed shadow root). */
+function summarize(root) {
+  const header = root.querySelector('header');
+  const footer = root.querySelector('footer');
+  const text = (el) => (el ? el.textContent.replace(/\s+/g, ' ').trim() : '');
+  return {
+    header: header && {
+      classes: [...header.classList].sort(),
+      height: getComputedStyle(header).height,
+      drops: [...header.querySelectorAll('.nav-drop')].map(text),
+      buttons: [...header.querySelectorAll('.nav-button')].map((a) => `${a.className}: ${text(a)}`),
+      heading: text(header.querySelector('.nav-panel-heading')),
+    },
+    footer: footer && {
+      bands: [...footer.querySelectorAll('.footer-band')].map((b) => b.className),
+      text: text(footer),
+    },
+  };
+}
+
 /** Opens a page at 1440px and collects page errors. */
 async function open(url) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
+  await page.addInitScript(`window.summarize = ${summarize}`);
   await page.goto(url);
   return { page, errors };
 }
@@ -166,41 +187,25 @@ test('embedded: scripts.js does not run the page load (no consent, sidebar, own 
   assert.equal(siteHits.filter((p) => p === '/footer.plain.html').length, 1, 'only aem-embed fetches the footer');
 });
 
-test('embedded header: built from the nav aem-embed passes in, site styles apply', async () => {
+test('embedded header and footer: built from the content aem-embed passes in, same as on the site', async () => {
+  const onSite = await open(`${siteOrigin}/page`);
+  await onSite.page.waitForFunction(() => document.querySelector('.nav-panel-heading')?.textContent.includes('Sheet')
+    && document.querySelector('.footer-band'), null, { timeout: 10000 });
+  const expected = await onSite.page.evaluate(() => window.summarize(document));
+  await onSite.page.close();
+
   const { page } = await open(`${hostOrigin}/`);
   await waitInEmbed(page, 0, '.nav-panel-heading');
   await page.waitForTimeout(500);
-  const header = await inEmbed(page, 0, (root) => {
-    const headerEl = root.querySelector('header');
-    return {
-      drops: root.querySelectorAll('.nav-drop').length,
-      primary: root.querySelector('.nav-button-primary')?.textContent,
-      secondary: root.querySelector('.nav-button-secondary')?.textContent,
-      heading: root.querySelector('.nav-panel-heading')?.textContent,
-      wrapper: headerEl?.classList.contains('header-wrapper'),
-      height: headerEl ? getComputedStyle(headerEl).height : '',
-      blue: getComputedStyle(root.querySelector('body')).getPropertyValue('--bmw-blue').trim(),
-    };
-  });
+  const header = await inEmbed(page, 0, (root) => window.summarize(root).header);
+  const footer = await inEmbed(page, 2, (root) => window.summarize(root).footer);
+  const blue = await inEmbed(page, 0, (root) => getComputedStyle(root.querySelector('body')).getPropertyValue('--bmw-blue').trim());
   await page.close();
-  assert.equal(header.drops, 1);
-  assert.equal(header.primary, 'Anmelden');
-  assert.equal(header.secondary, 'Registrieren');
-  assert.equal(header.heading, 'Willkommen aus dem Sheet.', 'login panel texts come from the site sheet');
-  assert.equal(header.wrapper, true);
-  assert.equal(header.height, '84px');
-  assert.equal(header.blue, '#1c69d4', ':host gets the :root custom properties');
-});
 
-test('embedded footer: built from the content aem-embed passes in', async () => {
-  const { page } = await open(`${hostOrigin}/`);
-  const footer = await inEmbed(page, 2, (root) => ({
-    columns: root.querySelectorAll('.footer-columns > *').length,
-    legal: root.querySelector('footer')?.textContent.includes('Impressum'),
-  }));
-  await page.close();
-  assert.equal(footer.columns, 2);
-  assert.equal(footer.legal, true);
+  assert.equal(expected.header.heading, 'Willkommen aus dem Sheet.', 'login panel texts come from the site sheet');
+  assert.deepEqual(header, expected.header);
+  assert.deepEqual(footer, expected.footer);
+  assert.equal(blue, '#1c69d4', ':host gets the :root custom properties');
 });
 
 test('embedded main: nested blocks and fragments load from the site into the shadow root', async () => {

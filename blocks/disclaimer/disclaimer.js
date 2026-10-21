@@ -1,4 +1,5 @@
 import { findAnchorTarget, scrollToElement } from '../../scripts/bmw-utils.js';
+import { isEmbedded, siteUrl } from '../../scripts/embed.js';
 
 /*
  * Disclaimer (source .text.style-text--disclaimer-1): small print at 70 % opacity.
@@ -19,6 +20,7 @@ let idCounter = 0;
 
 /** Content prefix of the current page (the local preview serves content below /content). */
 function contentPrefix() {
+  if (isEmbedded()) return siteUrl('/').slice(0, -1);
   const { pathname } = window.location;
   const idx = pathname.indexOf('/de/');
   return idx > 0 ? pathname.substring(0, idx) : '';

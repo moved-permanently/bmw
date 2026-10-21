@@ -239,7 +239,11 @@ test('a sheet can be loaded again past the page cache (WDH panel reload)', async
     calls.push(init?.cache);
     return { ok: true, json: async () => ({ data: [{ n: calls.length }], total: 1 }) };
   };
-  t.after(() => delete globalThis.fetch);
+  globalThis.window = { hlx: {} };
+  t.after(() => {
+    delete globalThis.fetch;
+    delete globalThis.window;
+  });
   const { fetchSheet } = await import('../../scripts/bmw-utils.js');
   assert.equal((await fetchSheet('/aida/data/wdh-test.json')).data[0].n, 1);
   assert.equal((await fetchSheet('/aida/data/wdh-test.json')).data[0].n, 1);

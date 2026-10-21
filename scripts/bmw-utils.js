@@ -2,6 +2,8 @@
  * Shared helpers for BMW blocks: Scene7 responsive pictures and the BMW ligature icon font.
  */
 
+import { codeUrl, loadStyles, siteUrl } from './embed.js';
+
 const SCENE7_IMAGE_RE = /^https?:\/\/[^/]*scene7\.com\/is\/image\//i;
 const IMAGE_EXT_RE = /\.(jpe?g|png|webp|avif|gif)(\?|#|$)/i;
 // Scene7 smart-crop suffix on the asset name, e.g. "asset_new:3to1"
@@ -215,7 +217,6 @@ const LABELS = {
 };
 
 let hlsPromise;
-let playerCssPromise;
 
 /**
  * Whether a URL points at a video (HLS/MP4 file, Scene7 video content, BMW China stream).
@@ -288,23 +289,7 @@ function loadHls() {
 }
 
 function loadPlayerCss() {
-  if (!playerCssPromise) {
-    playerCssPromise = new Promise((resolve) => {
-      const base = (window.hlx && window.hlx.codeBasePath) || '';
-      const href = `${base}${PLAYER_CSS}`;
-      if (document.querySelector(`head > link[href="${href}"]`)) {
-        resolve();
-        return;
-      }
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      link.onload = () => resolve();
-      link.onerror = () => resolve();
-      document.head.append(link);
-    });
-  }
-  return playerCssPromise;
+  return loadStyles(codeUrl(PLAYER_CSS));
 }
 
 /**
@@ -813,22 +798,10 @@ export function scrollToElement(el, offset = 0) {
  * on mobile. Styles: /scripts/bmw-infoi.css (loaded on first use).
  * ---------------------------------------------------------------------------------------- */
 
-let infoCssPromise;
 let openInfo = null;
 
 function loadInfoCss() {
-  if (!infoCssPromise) {
-    infoCssPromise = new Promise((resolve) => {
-      const base = (window.hlx && window.hlx.codeBasePath) || '';
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = `${base}/scripts/bmw-infoi.css`;
-      link.onload = () => resolve();
-      link.onerror = () => resolve();
-      document.head.append(link);
-    });
-  }
-  return infoCssPromise;
+  return loadStyles(codeUrl('/scripts/bmw-infoi.css'));
 }
 
 function closeInfo(focus = true) {
@@ -882,7 +855,8 @@ export function createInfoButton(content, { label = 'Weitere Informationen', cla
     close.innerHTML = '<span class="bmw-icon" data-icon="close" aria-hidden="true">close</span>';
     close.addEventListener('click', () => closeInfo());
     pop.append(close, body);
-    document.body.append(pop);
+    // the <body> of an aem-embed shadow root when embedded
+    (button.closest('body') || document.body).append(pop);
     const mobile = window.matchMedia('(max-width: 767px)').matches;
     if (mobile) {
       pop.classList.add('is-sheet');
@@ -904,7 +878,7 @@ export function createInfoButton(content, { label = 'Weitere Informationen', cla
   if (!createInfoButton.bound) {
     createInfoButton.bound = true;
     document.addEventListener('click', (e) => {
-      if (openInfo && !openInfo.pop.contains(e.target)) closeInfo(false);
+      if (openInfo && !e.composedPath().includes(openInfo.pop)) closeInfo(false);
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeInfo(); });
     window.addEventListener('resize', () => closeInfo(false));
@@ -1004,26 +978,9 @@ export function eagerLoadWhenNear(block, rootMargin = '400px 0px') {
  * ---------------------------------------------------------------------------------------- */
 
 const AI_LABEL_MARKER = ':ai_eu_label:';
-let mediaCssPromise;
 
 function loadMediaCss() {
-  if (!mediaCssPromise) {
-    mediaCssPromise = new Promise((resolve) => {
-      const base = (window.hlx && window.hlx.codeBasePath) || '';
-      const href = `${base}/scripts/bmw-media.css`;
-      if (document.querySelector(`head > link[href="${href}"]`)) {
-        resolve();
-        return;
-      }
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      link.onload = () => resolve();
-      link.onerror = () => resolve();
-      document.head.append(link);
-    });
-  }
-  return mediaCssPromise;
+  return loadStyles(codeUrl('/scripts/bmw-media.css'));
 }
 
 /**
@@ -1118,7 +1075,7 @@ export function fetchSheet(path, { reload = false } = {}) {
         if (!resp.ok) throw new Error(`${path}: ${resp.status}`);
         return resp.json();
       };
-      const json = await get(path);
+      const json = await get(siteUrl(path));
       if (Array.isArray(json[':names'])) {
         return Object.fromEntries(json[':names'].map((n) => [n, (json[n] && json[n].data) || []]));
       }
@@ -1127,7 +1084,7 @@ export function fetchSheet(path, { reload = false } = {}) {
       const sep = path.includes('?') ? '&' : '?';
       while (data.length < total) {
         // eslint-disable-next-line no-await-in-loop
-        const page = await get(`${path}${sep}offset=${data.length}&limit=1000`);
+        const page = await get(siteUrl(`${path}${sep}offset=${data.length}&limit=1000`));
         if (!page.data || !page.data.length) break;
         data.push(...page.data);
       }

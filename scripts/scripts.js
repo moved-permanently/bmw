@@ -14,8 +14,9 @@ import {
 } from './aem.js';
 import { decorateBmwSections } from './bmw-sections.js';
 import { createWdhSession, captureEditorPort, showWdhCheck } from './wdh-session.js';
+import { isEmbedded, codeUrl } from './embed.js';
 
-if (window.trustedTypes && window.trustedTypes.createPolicy) {
+if (!isEmbedded() && window.trustedTypes && window.trustedTypes.createPolicy) {
   const innerTT = window.trustedTypes.createPolicy('tt-inner', {
     createHTML: (s) => s, // avoid stack overflow
   });
@@ -543,4 +544,6 @@ async function loadPage() {
   loadDelayed();
 }
 
-loadPage();
+// aem-embed: no page load; fonts register on the host document (shadow roots ignore @font-face)
+if (isEmbedded()) loadCSS(codeUrl('/styles/fonts.css'));
+else loadPage();

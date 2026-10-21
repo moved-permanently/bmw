@@ -1,4 +1,5 @@
 import { createInfoButton, decorateFontIcons } from '../../scripts/bmw-utils.js';
+import { isEmbedded, siteUrl } from '../../scripts/embed.js';
 
 /*
  * Model Offer (source .cmp-modeloffer): slider of leasing offer cards (flag, model name, subtitle,
@@ -15,6 +16,7 @@ const WLTP_FRAGMENT = '/de/fragments/wltp-info';
 let wltpPromise;
 
 function contentPrefix() {
+  if (isEmbedded()) return siteUrl('/').slice(0, -1);
   const { pathname } = window.location;
   const idx = pathname.indexOf('/de/');
   return idx > 0 ? pathname.substring(0, idx) : '';
