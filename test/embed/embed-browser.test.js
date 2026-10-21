@@ -89,6 +89,7 @@ before(async () => {
         <aem-embed type="header" url="${siteOrigin}/nav"></aem-embed>
         <main><aem-embed url="${siteOrigin}/page"></aem-embed></main>
         <aem-embed type="footer" url="${siteOrigin}/footer"></aem-embed>
+        <div style="height: 3000px"></div>
         </body></html>`);
       return;
     }
@@ -222,6 +223,21 @@ test('embedded: clicks inside the shadow root do not count as outside clicks', a
   await page.close();
   assert.equal(flyoutOpen, true, 'header flyout stays open');
   assert.equal(listOpen, true, 'drivetrain dropdown opens');
+});
+
+test('embedded: in-page navigation finds its targets in the shadow root', async () => {
+  const { page } = await open(`${hostOrigin}/`);
+  await waitInEmbed(page, 1, '.content-navigation-link');
+  await page.locator('aem-embed').nth(1).locator('.content-navigation-link', { hasText: 'Ziel' }).click();
+  await page.waitForTimeout(1000);
+  const { scrollY, top } = await page.evaluate(() => ({
+    scrollY: window.scrollY,
+    top: [...document.querySelectorAll('aem-embed')[1].shadowRoot.querySelectorAll('h2')]
+      .find((h) => h.textContent === 'Ziel-Abschnitt').getBoundingClientRect().top,
+  }));
+  await page.close();
+  assert.ok(scrollY > 0, 'the page scrolled');
+  assert.ok(top >= 0 && top < 300, `the target is at the top (${top}px)`);
 });
 
 test('embedded main: nested blocks and fragments load from the site into the shadow root', async () => {
