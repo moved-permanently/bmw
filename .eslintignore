@@ -1,3 +1,4 @@
 helix-importer-ui
 *.min.js
 migration-work/
+tools/embed-demo/scripts/aem-embed.js

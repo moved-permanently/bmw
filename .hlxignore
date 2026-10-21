@@ -22,3 +22,4 @@ docs/*
 tools/ew-native/*
 tools/aida/icon-picker/*.py
 tools/aida/carplay/*
+tools/embed-demo/*
